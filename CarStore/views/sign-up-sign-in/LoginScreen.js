@@ -8,7 +8,7 @@ import { connect } from "react-redux"
 import { login } from '../../redux/action/login-action/LoginAction';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin'
 import auth from '@react-native-firebase/auth';
-
+import * as Animatable from 'react-native-animatable';
 
 const storeData = async (value) => {
   try {
@@ -56,6 +56,7 @@ class LoginScreen extends React.Component {
 
 
   componentDidMount() {
+
     console.log("-------DONT FORGET TO BIND PORT 3000 DEVICE--------");
 
 
@@ -67,20 +68,14 @@ class LoginScreen extends React.Component {
   }
 
   handleGoogleSignin = async () => {
-    // const { idToken } = await GoogleSignin.signIn();
-    // const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-    // auth().signInWithCredential(googleCredential);
-    // console.log("GOOOGLE ---- AUTHEN", auth().currentUser);  
-    // console.log("ID TOKEN MAIL ------" , idToken);
-
     GoogleSignin.configure({
       webClientId: "111011050447-m1qe21og2lpbk6nqj5fmtc98b93prco9.apps.googleusercontent.com",
     });
 
     try {
       const { idToken } = await GoogleSignin.signIn();
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken); 
-      console.log("auth",auth().currentUser)
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      console.log("auth", auth().currentUser)
       //TODO :  add api sign up here
       return auth().signInWithCredential(googleCredential);
     } catch (error) {
@@ -93,7 +88,7 @@ class LoginScreen extends React.Component {
       } else {
         // some other error happened
       }
-      console.log("error",error)
+      console.log("error", error)
     }
   }
   handleRememberChange = (value) => {
@@ -126,8 +121,9 @@ class LoginScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.Skip}>
-          <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Animatable.View style={styles.Skip} animation = "fadeInLeft">
+          <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}
+            onPress={() => this.props.navigation.navigate('RootDrawer')}>
 
             <Text style={{ marginRight: 5, fontSize: 20 }}>
               Skip
@@ -138,130 +134,134 @@ class LoginScreen extends React.Component {
             ></Icon>
 
           </TouchableOpacity>
-        </View>
-        <Text style={{ fontSize: 25, textAlign: 'center', color: '#33DDFF', fontWeight: '600' }}>
-          WELCOME
-        </Text>
-        <View style={{ alignItems: 'center' }}>
-          <Image
-            source={require('../../images/ferrari-welcome.jpeg')}
-            style={{ borderRadius: 40, margin: 20 }}
-          >
-          </Image>
-        </View>
+        </Animatable.View>
 
-        {/* input field */}
-        <View style={{ marginHorizontal: 30 }}>
-          <View>
-            <Text style={styles.emailAndPassWord}>
-              Email
-            </Text>
-            <View style={styles.Input}>
-              <Icon
-                name='envelope'
-                size={20}
-                style={{ paddingHorizontal: 20 }}>
-              </Icon>
-              <TextInput style={{ flex: 1 }}
-                onChangeText={value => this.setState({ email: value })}
-                value={this.state.email}>
-
-              </TextInput>
-            </View>
-          </View>
-
-          <View>
-            <Text style={styles.emailAndPassWord}>
-              Password
-            </Text>
-            <View style={styles.Input}>
-              <Icon
-                name='lock'
-                size={20}
-                style={{ paddingHorizontal: 20 }}>
-              </Icon>
-              <TextInput style={{ flex: 1 }}
-                onChangeText={value => this.setState({ password: value })}
-                secureTextEntry
-                value={this.state.password}
-              >
-
-              </TextInput>
-            </View>
-          </View>
-
-          {/*end input field */}
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Slider
-              style={{ width: 60, height: 40 }}
-              minimumValue={0}
-              maximumValue={1}
-              value={this.state.isRemember}
-              onValueChange={value => this.handleRememberChange(value)}
-              minimumTrackTintColor="#00e6e6"
-              maximumTrackTintColor="#000000"
-            />
-            <Text style={{ color: this.state.colorRemember }}>
-              Remember
-            </Text>
-
-            <TouchableOpacity style={{ marginLeft: 40, flex: 1 }}
-              onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')}>
-              <Text style={{ textAlign: 'right' }}>
-                Forgot password
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          <TouchableOpacity style={styles.loginButton}
-            onPress={this.handleLogin}>
-            <Text style={styles.loginText}>
-              LOGIN
-            </Text>
-          </TouchableOpacity>
-
-          <Text style={{ textAlign: 'center', fontSize: 17 }}> -------------- Or --------------</Text>
-
-          <View style={{ flexDirection: 'row', marginVertical: 10 }}>
-            <TouchableOpacity style={{ ...styles.loginWith, backgroundColor: 'blue' }}>
-              <Icon
-                name='facebook'
-                size={20}
-                style={{ color: 'white', marginRight: 5 }}>
-              </Icon>
-              <Text style={{ color: 'white', fontSize: 12 }}>
-                Login with Facebook
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={{ ...styles.loginWith, backgroundColor: '#ff3333', marginLeft: 'auto' }} onPress={this.handleGoogleSignin}>
-              <Icon
-                name='google'
-                size={20}
-                style={{ color: 'white', marginRight: 5 }}>
-              </Icon>
-              <Text style={{ color: 'white', fontSize: 12 }}>
-                Login with Google
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={{
-          flexDirection: 'row',
-          bottom: 0, //Here is the trick
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-          <Text>
-            Don't have account ?{' '}
+        {/* ANIMATION VIEW */}
+        <Animatable.View animation = "fadeInUp"  iterationCount={1} duration= {2000} >
+          <Text style={{ fontSize: 25, textAlign: 'center', color: '#33DDFF', fontWeight: '600' }}>
+            WELCOME
           </Text>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUpScreen')}>
-            <Text style={{ color: '#00e6e6' }}>
-              Sign up
-            </Text>
-          </TouchableOpacity>
+          <View style={{ alignItems: 'center' }}>
+            <Image
+              source={require('../../images/ferrari-welcome.jpeg')}
+              style={{ borderRadius: 40, margin: 20 }}
+            >
+            </Image>
+          </View>
 
-        </View>
+          {/* input field */}
+          <View style={{ marginHorizontal: 30 }}>
+            <View>
+              <Text style={styles.emailAndPassWord}>
+                Email
+              </Text>
+              <View style={styles.Input}>
+                <Icon
+                  name='envelope'
+                  size={20}
+                  style={{ paddingHorizontal: 20 }}>
+                </Icon>
+                <TextInput style={{ flex: 1 }}
+                  onChangeText={value => this.setState({ email: value })}
+                  value={this.state.email}>
+
+                </TextInput>
+              </View>
+            </View>
+
+            <View>
+              <Text style={styles.emailAndPassWord}>
+                Password
+              </Text>
+              <View style={styles.Input}>
+                <Icon
+                  name='lock'
+                  size={20}
+                  style={{ paddingHorizontal: 20 }}>
+                </Icon>
+                <TextInput style={{ flex: 1 }}
+                  onChangeText={value => this.setState({ password: value })}
+                  secureTextEntry
+                  value={this.state.password}
+                >
+
+                </TextInput>
+              </View>
+            </View>
+
+            {/*end input field */}
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Slider
+                style={{ width: 60, height: 40 }}
+                minimumValue={0}
+                maximumValue={1}
+                value={this.state.isRemember}
+                onValueChange={value => this.handleRememberChange(value)}
+                minimumTrackTintColor="#00e6e6"
+                maximumTrackTintColor="#000000"
+              />
+              <Text style={{ color: this.state.colorRemember }}>
+                Remember
+              </Text>
+
+              <TouchableOpacity style={{ marginLeft: 40, flex: 1 }}
+                onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')}>
+                <Text style={{ textAlign: 'right' }}>
+                  Forgot password
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity style={styles.loginButton}
+              onPress={this.handleLogin}>
+              <Animatable.Text animation="tada" iterationCount="infinite" style={styles.loginText}>LOGIN</Animatable.Text>
+
+            </TouchableOpacity>
+
+            <Text style={{ textAlign: 'center', fontSize: 17 }}> -------------- Or --------------</Text>
+
+            <View style={{ flexDirection: 'row', marginVertical: 10 }}>
+              <TouchableOpacity style={{ ...styles.loginWith, backgroundColor: 'blue' }}>
+                <Icon
+                  name='facebook'
+                  size={20}
+                  style={{ color: 'white', marginRight: 5 }}>
+                </Icon>
+                <Text style={{ color: 'white', fontSize: 12 }}>
+                  Login with Facebook
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={{ ...styles.loginWith, backgroundColor: '#ff3333', marginLeft: 'auto' }} onPress={this.handleGoogleSignin}>
+                <Icon
+                  name='google'
+                  size={20}
+                  style={{ color: 'white', marginRight: 5 }}>
+                </Icon>
+                <Text style={{ color: 'white', fontSize: 12 }}>
+                  Login with Google
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={{
+            flexDirection: 'row',
+            bottom: 0, //Here is the trick
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+            <Text>
+              Don't have account ?{' '}
+            </Text>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUpScreen')}>
+              <Text style={{ color: '#00e6e6' }}>
+                Sign up
+              </Text>
+            </TouchableOpacity>
+
+          </View>
+        </Animatable.View>
+
       </View >
     );
   }

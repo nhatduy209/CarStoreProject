@@ -7,6 +7,7 @@ import ForgotPasswordScreen from '../views/sign-up-sign-in/ForgotPasswordScreen'
 import ForgotPasswordCodeScreen from '../views/sign-up-sign-in/ForgotPasswordCodeScreen';
 import ChangePasswordScreen from '../views/sign-up-sign-in/ChangePasswordScreen';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import RootDrawer from './drawer-navigation/RootDrawer';
 const Stack = createNativeStackNavigator();
 
 export class Root extends React.Component {
@@ -66,7 +67,14 @@ export class Root extends React.Component {
           options={{
             headerShown: false
           }}
-          name="ChangePasswordScreen" component={ChangePasswordScreen} />
+          name="ChangePasswordScreen" component={ChangePasswordScreen} 
+          />
+             <Stack.Screen
+          options={{
+            headerShown: false
+          }}
+          name="RootDrawer" component={RootDrawer} 
+          />
       </Stack.Navigator>
     )
   }

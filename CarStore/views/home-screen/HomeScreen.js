@@ -23,6 +23,12 @@ const Categories = [
 export default class HomeScreen extends React.Component {
 
 
+  componentDidMount(){
+    console.log("load")
+  }
+  componentDidUpdate(){
+    console.log("reload")
+  }
   renderCategories = ({ item }) => {
     return (
       <TouchableOpacity>

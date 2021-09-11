@@ -35,11 +35,8 @@ export class Root extends React.Component {
 
   render() {
     return (
-      <Stack.Navigator>
+      <Stack.Navigator >
         <Stack.Screen
-          options={{
-            headerShown: false
-          }}
           name="LoginScreen" component={LoginScreen} />
           <Stack.Screen
           options={{
@@ -47,13 +44,6 @@ export class Root extends React.Component {
           }}
           name="SignUpScreen" component={SignUpScreen} />
         <Stack.Screen
-          // options={{
-          //   title: "",
-          //   headerBackVisible : true,
-          //   header : (props) => (
-          //     <this.headerLeft props = {props} />
-          //   ),
-          // }}
           options={{
             headerShown: false
           }}

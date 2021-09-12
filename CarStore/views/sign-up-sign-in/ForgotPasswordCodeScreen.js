@@ -5,7 +5,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  KeyboardAvoidingView
 } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 
@@ -16,6 +18,8 @@ class ForgotPasswordCodeScreen extends React.Component {
       isSent: false,
       inputValue: [],
       prevIndex:null,
+      recoverCode:'',
+      isIncorrect:false,
     };
     this.inputRefs = [
       React.createRef(),
@@ -26,8 +30,10 @@ class ForgotPasswordCodeScreen extends React.Component {
     ];
   }
 
-  componentDidMount() {
-    // console.log("props",this.props.navigation)
+  componentDidUpdate() {
+    if(this.state.recoverCode===''){
+    console.log('res',this.props.user.recoverCode.data.data)
+    this.setState({recoverCode:this.props.user.recoverCode.data.data})}
   }
   setInputValue(value, idx) {
     const list = [];
@@ -37,7 +43,6 @@ class ForgotPasswordCodeScreen extends React.Component {
       else
       list.push(element)
     });
-    console.log(list)
     this.setState({inputValue: list});
   }
   handleKeyDown(value, idx) {
@@ -49,7 +54,6 @@ class ForgotPasswordCodeScreen extends React.Component {
       }
       this.setInputValue(value, idx);
     } else {
-      console.log(value)
       const list = this.state.inputValue;
       list.push(value);
       this.setState({inputValue: list});
@@ -61,11 +65,25 @@ class ForgotPasswordCodeScreen extends React.Component {
     if (this.state.inputValue[e] === '') {
       this.inputRefs[e - 1 > -1 ? e - 1 : 0].focus();
     }
+    this.setState({isIncorrect:false})
   }
 
+  handleConfirmCode(){
+    const input = this.state.inputValue.toString().split(',').join("");
+    if(input.length===5&&input.localeCompare(this.state.recoverCode)===0){
+      this.setState({isIncorrect:false})
+        this.props.navigation.navigate('ChangePasswordScreen')
+    }
+    else
+    this.setState({isIncorrect:true})
+  }
   render() {
     return (
-      <View style={{height: '100%'}}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : null}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}>
+      <ScrollView>
         <TouchableOpacity
           onPress={() => this.props.navigation.goBack()}
           style={{padding: '8%'}}>
@@ -103,20 +121,22 @@ class ForgotPasswordCodeScreen extends React.Component {
               style={styles.codeNumber}></TextInput>
           ))}
         </View>
+        <Text style={this.state.isIncorrect?{padding:20,paddingHorizontal:'10%'}:{display:'none'}}>Your code is incorrect</Text>
         <TouchableOpacity
           style={styles.signUpButton}
           onPress={() =>
-            this.props.navigation.navigate('ChangePasswordScreen')
+            this.handleConfirmCode()
           }>
           <Text style={styles.forgotPasswordText}>Confirm</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }
 const mapStateToProps = state => {
   return {
-    user: state.UserReducer.user,
+    user: state.UserReducer,
   };
 };
 
@@ -136,6 +156,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     textAlign: 'center',
     fontSize: 24,
+    color:'#aaa'
   },
   signUpButton: {
     alignItems: 'center',

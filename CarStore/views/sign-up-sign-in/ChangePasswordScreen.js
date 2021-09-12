@@ -12,32 +12,35 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {signUp} from '../../redux/action/login-action/LoginAction';
+import {changepassword} from '../../redux/action/login-action/ChangePasswordAction';
 
 class ChangePasswordScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      email: '',
       password: '',
       hidePassword: true,
       icon: 'eye-slash',
       confirmPassword: '',
       hideConfirmPassword: true,
       iconConfirm: 'eye-slash',
-      phone: '',
+      error:'',
     };
   }
-  handleSignUp = () => {
-    const signupInfo = {
-      email: this.state.email,
-      password: this.state.password,
-      phone: this.state.phone,
-      email: this.state.email,
-      name: this.state.name,
-    };
-    this.props.signUp(signupInfo);
+  handleChangePassword = () => {
+    const data = {
+      email:this.props.email,
+      password:this.state.password
+    }
+    if(this.state.password.length>0){
+      if(this.state.password.localeCompare(this.state.confirmPassword)===0){
+        this.props.changepassword(data);
+        this.props.navigation.navigate('LoginScreen')
+      }
+      else
+      this.setState({error:'Confirm password not match!'})
+    }else
+    this.setState({error:'Please type new password!'})
   };
   handleHidePassowrd = () => {
     this.setState({
@@ -67,7 +70,7 @@ class ChangePasswordScreen extends React.Component {
           {/* input field */}
           <View style={{marginHorizontal: 30}}>
             <View>
-              <Text style={styles.emailAndPassWord}>New password</Text>
+              <Text style={styles.label}>New password</Text>
               <View style={styles.Input}>
                 <Icon
                   onPress={this.handleHidePassowrd}
@@ -81,9 +84,10 @@ class ChangePasswordScreen extends React.Component {
                   onChangeText={value => this.setState({password: value})}
                   value={this.state.password}></TextInput>
               </View>
+              <Text style={this.state.error.indexOf('type')>0?styles.textError:{display:'none'}}>{this.state.error}</Text>
             </View>
             <View>
-              <Text style={styles.emailAndPassWord}>Confirm new password</Text>
+              <Text style={styles.label}>Confirm new password</Text>
 
               <View style={styles.Input}>
                 <Icon
@@ -97,16 +101,17 @@ class ChangePasswordScreen extends React.Component {
                   placeholder={'Confirm new password'}
                   secureTextEntry={this.state.hideConfirmPassword}
                   onChangeText={value =>
-                    this.setState({passwordConfirmed: value})
+                    this.setState({confirmPassword: value})
                   }
                   value={this.state.passwordConfirmed}></TextInput>
               </View>
+              <Text style={this.state.error.indexOf('match')<0?{display:'none'}:styles.textError}>{this.state.error}</Text>
             </View>
 
             <TouchableOpacity
               style={styles.changePasswordButton}
               onPress={() =>
-                this.props.navigation.navigate('LoginScreen')
+                this.handleChangePassword()
               }>
               <Text style={styles.confirmText}>Confirm</Text>
             </TouchableOpacity>
@@ -119,26 +124,21 @@ class ChangePasswordScreen extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    user: state.UserReducer.user,
+    email: state.UserReducer.recoverCode.email,
   };
 };
 
-export default connect(mapStateToProps, {signUp})(ChangePasswordScreen);
+export default connect(mapStateToProps, {changepassword})(ChangePasswordScreen);
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#ffffff',
     flex: 1,
   },
-  Skip: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginRight: 20,
-    marginTop: 15,
-  },
-  emailAndPassWord: {
+  textError:{color:'red'},
+  label: {
     fontSize: 17,
-    fontWeight: '900',
+    fontWeight: 'bold',
     color: '#323637',
     marginBottom: '5%',
     marginTop: '4%',

@@ -1,16 +1,13 @@
 import { STATUS } from '../config/Status';
 import { URL } from '../config/URL'
 import PostService from '../service/PostService'
-export default class SignUpBusiness { 
-  signUpBusiness = async(data) =>  {
+export default class RecoverPasswordBusiness { 
+    recoverPasswordBusiness = async(data) =>  {
         var postService = new PostService();
-        const url = URL + 'account/register' ;
+        const url = URL + 'account/recoverpassword' ;
 
         const params = {
-          name:data.name,
           email:data.email,
-          phone:data.phone,
-          password:data.password,
         }
         var result = await postService.PostAPI(url , params);
 

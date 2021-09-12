@@ -16,6 +16,16 @@ const UserReducer = (state = USER_STATE, action) => {
         ...state,
         user: action.data,
       };
+    case ACTION_NAME.RECOVERPASSWORD_ACTION.RECOVERPASSWORD_ACTION:
+      return {
+        ...state,
+        recoverCode: action.data,
+      };
+      case ACTION_NAME.CHANGEPASSWORD_ACTION.CHANGEPASSWORD_ACTION:
+      return {
+        ...state,
+        user: action.data,
+      };
     default:
       return state;
   }

@@ -12,7 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {signUp} from '../../redux/action/login-action/LoginAction';
+import {signUp} from '../../redux/action/login-action/SignUpAction';
 
 class SignUpScreen extends React.Component {
   constructor(props) {

@@ -5,7 +5,6 @@ import { Image, View, TouchableOpacity, StyleSheet,Text } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/FontAwesome';
 const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
 
 const NavigationDrawerStructureLeft = props => {
   //Structure for the navigatin Drawer

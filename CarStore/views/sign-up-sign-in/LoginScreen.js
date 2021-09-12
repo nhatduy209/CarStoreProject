@@ -57,9 +57,7 @@ class LoginScreen extends React.Component {
 
   componentDidMount() {
 
-    console.log("-------DONT FORGET TO BIND PORT 3000 DEVICE--------");
-
-
+    console.log("-------DONT FORGET TO BIND PORT 3000 DEVICE--------",this.props.user);
     getUserlogin().then(res => {
       if (res) {
         this.setState({ email: res.email, password: res.password, isRemember: res.isRemember })
@@ -112,10 +110,6 @@ class LoginScreen extends React.Component {
       removeUserLogin();
     }
     this.props.login(this.state.email, this.state.password);
-  }
-
-  componentDidUpdate() {
-    console.log('USER---', this.state.userEmail);
   }
 
   render() {

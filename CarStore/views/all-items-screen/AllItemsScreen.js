@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
-import {recoverpassword} from '../../redux/action/login-action/RecoverPasswordAction';
-
+import CardItem from './CardItem';
+import RelatedCardItem from './RelatedCardItem';
 class AllItemsScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -21,64 +21,26 @@ class AllItemsScreen extends React.Component {
   componentDidMount() {
     // console.log("props",this.props.navigation)
   }
-
-  handleEmailGetPassword() {
-    if (this.state.email === '') {
-      this.setState({isNull: true});
-    } else {
-      this.props.recoverpassword({email: this.state.email});
-      this.props.navigation.navigate('ForgotPasswordCodeScreen');
-    }
-  }
   render() {
     return (
-      <View style={{height: '100%'}}>
+      <View style={{height: '100%',backgroundColor:'white'}}>
+        
+        <View style={{flexDirection:'row',height:'7%',alignItems:'center',paddingHorizontal:20}}>
         <TouchableOpacity
-          onPress={() => this.props.navigation.goBack()}
-          style={{padding: '8%'}}>
+          onPress={() => this.props.navigation.goBack()}>
           <Icon
             name="arrow-left"
             size={16}
             style={{color: '#555', marginRight: 5}}></Icon>
         </TouchableOpacity>
-        <View
-          style={{
-            alignItems: 'flex-start',
-            marginHorizontal: '8%',
-            marginVertical: '8%',
-          }}>
-          <Text style={{fontSize: 45, fontWeight: '700'}}>
-            All {"\n"}
-            Items
-          </Text>
+        <Text style={{marginLeft:'25%',fontSize:20,fontWeight:'bold'}}>Choose your car</Text>
         </View>
-        <View
-          style={{
-            alignItems: 'flex-start',
-            marginHorizontal: '8%',
-          }}>
-          <Text style={{fontSize: 24}}>Type your email:</Text>
+        <View style={{flexDirection:'row'}}>
+        <RelatedCardItem/>
+        <RelatedCardItem/>
         </View>
-        {/* input field */}
-        <View style={{marginHorizontal: 30}}>
-          <TextInput
-            placeholder={'Email'}
-            onChangeText={value => this.setState({email: value})}
-            style={styles.emailInput}></TextInput>
-          <Text
-            style={
-              !this.state.isNull
-                ? {display: 'none'}
-                : {color: 'red', padding: 10}
-            }>
-            Please type your email!
-          </Text>
-        </View>
-        <TouchableOpacity
-          style={styles.signUpButton}
-          onPress={() => this.handleEmailGetPassword()}>
-          <Text style={styles.forgotPasswordText}>NEXT</Text>
-        </TouchableOpacity>
+        <CardItem></CardItem>
+        <CardItem></CardItem>
       </View>
     );
   }
@@ -89,35 +51,10 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {recoverpassword})(
+export default connect(mapStateToProps, {})(
     AllItemsScreen
 );
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#ffffff',
-    flex: 1,
-  },
-  signUpButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 100,
-    padding: 12,
-    alignSelf: 'flex-end',
-    margin: '8%',
-    borderRadius: 10,
-    backgroundColor: 'rgb(32,45,70)',
-  },
-  forgotPasswordText: {
-    color: '#fff',
-  },
-  emailInput: {
-    height: 60,
-    backgroundColor: '#ddd',
-    borderRadius: 10,
-    marginTop: '8%',
-    paddingHorizontal: '4%',
-    fontSize: 20,
-    color:'#aaa'
-  },
+  
 });

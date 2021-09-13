@@ -155,7 +155,7 @@ class LoginScreen extends React.Component {
                   size={20}
                   style={{ paddingHorizontal: 20 }}>
                 </Icon>
-                <TextInput style={{ flex: 1 }}
+                <TextInput style={{ flex: 1,color:'#000' }}
                   onChangeText={value => this.setState({ email: value })}
                   value={this.state.email}>
 
@@ -173,7 +173,7 @@ class LoginScreen extends React.Component {
                   size={20}
                   style={{ paddingHorizontal: 20 }}>
                 </Icon>
-                <TextInput style={{ flex: 1 }}
+                <TextInput style={{ flex: 1,color:'#000' }}
                   onChangeText={value => this.setState({ password: value })}
                   secureTextEntry
                   value={this.state.password}

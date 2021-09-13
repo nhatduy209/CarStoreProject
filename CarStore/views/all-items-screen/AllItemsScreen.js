@@ -4,16 +4,13 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
   TextInput,
-  KeyboardAvoidingView,
-  ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import {recoverpassword} from '../../redux/action/login-action/RecoverPasswordAction';
 
-class ForgotPasswordScreen extends React.Component {
+class AllItemsScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,8 +48,8 @@ class ForgotPasswordScreen extends React.Component {
             marginVertical: '8%',
           }}>
           <Text style={{fontSize: 45, fontWeight: '700'}}>
-            Forgot {"\n"}
-            Password
+            All {"\n"}
+            Items
           </Text>
         </View>
         <View
@@ -93,7 +90,7 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {recoverpassword})(
-  ForgotPasswordScreen,
+    AllItemsScreen
 );
 
 const styles = StyleSheet.create({

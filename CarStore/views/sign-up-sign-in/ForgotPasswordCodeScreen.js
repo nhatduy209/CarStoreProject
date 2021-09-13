@@ -98,7 +98,7 @@ class ForgotPasswordCodeScreen extends React.Component {
             marginHorizontal: '8%',
             marginVertical: '8%',
           }}>
-          <Text style={{fontSize: 40, fontWeight: '700', width: '70%'}}>
+          <Text style={{fontSize: 45, fontWeight: '700'}}>
             Enter 4-digit recovery code
           </Text>
           <Text style={{fontSize: 24, fontWeight: '500',marginTop:'10%'}}>

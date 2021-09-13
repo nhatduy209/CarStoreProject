@@ -21,14 +21,6 @@ const Categories = [
   }
 ]
 export default class HomeScreen extends React.Component {
-
-
-  componentDidMount(){
-    console.log("load")
-  }
-  componentDidUpdate(){
-    console.log("reload")
-  }
   renderCategories = ({ item }) => {
     return (
       <TouchableOpacity>
@@ -68,7 +60,7 @@ export default class HomeScreen extends React.Component {
             </Text>
           </View>
           <View style={{ justifyContent: 'flex-end' }}>
-            <Text style={{ color: '#66b8ff' }}>
+            <Text onPress={()=>this.props.navigation.navigate("AllItemsScreen")} style={{ color: '#66b8ff' }}>
               Show all
             </Text>
           </View>

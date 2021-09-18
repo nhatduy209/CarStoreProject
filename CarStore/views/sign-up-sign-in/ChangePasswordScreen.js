@@ -45,7 +45,7 @@ class ChangePasswordScreen extends React.Component {
   handleHidePassowrd = () => {
     this.setState({
       hidePassword: !this.state.hidePassword,
-      icon: this.state.hidePassword ? 'eye-slash' : 'eye',
+      icon: !this.state.hidePassword ? 'eye-slash' : 'eye',
     });
   };
   handleHideConfirmedPassowrd = () => {
@@ -78,7 +78,7 @@ class ChangePasswordScreen extends React.Component {
                   size={16}
                   style={{color: '#555', marginRight: 5}}></Icon>
                 <TextInput
-                  style={{flex: 1}}
+                  style={{flex: 1,color:'#000'}}
                   placeholder={'New password'}
                   secureTextEntry={this.state.hidePassword}
                   onChangeText={value => this.setState({password: value})}
@@ -97,7 +97,7 @@ class ChangePasswordScreen extends React.Component {
                   style={{color: '#555', marginRight: 5}}></Icon>
 
                 <TextInput
-                  style={{flex: 1}}
+                  style={{flex: 1,color:'#000'}}
                   placeholder={'Confirm new password'}
                   secureTextEntry={this.state.hideConfirmPassword}
                   onChangeText={value =>

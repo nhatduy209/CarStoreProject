@@ -20,6 +20,7 @@ class ForgotPasswordCodeScreen extends React.Component {
       prevIndex:null,
       recoverCode:'',
       isIncorrect:false,
+      countDown:80,
     };
     this.inputRefs = [
       React.createRef(),
@@ -30,11 +31,26 @@ class ForgotPasswordCodeScreen extends React.Component {
     ];
   }
 
+  componentDidMount(){
+    setInterval(()=>this.setState({countDown:this.state.countDown -1}),1000)
+  }
+
   componentDidUpdate() {
+    if(typeof this.props.user.recoverCode.data.data === 'undefined'){
+      this.props.navigation.goBack()
+    }
     if(this.state.recoverCode===''){
     console.log('res',this.props.user.recoverCode.data.data)
     this.setState({recoverCode:this.props.user.recoverCode.data.data})}
+    if(this.state.countDown===0){
+      this.props.navigation.goBack()
+    }
   }
+  componentWillUnmount() {
+    if (this.interval) {
+        clearInterval(this.interval);
+    }
+}
   setInputValue(value, idx) {
     const list = [];
     this.state.inputValue.forEach((element, index) => {
@@ -77,7 +93,7 @@ class ForgotPasswordCodeScreen extends React.Component {
     else
     this.setState({isIncorrect:true})
   }
-  render() {
+  render() {    
     return (
       <KeyboardAvoidingView
         style={styles.container}
@@ -129,6 +145,7 @@ class ForgotPasswordCodeScreen extends React.Component {
           }>
           <Text style={styles.forgotPasswordText}>Confirm</Text>
         </TouchableOpacity>
+        <Text style={styles.countDownText}>{this.state.countDown}</Text>
       </ScrollView>
       </KeyboardAvoidingView>
     );
@@ -146,6 +163,15 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#ffffff',
     flex: 1,
+  },
+  countDownText:{
+    fontSize:45,
+    width:60,
+    height:60,
+    alignSelf: 'center',
+    marginTop: '10%',
+    color: '#555',
+    textAlign:'center'
   },
   codeNumber: {
     backgroundColor: '#ddd',

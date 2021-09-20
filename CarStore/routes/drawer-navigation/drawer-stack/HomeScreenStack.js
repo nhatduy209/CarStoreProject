@@ -4,6 +4,7 @@ import HomeScreen from '../../../views/home-screen/HomeScreen'
 import { Image, View, TouchableOpacity, StyleSheet,Text } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import TabBar from '../../TabBar';
 const Stack = createStackNavigator();
 
 const NavigationDrawerStructureLeft = props => {
@@ -38,7 +39,8 @@ export default class HomeScreenStack extends React.Component {
   }
   render() {
     return (
-      <Stack.Navigator >
+      <View>
+        <Stack.Navigator >
       <Stack.Screen
         name="Home"
         component={HomeScreen}   
@@ -52,6 +54,8 @@ export default class HomeScreenStack extends React.Component {
         }}
       />
       </Stack.Navigator>
+      <TabBar prop={this.props.navigation}/>
+      </View>
     );
   }
 

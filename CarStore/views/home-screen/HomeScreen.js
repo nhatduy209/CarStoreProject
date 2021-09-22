@@ -5,6 +5,7 @@ import { getListCar } from '../../redux/action/get-list-car/GetListCar'
 import { connect } from 'react-redux'
 import RevealCycle from './RevealCycle'
 import RenderCarOnSale from './RenderCarOnSale'
+import {searchCar} from '../../redux/action/search-car/SearchAction'
 const Categories = [
   {
     title: "Toyota",
@@ -49,7 +50,6 @@ class HomeScreen extends React.Component {
           </Text>
         </View>
       </TouchableOpacity>
-
     );
   }
 
@@ -58,7 +58,6 @@ class HomeScreen extends React.Component {
     return (
       <RenderCarOnSale item={item} />
     )
-
   }
 
   renderRevealCycle = () => {
@@ -85,15 +84,19 @@ class HomeScreen extends React.Component {
     }
   }
 
-  render() {
-    return (
+  handleSearchPress = () => {
+      this.props.searchCar(this.state.searchText)
+  }
 
-      <View style={styles.Container}>
+  render() {
+    const count =  (this.props.search_car?.length === undefined ? 0 : this.props.search_car.length ) 
+    if(this.state.searchText.length > 0 && count >= 0) {
+      return(
+        <View style={styles.Container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <this.renderRevealCycle />
           {/* Search input text  */}
           <View style={styles.searchInput}>
-
             <TextInput style={{ flex: 1 , paddingHorizontal : 15 }}
               onChangeText={value => {
                 this.handleSearch(value)
@@ -105,8 +108,7 @@ class HomeScreen extends React.Component {
             </TextInput>
 
             {this.state.visible &&
-
-              <TouchableOpacity>
+              <TouchableOpacity onPress = {this.handleSearchPress }>
                 <View style={{ alignItems: 'center', width: 80 }} >
                   <Icon
                     name="search"
@@ -116,74 +118,115 @@ class HomeScreen extends React.Component {
                   </Icon>
                 </View>
               </TouchableOpacity>
-
             }
 
           </View>
           {/* end  Search input text  */}
-          <View style={{ flexDirection: 'row', paddingTop: 10 }}>
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 18, fontWeight: '900' }}>
-                Categories
-              </Text>
-            </View>
-            <View style={{ justifyContent: 'flex-end' }}>
-              <Text style={{ color: '#66b8ff' }}>
-                Show all
-              </Text>
-            </View>
-          </View>
 
-          {/* flatlist category */}
-          <View style={{ padding: 10 }}>
-            <FlatList
-              horizontal
-              data={Categories}
-              renderItem={this.renderCategories}
-              keyExtractor={(item) => item.title}
-              showsHorizontalScrollIndicator={false}
-            >
-            </FlatList>
-          </View>
-          {/* end flatlist category */}
 
-          { /* Car on sale  */}
-          <View style={{ flexDirection: 'row', paddingTop: 10 }}>
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 18, fontWeight: '900' }}>
-                Discount
-              </Text>
-            </View>
-            <View style={{ justifyContent: 'flex-end' }}>
-              <Text style={{ color: '#66b8ff' }}>
-                Show all
-              </Text>
-            </View>
-          </View>
-
-          <FlatList
-            horizontal
-            data={this.props.car.data}
-            renderItem={this.renderCarOnSale}
-            keyExtractor={(item) => item.name}
-            showsHorizontalScrollIndicator={false}
-            ItemSeparatorComponent={this.separateItem}
-          />
-          { /*End car on sale */}
+          {/* TODO add search data component TRAN THANH TOÀN */}
+          
         </ScrollView>
       </View>
-
-    )
+      )     
+    }
+    else{
+      return (
+        <View style={styles.Container}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <this.renderRevealCycle />
+            {/* Search input text  */}
+            <View style={styles.searchInput}>
+              <TextInput style={{ flex: 1 , paddingHorizontal : 15 }}
+                onChangeText={value => {
+                  this.handleSearch(value)
+                }}
+                placeholder="Search......"
+                value={this.state.searchText}
+              >
+  
+              </TextInput>
+  
+              {this.state.visible &&
+                <TouchableOpacity onPress = {this.handleSearchPress }>
+                  <View style={{ alignItems: 'center', width: 80 }} >
+                    <Icon
+                      name="search"
+                      size={18}
+                      style={{ color: '#bbbbbb' }}
+                    >
+                    </Icon>
+                  </View>
+                </TouchableOpacity>
+  
+              }
+  
+            </View>
+            {/* end  Search input text  */}
+            <View style={{ flexDirection: 'row', paddingTop: 10 }}>
+              <View style={{ flex: 1 }}>
+                <Text style={{ fontSize: 18, fontWeight: '900' }}>
+                  Categories
+                </Text>
+              </View>
+              <View style={{ justifyContent: 'flex-end' }}>
+                <Text style={{ color: '#66b8ff' }}>
+                  Show all
+                </Text>
+              </View>
+            </View>
+  
+            {/* flatlist category */}
+            <View style={{ padding: 10 }}>
+              <FlatList
+                horizontal
+                data={Categories}
+                renderItem={this.renderCategories}
+                keyExtractor={(item) => item.title}
+                showsHorizontalScrollIndicator={false}
+              >
+              </FlatList>
+            </View>
+            {/* end flatlist category */}
+  
+            { /* Car on sale  */}
+            <View style={{ flexDirection: 'row', paddingTop: 10 }}>
+              <View style={{ flex: 1 }}>
+                <Text style={{ fontSize: 18, fontWeight: '900' }}>
+                  Discount
+                </Text>
+              </View>
+              <View style={{ justifyContent: 'flex-end' }}>
+                <Text style={{ color: '#66b8ff' }}>
+                  Show all
+                </Text>
+              </View>
+            </View>
+  
+            <FlatList
+              horizontal
+              data={this.props.car.data}
+              renderItem={this.renderCarOnSale}
+              keyExtractor={(item) => item.name}
+              showsHorizontalScrollIndicator={false}
+              ItemSeparatorComponent={this.separateItem}
+            />
+            { /*End car on sale */}
+          </ScrollView>
+        </View>
+      )
+    }
   }
 }
 
 const mapStateToProps = state => {
   return {
     car: state.CarReducer.car,
+    search_car : state.SearchReducer.car
   }
 }
 
-export default connect(mapStateToProps, { getListCar })(HomeScreen)
+export default connect(mapStateToProps, { getListCar , searchCar})(HomeScreen)
 
 const styles = new StyleSheet.create({
   Container: {

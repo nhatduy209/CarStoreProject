@@ -1,4 +1,4 @@
 export const STATUS  = {
-  SUCCESS : 'STATUS_SUCCESS',
+  SUCCESS : 'SUCCESS',
   FAIL : 'FAIL'
 }

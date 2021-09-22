@@ -12,7 +12,7 @@ export default class RenderCarOnSale extends React.Component{
         <View style={styles.renderCarOnSale}>
           <Image
             source={{uri : this.props.item.img}}
-            style={{ width: 200, height: 130, borderTopLeftRadius: 20, borderTopRightRadius: 20 }} />
+            style={{ width: 250, height: 130, borderTopLeftRadius: 20, borderTopRightRadius: 20 }} />
 
           <View style={{ paddingVertical: 20 }}>
             <View style={{ flexDirection: 'row', padding: 5 }}>
@@ -27,7 +27,7 @@ export default class RenderCarOnSale extends React.Component{
 
             <View style={{ paddingHorizontal: 5 }}>
               <Text style={{ textDecorationLine: 'line-through', textDecorationStyle: 'solid' }}>
-                200.000 USD
+              {this.props.item.prices}  USD
               </Text>
 
               <Text style={{ textDecorationStyle: 'solid' }}>

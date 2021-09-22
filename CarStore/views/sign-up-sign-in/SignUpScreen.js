@@ -12,7 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {signUp} from '../../redux/action/login-action/LoginAction';
+import {signUp} from '../../redux/action/login-action/SignUpAction';
 
 class SignUpScreen extends React.Component {
   constructor(props) {
@@ -74,7 +74,7 @@ class SignUpScreen extends React.Component {
                   size={16}
                   style={{color: '#555', marginRight: 5}}></Icon>
                 <TextInput
-                  style={{flex: 1}}
+                  style={{flex: 1,color:'#000'}}
                   placeholder={'Name'}
                   onChangeText={value => this.setState({name: value})}
                   value={this.state.name}></TextInput>
@@ -88,7 +88,7 @@ class SignUpScreen extends React.Component {
                   size={16}
                   style={{color: '#555', marginRight: 5}}></Icon>
                 <TextInput
-                  style={{flex: 1}}
+                  style={{flex: 1,color:'#000'}}
                   placeholder={'Phone'}
                   onChangeText={value => this.setState({phone: value})}
                   value={this.state.phone}></TextInput>
@@ -102,7 +102,7 @@ class SignUpScreen extends React.Component {
                   size={16}
                   style={{color: '#555', marginRight: 5}}></Icon>
                 <TextInput
-                  style={{flex: 1}}
+                  style={{flex: 1,color:'#000'}}
                   placeholder={'Email'}
                   onChangeText={value => this.setState({email: value})}
                   value={this.state.email}></TextInput>
@@ -117,7 +117,7 @@ class SignUpScreen extends React.Component {
                   size={16}
                   style={{color: '#555', marginRight: 5}}></Icon>
                 <TextInput
-                  style={{flex: 1}}
+                  style={{flex: 1,color:'#000'}}
                   placeholder={'Password'}
                   secureTextEntry={this.state.hidePassword}
                   onChangeText={value => this.setState({password: value})}
@@ -135,7 +135,7 @@ class SignUpScreen extends React.Component {
                   style={{color: '#555', marginRight: 5}}></Icon>
 
                 <TextInput
-                  style={{flex: 1}}
+                  style={{flex: 1,color:'#000'}}
                   placeholder={'Confirm password'}
                   secureTextEntry={this.state.hideConfirmPassword}
                   onChangeText={value =>
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   Input: {
     borderWidth: 0.5,
     borderRadius: 10,
-    paddingHorizontal: 8,
+    paddingHorizontal: 10,
     borderColor: '#ddd',
     flexDirection: 'row',
     alignItems: 'center',
@@ -216,5 +216,4 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: '#33DDFF',
   },
-  loginWith: {flexDirection: 'row', alignItems: 'center', padding: 7},
 });

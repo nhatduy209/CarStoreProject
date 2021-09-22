@@ -57,9 +57,7 @@ class LoginScreen extends React.Component {
 
   componentDidMount() {
 
-    console.log("-------DONT FORGET TO BIND PORT 3000 DEVICE--------");
-
-
+    console.log("-------DONT FORGET TO BIND PORT 3000 DEVICE--------",this.props.user);
     getUserlogin().then(res => {
       if (res) {
         this.setState({ email: res.email, password: res.password, isRemember: res.isRemember })
@@ -114,10 +112,6 @@ class LoginScreen extends React.Component {
     this.props.login(this.state.email, this.state.password);
   }
 
-  componentDidUpdate() {
-    console.log('USER---', this.state.userEmail);
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -161,7 +155,7 @@ class LoginScreen extends React.Component {
                   size={20}
                   style={{ paddingHorizontal: 20 }}>
                 </Icon>
-                <TextInput style={{ flex: 1 }}
+                <TextInput style={{ flex: 1,color:'#000' }}
                   onChangeText={value => this.setState({ email: value })}
                   value={this.state.email}>
 
@@ -179,7 +173,7 @@ class LoginScreen extends React.Component {
                   size={20}
                   style={{ paddingHorizontal: 20 }}>
                 </Icon>
-                <TextInput style={{ flex: 1 }}
+                <TextInput style={{ flex: 1,color:'#000' }}
                   onChangeText={value => this.setState({ password: value })}
                   secureTextEntry
                   value={this.state.password}

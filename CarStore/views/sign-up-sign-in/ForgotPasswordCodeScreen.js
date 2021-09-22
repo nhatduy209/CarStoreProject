@@ -5,7 +5,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  KeyboardAvoidingView,
 } from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 
@@ -15,7 +17,10 @@ class ForgotPasswordCodeScreen extends React.Component {
     this.state = {
       isSent: false,
       inputValue: [],
-      prevIndex:null,
+      prevIndex: null,
+      recoverCode: '',
+      isIncorrect: false,
+      countDown: 80,
     };
     this.inputRefs = [
       React.createRef(),
@@ -27,21 +32,40 @@ class ForgotPasswordCodeScreen extends React.Component {
   }
 
   componentDidMount() {
-    // console.log("props",this.props.navigation)
+    setInterval(
+      () => this.setState({countDown: this.state.countDown - 1}),
+      1000,
+    );
+  }
+
+  componentDidUpdate() {
+    if (typeof this.props.user.recoverCode === 'undefined') {
+      this.props.navigation.goBack();
+    }
+    if (this.state.recoverCode === ''&& typeof this.props.user.recoverCode.data !=='undefined') {
+      console.log('res', this.props.user.recoverCode.data.data);
+      this.setState({recoverCode: this.props.user.recoverCode.data.data});
+    }
+    if (this.state.countDown === 0) {
+      this.setState({recoverCode: ''});
+      this.props.navigation.goBack();
+    }
+  }
+  componentWillUnmount() {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
   setInputValue(value, idx) {
     const list = [];
     this.state.inputValue.forEach((element, index) => {
-      if (index === idx)
-      list.push(value);
-      else
-      list.push(element)
+      if (index === idx) list.push(value);
+      else list.push(element);
     });
-    console.log(list)
     this.setState({inputValue: list});
   }
   handleKeyDown(value, idx) {
-    if (typeof this.state.inputValue[idx]!== 'undefined') {
+    if (typeof this.state.inputValue[idx] !== 'undefined') {
       if (value !== '') {
         this.inputRefs[idx + 1 > 4 ? 4 : idx + 1].focus();
       } else {
@@ -49,74 +73,96 @@ class ForgotPasswordCodeScreen extends React.Component {
       }
       this.setInputValue(value, idx);
     } else {
-      console.log(value)
       const list = this.state.inputValue;
       list.push(value);
       this.setState({inputValue: list});
       if (idx < this.inputRefs.length - 1) this.inputRefs[idx + 1].focus();
     }
-    this.setState({prevIndex:idx})
+    this.setState({prevIndex: idx});
   }
-  onKeyDown= e=>()=> {
+  onKeyDown = e => () => {
     if (this.state.inputValue[e] === '') {
       this.inputRefs[e - 1 > -1 ? e - 1 : 0].focus();
     }
-  }
+    this.setState({isIncorrect: false});
+  };
 
+  handleConfirmCode() {
+    const input = this.state.inputValue.toString().split(',').join('');
+    if (
+      input.length === 5 &&
+      input.localeCompare(this.state.recoverCode) === 0
+    ) {
+      this.setState({isIncorrect: false});
+      this.props.navigation.navigate('ChangePasswordScreen');
+    } else this.setState({isIncorrect: true});
+  }
   render() {
     return (
-      <View style={{height: '100%'}}>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.goBack()}
-          style={{padding: '8%'}}>
-          <Icon
-            name="arrow-left"
-            size={16}
-            style={{color: '#555', marginRight: 5}}></Icon>
-        </TouchableOpacity>
-        <View
-          style={{
-            alignItems: 'flex-start',
-            marginHorizontal: '8%',
-            marginVertical: '8%',
-          }}>
-          <Text style={{fontSize: 40, fontWeight: '700', width: '70%'}}>
-            Enter 4-digit recovery code
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}>
+        <ScrollView>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.goBack()}
+            style={{padding: '8%'}}>
+            <Icon
+              name="arrow-left"
+              size={16}
+              style={{color: '#555', marginRight: 5}}></Icon>
+          </TouchableOpacity>
+          <View
+            style={{
+              alignItems: 'flex-start',
+              marginHorizontal: '8%',
+              marginVertical: '8%',
+            }}>
+            <Text style={{fontSize: 45, fontWeight: '700'}}>
+              Enter 4-digit recovery code
+            </Text>
+            <Text style={{fontSize: 24, fontWeight: '500', marginTop: '10%'}}>
+              The recovery code was sent to your mail. Please enter the code
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginLeft: '2%',
+              justifyContent: 'center',
+            }}>
+            {this.inputRefs.map((k, idx) => (
+              <TextInput
+                key={idx}
+                ref={r => (this.inputRefs[idx] = r)}
+                maxLength={1}
+                onKeyPress={this.onKeyDown(idx)}
+                onChangeText={value => this.handleKeyDown(value, idx)}
+                style={styles.codeNumber}></TextInput>
+            ))}
+          </View>
+          <Text
+            style={
+              this.state.isIncorrect
+                ? {padding: 20, paddingHorizontal: '10%'}
+                : {display: 'none'}
+            }>
+            Your code is incorrect
           </Text>
-          <Text style={{fontSize: 24, fontWeight: '500',marginTop:'10%'}}>
-            The recovery code was sent to your mail. Please enter the code
-          </Text>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginLeft: '2%',
-            justifyContent: 'center',
-          }}>
-          {this.inputRefs.map((k, idx) => (
-            <TextInput
-              key={idx}
-              ref={r => (this.inputRefs[idx] = r)}
-              maxLength={1}
-              onKeyPress={this.onKeyDown(idx)}
-              onChangeText={value => this.handleKeyDown(value, idx)}
-              style={styles.codeNumber}></TextInput>
-          ))}
-        </View>
-        <TouchableOpacity
-          style={styles.signUpButton}
-          onPress={() =>
-            this.props.navigation.navigate('ChangePasswordScreen')
-          }>
-          <Text style={styles.forgotPasswordText}>Confirm</Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity
+            style={styles.signUpButton}
+            onPress={() => this.handleConfirmCode()}>
+            <Text style={styles.forgotPasswordText}>Confirm</Text>
+          </TouchableOpacity>
+          <Text style={styles.countDownText}>{this.state.countDown}</Text>
+        </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }
 const mapStateToProps = state => {
   return {
-    user: state.UserReducer.user,
+    user: state.UserReducer,
   };
 };
 
@@ -127,6 +173,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     flex: 1,
   },
+  countDownText: {
+    fontSize: 45,
+    width: 60,
+    height: 60,
+    alignSelf: 'center',
+    marginTop: '10%',
+    color: '#555',
+    textAlign: 'center',
+  },
   codeNumber: {
     backgroundColor: '#ddd',
     marginHorizontal: '2%',
@@ -136,6 +191,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     textAlign: 'center',
     fontSize: 24,
+    color: '#aaa',
   },
   signUpButton: {
     alignItems: 'center',

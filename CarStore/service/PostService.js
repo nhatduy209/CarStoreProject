@@ -6,7 +6,7 @@ export default class PostService {
     const response = await axios.post(url, { params }) ; 
     return{
       data : response.data ,
-      status : STATUS.SUCCESS
+      status : response.data.result,
     }
   }
 }

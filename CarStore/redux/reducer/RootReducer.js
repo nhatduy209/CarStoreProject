@@ -1,12 +1,14 @@
 
-    import { combineReducers } from 'redux';
+import { combineReducers } from 'redux';
 
 
-    import UserReducer from './UserReducer';
+import UserReducer from './UserReducer';
+import CarReducer from './CarReducer'
+import SearchReducer from './SearchReducer.js'
+const rootReducer = combineReducers({
+  UserReducer,
+  CarReducer,
+  SearchReducer,
+});
 
-
-    const rootReducer = combineReducers({
-      UserReducer,
-    });
-
-    export default rootReducer;
+export default rootReducer;

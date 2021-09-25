@@ -4,6 +4,7 @@ import HomeScreen from '../../views/home-screen/HomeScreen';
 import { View, Text, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import CircleTransition from 'react-native-circle-reveal-view'
+import DrawerContent from './DrawerContent'
 
 const Drawer = createDrawerNavigator();
 

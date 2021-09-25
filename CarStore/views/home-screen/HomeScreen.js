@@ -170,9 +170,12 @@ class HomeScreen extends React.Component {
                 </Text>
               </View>
               <View style={{ justifyContent: 'flex-end' }}>
+                <TouchableOpacity onPress={()=> this.props.navigation.navigate("AllItemsScreen")}>
                 <Text style={{ color: '#66b8ff' }}>
                   Show all
                 </Text>
+                  </TouchableOpacity>
+                
               </View>
             </View>
   

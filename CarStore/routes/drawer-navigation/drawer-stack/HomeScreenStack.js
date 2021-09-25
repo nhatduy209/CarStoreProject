@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import React from 'react'
 import HomeScreen from '../../../views/home-screen/HomeScreen'
@@ -39,7 +40,6 @@ export default class HomeScreenStack extends React.Component {
   }
   render() {
     return (
-      <View>
         <Stack.Navigator >
       <Stack.Screen
         name="Home"
@@ -54,8 +54,6 @@ export default class HomeScreenStack extends React.Component {
         }}
       />
       </Stack.Navigator>
-      <TabBar prop={this.props.navigation}/>
-      </View>
     );
   }
 

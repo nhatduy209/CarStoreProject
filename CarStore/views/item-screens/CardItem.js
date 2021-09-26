@@ -14,28 +14,28 @@ class CardItem extends React.Component {
   render() {
     return (
       <TouchableOpacity
-        onPress={() => this.props.navigation.navigate('DetailItemScreen')}
+        // onPress={() => this.props.navigation.navigate('DetailItemScreen',{data:this.props.data})}
         style={[styles.cardItem, styles.shadowBox]}>
         <View style={styles.itemInfo}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={{fontSize: 18, color: '#aaa', width: '90%'}}>
-              Ferrari
+              {this.props.data.category}
             </Text>
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={{fontSize: 18, width: '70%', fontWeight: 'bold'}}>
-              sf90-stradale
+              {this.props.data.name}
             </Text>
             <Text style={{fontSize: 18, width: '30%', fontWeight: 'bold'}}>
-              $168,125
+              ${this.props.data.prices}
             </Text>
           </View>
         </View>
         <View style={styles.itemImageContainer}>
           <Image
-            style={[styles.imageItem, {width: 300, height: '100%'}]}
-            source={require('../../images/TestImage.png')}
+            style={[styles.imageItem, {width: '100%', height: 300}]}
+            source={{uri:this.props.data.img}}
           />
         </View>
       </TouchableOpacity>
@@ -52,7 +52,7 @@ export default connect(mapStateToProps, {})(CardItem);
 
 const styles = StyleSheet.create({
   cardItem: {
-    backgroundColor: '#eee',
+    backgroundColor: '#fff',
     borderRadius: 10,
     marginHorizontal: '5%',
     width: '90%',

@@ -22,13 +22,13 @@ export default class DrawerContent extends React.Component {
       <ImageBackground source={require('../../images/backgroundDrawer.jpg')} style={{height:'100%',borderTopRightRadius:20,borderBottomRightRadius:20}}>
         
         <View style={{height:'15%',alignSelf:'center',justifyContent:'center',marginTop:'10%'}}>
-        <Image source={require('../../images/car.png')} style={{resizeMode: "cover",width:100,height:100}}></Image>
+        <Image source={require('../../images/avatar.jpg')} style={{resizeMode: "center",width:100,height:100}}></Image>
         </View>
         <View style={{alignItems: 'center',justifyContent: 'center',marginBottom:'10%'}}>
-              <Text style={{ fontSize: 25,fontWeight:'bold',color:'rgb(32,45,70)' }}>
+              <Text style={{ fontSize: 25,fontWeight:'bold',color:'#fff' }}>
                 username
               </Text>
-              <Text style={{ color: 'rgb(32,45,70)' }}>
+              <Text style={{ color: '#fff' }}>
                 email
               </Text>
             </View>
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   iconStyle: {
-    color: 'rgb(32,45,70)',
+    color: '#fff',
     margin: 10,
   },
   itemDrawer: {
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     margin: 10,
     fontSize: 16,
-    color:'rgb(32,45,70)',
+    color:'#fff',
     fontWeight:'bold'
   },
   choosenScreen:{

@@ -26,6 +26,7 @@ export default class HeaderComponent extends React.Component {
           borderBottomLeftRadius: 50,
           borderBottomRightRadius: 50,
         }}>
+          <Image source={require('../images/headerbg.png')} style={{resizeMode:'stretch',height:100,opacity:0.8,width:'100%',position:'absolute'}}/>
         <View
           style={{
             flexDirection: 'row',
@@ -39,9 +40,9 @@ export default class HeaderComponent extends React.Component {
             <Icon
               name="arrow-left"
               size={16}
-              style={{color: '#555', marginRight: 5}}></Icon>
+              style={{color: '#fff', marginRight: 5}}></Icon>
           </TouchableOpacity>
-          <Text style={{marginLeft: '25%', fontSize: 20, fontWeight: 'bold'}}>
+          <Text style={{marginLeft: '25%', fontSize: 20, fontWeight: 'bold',color:'#fff'}}>
             Choose your car
           </Text>
         </View>

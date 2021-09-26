@@ -5,6 +5,7 @@ import { getListCar } from '../../redux/action/get-list-car/GetListCar'
 import { connect } from 'react-redux'
 import RevealCycle from './RevealCycle'
 import RenderCarOnSale from './RenderCarOnSale'
+import AllItemsScreen from '../item-screens/AllItemsScreen'
 import {searchCar} from '../../redux/action/search-car/SearchAction'
 const Categories = [
   {
@@ -124,7 +125,8 @@ class HomeScreen extends React.Component {
           {/* end  Search input text  */}
 
 
-          {/* TODO add search data component TRAN THANH TOÀN */}
+          {/* TODO add search data component TRAN THANH TOAN */}
+          <AllItemsScreen navigation={this.props.navigation} listItems={this.props.search_car.data} isSearch={true}></AllItemsScreen>
           
         </ScrollView>
       </View>

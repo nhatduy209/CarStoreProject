@@ -6,13 +6,15 @@ export default class GetService {
 
     try{
       const response = await axios.get(url) ; 
+      
       return{
         data : response.data ,
         status : STATUS.SUCCESS
       }
     }catch(err){
+      console.log('response----' , err)
       return{
-        data : response.data,
+        data : {},
         status : STATUS.FAIL
       }
     } 

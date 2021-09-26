@@ -7,7 +7,7 @@ export const login = (email , password ) => async dispatch => {
   const data = await loginBusiness.loginBusiness({email, password });
   dispatch({
     type : ACTION_NAME.LOGIN_ACTION.LOGIN_ACTION,
-    data : { email , password}
+    data,
   }
   )
 }

@@ -62,7 +62,7 @@ class HomeScreen extends React.Component {
 
   renderRevealCycle = () => {
     return (
-      <RevealCycle />
+      <RevealCycle navigation = {this.props.navigation} />
     )
   }
 

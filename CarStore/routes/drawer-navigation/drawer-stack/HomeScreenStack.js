@@ -2,10 +2,12 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import React from 'react'
 import HomeScreen from '../../../views/home-screen/HomeScreen'
-import { Image, View, TouchableOpacity, StyleSheet,Text } from 'react-native'
+import { Image, View, TouchableOpacity, StyleSheet, Text } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import TabBar from '../../TabBar';
+import ProfileScreen from '../../../views/profile/ProfileScreen';
+import LoginScreen from '../../../views/sign-up-sign-in/LoginScreen';
 const Stack = createStackNavigator();
 
 const NavigationDrawerStructureLeft = props => {
@@ -40,19 +42,27 @@ export default class HomeScreenStack extends React.Component {
   }
   render() {
     return (
-        <Stack.Navigator >
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}   
-        options={{
+      <Stack.Navigator >
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
             headerShown: false,
-            title:'',
-          headerLeft: ()=>
-            <NavigationDrawerStructureLeft
-              navigationProps={this.props.navigation}
-            />
-        }}
-      />
+            title: '',
+            headerLeft: () =>
+              <NavigationDrawerStructureLeft
+                navigationProps={this.props.navigation}
+              />
+          }}
+        />
+
+        <Stack.Screen
+          name="ProfileScreen"
+          component={ProfileScreen}
+          options={{
+            title: "Profile"
+          }}
+        />
       </Stack.Navigator>
     );
   }
@@ -83,10 +93,10 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: "center"
   },
-  noCart:{
-    position:'absolute',
-    alignSelf:'flex-end',
-    color:'red',
-    fontWeight:'bold'
+  noCart: {
+    position: 'absolute',
+    alignSelf: 'flex-end',
+    color: 'red',
+    fontWeight: 'bold'
   }
 })

@@ -9,6 +9,7 @@ import { login } from '../../redux/action/login-action/LoginAction';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin'
 import auth from '@react-native-firebase/auth';
 import * as Animatable from 'react-native-animatable';
+import { STATUS } from '../../config/Status';
 
 const storeData = async (value) => {
   try {
@@ -56,13 +57,17 @@ class LoginScreen extends React.Component {
 
 
   componentDidMount() {
-
-    console.log("-------DONT FORGET TO BIND PORT 3000 DEVICE--------",this.props.user);
     getUserlogin().then(res => {
       if (res) {
         this.setState({ email: res.email, password: res.password, isRemember: res.isRemember })
       }
     });
+  }
+
+  componentDidUpdate(){
+    if(this.props.user.status === STATUS.SUCCESS){
+      this.props.navigation.navigate('RootDrawer');
+    }
   }
 
   handleGoogleSignin = async () => {

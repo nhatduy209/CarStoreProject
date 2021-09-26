@@ -5,6 +5,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import CircleTransition from 'react-native-circle-reveal-view'
 import DrawerContent from './DrawerContent'
+import HomeScreenStack from './drawer-stack/HomeScreenStack';
 
 const Drawer = createDrawerNavigator();
 
@@ -19,8 +20,8 @@ export default class RootDrawer extends React.Component {
           options={{
            headerShown : false,
           }}
-          name="HomeScreen"
-          component={HomeScreen} />
+          name="HomeScreenStack"
+          component={HomeScreenStack} />
       </Drawer.Navigator>
     );
   }

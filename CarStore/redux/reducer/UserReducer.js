@@ -1,7 +1,11 @@
+import { STATUS } from '../../config/Status';
 import {ACTION_NAME} from '../action/login-action/ActionName';
 
 const USER_STATE = {
-  user: {},
+  user: {
+    status : STATUS.FAIL 
+  },
+ 
 };
 
 const UserReducer = (state = USER_STATE, action) => {

@@ -48,6 +48,10 @@ class AllItemsScreen extends React.Component {
   separateItem = () => {
     return <View style={{width: 10}}></View>;
   };
+
+  renderFooter = () => {
+    return <View style={{height: 100}}></View>;
+  }
   render() {
     return (
       <View style={{backgroundColor: !this.state.listItems ? '#fff' : '#eee'}}>
@@ -74,7 +78,8 @@ class AllItemsScreen extends React.Component {
               keyExtractor={item => item.name}
               showsHorizontalScrollIndicator={false}
               ItemSeparatorComponent={this.separateItem}
-              style={{paddingTop:90}}></FlatList>
+              style={{paddingTop:90}}
+              ListFooterComponent = {this.renderFooter}></FlatList>
 
           // <ScrollView
           //   showsVerticalScrollIndicator={false}

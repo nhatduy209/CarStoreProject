@@ -4,6 +4,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as ImagePicker from "react-native-image-picker";
+import Moment from 'react-moment';
 
 
 
@@ -11,26 +12,13 @@ class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: 'img',
-      isModalVisible: true,
-      username: "",
-      email: "nhatduy20000@gmail.com",
-      birthday: "",
-      phoneNum: "",
-      gender: true,     // true is male and false is female 
-      Avatar: "",
+      url: this.props.user.data.avatar,
+      phoneNum: this.props.user.data.phoneNum,
+      gender: this.props.user.data.gender,     // true is male and false is female 
       isCalendarVisible: false,
-      date: new Date(),
-      address: "",
+      date: this.props.user.data.birthday,
+      address: this.props.user.data.address,
     }
-  }
-
-  componentDidMount() {
-
-  }
-
-  componentDidUpdate(prevProps) {
-
   }
 
   handlePhotos = () => {
@@ -48,14 +36,23 @@ class ProfileScreen extends React.Component {
   }
 
   handleReset = () => {
-
+    this.setState({
+      url: this.props.user.data.avatar,
+      email: this.props.user.data.email,
+      phoneNum: this.props.user.data.phoneNum,
+      gender: this.props.user.data.gender,     // true is male and false is female 
+      isCalendarVisible: false,
+      date: this.props.user.data.birthday,
+      address: this.props.user.data.address,
+    })
   }
 
   handleSave = () => {
-
+    // TODO TRAN THANH TOAN HANDLE SAVE INFO 
   }
 
   onChange = (event, selectedDate) => {
+    const date = new Date()
     const currentDate = selectedDate || date;
     this.setState({ date: currentDate, isCalendarVisible: false })
   };
@@ -65,30 +62,20 @@ class ProfileScreen extends React.Component {
   }
 
   handleGender = (value) => {
-    if(value === 'male'){
-      this.setState({ gender : true })
-    }else{
-      this.setState({ gender : false})
+    if (value === 'male') {
+      this.setState({ gender: true })
+    } else {
+      this.setState({ gender: false })
     }
   }
 
-
-
   render() {
-    const setDate = (this.state.date.toLocaleDateString() === new Date().toLocaleDateString()) ? "Add your birthday" : this.state.date.toLocaleDateString();
-
+    const date = new Date(this.state.date)
     const isGender = (this.state.gender)
-     ? { colorMale : '#4db8ff' , colorFemale : '#bbbbbb'} 
-     : {colorMale : '#bbbbbb' , colorFemale : 'pink'}
+      ? { colorMale: '#4db8ff', colorFemale: '#bbbbbb' }
+      : { colorMale: '#bbbbbb', colorFemale: 'pink' }
     return (
       <View style={styles.container}>
-        {/* <View>
-          <Modal isVisible={this.state.isModalVisible}>
-            <View>
-              <Text>Hello!</Text>
-            </View>
-          </Modal>
-        </View> */}
         <View style={styles.avtImage}>
           <TouchableOpacity onPress={this.handlePhotos}>
             <Image
@@ -114,20 +101,26 @@ class ProfileScreen extends React.Component {
                   this.setState({ email: value })
                 }}
                 value={this.state.email}
-                editable = {false}
+                editable={false}
               ></TextInput>
             </View>
 
             <View style={styles.detailInfo}>
               <Text style={styles.textStyleTitle}>{' '}Birthday</Text>
               <TouchableOpacity onPress={this.showDatepicker}>
-                <Text style={{ ...styles.textStyleData, paddingVertical: 10 }}> {setDate}</Text>
+                {/* <Text style={{ ...styles.textStyleData, paddingVertical: 10 }}> {setDate}</Text> */}
+                <Moment
+                  date={this.state.date}
+                  format="DD/MM/YYYY"
+                  element={Text}
+                  style={{ ...styles.textStyleData, paddingVertical: 10 }}>
+                </Moment>
               </TouchableOpacity>
               {
                 this.state.isCalendarVisible && (
                   <DateTimePicker
                     testID="dateTimePicker"
-                    value={this.state.date}
+                    value={date}
                     mode="date"
                     is24Hour={true}
                     display="default"
@@ -149,10 +142,10 @@ class ProfileScreen extends React.Component {
               ></TextInput>
             </View>
 
-            <View style={{ ...styles.detailInfo, flexDirection: 'row', alignItems: 'center' , paddingVertical : 20}}>
+            <View style={{ ...styles.detailInfo, flexDirection: 'row', alignItems: 'center', paddingVertical: 20 }}>
               <Text style={styles.textStyleTitle}>{' '}Gender</Text>
-              <View style = {{flexDirection: 'row' }}>
-                <TouchableOpacity style={{ marginHorizontal: 20 }} onPress = { () => this.handleGender('male')}>
+              <View style={{ flexDirection: 'row' }}>
+                <TouchableOpacity style={{ marginHorizontal: 20 }} onPress={() => this.handleGender('male')}>
                   <Icon
                     name="male"
                     size={35}
@@ -160,12 +153,12 @@ class ProfileScreen extends React.Component {
                   </Icon>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress = { () => this.handleGender('female')} >
-                    <Icon
-                      name="female"
-                      size={35}
-                      color={isGender.colorFemale}>
-                    </Icon>
+                <TouchableOpacity onPress={() => this.handleGender('female')} >
+                  <Icon
+                    name="female"
+                    size={35}
+                    color={isGender.colorFemale}>
+                  </Icon>
                 </TouchableOpacity>
               </View>
             </View>
@@ -181,8 +174,6 @@ class ProfileScreen extends React.Component {
             </View>
 
           </View>
-
-
           <View style={{ flexDirection: 'row', marginVertical: 20, }}>
             <View style={styles.btnReset}>
               <TouchableOpacity onPress={this.handleReset}>
@@ -207,11 +198,10 @@ class ProfileScreen extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    user: state.UserReducer.user.data
   };
 }
 export default connect(mapStateToProps, {})(ProfileScreen);
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

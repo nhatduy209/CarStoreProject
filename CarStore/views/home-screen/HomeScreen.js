@@ -1,11 +1,13 @@
 import React from 'react'
 import { View, Text, StyleSheet, TextInput, FlatList, Image, TouchableOpacity, ScrollView } from 'react-native'
+import Modal from "react-native-modal";
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { getListCar } from '../../redux/action/get-list-car/GetListCar'
 import { connect } from 'react-redux'
 import RevealCycle from './RevealCycle'
 import RenderCarOnSale from './RenderCarOnSale'
-import {searchCar} from '../../redux/action/search-car/SearchAction'
+import { searchCar } from '../../redux/action/search-car/SearchAction'
+import ModalWarningLogin from '../modal/ModalWarningLogin';
 const Categories = [
   {
     title: "Toyota",
@@ -38,6 +40,7 @@ class HomeScreen extends React.Component {
     this.props.getListCar();
   }
 
+
   renderCategories = ({ item }) => {
     return (
       <TouchableOpacity>
@@ -62,7 +65,7 @@ class HomeScreen extends React.Component {
 
   renderRevealCycle = () => {
     return (
-      <RevealCycle navigation = {this.props.navigation} />
+      <RevealCycle navigation={this.props.navigation} />
     )
   }
 
@@ -85,70 +88,30 @@ class HomeScreen extends React.Component {
   }
 
   handleSearchPress = () => {
-      this.props.searchCar(this.state.searchText)
+    this.props.searchCar(this.state.searchText)
   }
 
   render() {
-    const count =  (this.props.search_car?.length === undefined ? 0 : this.props.search_car.length ) 
-    if(this.state.searchText.length > 0 && count >= 0) {
-      return(
-        <View style={styles.Container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <this.renderRevealCycle />
-          {/* Search input text  */}
-          <View style={styles.searchInput}>
-            <TextInput style={{ flex: 1 , paddingHorizontal : 15 }}
-              onChangeText={value => {
-                this.handleSearch(value)
-              }}
-              placeholder="Search......"
-              value={this.state.searchText}
-            >
-
-            </TextInput>
-
-            {this.state.visible &&
-              <TouchableOpacity onPress = {this.handleSearchPress }>
-                <View style={{ alignItems: 'center', width: 80 }} >
-                  <Icon
-                    name="search"
-                    size={18}
-                    style={{ color: '#bbbbbb' }}
-                  >
-                  </Icon>
-                </View>
-              </TouchableOpacity>
-            }
-
-          </View>
-          {/* end  Search input text  */}
-
-
-          {/* TODO add search data component TRAN THANH TOÀN */}
-          
-        </ScrollView>
-      </View>
-      )     
-    }
-    else{
+    const count = (this.props.search_car?.length === undefined ? 0 : this.props.search_car.length)
+    if (this.state.searchText.length > 0 && count >= 0) {
       return (
         <View style={styles.Container}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <this.renderRevealCycle />
             {/* Search input text  */}
             <View style={styles.searchInput}>
-              <TextInput style={{ flex: 1 , paddingHorizontal : 15 }}
+              <TextInput style={{ flex: 1, paddingHorizontal: 15 }}
                 onChangeText={value => {
                   this.handleSearch(value)
                 }}
                 placeholder="Search......"
                 value={this.state.searchText}
               >
-  
+
               </TextInput>
-  
+
               {this.state.visible &&
-                <TouchableOpacity onPress = {this.handleSearchPress }>
+                <TouchableOpacity onPress={this.handleSearchPress}>
                   <View style={{ alignItems: 'center', width: 80 }} >
                     <Icon
                       name="search"
@@ -158,9 +121,50 @@ class HomeScreen extends React.Component {
                     </Icon>
                   </View>
                 </TouchableOpacity>
-  
               }
-  
+
+            </View>
+            {/* end  Search input text  */}
+
+
+            {/* TODO add search data component TRAN THANH TOÀN */}
+
+          </ScrollView>
+        </View>
+      )
+    }
+    else {
+      return (
+        <View style={styles.Container}>
+          <ModalWarningLogin navigation = {this.props.navigation}/>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <this.renderRevealCycle />
+            {/* Search input text  */}
+            <View style={styles.searchInput}>
+              <TextInput style={{ flex: 1, paddingHorizontal: 15 }}
+                onChangeText={value => {
+                  this.handleSearch(value)
+                }}
+                placeholder="Search......"
+                value={this.state.searchText}
+              >
+
+              </TextInput>
+
+              {this.state.visible &&
+                <TouchableOpacity onPress={this.handleSearchPress}>
+                  <View style={{ alignItems: 'center', width: 80 }} >
+                    <Icon
+                      name="search"
+                      size={18}
+                      style={{ color: '#bbbbbb' }}
+                    >
+                    </Icon>
+                  </View>
+                </TouchableOpacity>
+
+              }
+
             </View>
             {/* end  Search input text  */}
             <View style={{ flexDirection: 'row', paddingTop: 10 }}>
@@ -170,15 +174,15 @@ class HomeScreen extends React.Component {
                 </Text>
               </View>
               <View style={{ justifyContent: 'flex-end' }}>
-                <TouchableOpacity onPress={()=> this.props.navigation.navigate("AllItemsScreen")}>
-                <Text style={{ color: '#66b8ff' }}>
-                  Show all
-                </Text>
-                  </TouchableOpacity>
-                
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("AllItemsScreen")}>
+                  <Text style={{ color: '#66b8ff' }}>
+                    Show all
+                  </Text>
+                </TouchableOpacity>
+
               </View>
             </View>
-  
+
             {/* flatlist category */}
             <View style={{ padding: 10 }}>
               <FlatList
@@ -191,7 +195,7 @@ class HomeScreen extends React.Component {
               </FlatList>
             </View>
             {/* end flatlist category */}
-  
+
             { /* Car on sale  */}
             <View style={{ flexDirection: 'row', paddingTop: 10 }}>
               <View style={{ flex: 1 }}>
@@ -205,7 +209,7 @@ class HomeScreen extends React.Component {
                 </Text>
               </View>
             </View>
-  
+
             <FlatList
               horizontal
               data={this.props.car.data}
@@ -225,11 +229,12 @@ class HomeScreen extends React.Component {
 const mapStateToProps = state => {
   return {
     car: state.CarReducer.car,
-    search_car : state.SearchReducer.car
+    search_car: state.SearchReducer.car,
+    isShow: state.ModalReducer.isShow,
   }
 }
 
-export default connect(mapStateToProps, { getListCar , searchCar})(HomeScreen)
+export default connect(mapStateToProps, { getListCar, searchCar })(HomeScreen)
 
 const styles = new StyleSheet.create({
   Container: {

@@ -5,9 +5,6 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as ImagePicker from "react-native-image-picker";
 import Moment from 'react-moment';
-
-
-
 class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -18,6 +15,7 @@ class ProfileScreen extends React.Component {
       isCalendarVisible: false,
       date: this.props.user.data.birthday,
       address: this.props.user.data.address,
+      email: this.props.user.data.email,
     }
   }
 
@@ -128,8 +126,6 @@ class ProfileScreen extends React.Component {
                   />
                 )
               }
-
-
             </View>
 
             <View style={styles.detailInfo}>

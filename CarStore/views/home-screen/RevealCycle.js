@@ -4,19 +4,14 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import CircleTransition from 'react-native-circle-reveal-view'
 import { connect } from 'react-redux'
 import { STATUS } from '../../config/Status'
+import {showModalNotLogin} from '../../redux/action/show-modal/ShowModalAction'
 class RevealCycle extends React.Component {
 
   constructor(props) {
     super(props)
   }
 
-  componentDidMount() {
-    console.log('USER ------ ', this.props.user);
-  }
-
-
   renderSignInIcons = () => {
-    console.log('USER STATUS ---' , this.props.user.status )
     if (this.props.user.status === STATUS.SUCCESS) {
       return (
         <TouchableOpacity style={{ marginLeft: 60, marginVertical: 8 }}
@@ -42,6 +37,14 @@ class RevealCycle extends React.Component {
         </TouchableOpacity>
       )
 
+    }
+  }
+
+  handleGoToUserProfile = () => {
+    if (this.props.user.status === STATUS.SUCCESS) {
+        this.props.navigation.navigate('ProfileScreen')
+    } else {
+      this.props.showModalNotLogin();
     }
   }
 
@@ -77,7 +80,8 @@ class RevealCycle extends React.Component {
               <this.renderSignInIcons />
 
               <TouchableOpacity style={{ marginLeft: 100, marginVertical: 8 }}
-                onPress={() => this.props.navigation.navigate('ProfileScreen')}>
+              onPress = {this.handleGoToUserProfile}
+                >
                 <Icon
                   name="user"
                   size={28}>
@@ -105,7 +109,8 @@ class RevealCycle extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.UserReducer.user,
+    isShow :  state.ModalReducer.isShow,
   }
 }
 
-export default connect(mapStateToProps, {})(RevealCycle)
+export default connect(mapStateToProps, {showModalNotLogin})(RevealCycle)

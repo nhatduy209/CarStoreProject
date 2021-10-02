@@ -9,12 +9,12 @@ class CardItem extends React.Component {
     super(props);
   }
   componentDidMount() {
-    // console.log("props",this.props.navigation)
+    // console.log("props",this.props)
   }
   render() {
     return (
       <TouchableOpacity
-        // onPress={() => this.props.navigation.navigate('DetailItemScreen',{data:this.props.data})}
+        onPress={() => this.props.navigation.navigate('DetailItemScreen',{data:this.props.data})}
         style={[styles.cardItem, styles.shadowBox]}>
         <View style={styles.itemInfo}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>

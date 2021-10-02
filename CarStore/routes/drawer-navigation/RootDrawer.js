@@ -1,6 +1,7 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import React from 'react';
 import HomeScreen from '../../views/home-screen/HomeScreen';
+import StoreInfoScreen from '../../views/StoreInfoScreen';
 import { View, Text, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import CircleTransition from 'react-native-circle-reveal-view'
@@ -21,6 +22,12 @@ export default class RootDrawer extends React.Component {
           }}
           name="HomeScreen"
           component={HomeScreen} />
+          <Drawer.Screen
+          options={{
+           headerShown : false,
+          }}
+          name="StoreInfoScreen"
+          component={StoreInfoScreen} />
       </Drawer.Navigator>
     );
   }

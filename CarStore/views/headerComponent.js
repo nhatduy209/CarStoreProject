@@ -14,7 +14,7 @@ export default class HeaderComponent extends React.Component {
     super(props);
   }
   componentDidMount() {
-    // console.log("props",this.props.navigation)
+    // console.log("props",this.props.screenTitle)
   }
   render() {
     return (
@@ -42,8 +42,8 @@ export default class HeaderComponent extends React.Component {
               size={16}
               style={{color: '#fff', marginRight: 5}}></Icon>
           </TouchableOpacity>
-          <Text style={{marginLeft: '25%', fontSize: 20, fontWeight: 'bold',color:'#fff'}}>
-            Choose your car
+          <Text style={{marginLeft: '25%', fontSize: 20, fontWeight: 'bold',color:'#fff',textAlign:'center'}}>
+            { this.props.screenTitle ?? 'Name'}
           </Text>
         </View>
         {this.props.search ? (

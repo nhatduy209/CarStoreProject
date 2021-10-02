@@ -14,8 +14,12 @@ export default class DrawerContent extends React.Component {
 
   // handle navigate home 
   onHomePress = () => {
-    this.setState({currentScreen:'Home'})
-    this.props.navigation.navigate('Home');
+    this.setState({currentScreen:'HomeScreen'})
+    this.props.navigation.navigate('HomeScreen');
+  }
+  onStoreInfoPress = ()=>{
+    this.setState({currentScreen:'StoreInfoScreen'})
+    this.props.navigation.navigate('StoreInfoScreen');
   }
   render() {
     return (
@@ -35,7 +39,7 @@ export default class DrawerContent extends React.Component {
         {/* list item in drawer  */}
         <View>
           {/* each item  */}
-          <TouchableOpacity onPress={this.onHomePress} style={this.state.currentScreen==='Home'?styles.choosenScreen:{}}>
+          <TouchableOpacity onPress={this.onHomePress}>
             <View style={styles.itemDrawer}>
               <Icon
                 size={25}
@@ -97,6 +101,19 @@ export default class DrawerContent extends React.Component {
               </Icon>
               <Text style={styles.itemText}>
                 Contact us
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.onStoreInfoPress}>
+            <View style={styles.itemDrawer}>
+              <Icon
+                size={25}
+                name="phone"
+                style={styles.iconStyle}
+              >
+              </Icon>
+              <Text style={styles.itemText}>
+                Store info
               </Text>
             </View>
           </TouchableOpacity>

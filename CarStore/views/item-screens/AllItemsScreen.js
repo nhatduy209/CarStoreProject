@@ -33,15 +33,13 @@ class AllItemsScreen extends React.Component {
     }
     // console.log("prop",this.props.car)
   }
-  componentDidUpdate(prevProp) {
-    if (prevProp.search_car !== this.props.search_car) {
-      console.log('search', this.props.search_car);
-      this.setState({listItems: this.props.search_car});
-    }
+  componentDidUpdate() {
+    if(!this.state.listItems)
+    this.setState({listItems: this.props.search_car});
   }
-  renderItem({item}) {
+  renderItem({item,navigation}) {
     return (
-      <CardItem data={item}></CardItem>
+      <CardItem data={item} navigation={navigation}></CardItem>
       //       );
     );
   }
@@ -74,30 +72,12 @@ class AllItemsScreen extends React.Component {
         ) : (
           <FlatList
               data={this.props.car.data}
-              renderItem={this.renderItem}
+              renderItem={(item)=>this.renderItem({...item,navigation:this.props.navigation})}
               keyExtractor={item => item.name}
               showsHorizontalScrollIndicator={false}
               ItemSeparatorComponent={this.separateItem}
               style={{paddingTop:90}}
               ListFooterComponent = {this.renderFooter}></FlatList>
-
-          // <ScrollView
-          //   showsVerticalScrollIndicator={false}
-          //   style={{
-          //     height: '100%',
-          //     backgroundColor: this.props.isSearch ? '#fff' : '#eee',
-          //   }}>
-          //   <View style={{paddingTop: this.props.isSearch ? 0 : 70}}>
-          //     {this.state.listItems.map((item, index) => {
-          //       return (
-          //         <CardItem
-          //           data={item}
-          //           key={index}
-          //           navigation={this.props.navigation}></CardItem>
-          //       );
-          //     })}
-          //   </View>
-          // </ScrollView>
         )}
       </View>
     );

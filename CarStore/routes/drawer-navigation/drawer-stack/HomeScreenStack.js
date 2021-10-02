@@ -2,6 +2,7 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import React from 'react'
 import HomeScreen from '../../../views/home-screen/HomeScreen'
+import StoreInfoScreen from '../../../views/StoreInfoScreen';
 import { Image, View, TouchableOpacity, StyleSheet,Text } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -42,8 +43,20 @@ export default class HomeScreenStack extends React.Component {
     return (
         <Stack.Navigator >
       <Stack.Screen
-        name="Home"
+        name="HomeScreen"
         component={HomeScreen}   
+        options={{
+            headerShown: false,
+            title:'',
+          headerLeft: ()=>
+            <NavigationDrawerStructureLeft
+              navigationProps={this.props.navigation}
+            />
+        }}
+      />
+      <Stack.Screen
+        name="StoreInfoScreen"
+        component={StoreInfoScreen}   
         options={{
             headerShown: false,
             title:'',

@@ -1,0 +1,7 @@
+export const ACTION_NAME = {
+  ADD_TO_CART : {
+    ADD_TO_CART : 'ADD_TO_CART',
+    ADD_TO_CART_SUCCESS : 'ADD_TO_CART_SUCCESS',
+    ADD_TO_CART_FAIL : 'ADD_TO_CART_FAIL',
+  },
+}

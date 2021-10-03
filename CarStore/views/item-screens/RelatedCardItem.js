@@ -19,10 +19,16 @@ class RelatedCardItem extends React.Component {
       <View style={[styles.relatedCardItem,styles.shadowBox]}>
         <Image
           style={[styles.imageItem, {width: 150, height: 100}]}
-          source={require('../../images/TestImage.png')}
+          source={{uri:this.props.data.img}}
         />
-        <Text style={{fontSize:14,color:'#aaa',width:'30%'}}>Ferrari</Text>
-        <Text style={{fontSize:14,width:'70%',fontWeight:'bold'}}>sf90-stradale</Text>
+        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+          <View>
+          <Text style={{fontSize:14,color:'#aaa'}}>{this.props.data.category}</Text>
+          <Text style={{fontSize:14,fontWeight:'bold'}}>{this.props.data.name}</Text>
+          </View>
+          <Text style={{fontSize:14}}>${this.props.data.prices}</Text>
+        </View>
+        
       </View>
     );
   }
@@ -43,7 +49,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingVertical: 45,
     paddingHorizontal: 15,
-    width: '45%',
+    width: 240,
     height:170,
     margin: 10,
   },

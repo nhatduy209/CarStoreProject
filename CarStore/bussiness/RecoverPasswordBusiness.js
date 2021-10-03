@@ -1,10 +1,10 @@
 import { STATUS } from '../config/Status';
-import { URL } from '../config/URL'
+import { URL_HEROKU } from '../config/URL'
 import PostService from '../service/PostService'
 export default class RecoverPasswordBusiness { 
     recoverPasswordBusiness = async(data) =>  {
         var postService = new PostService();
-        const url = URL + 'account/recoverpassword' ;
+        const url = URL_HEROKU + 'account/recoverpassword' ;
 
         const params = {
           email:data.email,

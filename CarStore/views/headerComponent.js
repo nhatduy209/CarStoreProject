@@ -42,8 +42,8 @@ export default class HeaderComponent extends React.Component {
               size={16}
               style={{color: '#fff', marginRight: 5}}></Icon>
           </TouchableOpacity>
-          <Text style={{marginLeft: '25%', fontSize: 20, fontWeight: 'bold',color:'#fff',textAlign:'center'}}>
-            { this.props.screenTitle ?? 'Name'}
+          <Text style={{fontSize: 20,width:'90%', fontWeight: 'bold',color:'#fff',textAlign:'center'}}>
+            { this.props.screenTitle ?? ''}
           </Text>
         </View>
         {this.props.search ? (

@@ -1,10 +1,10 @@
 import { STATUS } from '../config/Status';
-import { URL } from '../config/URL'
+import { URL_HEROKU } from '../config/URL'
 import PostService from '../service/PostService'
 export default class ChangePasswordBusiness { 
     changePasswordBusiness = async(data) =>  {
         var postService = new PostService();
-        const url = URL + 'account/changepassword' ;
+        const url = URL_HEROKU + 'account/changepassword' ;
 
         const params = {
           email:data.email,

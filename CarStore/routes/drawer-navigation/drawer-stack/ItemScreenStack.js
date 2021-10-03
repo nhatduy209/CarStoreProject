@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import React from 'react'
-import HomeScreen from '../../../views/home-screen/HomeScreen'
-import StoreInfoScreen from '../../../views/StoreInfoScreen';
+import AllItemsScreen from '../../../views/item-screens/AllItemsScreen';
+import DetailItemScreen from '../../../views/item-screens/DetailItemScreen';
 import { Image, View, TouchableOpacity, StyleSheet,Text } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -30,7 +30,7 @@ const NavigationDrawerStructureLeft = props => {
 
 
 
-export default class HomeScreenStack extends React.Component {
+export default class ItemScreenStack extends React.Component {
 
   constructor(props) {
     super(props);
@@ -43,8 +43,8 @@ export default class HomeScreenStack extends React.Component {
     return (
         <Stack.Navigator >
       <Stack.Screen
-        name="HomeScreen"
-        component={HomeScreen}   
+        name="AllItemsScreen"
+        component={AllItemsScreen}   
         options={{
             headerShown: false,
             title:'',
@@ -55,8 +55,8 @@ export default class HomeScreenStack extends React.Component {
         }}
       />
       <Stack.Screen
-        name="StoreInfoScreen"
-        component={StoreInfoScreen}   
+        name="DetailItemScreen"
+        component={DetailItemScreen}   
         options={{
             headerShown: false,
             title:'',

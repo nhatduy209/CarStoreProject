@@ -50,14 +50,17 @@ class LoginScreen extends React.Component {
       email: "",
       password: "",
       colorRemember: "black",
-      userEmail: {}
+      userEmail: {},
+      prevRoute:'',
     }
   }
 
 
   componentDidMount() {
-
     console.log("-------DONT FORGET TO BIND PORT 3000 DEVICE--------",this.props.user);
+    if(this.props.route.params){
+      this.setState({prevRoute:this.props.route.params.prevRoute??'HomeScreen'});
+    }
     getUserlogin().then(res => {
       if (res) {
         this.setState({ email: res.email, password: res.password, isRemember: res.isRemember })
@@ -96,7 +99,6 @@ class LoginScreen extends React.Component {
       this.setState({ colorRemember: "black", isRemember: value });
     }
   }
-
 
   handleLogin = async () => {
     if (this.state.isRemember === 1) {

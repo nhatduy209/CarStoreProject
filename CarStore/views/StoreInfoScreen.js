@@ -13,33 +13,33 @@ class StoreInfoScreen extends React.Component {
   }
   render() {
     return (
-        <ImageBackground source={require('../images/backgroundDrawer.jpg')} style={{height:'100%',width:'100%'}}>
+        <View>
             <HeaderComponent screenTitle={'Store Information'} navigation={this.props.navigation} />
-            <View style={{height:'100%'}}>
-                <Text style={{fontSize:56,fontWeight:'700',color:'#fff',marginTop:100,textAlign:'center'}}>
+            <View style={{height:'100%',paddingHorizontal:20}}>
+                <Text style={{fontSize:56,fontWeight:'700',color:'#000',marginTop:150,textAlign:'center'}}>
                     Welcome
                 </Text>
-                <Text style={{fontSize:20,color:'#fff',marginTop:12,paddingHorizontal:16}}>
-                    Address
+                <Text style={{fontSize:20,color:'#000',marginTop:12}}>
+                    Address: ở đâu đó không biết, chỉ biết là không biết nó nằm ở đâu.
                 </Text>
-                <Text style={{fontSize:20,color:'#fff',marginTop:12,paddingHorizontal:16}}>
-                    Number phone
+                <Text style={{fontSize:20,color:'#000',marginTop:12}}>
+                    Number phone: 1234567890
                 </Text>
-                <Text style={{fontSize:20,color:'#fff',marginTop:12,paddingHorizontal:16}}>
-                    Rating
+                <Text style={{fontSize:20,color:'#000',marginTop:12}}>
+                    Rating: 1 sao
                 </Text>
-                <Text style={{fontSize:20,color:'#fff',marginTop:12,paddingHorizontal:16}}>
-                    Like
+                <Text style={{fontSize:20,color:'#000',marginTop:12}}>
+                    Like: 10 like
                 </Text>
                 <TouchableOpacity style={{justifyContent:'center', padding:12,width:'60%',alignItems:'center',alignSelf:'center',marginTop:20,borderRadius:30,borderWidth:1,flexDirection:'row'}}>
-                    <Icon name="heart" style={{padding:12,backgroundColor:'#fff',borderRadius:20}}></Icon>
-                <Text style={{fontSize:24,color:'#fff',textAlign:'center',marginLeft:8}}>
-                    Contact to us
-                </Text>
+                    <Icon name="heart" style={{padding:12,backgroundColor:'#aaa',borderRadius:20}}></Icon>
+                    <Text style={{fontSize:24,color:'#000',textAlign:'center',marginLeft:8}}>
+                        Contact to us
+                    </Text>
                 </TouchableOpacity>
                 <Image source={require('../images/TestImage.png')} style={{resizeMode:'center',height:250,width:'100%',bottom:0,position:'absolute'}}/>
             </View>
-        </ImageBackground>
+        </View>
     );
   }
 }

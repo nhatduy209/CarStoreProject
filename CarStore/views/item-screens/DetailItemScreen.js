@@ -9,7 +9,9 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import HeaderComponent from '../headerComponent';
-
+import RelatedItemList from './RelatedItemList';
+import ColorPickerComponent from '../ColorPickerComponent';
+import { addToCart } from '../../redux/action/add-to-cart/AddToCart';
 import {connect} from 'react-redux';
 
 class DetailItemScreen extends React.Component {
@@ -17,16 +19,53 @@ class DetailItemScreen extends React.Component {
     super(props);
     this.state = {
       itemInfo: {},
+      relatedItems:[],
+      quantity:0,
     };
   }
   componentDidMount() {
-    // console.log("props",this.props.navigation)
+    // console.log("props",this.props.route.params.data)
+    // console.log("state", this.props.car)
     this.setState({itemInfo: this.props.route.params.data});
+    const list = this.props.car.data.filter(item => {return item.category===this.props.route.params.data.category} )
+    this.setState({relatedItems:list});
+  }
+  componentDidUpdate(prevProps){
+    if(prevProps.route.params.data!==this.props.route.params.data){
+      this.setState({itemInfo: this.props.route.params.data});
+    const list = this.props.car.data.filter(item => {return item.category===this.props.route.params.data.category} )
+    this.setState({relatedItems:list});
+    }
+  }
+  handleRelatedItem({item}){
+    this.setState({itemInfo:item})
+  }
+  handleAddToCart(){
+    console.log(this.props.user)
+    console.log(this.state.itemInfo)
+    const data={
+      email:this.props.user.email,
+      name:this.state.itemInfo.name,
+      color:this.state.itemInfo.color[0].color,
+      quantity:this.state.quantity,
+      price:this.state.itemInfo.prices
+    }
+    if(!this.props.user.email){
+      this.props.navigation.navigate('LoginScreen',{prevRoute:this.props.route.name});
+    }
+    else{
+      this.props.addToCart(data);
+    }
+    
+    // const data={
+    //   email:this.props.user
+    // }
+    //Todo
   }
   render() {
     return (
       <View style={{height: '100%'}}>
-        <HeaderComponent navigation={this.props.navigation} />
+        <HeaderComponent navigation={this.props.navigation} screenTitle={this.props.route.params.data.name} />
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{height: '100%', backgroundColor: '#eee'}}>
@@ -70,6 +109,13 @@ class DetailItemScreen extends React.Component {
                 </View>
               </View>
             </View>
+            <View>
+              <View style={{flexDirection:'row',justifyContent:'space-between',paddingHorizontal:20}}>
+                <Text>Related items</Text>
+                <Text>Show all</Text>
+              </View>
+              <RelatedItemList data={this.state.relatedItems} navigation={this.props.navigation}/>
+            </View>
             <View style={[{padding: 16,paddingLeft:30}]}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Text style={[styles.name, {width: '30%', color: '#222'}]}>
@@ -89,6 +135,9 @@ class DetailItemScreen extends React.Component {
                   </TouchableOpacity>
                 </View>
               </View>
+            </View>
+            <View>
+              <ColorPickerComponent data={this.state.itemInfo.color}/>
             </View>
             <View style={[styles.Description, {padding: 16}]}>
               <View style={{alignItems: 'center'}}>
@@ -127,12 +176,12 @@ class DetailItemScreen extends React.Component {
           </View>
         </ScrollView>
         <View style={styles.btnContainer}>
-          <View style={[styles.btnBuy,styles.shadowBox,{backgroundColor:'#9695c1'}]}>
+          <TouchableOpacity style={[styles.btnBuy,styles.shadowBox,{backgroundColor:'#9695c1'}]}>
             <Text style={styles.btn__text}>Buy</Text>
-          </View>
-          <View style={[styles.btnBuy,styles.shadowBox,{backgroundColor:'#fff'}]}>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=>this.handleAddToCart()} style={[styles.btnBuy,styles.shadowBox,{backgroundColor:'#fff'}]}>
             <Text style={styles.btn__text}>Add to cart</Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -141,14 +190,15 @@ class DetailItemScreen extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.UserReducer.user,
+    car: state.CarReducer.car,
   };
 };
 
-export default connect(mapStateToProps, {})(DetailItemScreen);
+export default connect(mapStateToProps, {addToCart})(DetailItemScreen);
 
 const styles = StyleSheet.create({
   imageItem: {
-    resizeMode: 'contain',
+    resizeMode: 'center',
     alignSelf: 'center',
   },
   infoContainer: {
@@ -236,7 +286,7 @@ const styles = StyleSheet.create({
     marginBottom:80
   },
   Description_row: {
-    paddingBottom: 16,
+    paddingVertical: 8,
     flexDirection: 'row',
     alignItems: 'center',
   },

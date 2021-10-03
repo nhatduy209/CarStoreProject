@@ -18,29 +18,29 @@ class AllItemsScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isNull: false,
-      email: '',
+      countItem:0,
       listItems: [],
     };
   }
   componentDidMount() {
     if (this.props.isSearch) {
-      console.log('search car', this.props.search_car.data);
       this.setState({listItems: this.props.search_car.data});
     } else {
       this.props.getListCar();
       this.setState({listItems: this.props.car.data});
+      this.setState({countItem:this.props.car.data?this.props.car.data.length:0})
     }
     // console.log("prop",this.props.car)
   }
   componentDidUpdate() {
-    if(!this.state.listItems)
-    this.setState({listItems: this.props.search_car});
+    if(!this.state.listItems){
+      this.setState({listItems: this.props.search_car});
+      this.setState({countItem:this.props.car.data?this.props.car.data.length:0})
+    }
   }
   renderItem({item,navigation}) {
     return (
-      <CardItem data={item} navigation={navigation}></CardItem>
-      //       );
+      <CardItem data={item} navigation={navigation} isShownOption={true} isManagementScreen={this.props.isManagementScreen}></CardItem>
     );
   }
   separateItem = () => {
@@ -50,13 +50,25 @@ class AllItemsScreen extends React.Component {
   renderFooter = () => {
     return <View style={{height: 100}}></View>;
   }
+  showAddContainer = ()=>{
+    <Text>Count Item {this.state.countItem}</Text>
+    return <View style={styles.addContainer}>
+      <Text style={{fontSize:20,}}>Item Count: {this.state.countItem}</Text>
+      <View style={[styles.btnBuy,styles.shadowBox,{backgroundColor:'#9695c1'}]}>
+        <Icon style={styles.btn__text} name="plus"></Icon>
+      </View>
+    </View>
+  }
+  renderHeader = () => {
+    return ( this.props.isManagementScreen? this.showAddContainer():<View></View>)
+  }
   render() {
     return (
       <View style={{backgroundColor: !this.state.listItems ? '#fff' : '#eee'}}>
         {this.props.isSearch ? (
           <View></View>
         ) : (
-          <HeaderComponent navigation={this.props.navigation} />
+          <HeaderComponent navigation={this.props.navigation} screenTitle={this.props.screenTitle}/>
         )}
         {!this.state.listItems ? (
           <View>
@@ -71,12 +83,13 @@ class AllItemsScreen extends React.Component {
           </View>
         ) : (
           <FlatList
+              ListHeaderComponent={this.renderHeader}
               data={this.props.car.data}
               renderItem={(item)=>this.renderItem({...item,navigation:this.props.navigation})}
               keyExtractor={item => item.name}
               showsHorizontalScrollIndicator={false}
               ItemSeparatorComponent={this.separateItem}
-              style={{paddingTop:90}}
+              style={{paddingTop:120}}
               ListFooterComponent = {this.renderFooter}></FlatList>
         )}
       </View>
@@ -94,4 +107,32 @@ export default connect(mapStateToProps, {getListCar, searchCar})(
   AllItemsScreen,
 );
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  addContainer:{
+    height: 100,
+    justifyContent:'center',
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center',
+    paddingHorizontal:20
+  },
+  btnBuy: {
+    width:80,
+    justifyContent:'center',
+    padding:10,
+    height:60,
+    borderRadius:30,
+  },
+  shadowBox: {
+    shadowColor: '#bbb',
+    shadowOffset: {width: -2, peak: 4},
+    shadowOpacity: 0.5,
+    shadowRadius: 3,
+    elevation: 6,
+  },
+  btn__text:{
+    textAlign:'center',
+    fontSize:18,
+    fontWeight:'bold'
+  },
+});

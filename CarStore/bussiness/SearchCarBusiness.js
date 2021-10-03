@@ -4,7 +4,7 @@ import PostService from '../service/PostService'
 export default class SearchCarBusiness {
   searchCar = async ( data ) => {
     var postService = new PostService();
-    var URL_Search = URL_HEROKU + '/car/search';
+    var URL_Search = URL_HEROKU + 'car/search';
 
 
     const params = {

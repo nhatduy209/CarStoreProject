@@ -48,6 +48,10 @@ class RevealCycle extends React.Component {
     }
   }
 
+  handleGoToCart = () => {
+    this.props.navigation.navigate('CartScreen')
+  }
+
   render() {
     return (
       <View>
@@ -88,7 +92,8 @@ class RevealCycle extends React.Component {
                 </Icon>
               </TouchableOpacity>
 
-              <TouchableOpacity style={{ marginLeft: 140, marginVertical: 8 }}>
+              <TouchableOpacity style={{ marginLeft: 140, marginVertical: 8 }}
+              onPress = {this.handleGoToCart}>
                 <Icon
                   name="shopping-cart"
                   size={28}>

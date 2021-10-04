@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions, TextInput, Alert, BackHandler } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Slider from '@react-native-community/slider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -57,12 +57,29 @@ class LoginScreen extends React.Component {
 
 
   componentDidMount() {
+    this.backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.backAction
+    );
     getUserlogin().then(res => {
       if (res) {
         this.setState({ email: res.email, password: res.password, isRemember: res.isRemember })
       }
     });
   }
+
+
+  backAction = () => {
+    Alert.alert("Hold on!", "Are you sure you want to go back?", [
+      {
+        text: "Cancel",
+        onPress: () => null,
+        style: "cancel"
+      },
+      { text: "YES", onPress: () => BackHandler.exitApp() }
+    ]);
+    return true;
+  }; 
 
   componentDidUpdate(){
     if(this.props.user.status === STATUS.SUCCESS){

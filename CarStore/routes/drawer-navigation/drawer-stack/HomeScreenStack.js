@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import TabBar from '../../TabBar';
 import ProfileScreen from '../../../views/profile/ProfileScreen';
 import LoginScreen from '../../../views/sign-up-sign-in/LoginScreen';
+import CartScreen from '../../../views/cart-screen/CartScreen';
 const Stack = createStackNavigator();
 
 const NavigationDrawerStructureLeft = props => {
@@ -24,6 +25,23 @@ const NavigationDrawerStructureLeft = props => {
           source={require('../../../images/drawer.png')}
           style={{ width: 25, height: 25, marginLeft: 5 }}
         />
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+
+const NavigationStackStructureLeft = props => {
+  //Structure for the navigatin Drawer
+
+  return (
+    <View style={{ flexDirection: 'row' }}>
+      <TouchableOpacity style = {{ marginLeft : 20}}>
+        {/*Donute Button Image */}
+       <Icon
+       name = "arrow-left"
+       size = {20}>
+       </Icon>
       </TouchableOpacity>
     </View>
   );
@@ -61,6 +79,16 @@ export default class HomeScreenStack extends React.Component {
           component={ProfileScreen}
           options={{
             title: "Profile"
+          }}
+        />
+
+        <Stack.Screen
+          name="CartScreen"
+          component={CartScreen}
+          options={{
+            title : '',
+            headerLeft: () => 
+              <NavigationStackStructureLeft navigationProps={this.props.navigation} />
           }}
         />
       </Stack.Navigator>

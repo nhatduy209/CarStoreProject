@@ -1,6 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, TextInput, FlatList, Image, TouchableOpacity, ScrollView } from 'react-native'
-import Modal from "react-native-modal";
+import { View, Text, StyleSheet, TextInput, FlatList, Image, TouchableOpacity, ScrollView ,BackHandler} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { getListCar } from '../../redux/action/get-list-car/GetListCar'
 import { connect } from 'react-redux'
@@ -38,9 +37,24 @@ class HomeScreen extends React.Component {
 
   componentDidMount() {
     this.props.getListCar();
+    this.backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.backAction
+    );
   }
 
 
+  backAction = () => {
+    Alert.alert("Hold on!", "Are you sure you want to go back?", [
+      {
+        text: "Cancel",
+        onPress: () => null,
+        style: "cancel"
+      },
+      { text: "YES", onPress: () => BackHandler.exitApp() }
+    ]);
+    return true;
+  }; 
   renderCategories = ({ item }) => {
     return (
       <TouchableOpacity>
@@ -72,7 +86,7 @@ class HomeScreen extends React.Component {
   separateItem = () => {
     return (
 
-      <View style={{ width: 10 }}>
+      <View style={{ width: 30 }}>
 
       </View>
     )

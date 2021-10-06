@@ -1,11 +1,10 @@
-import { STATUS } from '../../config/Status';
+import {STATUS} from '../../config/Status';
 import {ACTION_NAME} from '../action/login-action/ActionName';
 
 const USER_STATE = {
   user: {
-    status : STATUS.FAIL 
+    status: STATUS.FAIL,
   },
- 
 };
 
 const UserReducer = (state = USER_STATE, action) => {
@@ -25,7 +24,7 @@ const UserReducer = (state = USER_STATE, action) => {
         ...state,
         recoverCode: action.data,
       };
-      case ACTION_NAME.CHANGEPASSWORD_ACTION.CHANGEPASSWORD_ACTION:
+    case ACTION_NAME.CHANGEPASSWORD_ACTION.CHANGEPASSWORD_ACTION:
       return {
         ...state,
         user: action.data,

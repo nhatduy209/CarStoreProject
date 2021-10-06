@@ -1,4 +1,4 @@
-export const STATUS  = {
-  SUCCESS : 'SUCCESS',
-  FAIL : 'FAIL'
-}
+export const STATUS = {
+  SUCCESS: 'SUCCESS',
+  FAIL: 'FAIL',
+};

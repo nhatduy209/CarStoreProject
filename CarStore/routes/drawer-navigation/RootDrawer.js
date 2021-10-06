@@ -1,27 +1,29 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import React from 'react';
-import HomeScreen from '../../views/home-screen/HomeScreen';
-import { View, Text, TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome5'
-import CircleTransition from 'react-native-circle-reveal-view'
-import DrawerContent from './DrawerContent'
+import DrawerContent from './DrawerContent';
 import HomeScreenStack from './drawer-stack/HomeScreenStack';
 
 const Drawer = createDrawerNavigator();
 
 export default class RootDrawer extends React.Component {
-
   render() {
     return (
       <Drawer.Navigator
-      screenOptions={{drawerStyle:{borderTopRightRadius:20,borderBottomRightRadius:20,backgroundColor:'#fff'}}}
-      drawerContent={(props)=><DrawerContent {...props}></DrawerContent>}>
+        screenOptions={{
+          drawerStyle: {
+            borderTopRightRadius: 20,
+            borderBottomRightRadius: 20,
+            backgroundColor: '#fff',
+          },
+        }}
+        drawerContent={props => <DrawerContent {...props} />}>
         <Drawer.Screen
           options={{
-           headerShown : false,
+            headerShown: false,
           }}
           name="HomeScreenStack"
-          component={HomeScreenStack} />
+          component={HomeScreenStack}
+        />
       </Drawer.Navigator>
     );
   }

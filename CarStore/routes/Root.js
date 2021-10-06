@@ -10,7 +10,6 @@ import AllItemsScreen from '../views/item-screens/AllItemsScreen';
 import DetailItemsScreen from '../views/item-screens/DetailItemScreen';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import RootDrawer from './drawer-navigation/RootDrawer';
-import HomeScreenStack from './drawer-navigation/drawer-stack/HomeScreenStack';
 const Stack = createNativeStackNavigator();
 
 export class Root extends React.Component {
@@ -26,7 +25,8 @@ export class Root extends React.Component {
           <Icon
             name="arrow-left"
             size={18}
-            style={{marginRight: 10, color: '#00b3b3'}}></Icon>
+            style={{marginRight: 10, color: '#00b3b3'}}
+          />
           <Text style={{fontSize: 17, fontWeight: '900', color: '#00b3b3'}}>
             Forgot password
           </Text>
@@ -38,7 +38,7 @@ export class Root extends React.Component {
   render() {
     return (
       <Stack.Navigator>
-         <Stack.Screen
+        <Stack.Screen
           options={{
             headerShown: false,
           }}

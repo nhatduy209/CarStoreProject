@@ -4,10 +4,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
   TextInput,
-  KeyboardAvoidingView,
-  ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
@@ -42,7 +39,8 @@ class ForgotPasswordScreen extends React.Component {
           <Icon
             name="arrow-left"
             size={16}
-            style={{color: '#555', marginRight: 5}}></Icon>
+            style={{color: '#555', marginRight: 5}}
+          />
         </TouchableOpacity>
         <View
           style={{
@@ -51,7 +49,7 @@ class ForgotPasswordScreen extends React.Component {
             marginVertical: '8%',
           }}>
           <Text style={{fontSize: 45, fontWeight: '700'}}>
-            Forgot {"\n"}
+            Forgot {'\n'}
             Password
           </Text>
         </View>
@@ -67,7 +65,8 @@ class ForgotPasswordScreen extends React.Component {
           <TextInput
             placeholder={'Email'}
             onChangeText={value => this.setState({email: value})}
-            style={styles.emailInput}></TextInput>
+            style={styles.emailInput}
+          />
           <Text
             style={
               !this.state.isNull
@@ -121,6 +120,6 @@ const styles = StyleSheet.create({
     marginTop: '8%',
     paddingHorizontal: '4%',
     fontSize: 20,
-    color:'#aaa'
+    color: '#aaa',
   },
 });

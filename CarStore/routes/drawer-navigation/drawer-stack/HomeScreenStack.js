@@ -1,9 +1,8 @@
 /* eslint-disable prettier/prettier */
-import React from 'react'
-import HomeScreen from '../../../views/home-screen/HomeScreen'
-import { Image, View, TouchableOpacity, StyleSheet } from 'react-native'
-import { createStackNavigator } from '@react-navigation/stack';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import React from 'react';
+import HomeScreen from '../../../views/home-screen/HomeScreen';
+import {Image, View, TouchableOpacity} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
 import ProfileScreen from '../../../views/profile/ProfileScreen';
 import CartStack from '../../cart-stack/CartStack';
 const Stack = createStackNavigator();
@@ -15,12 +14,12 @@ const NavigationDrawerStructureLeft = props => {
     props.navigationProps.openDrawer();
   };
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={{flexDirection: 'row'}}>
       <TouchableOpacity onPress={toggleDrawer}>
         {/*Donute Button Image */}
         <Image
           source={require('../../../images/drawer.png')}
-          style={{ width: 25, height: 25, marginLeft: 5 }}
+          style={{width: 25, height: 25, marginLeft: 5}}
         />
       </TouchableOpacity>
     </View>
@@ -28,27 +27,26 @@ const NavigationDrawerStructureLeft = props => {
 };
 
 export default class HomeScreenStack extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      sortUpOption: false
-    }
-
+      sortUpOption: false,
+    };
   }
   render() {
     return (
-      <Stack.Navigator >
+      <Stack.Navigator>
         <Stack.Screen
           name="Home"
           component={HomeScreen}
           options={{
             headerShown: false,
             title: '',
-            headerLeft: () =>
+            headerLeft: () => (
               <NavigationDrawerStructureLeft
                 navigationProps={this.props.navigation}
               />
+            ),
           }}
         />
 
@@ -56,51 +54,20 @@ export default class HomeScreenStack extends React.Component {
           name="ProfileScreen"
           component={ProfileScreen}
           options={{
-            title: "Profile"
+            title: 'Profile',
           }}
         />
 
         <Stack.Screen
           name="CartStack"
           component={CartStack}
-          options = {{
-            headerShown : false
+          options={{
+            headerShown: false,
           }}
         />
       </Stack.Navigator>
     );
   }
-
 }
 
 
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center"
-  },
-  noCart: {
-    position: 'absolute',
-    alignSelf: 'flex-end',
-    color: 'red',
-    fontWeight: 'bold'
-  }
-})

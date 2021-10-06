@@ -1,27 +1,27 @@
-import { URL_HEROKU } from '../config/URL';
+import {URL_HEROKU} from '../config/URL';
 import DeleteService from '../service/DeleteService';
-import GetService from '../service/GetService'
+import GetService from '../service/GetService';
 
 export default class CartBusiness {
-  getListCart = async ( email ) => {
-    var  getAPI = new GetService();
-    const url =  URL_HEROKU + 'cart/getlist' 
+  getListCart = async email => {
+    var getAPI = new GetService();
+    const url = URL_HEROKU + 'cart/getlist';
     const params = {
       email,
-    }
-    const result = await getAPI.getApiWithParams(url ,params );
+    };
+    const result = await getAPI.getApiWithParams(url, params);
 
-    return result ; 
-  }
+    return result;
+  };
 
-  deleteItem = async ( data ) => {
-    var  deleteAPI = new DeleteService();
-    const url =  URL_HEROKU + 'cart/delete' 
+  deleteItem = async data => {
+    var deleteAPI = new DeleteService();
+    const url = URL_HEROKU + 'cart/delete';
     const params = {
-      email : data.email,
-      id : data.id 
-    }
-    const result = await deleteAPI.deleteAPI(url ,params );
-    return result ; 
-  }
+      email: data.email,
+      id: data.id,
+    };
+    const result = await deleteAPI.deleteAPI(url, params);
+    return result;
+  };
 }

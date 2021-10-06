@@ -67,14 +67,17 @@ class DetailItemScreen extends React.Component {
               <View
                 style={[
                   styles.count,
-                  {flexDirection: 'row', alignItems: 'center'},
+                  {
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  },
                 ]}>
                 <TouchableOpacity>
-                  <Icon name="minus"></Icon>
+                  <Icon name="minus" />
                 </TouchableOpacity>
                 <Text style={{marginHorizontal: 16}}>1</Text>
                 <TouchableOpacity>
-                  <Icon name="plus"></Icon>
+                  <Icon name="plus" />
                 </TouchableOpacity>
               </View>
             </View>

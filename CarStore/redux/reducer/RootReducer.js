@@ -1,18 +1,16 @@
-
-import { combineReducers } from 'redux';
-
+import {combineReducers} from 'redux';
 
 import UserReducer from './UserReducer';
-import CarReducer from './CarReducer'
-import SearchReducer from './SearchReducer.js'
-import ModalReducer from './ModalReducer'
-import CartReducer from './CartReducer'
+import CarReducer from './CarReducer';
+import SearchReducer from './SearchReducer.js';
+import ModalReducer from './ModalReducer';
+import CartReducer from './CartReducer';
 const rootReducer = combineReducers({
   UserReducer,
   CarReducer,
   SearchReducer,
   ModalReducer,
-  CartReducer
+  CartReducer,
 });
 
 export default rootReducer;

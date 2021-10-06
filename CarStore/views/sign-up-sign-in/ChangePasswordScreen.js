@@ -4,13 +4,12 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
   TextInput,
   KeyboardAvoidingView,
   ScrollView,
+  Platform,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import axios from 'axios';
 import {connect} from 'react-redux';
 import {changepassword} from '../../redux/action/login-action/ChangePasswordAction';
 
@@ -24,23 +23,24 @@ class ChangePasswordScreen extends React.Component {
       confirmPassword: '',
       hideConfirmPassword: true,
       iconConfirm: 'eye-slash',
-      error:'',
+      error: '',
     };
   }
   handleChangePassword = () => {
     const data = {
-      email:this.props.email,
-      password:this.state.password
-    }
-    if(this.state.password.length>0){
-      if(this.state.password.localeCompare(this.state.confirmPassword)===0){
+      email: this.props.email,
+      password: this.state.password,
+    };
+    if (this.state.password.length > 0) {
+      if (this.state.password.localeCompare(this.state.confirmPassword) === 0) {
         this.props.changepassword(data);
-        this.props.navigation.navigate('LoginScreen')
+        this.props.navigation.navigate('LoginScreen');
+      } else {
+        this.setState({error: 'Confirm password not match!'});
       }
-      else
-      this.setState({error:'Confirm password not match!'})
-    }else
-    this.setState({error:'Please type new password!'})
+    } else {
+      this.setState({error: 'Please type new password!'});
+    }
   };
   handleHidePassowrd = () => {
     this.setState({
@@ -58,9 +58,9 @@ class ChangePasswordScreen extends React.Component {
     return (
       <KeyboardAvoidingView
         style={styles.container}
-        behavior={Platform.OS === "ios" ? "padding" : null}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}>
-        <ScrollView style={{height:'100%'}}>
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}>
+        <ScrollView style={{height: '100%'}}>
           <View style={{alignItems: 'center', marginVertical: '15%'}}>
             <Text style={{fontSize: 32, fontWeight: '500'}}>
               Change password
@@ -76,15 +76,24 @@ class ChangePasswordScreen extends React.Component {
                   onPress={this.handleHidePassowrd}
                   name={this.state.icon}
                   size={16}
-                  style={{color: '#555', marginRight: 5}}></Icon>
+                  style={{color: '#555', marginRight: 5}}
+                />
                 <TextInput
-                  style={{flex: 1,color:'#000'}}
+                  style={{flex: 1, color: '#000'}}
                   placeholder={'New password'}
                   secureTextEntry={this.state.hidePassword}
                   onChangeText={value => this.setState({password: value})}
-                  value={this.state.password}></TextInput>
+                  value={this.state.password}
+                />
               </View>
-              <Text style={this.state.error.indexOf('type')>0?styles.textError:{display:'none'}}>{this.state.error}</Text>
+              <Text
+                style={
+                  this.state.error.indexOf('type') > 0
+                    ? styles.textError
+                    : {display: 'none'}
+                }>
+                {this.state.error}
+              </Text>
             </View>
             <View>
               <Text style={styles.label}>Confirm new password</Text>
@@ -94,29 +103,35 @@ class ChangePasswordScreen extends React.Component {
                   onPress={this.handleHideConfirmedPassowrd}
                   name={this.state.iconConfirm}
                   size={16}
-                  style={{color: '#555', marginRight: 5}}></Icon>
+                  style={{color: '#555', marginRight: 5}}
+                />
 
                 <TextInput
-                  style={{flex: 1,color:'#000'}}
+                  style={{flex: 1, color: '#000'}}
                   placeholder={'Confirm new password'}
                   secureTextEntry={this.state.hideConfirmPassword}
                   onChangeText={value =>
                     this.setState({confirmPassword: value})
                   }
-                  value={this.state.passwordConfirmed}></TextInput>
+                  value={this.state.passwordConfirmed}
+                />
               </View>
-              <Text style={this.state.error.indexOf('match')<0?{display:'none'}:styles.textError}>{this.state.error}</Text>
+              <Text
+                style={
+                  this.state.error.indexOf('match') < 0
+                    ? {display: 'none'}
+                    : styles.textError
+                }>
+                {this.state.error}
+              </Text>
             </View>
 
             <TouchableOpacity
               style={styles.changePasswordButton}
-              onPress={() =>
-                this.handleChangePassword()
-              }>
+              onPress={() => this.handleChangePassword()}>
               <Text style={styles.confirmText}>Confirm</Text>
             </TouchableOpacity>
           </View>
-          
         </ScrollView>
       </KeyboardAvoidingView>
     );
@@ -135,7 +150,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     flex: 1,
   },
-  textError:{color:'red'},
+  textError: {color: 'red'},
   label: {
     fontSize: 17,
     fontWeight: 'bold',
@@ -162,7 +177,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: '10%',
     borderRadius: 20,
-    backgroundColor:'rgb(32,45,70)',
+    backgroundColor: 'rgb(32,45,70)',
   },
   loginWith: {flexDirection: 'row', alignItems: 'center', padding: 7},
 });

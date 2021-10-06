@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 
 class CardItem extends React.Component {
@@ -24,10 +23,20 @@ class CardItem extends React.Component {
           </View>
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={{fontSize: 18, width: '70%', fontWeight: 'bold'}}>
+            <Text
+              style={{
+                fontSize: 18,
+                width: '70%',
+                fontWeight: 'bold',
+              }}>
               sf90-stradale
             </Text>
-            <Text style={{fontSize: 18, width: '30%', fontWeight: 'bold'}}>
+            <Text
+              style={{
+                fontSize: 18,
+                width: '30%',
+                fontWeight: 'bold',
+              }}>
               $168,125
             </Text>
           </View>

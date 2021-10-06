@@ -51,6 +51,10 @@ class CartScreen extends React.Component {
     this.props.navigation.navigate('Home');
   }
 
+  handleContact = () => {
+    this.props.navigation.navigate('BookingScreen');
+  }
+
   render() {
     const count = ( this.props.cart?.data?.length ?? 0  );
     return (
@@ -88,7 +92,7 @@ class CartScreen extends React.Component {
         </View>
 
         <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-          <TouchableOpacity style={{ ...styles.btnCheckout, backgroundColor: '#4dacff' }} onPress={this.handleScrollTop}>
+          <TouchableOpacity style={{ ...styles.btnCheckout, backgroundColor: '#4dacff' }} onPress={this.handleContact}>
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
               <Text style={{ fontSize: 20, color: '#ffffff' }}>
                 Contact us now {' '}

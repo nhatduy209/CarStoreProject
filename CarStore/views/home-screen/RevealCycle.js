@@ -49,7 +49,7 @@ class RevealCycle extends React.Component {
   }
 
   handleGoToCart = () => {
-    this.props.navigation.navigate('CartScreen')
+    this.props.navigation.navigate('CartStack')
   }
 
   render() {

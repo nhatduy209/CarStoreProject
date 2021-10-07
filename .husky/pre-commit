@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-cd CarStore && npm run fix
+cd CarStore && npm run lint

@@ -14,16 +14,19 @@ class RelatedCardItem extends React.Component {
       <View style={[styles.relatedCardItem, styles.shadowBox]}>
         <Image
           style={[styles.imageItem, {width: 150, height: 100}]}
-          source={{uri:this.props.data.img}}
+          source={{uri: this.props.data.img}}
         />
-        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <View>
-          <Text style={{fontSize:14,color:'#aaa'}}>{this.props.data.category}</Text>
-          <Text style={{fontSize:14,fontWeight:'bold'}}>{this.props.data.name}</Text>
+            <Text style={{fontSize: 14, color: '#aaa'}}>
+              {this.props.data.category}
+            </Text>
+            <Text style={{fontSize: 14, fontWeight: 'bold'}}>
+              {this.props.data.name}
+            </Text>
           </View>
-          <Text style={{fontSize:14}}>${this.props.data.prices}</Text>
+          <Text style={{fontSize: 14}}>${this.props.data.prices}</Text>
         </View>
-        
       </View>
     );
   }
@@ -44,7 +47,7 @@ const styles = StyleSheet.create({
     paddingVertical: 45,
     paddingHorizontal: 15,
     width: 240,
-    height:170,
+    height: 170,
     margin: 10,
   },
   shadowBox: {

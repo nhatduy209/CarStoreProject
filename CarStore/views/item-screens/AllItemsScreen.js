@@ -1,11 +1,6 @@
+/* eslint-disable react/no-did-mount-set-state */
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  ScrollView,
-} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import CardItem from './CardItem';
@@ -17,7 +12,7 @@ class AllItemsScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      countItem:0,
+      countItem: 0,
       listItems: [],
     };
   }
@@ -27,48 +22,68 @@ class AllItemsScreen extends React.Component {
     } else {
       this.props.getListCar();
       this.setState({listItems: this.props.car.data});
-      this.setState({countItem:this.props.car.data?this.props.car.data.length:0})
+      this.setState({
+        countItem: this.props.car.data ? this.props.car.data.length : 0,
+      });
     }
     // console.log("prop",this.props.car)
   }
   componentDidUpdate() {
-    if(!this.state.listItems){
+    if (!this.state.listItems) {
       this.setState({listItems: this.props.search_car});
-      this.setState({countItem:this.props.car.data?this.props.car.data.length:0})
+      this.setState({
+        countItem: this.props.car.data ? this.props.car.data.length : 0,
+      });
     }
   }
-  renderItem({item,navigation}) {
+  renderItem({item, navigation}) {
     return (
-      <CardItem data={item} navigation={navigation} isShownOption={true} isManagementScreen={this.props.isManagementScreen}></CardItem>
+      <CardItem
+        data={item}
+        navigation={navigation}
+        isShownOption={true}
+        isManagementScreen={this.props.isManagementScreen}
+      />
     );
   }
   separateItem = () => {
-    return <View style={{width: 10}}></View>;
+    return <View style={{width: 10}} />;
   };
 
   renderFooter = () => {
-    return <View style={{height: 100}}></View>;
-  }
-  showAddContainer = ()=>{
-    <Text>Count Item {this.state.countItem}</Text>
-    return <View style={styles.addContainer}>
-      <Text style={{fontSize:20,}}>Item Count: {this.state.countItem}</Text>
-      <View style={[styles.btnBuy,styles.shadowBox,{backgroundColor:'#9695c1'}]}>
-        <Icon style={styles.btn__text} name="plus"></Icon>
+    return <View style={{height: 100}} />;
+  };
+  showAddContainer = () => {
+    <Text>Count Item {this.state.countItem}</Text>;
+    return (
+      <View style={styles.addContainer}>
+        <Text style={{fontSize: 20}}>Item Count: {this.state.countItem}</Text>
+        <View
+          style={[
+            styles.btnBuy,
+            styles.shadowBox,
+            {backgroundColor: '#9695c1'},
+          ]}>
+          <Icon style={styles.btn__text} name="plus" />
+        </View>
       </View>
-    </View>
-  }
+    );
+  };
   renderHeader = () => {
-    return ( this.props.isManagementScreen? this.showAddContainer():<View></View>)
-  }
+    return this.props.isManagementScreen ? this.showAddContainer() : <View />;
+  };
   render() {
     return (
       <View style={{backgroundColor: !this.state.listItems ? '#fff' : '#eee'}}>
         {this.props.isSearch ? (
-          <View></View>
+          <View />
         ) : (
-          <HeaderComponent navigation={this.props.navigation} screenTitle={this.props.screenTitle}/>
+          <HeaderComponent
+            navigation={this.props.navigation}
+            screenTitle={this.props.screenTitle}
+          />
         )}
+
         {!this.state.listItems ? (
           <View>
             <Text
@@ -82,14 +97,17 @@ class AllItemsScreen extends React.Component {
           </View>
         ) : (
           <FlatList
-              ListHeaderComponent={this.renderHeader}
-              data={this.props.car.data}
-              renderItem={(item)=>this.renderItem({...item,navigation:this.props.navigation})}
-              keyExtractor={item => item.name}
-              showsHorizontalScrollIndicator={false}
-              ItemSeparatorComponent={this.separateItem}
-              style={{paddingTop:120}}
-              ListFooterComponent = {this.renderFooter}></FlatList>
+            ListHeaderComponent={this.renderHeader}
+            data={this.props.car.data}
+            renderItem={item =>
+              this.renderItem({...item, navigation: this.props.navigation})
+            }
+            keyExtractor={item => item.name}
+            showsHorizontalScrollIndicator={false}
+            ItemSeparatorComponent={this.separateItem}
+            style={{paddingTop: 120}}
+            ListFooterComponent={this.renderFooter}
+          />
         )}
       </View>
     );
@@ -107,20 +125,19 @@ export default connect(mapStateToProps, {getListCar, searchCar})(
 );
 
 const styles = StyleSheet.create({
-  addContainer:{
+  addContainer: {
     height: 100,
-    justifyContent:'center',
-    flexDirection:'row',
-    justifyContent:'space-between',
-    alignItems:'center',
-    paddingHorizontal:20
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
   },
   btnBuy: {
-    width:80,
-    justifyContent:'center',
-    padding:10,
-    height:60,
-    borderRadius:30,
+    width: 80,
+    justifyContent: 'center',
+    padding: 10,
+    height: 60,
+    borderRadius: 30,
   },
   shadowBox: {
     shadowColor: '#bbb',
@@ -129,9 +146,9 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     elevation: 6,
   },
-  btn__text:{
-    textAlign:'center',
-    fontSize:18,
-    fontWeight:'bold'
+  btn__text: {
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });

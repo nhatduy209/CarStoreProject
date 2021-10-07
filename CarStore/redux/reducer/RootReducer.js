@@ -11,7 +11,6 @@ const rootReducer = combineReducers({
   CartReducer,
   SearchReducer,
   ModalReducer,
-  CartReducer,
 });
 
 export default rootReducer;

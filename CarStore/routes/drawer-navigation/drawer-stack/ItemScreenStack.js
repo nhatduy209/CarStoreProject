@@ -1,12 +1,8 @@
-/* eslint-disable prettier/prettier */
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import React from 'react'
+import React from 'react';
 import AllItemsScreen from '../../../views/item-screens/AllItemsScreen';
 import DetailItemScreen from '../../../views/item-screens/DetailItemScreen';
-import { Image, View, TouchableOpacity, StyleSheet,Text } from 'react-native'
-import { createStackNavigator } from '@react-navigation/stack';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import TabBar from '../../TabBar';
+import {Image, View, TouchableOpacity} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
 const Stack = createStackNavigator();
 
 const NavigationDrawerStructureLeft = props => {
@@ -16,62 +12,55 @@ const NavigationDrawerStructureLeft = props => {
     props.navigationProps.openDrawer();
   };
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={{flexDirection: 'row'}}>
       <TouchableOpacity onPress={toggleDrawer}>
         {/*Donute Button Image */}
         <Image
           source={require('../../../images/drawer.png')}
-          style={{ width: 25, height: 25, marginLeft: 5 }}
+          style={{width: 25, height: 25, marginLeft: 5}}
         />
       </TouchableOpacity>
     </View>
   );
 };
 
-
-
 export default class ItemScreenStack extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      sortUpOption: false
-    }
-
+      sortUpOption: false,
+    };
   }
   render() {
     return (
-        <Stack.Navigator >
-      <Stack.Screen
-        name="AllItemsScreen"
-        component={AllItemsScreen}   
-        options={{
+      <Stack.Navigator>
+        <Stack.Screen
+          name="AllItemsScreen"
+          component={AllItemsScreen}
+          options={{
             headerShown: false,
-            title:'',
-          headerLeft: ()=>
-            <NavigationDrawerStructureLeft
-              navigationProps={this.props.navigation}
-            />
-        }}
-      />
-      <Stack.Screen
-        name="DetailItemScreen"
-        component={DetailItemScreen}   
-        options={{
+            title: '',
+            headerLeft: () => (
+              <NavigationDrawerStructureLeft
+                navigationProps={this.props.navigation}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="DetailItemScreen"
+          component={DetailItemScreen}
+          options={{
             headerShown: false,
-            title:'',
-          headerLeft: ()=>
-            <NavigationDrawerStructureLeft
-              navigationProps={this.props.navigation}
-            />
-        }}
-      />
+            title: '',
+            headerLeft: () => (
+              <NavigationDrawerStructureLeft
+                navigationProps={this.props.navigation}
+              />
+            ),
+          }}
+        />
       </Stack.Navigator>
     );
   }
-
 }
-
-
-const styles = StyleSheet.create({
-})

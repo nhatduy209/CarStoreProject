@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   TextInput,
   Text,
+  Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -25,7 +26,16 @@ export default class HeaderComponent extends React.Component {
           borderBottomLeftRadius: 50,
           borderBottomRightRadius: 50,
         }}>
-          <Image source={require('../images/headerbg.png')} style={{resizeMode:'stretch',height:100,opacity:0.8,width:'100%',position:'absolute'}}/>
+        <Image
+          source={require('../images/headerbg.png')}
+          style={{
+            resizeMode: 'stretch',
+            height: 100,
+            opacity: 0.8,
+            width: '100%',
+            position: 'absolute',
+          }}
+        />
         <View
           style={{
             flexDirection: 'row',
@@ -39,10 +49,18 @@ export default class HeaderComponent extends React.Component {
             <Icon
               name="arrow-left"
               size={16}
-              style={{color: '#fff', marginRight: 5}}></Icon>
+              style={{color: '#fff', marginRight: 5}}
+            />
           </TouchableOpacity>
-          <Text style={{fontSize: 20,width:'90%', fontWeight: 'bold',color:'#fff',textAlign:'center'}}>
-            { this.props.screenTitle ?? ''}
+          <Text
+            style={{
+              fontSize: 20,
+              width: '90%',
+              fontWeight: 'bold',
+              color: '#fff',
+              textAlign: 'center',
+            }}>
+            {this.props.screenTitle ?? ''}
           </Text>
         </View>
         {this.props.search ? (

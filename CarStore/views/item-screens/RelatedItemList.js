@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity
-} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import {View, FlatList, TouchableOpacity} from 'react-native';
 import RelatedCardItem from './RelatedCardItem';
 
 export default class RelatedItemList extends React.Component {
@@ -15,29 +9,31 @@ export default class RelatedItemList extends React.Component {
   componentDidMount() {
     // console.log("props related",this.props.data)
   }
-  renderItem({item,navigation}){
-    return(
-        <TouchableOpacity onPress={()=>navigation.push('DetailItemScreen',{data:item})}>
-            <RelatedCardItem data={item} />
-        </TouchableOpacity>
-    )
+  renderItem({item, navigation}) {
+    return (
+      <TouchableOpacity
+        onPress={() => navigation.push('DetailItemScreen', {data: item})}>
+        <RelatedCardItem data={item} />
+      </TouchableOpacity>
+    );
   }
   separateItem = () => {
-    return <View style={{width: 4}}></View>;
+    return <View style={{width: 4}} />;
   };
   render() {
     return (
       <View>
-          <FlatList
+        <FlatList
           horizontal
           data={this.props.data}
-          renderItem={(item)=>this.renderItem({...item,navigation:this.props.navigation})}
+          renderItem={item =>
+            this.renderItem({...item, navigation: this.props.navigation})
+          }
           keyExtractor={item => item.name}
           showsHorizontalScrollIndicator={false}
-          ItemSeparatorComponent={this.separateItem}></FlatList>
+          ItemSeparatorComponent={this.separateItem}
+        />
       </View>
     );
   }
 }
-const styles = StyleSheet.create({
-});

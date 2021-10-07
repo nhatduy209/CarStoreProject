@@ -1,9 +1,9 @@
-import { URL_HEROKU } from '../config/URL'
-import PostService from '../service/PostService'
-export default class SignUpBusiness { 
-  signUpBusiness = async(data) =>  {
-        var postService = new PostService();
-        const url = URL_HEROKU + 'account/register' ;
+import {URL_HEROKU} from '../config/URL';
+import PostService from '../service/PostService';
+export default class SignUpBusiness {
+  signUpBusiness = async data => {
+    var postService = new PostService();
+    const url = URL_HEROKU + 'account/register';
 
     const params = {
       name: data.name,

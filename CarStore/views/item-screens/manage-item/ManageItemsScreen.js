@@ -1,17 +1,7 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import {View} from 'react-native';
 import {connect} from 'react-redux';
-import CardItem from '../CardItem';
 import AllItemsScreen from '../AllItemsScreen';
-import {getListCar} from '../../../redux/action/get-list-car/GetListCar';
 class ManageItemsScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -25,7 +15,11 @@ class ManageItemsScreen extends React.Component {
   render() {
     return (
       <View>
-          <AllItemsScreen isManagementScreen={true} navigation={this.props.navigation} screenTitle={'Items Management'}/>
+        <AllItemsScreen
+          isManagementScreen={true}
+          navigation={this.props.navigation}
+          screenTitle={'Items Management'}
+        />
       </View>
     );
   }
@@ -37,8 +31,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {})(
-    ManageItemsScreen,
-);
-
-const styles = StyleSheet.create({});
+export default connect(mapStateToProps, {})(ManageItemsScreen);

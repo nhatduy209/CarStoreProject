@@ -1,10 +1,21 @@
+/* eslint-disable react/no-did-mount-set-state */
 import React from 'react';
-import {View, Image, StyleSheet, Text, TouchableOpacity,UIManager,LayoutAnimation} from 'react-native';
+import {
+  View,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  UIManager,
+  LayoutAnimation,
+  Platform,
+} from 'react-native';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 if (
-  Platform.OS === "android" &&
+  Platform.OS === 'android' &&
   UIManager.setLayoutAnimationEnabledExperimental
 ) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -12,13 +23,13 @@ if (
 class CardItem extends React.Component {
   constructor(props) {
     super(props);
-    this.state={
-      isShow:false,
-    }
+    this.state = {
+      isShow: false,
+    };
   }
   componentDidMount() {
     // console.log("props",this.props)
-    this.setState({isShow:false})
+    this.setState({isShow: false});
   }
   listOptionIcons = [
     {iconName: 'info', backgroundColor: '#7289da'},
@@ -27,38 +38,40 @@ class CardItem extends React.Component {
   ];
   handleDetailItem = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-    this.props.isShownOption&&this.props.isManagementScreen?this.setState({isShow:!this.state.isShow}):
-    this.props.navigation.navigate('DetailItemScreen', {data: this.props.data});
+    this.props.isShownOption && this.props.isManagementScreen
+      ? this.setState({isShow: !this.state.isShow})
+      : this.props.navigation.navigate('DetailItemScreen', {
+          data: this.props.data,
+        });
   };
-  handleUpdertItem= ()=>{
-  }
-  showOptionItem=(item,index)=>{
+  handleUpdertItem = () => {};
+  showOptionItem = (item, index) => {
     return (
-    <TouchableOpacity key={index}onPress={()=>this.handleUpdertItem()}>
-    <Icon
-      style={[
-        styles.iconStyle,
-        {backgroundColor: item.backgroundColor},
-      ]}
-      name={item.iconName}
-    />
-  </TouchableOpacity>
-  )
-  }
+      <TouchableOpacity key={index} onPress={() => this.handleUpdertItem()}>
+        <Icon
+          style={[styles.iconStyle, {backgroundColor: item.backgroundColor}]}
+          name={item.iconName}
+        />
+      </TouchableOpacity>
+    );
+  };
+  handleShowOption = () => {
+    return this.state.isShow ? (
+      <View style={styles.options}>
+        {this.listOptionIcons.map((item, index) =>
+          this.showOptionItem(item, index),
+        )}
+      </View>
+    ) : (
+      <View />
+    );
+  };
   render() {
     return (
       <TouchableOpacity
         onPress={() => this.handleDetailItem()}
         style={[styles.cardItem, styles.shadowBox]}>
-          {
-            this.state.isShow?
-            <View style={styles.options}>
-            {
-            this.listOptionIcons.map((item, index) => this.showOptionItem(item,index))
-            }
-          </View>:<View></View>
-          }
-        
+        {this.handleShowOption()}
         <View style={styles.itemInfo}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={{fontSize: 18, color: '#aaa', width: '90%'}}>

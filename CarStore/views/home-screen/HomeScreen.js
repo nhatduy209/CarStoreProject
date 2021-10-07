@@ -18,7 +18,7 @@ import RevealCycle from './RevealCycle';
 import RenderCarOnSale from './RenderCarOnSale';
 import {searchCar} from '../../redux/action/search-car/SearchAction';
 import ModalWarningLogin from '../modal/ModalWarningLogin';
-import AllItemsScreen from '../item-screens/AllItemsScreen'
+import AllItemsScreen from '../item-screens/AllItemsScreen';
 const Categories = [
   {
     title: 'Toyota',
@@ -136,7 +136,11 @@ class HomeScreen extends React.Component {
               )}
             </View>
             {/* end  Search input text  */}
-            <AllItemsScreen navigation={this.props.navigation} listItems={this.props.search_car.data} isSearch={true}></AllItemsScreen>
+            <AllItemsScreen
+              navigation={this.props.navigation}
+              listItems={this.props.search_car.data}
+              isSearch={true}
+            />
           </ScrollView>
         </View>
       );

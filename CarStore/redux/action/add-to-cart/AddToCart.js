@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 import AddToCartBusiness from '../../../bussiness/AddToCartBusiness';
 import {STATUS} from '../../../config/Status';
 import {ACTION_NAME} from './ActionName';

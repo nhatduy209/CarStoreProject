@@ -25,7 +25,8 @@ export class Root extends React.Component {
           <Icon
             name="arrow-left"
             size={18}
-            style={{marginRight: 10, color: '#00b3b3'}}></Icon>
+            style={{marginRight: 10, color: '#00b3b3'}}
+          />
           <Text style={{fontSize: 17, fontWeight: '900', color: '#00b3b3'}}>
             Forgot password
           </Text>

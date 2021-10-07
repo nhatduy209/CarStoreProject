@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Image,Text
-} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import {View, StyleSheet, Image, Text} from 'react-native';
 import {connect} from 'react-redux';
 
 class RelatedCardItem extends React.Component {
@@ -16,7 +11,7 @@ class RelatedCardItem extends React.Component {
   }
   render() {
     return (
-      <View style={[styles.relatedCardItem,styles.shadowBox]}>
+      <View style={[styles.relatedCardItem, styles.shadowBox]}>
         <Image
           style={[styles.imageItem, {width: 150, height: 100}]}
           source={{uri:this.props.data.img}}
@@ -36,15 +31,14 @@ class RelatedCardItem extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.UserReducer.user,
+    isShow: state.ModalReducer.isShow,
   };
 };
 
-export default connect(mapStateToProps, {})(
-    RelatedCardItem
-);
+export default connect(mapStateToProps, {})(RelatedCardItem);
 
 const styles = StyleSheet.create({
-  relatedCardItem:{
+  relatedCardItem: {
     backgroundColor: 'white',
     borderRadius: 8,
     paddingVertical: 45,
@@ -53,13 +47,14 @@ const styles = StyleSheet.create({
     height:170,
     margin: 10,
   },
-  shadowBox:{
+  shadowBox: {
     shadowColor: '#000',
     shadowOffset: {width: -2, peak: 4},
     shadowOpacity: 0.5,
     shadowRadius: 3,
-    elevation:6,
-  },imageItem: {
+    elevation: 6,
+  },
+  imageItem: {
     resizeMode: 'contain',
     alignSelf: 'center',
     marginTop: -40,

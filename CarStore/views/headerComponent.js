@@ -2,10 +2,9 @@ import React from 'react';
 import {
   View,
   StyleSheet,
-  Image,
-  Text,
   TouchableOpacity,
   TextInput,
+  Text,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -51,11 +50,12 @@ export default class HeaderComponent extends React.Component {
             <Icon
               name="search"
               size={16}
-              style={{color: '#555', marginRight: 5}}></Icon>
-            <TextInput style={{flex: 1, color: '#000'}}></TextInput>
+              style={{color: '#555', marginRight: 5}}
+            />
+            <TextInput style={{flex: 1, color: '#000'}} />
           </View>
         ) : (
-          <View></View>
+          <View />
         )}
       </View>
     );

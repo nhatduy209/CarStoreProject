@@ -1,12 +1,11 @@
 /* eslint-disable prettier/prettier */
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import React from 'react'
-import HomeScreen from '../../../views/home-screen/HomeScreen'
+import React from 'react';
+import HomeScreen from '../../../views/home-screen/HomeScreen';
+import {Image, View, TouchableOpacity} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
+import ProfileScreen from '../../../views/profile/ProfileScreen';
+import CartStack from '../../cart-stack/CartStack';
 import StoreInfoScreen from '../../../views/StoreInfoScreen';
-import { Image, View, TouchableOpacity, StyleSheet,Text } from 'react-native'
-import { createStackNavigator } from '@react-navigation/stack';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import TabBar from '../../TabBar';
 const Stack = createStackNavigator();
 
 const NavigationDrawerStructureLeft = props => {
@@ -16,45 +15,42 @@ const NavigationDrawerStructureLeft = props => {
     props.navigationProps.openDrawer();
   };
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={{flexDirection: 'row'}}>
       <TouchableOpacity onPress={toggleDrawer}>
         {/*Donute Button Image */}
         <Image
           source={require('../../../images/drawer.png')}
-          style={{ width: 25, height: 25, marginLeft: 5 }}
+          style={{width: 25, height: 25, marginLeft: 5}}
         />
       </TouchableOpacity>
     </View>
   );
 };
 
-
-
 export default class HomeScreenStack extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      sortUpOption: false
-    }
-
+      sortUpOption: false,
+    };
   }
   render() {
     return (
-        <Stack.Navigator >
-      <Stack.Screen
-        name="HomeScreen"
-        component={HomeScreen}   
-        options={{
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
             headerShown: false,
-            title:'',
-          headerLeft: ()=>
-            <NavigationDrawerStructureLeft
-              navigationProps={this.props.navigation}
-            />
-        }}
-      />
-      <Stack.Screen
+            title: '',
+            headerLeft: () => (
+              <NavigationDrawerStructureLeft
+                navigationProps={this.props.navigation}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
         name="StoreInfoScreen"
         component={StoreInfoScreen}   
         options={{
@@ -66,12 +62,24 @@ export default class HomeScreenStack extends React.Component {
             />
         }}
       />
+        <Stack.Screen
+          name="ProfileScreen"
+          component={ProfileScreen}
+          options={{
+            title: 'Profile',
+          }}
+        />
+
+        <Stack.Screen
+          name="CartStack"
+          component={CartStack}
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack.Navigator>
     );
   }
-
 }
 
 
-const styles = StyleSheet.create({
-})

@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TextInput,
   KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -42,7 +43,10 @@ class ForgotPasswordCodeScreen extends React.Component {
     if (typeof this.props.user.recoverCode === 'undefined') {
       this.props.navigation.goBack();
     }
-    if (this.state.recoverCode === ''&& typeof this.props.user.recoverCode.data !=='undefined') {
+    if (
+      this.state.recoverCode === '' &&
+      typeof this.props.user.recoverCode.data !== 'undefined'
+    ) {
       console.log('res', this.props.user.recoverCode.data.data);
       this.setState({recoverCode: this.props.user.recoverCode.data.data});
     }
@@ -59,8 +63,11 @@ class ForgotPasswordCodeScreen extends React.Component {
   setInputValue(value, idx) {
     const list = [];
     this.state.inputValue.forEach((element, index) => {
-      if (index === idx) list.push(value);
-      else list.push(element);
+      if (index === idx) {
+        list.push(value);
+      } else {
+        list.push(element);
+      }
     });
     this.setState({inputValue: list});
   }
@@ -76,7 +83,9 @@ class ForgotPasswordCodeScreen extends React.Component {
       const list = this.state.inputValue;
       list.push(value);
       this.setState({inputValue: list});
-      if (idx < this.inputRefs.length - 1) this.inputRefs[idx + 1].focus();
+      if (idx < this.inputRefs.length - 1) {
+        this.inputRefs[idx + 1].focus();
+      }
     }
     this.setState({prevIndex: idx});
   }
@@ -95,7 +104,9 @@ class ForgotPasswordCodeScreen extends React.Component {
     ) {
       this.setState({isIncorrect: false});
       this.props.navigation.navigate('ChangePasswordScreen');
-    } else this.setState({isIncorrect: true});
+    } else {
+      this.setState({isIncorrect: true});
+    }
   }
   render() {
     return (
@@ -110,7 +121,8 @@ class ForgotPasswordCodeScreen extends React.Component {
             <Icon
               name="arrow-left"
               size={16}
-              style={{color: '#555', marginRight: 5}}></Icon>
+              style={{color: '#555', marginRight: 5}}
+            />
           </TouchableOpacity>
           <View
             style={{
@@ -121,7 +133,12 @@ class ForgotPasswordCodeScreen extends React.Component {
             <Text style={{fontSize: 45, fontWeight: '700'}}>
               Enter 4-digit recovery code
             </Text>
-            <Text style={{fontSize: 24, fontWeight: '500', marginTop: '10%'}}>
+            <Text
+              style={{
+                fontSize: 24,
+                fontWeight: '500',
+                marginTop: '10%',
+              }}>
               The recovery code was sent to your mail. Please enter the code
             </Text>
           </View>
@@ -138,7 +155,8 @@ class ForgotPasswordCodeScreen extends React.Component {
                 maxLength={1}
                 onKeyPress={this.onKeyDown(idx)}
                 onChangeText={value => this.handleKeyDown(value, idx)}
-                style={styles.codeNumber}></TextInput>
+                style={styles.codeNumber}
+              />
             ))}
           </View>
           <Text

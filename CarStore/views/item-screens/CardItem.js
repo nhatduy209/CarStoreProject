@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Image, StyleSheet, Text, TouchableOpacity,UIManager,LayoutAnimation} from 'react-native';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 
 if (

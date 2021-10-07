@@ -1,6 +1,6 @@
 import {ACTION_NAME} from '../action/search-car/ActionName';
 
-const CAR_SEARCH= {
+const CAR_SEARCH = {
   car: {},
 };
 

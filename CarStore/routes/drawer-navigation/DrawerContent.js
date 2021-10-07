@@ -1,16 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Image,ImageBackground } from 'react-native';
-import { color } from 'react-native-reanimated';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  ImageBackground,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 export default class DrawerContent extends React.Component {
-
   constructor(props) {
     super(props);
   }
 
-  // handle navigate home 
+  // handle navigate home
   onHomePress = () => {
     this.props.navigation.navigate('HomeScreen');
   }
@@ -136,10 +141,10 @@ const styles = StyleSheet.create({
     textAlign:'left',
     width:'50%'
   },
-  choosenScreen:{
-    backgroundColor:'#fff',
-    marginRight:50,
-    borderTopRightRadius:50,
-    borderBottomRightRadius:50
-  }
-})
+  choosenScreen: {
+    backgroundColor: '#fff',
+    marginRight: 50,
+    borderTopRightRadius: 50,
+    borderBottomRightRadius: 50,
+  },
+});

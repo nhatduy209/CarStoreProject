@@ -4,13 +4,12 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
   TextInput,
   KeyboardAvoidingView,
   ScrollView,
+  Platform,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import axios from 'axios';
 import {connect} from 'react-redux';
 import {signUp} from '../../redux/action/login-action/SignUpAction';
 
@@ -34,7 +33,6 @@ class SignUpScreen extends React.Component {
       email: this.state.email,
       password: this.state.password,
       phone: this.state.phone,
-      email: this.state.email,
       name: this.state.name,
     };
     this.props.signUp(signupInfo);
@@ -55,9 +53,9 @@ class SignUpScreen extends React.Component {
     return (
       <KeyboardAvoidingView
         style={styles.container}
-        behavior={Platform.OS === "ios" ? "padding" : null}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}>
-        <ScrollView style={{height:'100%'}}>
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}>
+        <ScrollView style={{height: '100%'}}>
           <View style={{alignItems: 'center', marginVertical: '8%'}}>
             <Text style={{fontSize: 32, fontWeight: '500'}}>
               Create Account
@@ -72,12 +70,14 @@ class SignUpScreen extends React.Component {
                 <Icon
                   name="user"
                   size={16}
-                  style={{color: '#555', marginRight: 5}}></Icon>
+                  style={{color: '#555', marginRight: 5}}
+                />
                 <TextInput
-                  style={{flex: 1,color:'#000'}}
+                  style={{flex: 1, color: '#000'}}
                   placeholder={'Name'}
                   onChangeText={value => this.setState({name: value})}
-                  value={this.state.name}></TextInput>
+                  value={this.state.name}
+                />
               </View>
             </View>
             <View>
@@ -86,12 +86,14 @@ class SignUpScreen extends React.Component {
                 <Icon
                   name="phone"
                   size={16}
-                  style={{color: '#555', marginRight: 5}}></Icon>
+                  style={{color: '#555', marginRight: 5}}
+                />
                 <TextInput
-                  style={{flex: 1,color:'#000'}}
+                  style={{flex: 1, color: '#000'}}
                   placeholder={'Phone'}
                   onChangeText={value => this.setState({phone: value})}
-                  value={this.state.phone}></TextInput>
+                  value={this.state.phone}
+                />
               </View>
             </View>
             <View>
@@ -100,12 +102,14 @@ class SignUpScreen extends React.Component {
                 <Icon
                   name="envelope"
                   size={16}
-                  style={{color: '#555', marginRight: 5}}></Icon>
+                  style={{color: '#555', marginRight: 5}}
+                />
                 <TextInput
-                  style={{flex: 1,color:'#000'}}
+                  style={{flex: 1, color: '#000'}}
                   placeholder={'Email'}
                   onChangeText={value => this.setState({email: value})}
-                  value={this.state.email}></TextInput>
+                  value={this.state.email}
+                />
               </View>
             </View>
             <View>
@@ -115,13 +119,15 @@ class SignUpScreen extends React.Component {
                   onPress={this.handleHidePassowrd}
                   name={this.state.icon}
                   size={16}
-                  style={{color: '#555', marginRight: 5}}></Icon>
+                  style={{color: '#555', marginRight: 5}}
+                />
                 <TextInput
-                  style={{flex: 1,color:'#000'}}
+                  style={{flex: 1, color: '#000'}}
                   placeholder={'Password'}
                   secureTextEntry={this.state.hidePassword}
                   onChangeText={value => this.setState({password: value})}
-                  value={this.state.password}></TextInput>
+                  value={this.state.password}
+                />
               </View>
             </View>
             <View>
@@ -132,16 +138,20 @@ class SignUpScreen extends React.Component {
                   onPress={this.handleHideConfirmedPassowrd}
                   name={this.state.iconConfirm}
                   size={16}
-                  style={{color: '#555', marginRight: 5}}></Icon>
+                  style={{color: '#555', marginRight: 5}}
+                />
 
                 <TextInput
-                  style={{flex: 1,color:'#000'}}
+                  style={{flex: 1, color: '#000'}}
                   placeholder={'Confirm password'}
                   secureTextEntry={this.state.hideConfirmPassword}
                   onChangeText={value =>
-                    this.setState({passwordConfirmed: value})
+                    this.setState({
+                      passwordConfirmed: value,
+                    })
                   }
-                  value={this.state.passwordConfirmed}></TextInput>
+                  value={this.state.passwordConfirmed}
+                />
               </View>
             </View>
 

@@ -26,30 +26,34 @@ export default class HeaderComponent extends React.Component {
           borderBottomLeftRadius: 50,
           borderBottomRightRadius: 50,
         }}>
-        <Image
-          source={require('../images/headerbg.png')}
-          style={{
-            resizeMode: 'stretch',
-            height: 100,
-            opacity: 0.8,
-            width: '100%',
-            position: 'absolute',
-          }}
-        />
+        {this.props.showBackground ? (
+          <Image
+            source={require('../images/headerbg.png')}
+            style={{
+              resizeMode: 'stretch',
+              height: 100,
+              opacity: 0.8,
+              width: '100%',
+              position: 'absolute',
+            }}
+          />
+        ) : (
+          <View />
+        )}
         <View
           style={{
             flexDirection: 'row',
             height: 50,
             alignItems: 'center',
-            paddingHorizontal: 20,
+            paddingHorizontal: 32,
             position: 'relative',
-            top: 10,
+            top: 16,
           }}>
           <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
             <Icon
               name="arrow-left"
               size={16}
-              style={{color: '#fff', marginRight: 5}}
+              style={{color: '#999', marginRight: 5}}
             />
           </TouchableOpacity>
           <Text

@@ -33,7 +33,7 @@ class CardItem extends React.Component {
   }
   listOptionIcons = [
     {iconName: 'info', backgroundColor: '#7289da'},
-    {iconName: 'pen', backgroundColor: '#99cc33'},
+    {iconName: 'pencil', backgroundColor: '#99cc33'},
     {iconName: 'trash', backgroundColor: '#ee4035'},
   ];
   handleDetailItem = () => {

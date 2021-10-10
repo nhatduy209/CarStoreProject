@@ -9,22 +9,20 @@ export default class DrawerContent extends React.Component {
 
   // handle navigate home
   onHomePress = () => {
-    this.props.navigation.navigate('HomeScreen');
+    this.props.navigation.navigate('HomeScreenStack');
   };
   onStoreInfoPress = () => {
     this.props.navigation.navigate('StoreInfoScreen');
   };
   onManagePress = () => {
-    this.props.navigation.navigate('ManageItemsScreen', {
+    this.props.navigation.navigate('ManageItemScreenStack', {
       isManagementScreen: true,
     });
   };
+  onSettingPress = () => {
+    this.props.navigation.navigate('SettingScreenStack');
+  };
   listDrawerItems = [
-    {
-      iconName: 'user',
-      textContent: 'Profile',
-      handlePress: this.onHomePress,
-    },
     {
       iconName: 'home',
       textContent: 'Home',
@@ -33,7 +31,7 @@ export default class DrawerContent extends React.Component {
     {
       iconName: 'car',
       textContent: 'Product',
-      handlePress: this.onHomePress,
+      handlePress: this.onManagePress,
     },
     {
       iconName: 'book',
@@ -42,13 +40,18 @@ export default class DrawerContent extends React.Component {
     },
     {
       iconName: 'phone',
-      textContent: 'Manage',
-      handlePress: this.onManagePress,
-    },
-    {
-      iconName: 'phone',
       textContent: 'Store Info',
       handlePress: this.onStoreInfoPress,
+    },
+    {
+      iconName: 'gear',
+      textContent: 'Setting',
+      handlePress: this.onSettingPress,
+    },
+    {
+      iconName: 'snapchat',
+      textContent: 'Statistic',
+      handlePress: this.onSettingPress,
     },
     {
       iconName: 'check',

@@ -1,10 +1,7 @@
 import React from 'react';
-import HomeScreen from '../../../views/home-screen/HomeScreen';
 import {Image, View, TouchableOpacity} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import ProfileScreen from '../../../views/profile/ProfileScreen';
-import CartStack from '../../cart-stack/CartStack';
-import StoreInfoScreen from '../../../views/store-screen/StoreInfoScreen';
+import SettingScreen from '../../../views/setting-screen/SettingScreen';
 const Stack = createStackNavigator();
 
 const NavigationDrawerStructureLeft = props => {
@@ -26,7 +23,7 @@ const NavigationDrawerStructureLeft = props => {
   );
 };
 
-export default class HomeScreenStack extends React.Component {
+export default class ManageItemScreenStack extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,8 +34,8 @@ export default class HomeScreenStack extends React.Component {
     return (
       <Stack.Navigator>
         <Stack.Screen
-          name="Home"
-          component={HomeScreen}
+          name="SettingScreen"
+          component={SettingScreen}
           options={{
             headerShown: false,
             title: '',
@@ -47,34 +44,6 @@ export default class HomeScreenStack extends React.Component {
                 navigationProps={this.props.navigation}
               />
             ),
-          }}
-        />
-        <Stack.Screen
-          name="StoreInfoScreen"
-          component={StoreInfoScreen}
-          options={{
-            headerShown: false,
-            title: '',
-            headerLeft: () => (
-              <NavigationDrawerStructureLeft
-                navigationProps={this.props.navigation}
-              />
-            ),
-          }}
-        />
-        <Stack.Screen
-          name="ProfileScreen"
-          component={ProfileScreen}
-          options={{
-            title: 'Profile',
-          }}
-        />
-
-        <Stack.Screen
-          name="CartStack"
-          component={CartStack}
-          options={{
-            headerShown: false,
           }}
         />
       </Stack.Navigator>

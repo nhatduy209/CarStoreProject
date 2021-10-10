@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Image, Text, TouchableOpacity} from 'react-native';
-import HeaderComponent from './headerComponent';
-// import {TouchableOpacity} from 'react-native-gesture-handler';
+import HeaderComponent from '../headerComponent';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 
@@ -71,7 +70,7 @@ class StoreInfoScreen extends React.Component {
             </Text>
           </TouchableOpacity>
           <Image
-            source={require('../images/TestImage.png')}
+            source={require('../../images/TestImage.png')}
             style={{
               resizeMode: 'center',
               height: 250,

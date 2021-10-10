@@ -3,12 +3,11 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 
+const avatarUrlDefault =
+  'https://cdn-icons.flaticon.com/png/512/3899/premium/3899618.png?token=exp=1633858815~hmac=a43363f78b47cd09622836ef7277fbfb';
 class SettingItemComponent extends React.Component {
   constructor(props) {
     super(props);
-  }
-  componentDidMount() {
-    console.log(this.props.user.data.email);
   }
   renderIcon = () => {
     return !this.props.item ? (
@@ -18,7 +17,11 @@ class SettingItemComponent extends React.Component {
           {height: 80, width: 80, borderRadius: 50},
         ]}>
         <Image
-          source={{uri: this.props.user.data.avatar}}
+          source={{
+            uri: this.props.user
+              ? this.props.user.data.avatar
+              : avatarUrlDefault,
+          }}
           style={{
             height: 70,
             width: 70,
@@ -48,9 +51,7 @@ class SettingItemComponent extends React.Component {
             width: '60%',
           }}>
           <Text style={{fontSize: 18, width: '70%'}}>
-            {!this.props.item
-              ? this.props.user.data.email
-              : this.props.item.name}
+            {!this.props.item ? 'di đĩ' : this.props.item.name}
           </Text>
           <Text style={{color: '#aaa', width: '60%'}}>
             {!this.props.item ? 'Personal Info' : 'something'}

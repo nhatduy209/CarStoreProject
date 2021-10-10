@@ -8,9 +8,12 @@ import {
   ScrollView,
 } from 'react-native';
 import CountryPicker from 'react-native-country-picker-modal';
+import {Picker} from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Moment from 'react-moment';
 import {connect} from 'react-redux';
+import {createBooking} from '../../redux/action/booking/BookingAction';
+
 class BookingScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -25,6 +28,8 @@ class BookingScreen extends React.Component {
       phoneNum: this.props.user.data.phoneNum,
       email: this.props.user.data.email,
       personalID: '',
+      selectedCar: 'choose your car',
+      fullName: '',
     };
   }
 
@@ -54,7 +59,23 @@ class BookingScreen extends React.Component {
   };
 
   handleSubmit = () => {
-    console.log('------------------------', this.state.personalID);
+    const data = {
+      full_name: this.state.fullName,
+      clients_email: this.state.email,
+      country: this.state.country,
+      birthday: this.state.birthday,
+      personal_id: this.state.personalID,
+      phone_number: this.state.phoneNum,
+      date_meeting: this.state.date,
+      car_booking: {
+        car_name: this.state.selectedCar.car_name,
+        image: this.state.selectedCar.img,
+        color: this.state.selectedCar.color,
+      },
+    };
+
+    console.log('THIS IS SELECTED CAR ', this.state.selectedCar);
+    this.props.createBooking(data);
   };
   render() {
     const birthday = new Date(this.state.birthday);
@@ -88,8 +109,25 @@ class BookingScreen extends React.Component {
           </View>
 
           <View style={styles.inputView}>
+            <Text style={styles.textInfo}>Choose your car</Text>
+            <Picker
+              mode="dropdown"
+              selectedValue={this.state.selectedCar}
+              onValueChange={(itemValue, itemIndex) =>
+                this.setState({selectedCar: itemValue})
+              }>
+              {this.props.cart.data.map((item, index) => {
+                return <Picker.Item label={item.car_name} value={item} />;
+              })}
+            </Picker>
+          </View>
+
+          <View style={styles.inputView}>
             <Text style={styles.textInfo}>Full name</Text>
-            <TextInput style={styles.inputInfo} />
+            <TextInput
+              onChangeText={value => this.setState({fullName: value})}
+              style={styles.inputInfo}
+            />
           </View>
 
           <View style={styles.inputView}>
@@ -233,9 +271,10 @@ class BookingScreen extends React.Component {
 function mapStateToProps(state) {
   return {
     user: state.UserReducer.user.data,
+    cart: state.CartReducer.cart,
   };
 }
-export default connect(mapStateToProps, {})(BookingScreen);
+export default connect(mapStateToProps, {createBooking})(BookingScreen);
 
 const styles = new StyleSheet.create({
   container: {

@@ -51,17 +51,18 @@ export default class HomeScreenStack extends React.Component {
           }}
         />
         <Stack.Screen
-        name="StoreInfoScreen"
-        component={StoreInfoScreen}
-        options={{
+          name="StoreInfoScreen"
+          component={StoreInfoScreen}
+          options={{
             headerShown: false,
-            title:'',
-          headerLeft: ()=>
-            <NavigationDrawerStructureLeft
-              navigationProps={this.props.navigation}
-            />,
-        }}
-      />
+            title: '',
+            headerLeft: () => (
+              <NavigationDrawerStructureLeft
+                navigationProps={this.props.navigation}
+              />
+            ),
+          }}
+        />
         <Stack.Screen
           name="ProfileScreen"
           component={ProfileScreen}
@@ -81,5 +82,3 @@ export default class HomeScreenStack extends React.Component {
     );
   }
 }
-
-

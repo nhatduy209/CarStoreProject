@@ -17,26 +17,9 @@ import {connect} from 'react-redux';
 import RevealCycle from './RevealCycle';
 import RenderCarOnSale from './RenderCarOnSale';
 import {searchCar} from '../../redux/action/search-car/SearchAction';
+import {getListCategory} from '../../redux/action/get-list-category/GetListCategory';
 import ModalWarningLogin from '../modal/ModalWarningLogin';
 import AllItemsScreen from '../item-screens/AllItemsScreen';
-const Categories = [
-  {
-    title: 'Toyota',
-    img: require('../../images/categories-car/toyota.png'),
-  },
-  {
-    title: 'Ford',
-    img: require('../../images/categories-car/ford.png'),
-  },
-  {
-    title: 'Vinfast',
-    img: require('../../images/categories-car/vinfast.png'),
-  },
-  {
-    title: 'Suzuki',
-    img: require('../../images/categories-car/suzuki.png'),
-  },
-];
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -48,6 +31,7 @@ class HomeScreen extends React.Component {
 
   componentDidMount() {
     this.props.getListCar();
+    this.props.getListCategory();
     this.backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       this.backAction,
@@ -69,8 +53,8 @@ class HomeScreen extends React.Component {
     return (
       <TouchableOpacity>
         <View style={styles.renderItemStyle}>
-          <Image source={item.img} style={{width: 100, height: 100}} />
-          <Text style={{fontWeight: 'bold'}}>{item.title}</Text>
+          <Image source={{uri: item.image}} style={{width: 100, height: 100}} />
+          <Text style={{fontWeight: 'bold'}}>{item.name}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -194,9 +178,11 @@ class HomeScreen extends React.Component {
             <View style={{padding: 10}}>
               <FlatList
                 horizontal
-                data={Categories}
+                data={
+                  this.props.category.data ? this.props.category.data.data : []
+                }
                 renderItem={this.renderCategories}
-                keyExtractor={item => item.title}
+                keyExtractor={item => item.name}
                 showsHorizontalScrollIndicator={false}
               />
             </View>
@@ -233,10 +219,15 @@ const mapStateToProps = state => {
     car: state.CarReducer.car,
     search_car: state.SearchReducer.car,
     isShow: state.ModalReducer.isShow,
+    category: state.CategoryReducer.category,
   };
 };
 
-export default connect(mapStateToProps, {getListCar, searchCar})(HomeScreen);
+export default connect(mapStateToProps, {
+  getListCar,
+  searchCar,
+  getListCategory,
+})(HomeScreen);
 
 const styles = new StyleSheet.create({
   Container: {

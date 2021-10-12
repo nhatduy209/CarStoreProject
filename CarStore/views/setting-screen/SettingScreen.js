@@ -42,7 +42,7 @@ export default class SettingScreen extends React.Component {
           <View>
             <Text style={styles.groupItemTitle}>Account</Text>
             <SettingItemComponent />
-            <Text style={styles.groupItemTitle}>Account</Text>
+            <Text style={styles.groupItemTitle}>Settings</Text>
             {this.listItem.map((item, index) =>
               this.renderSettingItem(item, index),
             )}

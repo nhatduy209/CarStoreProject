@@ -8,6 +8,7 @@ const USER_STATE = {
 };
 
 const UserReducer = (state = USER_STATE, action) => {
+  console.log('LOGIN WITH EMAIL ', action);
   switch (action.type) {
     case ACTION_NAME.LOGIN_ACTION.LOGIN_ACTION:
       return {
@@ -25,6 +26,16 @@ const UserReducer = (state = USER_STATE, action) => {
         recoverCode: action.data,
       };
     case ACTION_NAME.CHANGEPASSWORD_ACTION.CHANGEPASSWORD_ACTION:
+      return {
+        ...state,
+        user: action.data,
+      };
+    case ACTION_NAME.LOGIN_WITH_EMAIL_ACTION.LOGIN_WITH_EMAIL_ACTION_SUCCESS:
+      return {
+        ...state,
+        user: action.data,
+      };
+    case ACTION_NAME.LOGIN_WITH_EMAIL_ACTION.LOGIN_WITH_EMAIL_ACTION_FAIL:
       return {
         ...state,
         user: action.data,

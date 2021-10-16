@@ -10,12 +10,19 @@ export default class LoginBusiness {
       password: data.password,
     };
     var result = await postService.PostAPI(url, params);
-    // if(result.status === STATUS.SUCCESS){
-    //   resolve(result);
-    // }
-    // else{
-    //   reject(result)
-    // }
+    return result;
+  };
+
+  loginWithEmailBusiness = async data => {
+    var postService = new PostService();
+    const url = URL_HEROKU + 'account/loginwithgmail';
+
+    const params = {
+      email: data.email,
+      displayName: data.displayName,
+      photoURL: data.displayName,
+    };
+    var result = await postService.PostAPI(url, params);
     return result;
   };
 }

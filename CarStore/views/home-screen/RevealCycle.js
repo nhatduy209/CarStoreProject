@@ -5,6 +5,8 @@ import CircleTransition from 'react-native-circle-reveal-view';
 import {connect} from 'react-redux';
 import {STATUS} from '../../config/Status';
 import {showModalNotLogin} from '../../redux/action/show-modal/ShowModalAction';
+
+const marginL = 20;
 class RevealCycle extends React.Component {
   constructor(props) {
     super(props);
@@ -14,7 +16,7 @@ class RevealCycle extends React.Component {
     if (this.props.user.status === STATUS.SUCCESS) {
       return (
         <TouchableOpacity
-          style={{marginLeft: 60, marginVertical: 8}}
+          style={{marginLeft: marginL, marginVertical: 8}}
           onPress={() => this.props.navigation.navigate('LoginScreen')}>
           <Icon name="sign-out-alt" size={28} />
         </TouchableOpacity>
@@ -22,7 +24,7 @@ class RevealCycle extends React.Component {
     } else {
       return (
         <TouchableOpacity
-          style={{marginLeft: 60, marginVertical: 8}}
+          style={{marginLeft: marginL, marginVertical: 8}}
           onPress={() => this.props.navigation.navigate('LoginScreen')}>
           <Icon name="sign-in-alt" size={28} />
         </TouchableOpacity>
@@ -40,6 +42,10 @@ class RevealCycle extends React.Component {
 
   handleGoToCart = () => {
     this.props.navigation.navigate('CartStack');
+  };
+
+  handleGoToCalendar = () => {
+    this.props.navigation.navigate('CalendarScreen');
   };
 
   render() {
@@ -71,15 +77,21 @@ class RevealCycle extends React.Component {
               <this.renderSignInIcons />
 
               <TouchableOpacity
-                style={{marginLeft: 100, marginVertical: 8}}
+                style={{marginLeft: marginL + 40, marginVertical: 8}}
                 onPress={this.handleGoToUserProfile}>
                 <Icon name="user" size={28} />
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={{marginLeft: 140, marginVertical: 8}}
+                style={{marginLeft: marginL + 80, marginVertical: 8}}
                 onPress={this.handleGoToCart}>
                 <Icon name="shopping-cart" size={28} />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{marginLeft: marginL + 120, marginVertical: 8}}
+                onPress={this.handleGoToCalendar}>
+                <Icon name="calendar" size={28} />
               </TouchableOpacity>
             </View>
           </CircleTransition>

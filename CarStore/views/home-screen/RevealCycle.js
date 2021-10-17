@@ -45,7 +45,7 @@ class RevealCycle extends React.Component {
   };
 
   handleGoToCalendar = () => {
-    this.props.navigation.navigate('CalendarScreen');
+    this.props.navigation.navigate('CalendarStack');
   };
 
   render() {

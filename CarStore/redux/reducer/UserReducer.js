@@ -8,7 +8,6 @@ const USER_STATE = {
 };
 
 const UserReducer = (state = USER_STATE, action) => {
-  console.log('LOGIN WITH EMAIL ', action);
   switch (action.type) {
     case ACTION_NAME.LOGIN_ACTION.LOGIN_ACTION:
       return {

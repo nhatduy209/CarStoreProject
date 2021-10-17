@@ -31,16 +31,26 @@ class CalendarScreen extends React.Component {
         list_meetings[newDate] = objSample.key2;
       }
     });
-    console.log('LIST MEETING -----', list_meetings);
     return list_meetings;
   };
+
+  handleDayPress = date => {
+    this.props.user.filter(item => {
+      if (
+        date.dateString === moment.utc(item.date_meeting).format('YYYY-MM-DD')
+      ) {
+        this.props.navigation.navigate('BookingDetailScreen', {booking: item});
+      }
+    });
+  };
+
   render() {
     return (
       <View style={styles.container}>
         <View style={{alignItems: 'center', padding: 20}}>
           <Icon name="calendar-alt" size={30} />
           <Text style={{marginTop: 20}}>
-            You are having {this.props.user.length} booking appoinment
+            You are having {this.props.user.length} booking appointment
           </Text>
         </View>
         <CalendarList
@@ -54,6 +64,7 @@ class CalendarScreen extends React.Component {
           pagingEnabled={true}
           // Set custom calendarWidth.
           markedDates={this.showDateMeetings()}
+          onDayPress={date => this.handleDayPress(date)}
           minDate={new Date()}
         />
       </View>

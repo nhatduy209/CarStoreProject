@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import HeaderComponent from '../../headerComponent';
 import {FlatList} from 'react-native-gesture-handler';
-import ColorPickerComponent from '../ColorPickerComponent';
+import ColorPickerComponent from '../component/ColorPickerComponent';
 export default class UpsertItemScreen extends React.Component {
   constructor(props) {
     super(props);

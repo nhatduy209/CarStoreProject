@@ -7,7 +7,7 @@ import CardItem from './CardItem';
 import {searchCar} from '../../redux/action/search-car/SearchAction';
 import HeaderComponent from '../headerComponent';
 import {getListCar} from '../../redux/action/get-list-car/GetListCar';
-import {FlatList} from 'react-native-gesture-handler';
+import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 class AllItemsScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -58,14 +58,17 @@ class AllItemsScreen extends React.Component {
     return (
       <View style={styles.addContainer}>
         <Text style={{fontSize: 20}}>Item Count: {this.state.countItem}</Text>
-        <View
+        <TouchableOpacity
+          onPress={() =>
+            this.props.navigation.navigate('UpsertItemScreen', {action: 'add'})
+          }
           style={[
             styles.btnBuy,
             styles.shadowBox,
             {backgroundColor: '#9695c1'},
           ]}>
           <Icon style={styles.btn__text} name="plus" />
-        </View>
+        </TouchableOpacity>
       </View>
     );
   };

@@ -11,7 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import HeaderComponent from '../headerComponent';
 import RelatedItemList from './RelatedItemList';
-import ColorPickerComponent from './ColorPickerComponent';
+import ColorPickerComponent from './component/ColorPickerComponent';
 import {addToCart} from '../../redux/action/add-to-cart/AddToCart';
 import {connect} from 'react-redux';
 

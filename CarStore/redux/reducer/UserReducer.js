@@ -1,6 +1,6 @@
 import {STATUS} from '../../config/Status';
 import {ACTION_NAME} from '../action/login-action/ActionName';
-
+import {REHYDRATE} from 'redux-persist';
 const USER_STATE = {
   user: {
     status: STATUS.FAIL,
@@ -9,6 +9,13 @@ const USER_STATE = {
 
 const UserReducer = (state = USER_STATE, action) => {
   switch (action.type) {
+    case REHYDRATE:
+      console.log('RELOAD _----', action.payload?.user);
+      return {
+        ...state,
+        user: action.payload?.user,
+      };
+
     case ACTION_NAME.LOGIN_ACTION.LOGIN_ACTION:
       return {
         ...state,

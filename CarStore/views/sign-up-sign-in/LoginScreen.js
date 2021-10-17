@@ -95,7 +95,7 @@ class LoginScreen extends React.Component {
   };
 
   componentDidUpdate() {
-    if (this.props.user.status === STATUS.SUCCESS) {
+    if (this.props.user?.status === STATUS.SUCCESS) {
       this.props.navigation.navigate('RootDrawer');
     }
   }

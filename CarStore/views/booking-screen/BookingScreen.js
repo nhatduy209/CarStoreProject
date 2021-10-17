@@ -80,6 +80,18 @@ class BookingScreen extends React.Component {
     console.log('THIS IS SELECTED CAR ', this.state.selectedCar);
     this.props.createBooking({data});
   };
+  handleModalButton = () => {
+    return this.props.booking.BOOKING_STATUS === 'SUCCESS'
+      ? 'Go to calendar'
+      : ' Close';
+  };
+  handleCloseModal = () => {
+    // if (this.props.booking.BOOKING_STATUS === 'SUCCESS') {
+    // }
+    console.log('navigate');
+    this.props.navigation.navigate('CalendarStack');
+    this.props.changeShowModalState();
+  };
   render() {
     const birthday = new Date(this.state.birthday);
     const {email, phoneNum} = this.props.user.data;
@@ -88,19 +100,14 @@ class BookingScreen extends React.Component {
         <Modal
           animationType="slide"
           transparent={true}
-          visible={this.props.booking.showModal}
-          onRequestClose={() => {
-            this.props.changeShowModalState();
-          }}>
+          visible={this.props.booking.showModal}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>
-                {this.props.booking.STATUS_BOOKING}
-              </Text>
+              <Text style={styles.modalText}>{this.props.booking.message}</Text>
               <TouchableOpacity
                 style={[styles.button, styles.buttonClose]}
-                onPress={() => this.props.changeShowModalState()}>
-                <Text style={styles.textStyle}>Hide Modal</Text>
+                onPress={() => this.handleCloseModal()}>
+                <Text style={styles.textStyle}>{this.handleModalButton()}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -372,5 +379,7 @@ const styles = new StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+    fontSize: 16,
+    fontWeight: '700',
   },
 });

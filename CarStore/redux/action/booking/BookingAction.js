@@ -5,7 +5,6 @@ export const createBooking = data => async dispatch => {
   var bookingBusiness = new BookingBusiness();
   const result = bookingBusiness.booking(data.data);
   if (result.status === STATUS.SUCCESS) {
-    data.onSuccess();
     dispatch({
       type: ACTION_NAME.BOOKING_ACTION.BOOKING_SUCCESS,
       data: result.data,

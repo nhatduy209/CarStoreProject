@@ -7,14 +7,14 @@ const BOOKING_STATE = {
 };
 
 const BookingReducer = (state = BOOKING_STATE, action) => {
+  console.log(action);
   switch (action.type) {
     case ACTION_NAME.BOOKING_ACTION.BOOKING_SUCCESS:
-      action.action();
       return {
         ...state,
         STATUS_BOOKING: STATUS.SUCCESS,
         showModal: true,
-        data: action.data,
+        message: 'You have just made an apointment successfully',
       };
     case ACTION_NAME.BOOKING_ACTION.BOOKING_FAIL:
       return {
@@ -22,6 +22,7 @@ const BookingReducer = (state = BOOKING_STATE, action) => {
         STATUS_BOOKING: STATUS.FAIL,
         showModal: true,
         data: action.data,
+        message: 'Your booking apointment is fail',
       };
     case ACTION_NAME.BOOKING_ACTION.BOOKING_CHANGE_MODAL:
       return {

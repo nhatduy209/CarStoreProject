@@ -18,12 +18,12 @@ class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: this.props.user.data.avatar,
-      phoneNum: this.props.user.data.phoneNum,
-      gender: this.props.user.data.gender, // true is male and false is female
+      url: this.props.user?.data?.avatar ?? 'Set avatar',
+      phoneNum: this.props.user.data?.phoneNum ?? 'Set your phone number',
+      gender: this.props.user?.data?.gender ?? true, // true is male and false is female
       isCalendarVisible: false,
-      date: this.props.user.data.birthday,
-      address: this.props.user.data.address,
+      date: this.props.user?.data?.birthday ?? new Date(),
+      address: this.props.user?.data?.address ?? 'Set your address ',
       email: this.props.user.data.email,
     };
   }

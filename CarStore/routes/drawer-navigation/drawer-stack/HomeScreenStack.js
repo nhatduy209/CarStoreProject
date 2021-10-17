@@ -5,6 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import ProfileScreen from '../../../views/profile/ProfileScreen';
 import CartStack from '../../cart-stack/CartStack';
 import StoreInfoScreen from '../../../views/store-screen/StoreInfoScreen';
+import CalendarStack from '../../calendar-stack/CalendarStack';
 const Stack = createStackNavigator();
 
 const NavigationDrawerStructureLeft = props => {
@@ -35,7 +36,7 @@ export default class HomeScreenStack extends React.Component {
   }
   render() {
     return (
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{headerTitleAlign: 'center'}}>
         <Stack.Screen
           name="Home"
           component={HomeScreen}
@@ -73,6 +74,14 @@ export default class HomeScreenStack extends React.Component {
         <Stack.Screen
           name="CartStack"
           component={CartStack}
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="CalendarStack"
+          component={CalendarStack}
           options={{
             headerShown: false,
           }}

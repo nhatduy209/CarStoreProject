@@ -13,7 +13,10 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import Slider from '@react-native-community/slider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {connect} from 'react-redux';
-import {login} from '../../redux/action/login-action/LoginAction';
+import {
+  login,
+  loginWithEmail,
+} from '../../redux/action/login-action/LoginAction';
 import {
   GoogleSignin,
   statusCodes,
@@ -92,7 +95,7 @@ class LoginScreen extends React.Component {
   };
 
   componentDidUpdate() {
-    if (this.props.user.status === STATUS.SUCCESS) {
+    if (this.props.user?.status === STATUS.SUCCESS) {
       this.props.navigation.navigate('RootDrawer');
     }
   }
@@ -106,7 +109,8 @@ class LoginScreen extends React.Component {
     try {
       const {idToken} = await GoogleSignin.signIn();
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      console.log('auth', auth().currentUser);
+      console.log('auth', auth().currentUser.providerData);
+      this.props.loginWithEmail(auth().currentUser);
       //TODO :  add api sign up here
       return auth().signInWithCredential(googleCredential);
     } catch (error) {
@@ -305,7 +309,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {login})(LoginScreen);
+export default connect(mapStateToProps, {login, loginWithEmail})(LoginScreen);
 
 const styles = StyleSheet.create({
   container: {

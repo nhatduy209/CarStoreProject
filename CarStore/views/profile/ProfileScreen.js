@@ -14,6 +14,8 @@ import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as ImagePicker from 'react-native-image-picker';
 import Moment from 'react-moment';
+import {changeInfo} from '../../redux/action/change-info/ChangeInfoAction';
+import {uploadImageToStorage} from '../../common/pushImage';
 class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -53,8 +55,25 @@ class ProfileScreen extends React.Component {
     });
   };
 
+  handleSaveInfo = url => {
+    const data = {
+      url: url,
+      email: this.state.email,
+      phoneNum: this.state.phoneNum,
+      gender: this.state.gender, // true is male and false is female
+      isCalendarVisible: this.state.isCalendarVisible,
+      date: this.state.date,
+      address: this.state.address,
+    };
+    this.props.changeInfo(data);
+  };
   handleSave = () => {
     // TODO TRAN THANH TOAN HANDLE SAVE INFO
+    if (this.state.Avatar) {
+      uploadImageToStorage(this.state.url, this.state.Avatar, url =>
+        this.handleSaveInfo(url),
+      );
+    }
   };
 
   onChange = (event, selectedDate) => {
@@ -213,7 +232,7 @@ function mapStateToProps(state) {
     user: state.UserReducer.user.data,
   };
 }
-export default connect(mapStateToProps, {})(ProfileScreen);
+export default connect(mapStateToProps, {changeInfo})(ProfileScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,

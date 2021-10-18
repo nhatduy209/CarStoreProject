@@ -1,6 +1,7 @@
 /* eslint-disable react/no-did-mount-set-state */
 import React from 'react';
 import {View, StyleSheet, FlatList, TouchableOpacity, Text} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 const handleColor = item => {
   switch (item.toUpperCase()) {
     case 'SILVER':
@@ -19,28 +20,44 @@ export default class ColorPickerComponent extends React.Component {
     };
   }
   componentDidMount() {
+    console.log('picker', this.props.data);
     const list = [];
     this.props.data
       ? this.props.data.forEach(element => list.push(element.color))
       : console.log(1);
+    list.push('add');
     this.setState({listColor: list});
   }
   componentDidUpdate(prevProps) {
-    if (prevProps.data !== this.props.data) {
+    if (prevProps !== this.props) {
       console.log(this.props.data);
       const list = [];
       this.props.data
         ? this.props.data.forEach(element => list.push(element.color))
         : console.log(1);
+      list.push('add');
       this.setState({listColor: list});
     }
   }
+  handleAddColor = () => {
+    this.props.navigation.push('AddImageItemScreen');
+  };
   renderItem({item}) {
-    return (
-      <TouchableOpacity
-        style={[styles.colorBox, {backgroundColor: handleColor(item)}]}
-      />
-    );
+    if (item === 'add' && this.props.isManageItem) {
+      return (
+        <TouchableOpacity
+          onPress={() => this.handleAddColor()}
+          style={[styles.addBox, {backgroundColor: '#ccc'}]}>
+          <Icon name="plus" size={20} />
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <TouchableOpacity
+          style={[styles.colorBox, {backgroundColor: handleColor(item)}]}
+        />
+      );
+    }
   }
   separateItem = () => {
     return <View style={{width: 12}} />;
@@ -67,5 +84,12 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 50,
+  },
+  addBox: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

@@ -1,5 +1,6 @@
 import {STATUS} from '../../config/Status';
 import {ACTION_NAME} from '../action/login-action/ActionName';
+import {ACTION_NAME as CHANGE_INFO_ACTION_NAME} from '../action/change-info/ActionName';
 import {REHYDRATE} from 'redux-persist';
 const USER_STATE = {
   user: {
@@ -44,7 +45,18 @@ const UserReducer = (state = USER_STATE, action) => {
     case ACTION_NAME.LOGIN_WITH_EMAIL_ACTION.LOGIN_WITH_EMAIL_ACTION_FAIL:
       return {
         ...state,
+        status: true,
         user: action.data,
+      };
+    case CHANGE_INFO_ACTION_NAME.CHANGE_INFO_ACTION.CHANGE_INFO_SUCCESS:
+      return {
+        ...state,
+        user: {data: action.data, status: 'SUCCESS'},
+      };
+    case CHANGE_INFO_ACTION_NAME.CHANGE_INFO_ACTION.CHANGE_INFO_FAIL:
+      return {
+        ...state,
+        user: {data: action.data, status: 'SUCCESS'},
       };
     default:
       return state;

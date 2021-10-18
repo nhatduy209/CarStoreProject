@@ -1,6 +1,8 @@
 import React from 'react';
 import {Image, View, TouchableOpacity} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
+import UpsertItemScreen from '../../../views/item-screens/manage-item/UpsertItemScreen';
+import AddImageItemScreen from '../../../views/item-screens/manage-item/AddImageItemScreen';
 import ManageItemsScreen from '../../../views/item-screens/manage-item/ManageItemsScreen';
 const Stack = createStackNavigator();
 
@@ -44,6 +46,22 @@ export default class ManageItemScreenStack extends React.Component {
                 navigationProps={this.props.navigation}
               />
             ),
+          }}
+        />
+        <Stack.Screen
+          name="UpsertItemScreen"
+          component={UpsertItemScreen}
+          options={{
+            headerShown: false,
+            title: '',
+          }}
+        />
+        <Stack.Screen
+          name="AddImageItemScreen"
+          component={AddImageItemScreen}
+          options={{
+            headerShown: false,
+            title: '',
           }}
         />
       </Stack.Navigator>

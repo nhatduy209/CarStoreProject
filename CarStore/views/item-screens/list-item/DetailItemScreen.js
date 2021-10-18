@@ -9,10 +9,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import HeaderComponent from '../headerComponent';
+import HeaderComponent from '../../headerComponent';
 import RelatedItemList from './RelatedItemList';
-import ColorPickerComponent from './ColorPickerComponent';
-import {addToCart} from '../../redux/action/add-to-cart/AddToCart';
+import ColorPickerComponent from '../component/ColorPickerComponent';
+import {addToCart} from '../../../redux/action/add-to-cart/AddToCart';
 import {connect} from 'react-redux';
 
 class DetailItemScreen extends React.Component {
@@ -25,8 +25,8 @@ class DetailItemScreen extends React.Component {
     };
   }
   componentDidMount() {
-    // console.log("props",this.props.route.params.data)
-    // console.log("state", this.props.car)
+    console.log('props', this.props.route.params.data);
+    // console.log('state', this.props.car);
     this.setState({itemInfo: this.props.route.params.data});
     const list = this.props.car.data.filter(item => {
       return item.category === this.props.route.params.data.category;
@@ -115,7 +115,7 @@ class DetailItemScreen extends React.Component {
                     styles.imageItem,
                     {width: 60, height: 60, borderRadius: 120},
                   ]}
-                  source={require('../../images/categories-car/toyota.png')}
+                  source={require('../../../images/categories-car/toyota.png')}
                 />
                 <View style={styles.chat}>
                   <Icon name="heart" size={24} />

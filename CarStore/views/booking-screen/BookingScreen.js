@@ -6,13 +6,17 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Modal,
 } from 'react-native';
 import CountryPicker from 'react-native-country-picker-modal';
 import {Picker} from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Moment from 'react-moment';
 import {connect} from 'react-redux';
-import {createBooking} from '../../redux/action/booking/BookingAction';
+import {
+  createBooking,
+  changeShowModalState,
+} from '../../redux/action/booking/BookingAction';
 
 class BookingScreen extends React.Component {
   constructor(props) {
@@ -32,7 +36,6 @@ class BookingScreen extends React.Component {
       fullName: '',
     };
   }
-
   handleSelect = item => {
     console.log('COUNTRY SELECTED ----', item);
     this.setState({country: item.name, countryCode: item.cca2});
@@ -75,13 +78,40 @@ class BookingScreen extends React.Component {
     };
 
     console.log('THIS IS SELECTED CAR ', this.state.selectedCar);
-    this.props.createBooking(data);
+    this.props.createBooking({data});
+  };
+  handleModalButton = () => {
+    return this.props.booking.BOOKING_STATUS === 'SUCCESS'
+      ? 'Go to calendar'
+      : ' Close';
+  };
+  handleCloseModal = () => {
+    // if (this.props.booking.BOOKING_STATUS === 'SUCCESS') {
+    // }
+    console.log('navigate');
+    this.props.navigation.navigate('CalendarStack');
+    this.props.changeShowModalState();
   };
   render() {
     const birthday = new Date(this.state.birthday);
     const {email, phoneNum} = this.props.user.data;
     return (
       <View style={styles.container}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.props.booking.showModal}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>{this.props.booking.message}</Text>
+              <TouchableOpacity
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => this.handleCloseModal()}>
+                <Text style={styles.textStyle}>{this.handleModalButton()}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
         <Text style={{fontSize: 23, marginTop: 20}}>
           Booking an Appointment
         </Text>
@@ -272,9 +302,12 @@ function mapStateToProps(state) {
   return {
     user: state.UserReducer.user.data,
     cart: state.CartReducer.cart,
+    booking: state.BookingReducer,
   };
 }
-export default connect(mapStateToProps, {createBooking})(BookingScreen);
+export default connect(mapStateToProps, {createBooking, changeShowModalState})(
+  BookingScreen,
+);
 
 const styles = new StyleSheet.create({
   container: {
@@ -305,5 +338,48 @@ const styles = new StyleSheet.create({
   txtButton: {
     fontSize: 20,
     textAlign: 'center',
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: '700',
   },
 });

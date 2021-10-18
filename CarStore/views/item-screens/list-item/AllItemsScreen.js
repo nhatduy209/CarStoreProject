@@ -4,9 +4,9 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import CardItem from './CardItem';
-import {searchCar} from '../../redux/action/search-car/SearchAction';
-import HeaderComponent from '../headerComponent';
-import {getListCar} from '../../redux/action/get-list-car/GetListCar';
+import {searchCar} from '../../../redux/action/search-car/SearchAction';
+import HeaderComponent from '../../headerComponent';
+import {getListCar} from '../../../redux/action/get-list-car/GetListCar';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 class AllItemsScreen extends React.Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class AllItemsScreen extends React.Component {
         countItem: this.props.car.data ? this.props.car.data.length : 0,
       });
     }
-    // console.log("prop",this.props.car)
+    // console.log('prop', this.props.car);
   }
   componentDidUpdate() {
     if (!this.state.listItems) {
@@ -94,7 +94,7 @@ class AllItemsScreen extends React.Component {
               No result
             </Text>
             <Image
-              source={require('../../images/car.png')}
+              source={require('../../../images/car.png')}
               style={{resizeMode: 'center', width: '100%'}}
             />
           </View>

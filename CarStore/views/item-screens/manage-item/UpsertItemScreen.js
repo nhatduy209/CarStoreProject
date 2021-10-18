@@ -8,9 +8,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import HeaderComponent from '../../headerComponent';
+import {connect} from 'react-redux';
 import {FlatList} from 'react-native-gesture-handler';
 import ColorPickerComponent from '../component/ColorPickerComponent';
-export default class UpsertItemScreen extends React.Component {
+class UpsertItemScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +19,7 @@ export default class UpsertItemScreen extends React.Component {
       name: '',
       category: '',
       prices: 0,
-      listColor: [],
+      listColor: this.props.listColor,
       height: 0,
       length: 0,
       width: 0,
@@ -62,7 +63,6 @@ export default class UpsertItemScreen extends React.Component {
     },
   ];
   componentDidMount() {
-    console.log(this.props.route);
     switch (this.props.route.params.action) {
       case 'add':
         this.setState({screenTitle: 'Add Item'});
@@ -75,25 +75,14 @@ export default class UpsertItemScreen extends React.Component {
         break;
     }
   }
-  componentDidUpdate() {
-    if (this.props.route.params.isAdded) {
-      const list = this.state.listColor;
-      list.push(this.props.route.params.oldColor);
-      this.props.route.params = {};
-      this.setState({listColor: list, addImage: false});
-    }
-  }
-  onColorChange(color) {
-    this.setState({color});
-  }
   renderInput({item}) {
+    console.log('upsert', this.props.listColor);
     if (item.isColor) {
       return (
         <View>
           <ColorPickerComponent
-            addColor={isAdded => this.setState({addImage: isAdded})}
             isManageItem={true}
-            data={this.state.listColor}
+            data={this.props.listColor}
             navigation={this.props.navigation}
           />
         </View>
@@ -150,6 +139,13 @@ export default class UpsertItemScreen extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    listColor: state.ListColorReducer.colors,
+  };
+};
+
+export default connect(mapStateToProps, {})(UpsertItemScreen);
 const styles = StyleSheet.create({
   screenTitle: {
     fontSize: 24,

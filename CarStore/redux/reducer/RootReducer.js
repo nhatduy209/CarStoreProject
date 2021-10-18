@@ -3,6 +3,7 @@ import UserReducer from './UserReducer';
 import CarReducer from './CarReducer';
 import SearchReducer from './SearchReducer.js';
 import ModalReducer from './ModalReducer';
+import ListColorReducer from './ListColorReducer';
 import CartReducer from './CartReducer';
 import CategoryReducer from './CategoryReducer';
 import BookingReducer from './BookingReducer';
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   ModalReducer,
   CategoryReducer,
   BookingReducer,
+  ListColorReducer,
 });
 
 export default rootReducer;

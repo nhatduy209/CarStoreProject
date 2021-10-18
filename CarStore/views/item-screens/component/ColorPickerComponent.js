@@ -20,6 +20,7 @@ export default class ColorPickerComponent extends React.Component {
     };
   }
   componentDidMount() {
+    console.log('picker', this.props.data);
     const list = [];
     this.props.data
       ? this.props.data.forEach(element => list.push(element.color))
@@ -28,18 +29,17 @@ export default class ColorPickerComponent extends React.Component {
     this.setState({listColor: list});
   }
   componentDidUpdate(prevProps) {
-    // if (prevProps.data.length !== this.props.data.length) {
-    //   console.log(this.props.data);
-    //   const list = [];
-    //   this.props.data
-    //     ? this.props.data.forEach(element => list.push(element.color))
-    //     : console.log(1);
-    //   list.push('add');
-    //   this.setState({listColor: list});
-    // }
+    if (prevProps !== this.props) {
+      console.log(this.props.data);
+      const list = [];
+      this.props.data
+        ? this.props.data.forEach(element => list.push(element.color))
+        : console.log(1);
+      list.push('add');
+      this.setState({listColor: list});
+    }
   }
   handleAddColor = () => {
-    this.props.addColor(true);
     this.props.navigation.push('AddImageItemScreen');
   };
   renderItem({item}) {

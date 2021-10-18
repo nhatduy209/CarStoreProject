@@ -8,22 +8,64 @@ import {
   Image,
 } from 'react-native';
 import HeaderComponent from '../../headerComponent';
+import * as ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {connect} from 'react-redux';
 import {BitMapColorPicker as ColorPicker} from 'react-native-bitmap-color-picker';
-export default class AddImageItemsScreen extends React.Component {
+import {addColor} from '../../../redux/action/list-color/ListColorAction';
+import {uploadImageToStorage} from '../../../common/pushImage';
+class AddImageItemsScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       oldColor: '#f77100',
       colorDescription: '',
       isBlack: false,
+      img: '',
+      url: '',
     };
   }
   componentDidMount() {
-    // console.log("prop",this.props.car)
+    // console.log("prop",this.props.listColor)
   }
+  handleGallery = () => {
+    const Options = {};
+    ImagePicker.launchImageLibrary(Options, response => {
+      if (response.assets) {
+        this.setState({url: response.assets[0].uri});
+        this.setState({img: response.assets[0].fileName});
+      }
+    });
+  };
+  handleCamera = () => {
+    const Options = {};
+    ImagePicker.launchCamera(Options, response => {
+      if (response.assets) {
+        this.setState({url: response.assets[0].uri});
+        this.setState({img: response.assets[0].fileName});
+      }
+    });
+  };
   changeColor = (colorRgb, resType) =>
     resType === 'end' && this.setState({oldColor: colorRgb});
+  handleAddColor = url => {
+    const listColor = this.props.listColor;
+    const data = {
+      color: this.state.isBlack ? '#000' : this.state.oldColor,
+      imgUrl: url,
+    };
+    listColor.push(data);
+    // console.log('listcolor',listColor)
+    this.props.addColor(listColor);
+    this.props.navigation.navigate('UpsertItemScreen');
+  };
+  handleAddImage = () => {
+    if (this.state.url) {
+      uploadImageToStorage(this.state.url, this.state.img, url =>
+        this.handleAddColor(url),
+      );
+    }
+  };
   render() {
     return (
       <View>
@@ -37,7 +79,11 @@ export default class AddImageItemsScreen extends React.Component {
             marginTop: 80,
           }}>
           <Image
-            source={require('../../../images/TestImage.png')}
+            source={
+              this.state.url
+                ? {uri: this.state.url}
+                : require('../../../images/TestImage.png')
+            }
             style={{
               height: 220,
               width: 220,
@@ -52,10 +98,10 @@ export default class AddImageItemsScreen extends React.Component {
             marginHorizontal: '35%',
             marginVertical: 12,
           }}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.handleCamera}>
             <Icon style={styles.iconPickImage} name="camera" size={30} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.handleGallery}>
             <Icon style={styles.iconPickImage} name="image" size={30} />
           </TouchableOpacity>
         </View>
@@ -110,12 +156,7 @@ export default class AddImageItemsScreen extends React.Component {
           />
         </View>
         <TouchableOpacity
-          onPress={() =>
-            this.props.navigation.navigate('UpsertItemScreen', {
-              ...this.state,
-              isAdded: true,
-            })
-          }
+          onPress={() => this.handleAddImage()}
           style={[
             styles.btnBuy,
             styles.shadowBox,
@@ -127,6 +168,13 @@ export default class AddImageItemsScreen extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    listColor: state.ListColorReducer.colors,
+  };
+};
+
+export default connect(mapStateToProps, {addColor})(AddImageItemsScreen);
 const styles = StyleSheet.create({
   colorPicker: {
     height: 200,
@@ -163,6 +211,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingVertical: 12,
     width: '60%',
+    color: '#000',
   },
   btnText: {
     textAlign: 'center',

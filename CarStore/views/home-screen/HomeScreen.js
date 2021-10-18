@@ -19,7 +19,7 @@ import RenderCarOnSale from './RenderCarOnSale';
 import {searchCar} from '../../redux/action/search-car/SearchAction';
 import {getListCategory} from '../../redux/action/get-list-category/GetListCategory';
 import ModalWarningLogin from '../modal/ModalWarningLogin';
-import AllItemsScreen from '../item-screens/AllItemsScreen';
+import AllItemsScreen from '../item-screens/list-item/AllItemsScreen';
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);

@@ -1,9 +1,8 @@
-import {URL_HEROKU} from '../config/URL';
+import {APP_URL} from '../config/URL';
 import PostService from '../service/PostService';
 export default class ManageItemBusiness {
   addItemBusiness = async data => {
     var postService = new PostService();
-    const url = URL_HEROKU + 'car/add';
 
     const params = {
       name: data.name,
@@ -14,7 +13,7 @@ export default class ManageItemBusiness {
       description: data.description,
       color: data.color,
     };
-    var result = await postService.PostAPI(url, params);
+    var result = await postService.PostAPI(APP_URL.MANAGE_ADD_ITEM, params);
 
     console.log('RESULT ----', result);
     return result;

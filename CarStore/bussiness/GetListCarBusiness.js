@@ -1,11 +1,10 @@
-import {URL_HEROKU} from '../config/URL';
+import {APP_URL} from '../config/URL';
 import GetService from '../service/GetService';
 export default class GetListCarBusiness {
   getListCarBusiness = async () => {
     var getService = new GetService();
-    const url = URL_HEROKU + 'car';
 
-    var result = await getService.getAPI(url);
+    var result = await getService.getAPI(APP_URL.GET_LIST_CAR);
     return result;
   };
 }

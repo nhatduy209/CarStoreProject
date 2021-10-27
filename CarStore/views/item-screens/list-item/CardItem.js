@@ -13,7 +13,7 @@ import {
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import {removeItem} from '../../../redux/action/manage-item-action/RemoveItemAction';
 if (
   Platform.OS === 'android' &&
   UIManager.setLayoutAnimationEnabledExperimental
@@ -32,9 +32,21 @@ class CardItem extends React.Component {
     this.setState({isShow: false});
   }
   listOptionIcons = [
-    {iconName: 'info', backgroundColor: '#7289da'},
-    {iconName: 'pencil', backgroundColor: '#99cc33'},
-    {iconName: 'trash', backgroundColor: '#ee4035'},
+    {
+      iconName: 'info',
+      backgroundColor: '#7289da',
+      onPress: () => this.handleUpdertItem(),
+    },
+    {
+      iconName: 'pencil',
+      backgroundColor: '#99cc33',
+      onPress: () => this.handleUpdertItem(),
+    },
+    {
+      iconName: 'trash',
+      backgroundColor: '#ee4035',
+      onPress: () => this.handleRemoveItem(),
+    },
   ];
   handleDetailItem = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
@@ -44,10 +56,18 @@ class CardItem extends React.Component {
           data: this.props.data,
         });
   };
-  handleUpdertItem = () => {};
+  handleUpdertItem = () => {
+    this.props.navigation.navigate('UpsertItemScreen', {
+      action: 'edit',
+      data: this.props.data,
+    });
+  };
+  handleRemoveItem = () => {
+    this.props.removeItem(this.props.data.name);
+  };
   showOptionItem = (item, index) => {
     return (
-      <TouchableOpacity key={index} onPress={() => this.handleUpdertItem()}>
+      <TouchableOpacity key={index} onPress={() => item.onPress()}>
         <Icon
           style={[styles.iconStyle, {backgroundColor: item.backgroundColor}]}
           name={item.iconName}
@@ -104,7 +124,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {})(CardItem);
+export default connect(mapStateToProps, {removeItem})(CardItem);
 
 const styles = StyleSheet.create({
   options: {

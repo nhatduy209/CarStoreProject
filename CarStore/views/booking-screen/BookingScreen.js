@@ -37,7 +37,6 @@ class BookingScreen extends React.Component {
     };
   }
   handleSelect = item => {
-    console.log('COUNTRY SELECTED ----', item);
     this.setState({country: item.name, countryCode: item.cca2});
   };
 
@@ -76,8 +75,6 @@ class BookingScreen extends React.Component {
         color: this.state.selectedCar.color,
       },
     };
-
-    console.log('THIS IS SELECTED CAR ', this.state.selectedCar);
     this.props.createBooking({data});
   };
   handleModalButton = () => {
@@ -88,7 +85,6 @@ class BookingScreen extends React.Component {
   handleCloseModal = () => {
     // if (this.props.booking.BOOKING_STATUS === 'SUCCESS') {
     // }
-    console.log('navigate');
     this.props.navigation.navigate('CalendarStack');
     this.props.changeShowModalState();
   };

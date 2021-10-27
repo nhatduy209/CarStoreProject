@@ -46,22 +46,15 @@ class DetailItemScreen extends React.Component {
     this.setState({itemInfo: item});
   }
   handleAddToCart() {
-    console.log(this.props.user);
-    console.log(this.state.itemInfo);
     const data = {
-      email: this.props.user.email,
+      email: this.props.user.data.data.email,
       name: this.state.itemInfo.name,
       color: this.state.itemInfo.color[0].color,
       quantity: this.state.quantity,
       price: this.state.itemInfo.prices,
     };
-    if (!this.props.user.email) {
-      this.props.navigation.navigate('LoginScreen', {
-        prevRoute: this.props.route.name,
-      });
-    } else {
-      this.props.addToCart(data);
-    }
+    console.log('user', this.props.user);
+    this.props.addToCart(data);
 
     // const data={
     //   email:this.props.user

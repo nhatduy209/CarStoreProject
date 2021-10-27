@@ -7,7 +7,6 @@ const BOOKING_STATE = {
 };
 
 const BookingReducer = (state = BOOKING_STATE, action) => {
-  console.log(action);
   switch (action.type) {
     case ACTION_NAME.BOOKING_ACTION.BOOKING_SUCCESS:
       return {

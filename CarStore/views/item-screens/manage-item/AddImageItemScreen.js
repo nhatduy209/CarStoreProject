@@ -12,8 +12,10 @@ import * as ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import {BitMapColorPicker as ColorPicker} from 'react-native-bitmap-color-picker';
-import {addColor} from '../../../redux/action/list-color/ListColorAction';
-import {uploadImageToStorage} from '../../../common/pushImage';
+import {
+  addColor,
+  setStateColor,
+} from '../../../redux/action/list-color/ListColorAction';
 class AddImageItemsScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -48,23 +50,16 @@ class AddImageItemsScreen extends React.Component {
   };
   changeColor = (colorRgb, resType) =>
     resType === 'end' && this.setState({oldColor: colorRgb});
-  handleAddColor = url => {
-    const listColor = this.props.listColor;
-    const data = {
+  handleAddColor = () => {
+    const newColor = {
       color: this.state.isBlack ? '#000' : this.state.oldColor,
-      imgUrl: url,
+      description: this.state.colorDescription,
+      img: this.state.img,
+      url: this.state.url,
     };
-    listColor.push(data);
-    // console.log('listcolor',listColor)
-    this.props.addColor(listColor);
+    const listColor = this.props.listColor.colors;
+    this.props.addColor({listColor: listColor, newColor: newColor});
     this.props.navigation.navigate('UpsertItemScreen');
-  };
-  handleAddImage = () => {
-    if (this.state.url) {
-      uploadImageToStorage(this.state.url, this.state.img, url =>
-        this.handleAddColor(url),
-      );
-    }
   };
   render() {
     return (
@@ -156,7 +151,7 @@ class AddImageItemsScreen extends React.Component {
           />
         </View>
         <TouchableOpacity
-          onPress={() => this.handleAddImage()}
+          onPress={() => this.handleAddColor()}
           style={[
             styles.btnBuy,
             styles.shadowBox,
@@ -170,11 +165,13 @@ class AddImageItemsScreen extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    listColor: state.ListColorReducer.colors,
+    listColor: state.ListColorReducer,
   };
 };
 
-export default connect(mapStateToProps, {addColor})(AddImageItemsScreen);
+export default connect(mapStateToProps, {addColor, setStateColor})(
+  AddImageItemsScreen,
+);
 const styles = StyleSheet.create({
   colorPicker: {
     height: 200,

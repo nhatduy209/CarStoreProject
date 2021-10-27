@@ -8,6 +8,7 @@ import {searchCar} from '../../../redux/action/search-car/SearchAction';
 import HeaderComponent from '../../headerComponent';
 import {getListCar} from '../../../redux/action/get-list-car/GetListCar';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+import {reloadListItem} from '../../../redux/action/manage-item-action/ReloadListItemAction';
 class AllItemsScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -28,7 +29,12 @@ class AllItemsScreen extends React.Component {
     }
     // console.log('prop', this.props.car);
   }
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      this.setState({
+        countItem: this.props.car.data ? this.props.car.data.length : 0,
+      });
+    }
     if (!this.state.listItems) {
       this.setState({listItems: this.props.search_car});
       this.setState({
@@ -119,13 +125,16 @@ class AllItemsScreen extends React.Component {
 const mapStateToProps = state => {
   return {
     car: state.CarReducer.car,
+    reload: state.CarReducer.reload ?? false,
     search_car: state.SearchReducer.car,
   };
 };
 
-export default connect(mapStateToProps, {getListCar, searchCar})(
-  AllItemsScreen,
-);
+export default connect(mapStateToProps, {
+  getListCar,
+  searchCar,
+  reloadListItem,
+})(AllItemsScreen);
 
 const styles = StyleSheet.create({
   addContainer: {

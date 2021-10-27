@@ -8,9 +8,6 @@ export default class TabBar extends React.Component {
       page: 1,
     };
   }
-  componentDidMount() {
-    console.log('prop', this.props);
-  }
   componentDidUpdate(prevState) {
     if (prevState.page !== this.state.page) {
       if (this.state.page === 1) {

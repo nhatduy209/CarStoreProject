@@ -11,6 +11,8 @@ import HeaderComponent from '../../headerComponent';
 import {connect} from 'react-redux';
 import {FlatList} from 'react-native-gesture-handler';
 import ColorPickerComponent from '../component/ColorPickerComponent';
+import {addItem} from '../../../redux/action/manage-item-action/AddItemAction';
+import {setDefaultListColor} from '../../../redux/action/list-color/ListColorAction';
 class UpsertItemScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -30,38 +32,58 @@ class UpsertItemScreen extends React.Component {
   }
   list = [
     {
-      title: 'Name',
+      title: 'name',
       isColor: false,
+      onChange: value => this.setState({name: value}),
     },
     {
-      title: 'Category',
+      title: 'category',
       isColor: false,
+      onChange: value => this.setState({category: value}),
     },
     {
-      title: 'Price',
+      title: 'prices',
       isColor: false,
+      onChange: value => this.setState({prices: value}),
     },
     {
       title: 'color',
       isColor: true,
     },
     {
-      title: 'Height',
+      title: 'height',
       isColor: false,
+      onChange: value => this.setState({height: value}),
     },
     {
-      title: 'Length',
+      title: 'length',
       isColor: false,
+      onChange: value => this.setState({length: value}),
     },
     {
-      title: 'Width',
+      title: 'width',
       isColor: false,
+      onChange: value => this.setState({width: value}),
     },
     {
-      title: 'Description',
+      title: 'description',
       isColor: false,
+      onChange: value => this.setState({description: value}),
     },
   ];
+  setData = data => {
+    console.log('data', data);
+    this.setState({
+      id: data._id,
+      name: data.name,
+      category: data.category,
+      prices: data.prices,
+      height: data.height,
+      width: data.width,
+      length: data.length,
+      description: data.description,
+    });
+  };
   componentDidMount() {
     switch (this.props.route.params.action) {
       case 'add':
@@ -69,6 +91,7 @@ class UpsertItemScreen extends React.Component {
         break;
       case 'edit':
         this.setState({screenTitle: 'Edit Item'});
+        this.setData(this.props.route.params?.data);
         break;
       default:
         this.setState({screenTitle: 'View Item'});
@@ -76,7 +99,6 @@ class UpsertItemScreen extends React.Component {
     }
   }
   renderInput({item}) {
-    console.log('upsert', this.props.listColor);
     if (item.isColor) {
       return (
         <View>
@@ -90,13 +112,32 @@ class UpsertItemScreen extends React.Component {
     } else {
       return (
         <TextInput
+          onChangeText={value => item.onChange(value)}
           placeholder={item.title}
           style={styles.input}
           placeholderTextColor="#363b74"
+          value={String(this.state[item.title])}
         />
       );
     }
   }
+  handleAddItem = () => {
+    const data = {
+      name: this.state.name,
+      category: this.state.category,
+      prices: parseInt(this.state.prices, 10),
+      color: this.props.listColor,
+      height: this.state.height,
+      length: this.state.length,
+      width: this.state.width,
+      description: this.state.description,
+    };
+    if (this.state.listColor.length > 0) {
+      this.props.addItem(data);
+      this.props.setDefaultListColor();
+      this.props.navigation.push('ManageItemsScreen');
+    }
+  };
   renderHeader = () => {
     return <Text style={styles.screenTitle}>{this.state.screenTitle}</Text>;
   };
@@ -107,6 +148,7 @@ class UpsertItemScreen extends React.Component {
     return (
       <View style={styles.btnContainer}>
         <TouchableOpacity
+          onPress={() => this.handleAddItem()}
           style={[
             styles.btnBuy,
             styles.shadowBox,
@@ -145,7 +187,9 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {})(UpsertItemScreen);
+export default connect(mapStateToProps, {addItem, setDefaultListColor})(
+  UpsertItemScreen,
+);
 const styles = StyleSheet.create({
   screenTitle: {
     fontSize: 24,

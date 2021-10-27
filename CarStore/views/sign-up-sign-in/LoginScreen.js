@@ -8,9 +8,9 @@ import {
   TextInput,
   Alert,
   BackHandler,
+  Switch,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import Slider from '@react-native-community/slider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {connect} from 'react-redux';
 import {
@@ -58,7 +58,7 @@ class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isRemember: 0,
+      isRemember: false,
       email: '',
       password: '',
       colorRemember: 'black',
@@ -127,15 +127,15 @@ class LoginScreen extends React.Component {
     }
   };
   handleRememberChange = value => {
-    if (value === 1) {
-      this.setState({colorRemember: 'green', isRemember: value});
+    if (value) {
+      this.setState({isRemember: true});
     } else {
-      this.setState({colorRemember: 'black', isRemember: value});
+      this.setState({isRemember: false});
     }
   };
 
   handleLogin = async () => {
-    if (this.state.isRemember === 1) {
+    if (this.state.isRemember) {
       const loginInfo = {
         email: this.state.email,
         password: this.state.password,
@@ -214,14 +214,12 @@ class LoginScreen extends React.Component {
 
             {/*end input field */}
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Slider
-                style={{width: 60, height: 40}}
-                minimumValue={0}
-                maximumValue={1}
-                value={this.state.isRemember}
+              <Switch
+                trackColor={{false: '#767577', true: '#81b0ff'}}
+                thumbColor={'#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
                 onValueChange={value => this.handleRememberChange(value)}
-                minimumTrackTintColor="#00e6e6"
-                maximumTrackTintColor="#000000"
+                value={this.state.isRemember}
               />
               <Text style={{color: this.state.colorRemember}}>Remember</Text>
 

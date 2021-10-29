@@ -18,6 +18,11 @@ const ListColorReducer = (state = COLOR_STATE, action) => {
         ...state,
         addState: 'FAIL',
       };
+    case ACTION_NAME.SET_COLOR:
+      return {
+        ...state,
+        colors: action.data,
+      };
     case ACTION_NAME.SET_DEFAULT_LIST_COLOR:
       return {
         colors: [],

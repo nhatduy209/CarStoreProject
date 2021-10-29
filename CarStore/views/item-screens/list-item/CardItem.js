@@ -14,6 +14,7 @@ import {
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {removeItem} from '../../../redux/action/manage-item-action/RemoveItemAction';
+import {getListCar} from '../../../redux/action/get-list-car/GetListCar';
 if (
   Platform.OS === 'android' &&
   UIManager.setLayoutAnimationEnabledExperimental
@@ -58,12 +59,13 @@ class CardItem extends React.Component {
   };
   handleUpdertItem = () => {
     this.props.navigation.navigate('UpsertItemScreen', {
-      action: 'edit',
+      action: 'Edit',
       data: this.props.data,
     });
   };
   handleRemoveItem = () => {
     this.props.removeItem(this.props.data.name);
+    this.props.getListCar();
   };
   showOptionItem = (item, index) => {
     return (
@@ -124,7 +126,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {removeItem})(CardItem);
+export default connect(mapStateToProps, {removeItem, getListCar})(CardItem);
 
 const styles = StyleSheet.create({
   options: {

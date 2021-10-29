@@ -59,7 +59,9 @@ class AddImageItemsScreen extends React.Component {
     };
     const listColor = this.props.listColor.colors;
     this.props.addColor({listColor: listColor, newColor: newColor});
-    this.props.navigation.navigate('UpsertItemScreen');
+    this.props.navigation.navigate('UpsertItemScreen', {
+      action: this.props.route.params.action,
+    });
   };
   render() {
     return (

@@ -19,11 +19,29 @@ export default class ManageItemBusiness {
     console.log('RESULT ----', result);
     return result;
   };
+  updateItemBusiness = async data => {
+    var postService = new PostService();
+    const url = URL_HEROKU + 'car/update';
+    const params = {
+      name: data.name,
+      category: data.category,
+      width: data.width,
+      height: data.height,
+      length: data.length,
+      description: data.description,
+      color: data.color,
+      price: data.prices,
+    };
+    var result = await postService.PostAPI(url, params);
+
+    console.log('RESULT ----', result);
+    return result;
+  };
   removeItemBusiness = async data => {
     var postService = new PostService();
     const url = URL_HEROKU + 'car/remove';
     const params = {
-      name: data.name,
+      name: data,
     };
     var result = await postService.PostAPI(url, params);
 

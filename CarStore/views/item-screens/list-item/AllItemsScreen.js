@@ -66,7 +66,7 @@ class AllItemsScreen extends React.Component {
         <Text style={{fontSize: 20}}>Item Count: {this.state.countItem}</Text>
         <TouchableOpacity
           onPress={() =>
-            this.props.navigation.navigate('UpsertItemScreen', {action: 'add'})
+            this.props.navigation.navigate('UpsertItemScreen', {action: 'Add'})
           }
           style={[
             styles.btnBuy,

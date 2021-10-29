@@ -24,14 +24,23 @@ const CarReducer = (state = CAR_STATE, action) => {
       return {
         ...state,
       };
+    case MANAGE_ACTION_NAME.UPDATE_ITEM_ACTION.UPDATE_ITEM_ACTION_SUCCESS:
+      return {
+        ...state,
+      };
+    case MANAGE_ACTION_NAME.UPDATE_ITEM_ACTION.UPDATE_ITEM_ACTION_FAIL:
+      return {
+        ...state,
+      };
     case MANAGE_ACTION_NAME.RELOADED_LIST:
       return {
         ...state,
-        addSuccess: false,
+        reload: false,
       };
     case MANAGE_ACTION_NAME.REMOVE_ITEM_ACTION.REMOVE_ITEM_ACTION_SUCCESS:
       return {
         ...state,
+        reload: true,
       };
     case MANAGE_ACTION_NAME.REMOVE_ITEM_ACTION.REMOVE_ITEM_ACTION_FAIL:
       return {

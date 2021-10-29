@@ -45,7 +45,9 @@ class ColorPickerComponent extends React.Component {
     }
   }
   handleAddColor = () => {
-    this.props.navigation.push('AddImageItemScreen');
+    this.props.navigation.push('AddImageItemScreen', {
+      action: this.props.currentScreen,
+    });
   };
   renderItem({item}) {
     if (item === 'add' && this.props.isManageItem) {

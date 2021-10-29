@@ -12,7 +12,9 @@ import {connect} from 'react-redux';
 import {FlatList} from 'react-native-gesture-handler';
 import ColorPickerComponent from '../component/ColorPickerComponent';
 import {addItem} from '../../../redux/action/manage-item-action/AddItemAction';
+import {updateItem} from '../../../redux/action/manage-item-action/UpdateItemAction';
 import {setDefaultListColor} from '../../../redux/action/list-color/ListColorAction';
+import {setColor} from '../../../redux/action/list-color/ListColorAction';
 class UpsertItemScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -28,6 +30,7 @@ class UpsertItemScreen extends React.Component {
       description: '',
       img: '',
       screenTitle: '',
+      action: '',
     };
   }
   list = [
@@ -73,6 +76,7 @@ class UpsertItemScreen extends React.Component {
   ];
   setData = data => {
     console.log('data', data);
+    this.props.setColor(data.color);
     this.setState({
       id: data._id,
       name: data.name,
@@ -86,10 +90,10 @@ class UpsertItemScreen extends React.Component {
   };
   componentDidMount() {
     switch (this.props.route.params.action) {
-      case 'add':
+      case 'Add':
         this.setState({screenTitle: 'Add Item'});
         break;
-      case 'edit':
+      case 'Edit':
         this.setState({screenTitle: 'Edit Item'});
         this.setData(this.props.route.params?.data);
         break;
@@ -97,12 +101,14 @@ class UpsertItemScreen extends React.Component {
         this.setState({screenTitle: 'View Item'});
         break;
     }
+    this.setState({action: this.props.route.params.action});
   }
   renderInput({item}) {
     if (item.isColor) {
       return (
         <View>
           <ColorPickerComponent
+            currentScreen={this.props.route.params.action}
             isManageItem={true}
             data={this.props.listColor}
             navigation={this.props.navigation}
@@ -121,7 +127,7 @@ class UpsertItemScreen extends React.Component {
       );
     }
   }
-  handleAddItem = () => {
+  handleUpsertItem = () => {
     const data = {
       name: this.state.name,
       category: this.state.category,
@@ -133,7 +139,17 @@ class UpsertItemScreen extends React.Component {
       description: this.state.description,
     };
     if (this.state.listColor.length > 0) {
-      this.props.addItem(data);
+      switch (this.props.route.params.action) {
+        case 'Add':
+          this.props.addItem(data);
+          break;
+        case 'Edit':
+          this.props.updateItem(data);
+          break;
+        default:
+          this.setState({screenTitle: 'View Item'});
+          break;
+      }
       this.props.setDefaultListColor();
       this.props.navigation.push('ManageItemsScreen');
     }
@@ -148,13 +164,15 @@ class UpsertItemScreen extends React.Component {
     return (
       <View style={styles.btnContainer}>
         <TouchableOpacity
-          onPress={() => this.handleAddItem()}
+          onPress={() => this.handleUpsertItem()}
           style={[
             styles.btnBuy,
             styles.shadowBox,
             {backgroundColor: '#363b74'},
           ]}>
-          <Text style={styles.btnText}>Add</Text>
+          <Text style={styles.btnText}>
+            {this.props.route.params?.action ?? 'Add'}
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.btnBuy, styles.shadowBox, {backgroundColor: '#ccc'}]}>
@@ -187,9 +205,12 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {addItem, setDefaultListColor})(
-  UpsertItemScreen,
-);
+export default connect(mapStateToProps, {
+  addItem,
+  updateItem,
+  setDefaultListColor,
+  setColor,
+})(UpsertItemScreen);
 const styles = StyleSheet.create({
   screenTitle: {
     fontSize: 24,

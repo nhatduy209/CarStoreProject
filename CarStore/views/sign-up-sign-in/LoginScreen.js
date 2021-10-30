@@ -24,7 +24,7 @@ import {
 import auth from '@react-native-firebase/auth';
 import * as Animatable from 'react-native-animatable';
 import {STATUS} from '../../config/Status';
-
+import {ProcessLoading} from '../modal/ProcessLoading';
 const storeData = async value => {
   try {
     const jsonValue = JSON.stringify(value);
@@ -63,6 +63,7 @@ class LoginScreen extends React.Component {
       password: '',
       colorRemember: 'black',
       userEmail: {},
+      loading: false,
     };
   }
 
@@ -96,6 +97,9 @@ class LoginScreen extends React.Component {
 
   componentDidUpdate() {
     if (this.props.user?.status === STATUS.SUCCESS) {
+      if (this.state.loading) {
+        this.setState({loading: false});
+      }
       this.props.navigation.navigate('RootDrawer');
     }
   }
@@ -146,6 +150,7 @@ class LoginScreen extends React.Component {
       removeUserLogin();
     }
     this.props.login(this.state.email, this.state.password);
+    this.setState({loading: true});
   };
 
   render() {
@@ -296,6 +301,7 @@ class LoginScreen extends React.Component {
             </TouchableOpacity>
           </View>
         </Animatable.View>
+        <ProcessLoading visible={this.state.loading} />
       </View>
     );
   }

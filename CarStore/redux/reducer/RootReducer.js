@@ -2,7 +2,6 @@ import {combineReducers} from 'redux';
 import UserReducer from './UserReducer';
 import CarReducer from './CarReducer';
 import SearchReducer from './SearchReducer.js';
-import ModalReducer from './ModalReducer';
 import ListColorReducer from './ListColorReducer';
 import CartReducer from './CartReducer';
 import CategoryReducer from './CategoryReducer';
@@ -19,7 +18,6 @@ const rootReducer = combineReducers({
   CarReducer,
   CartReducer,
   SearchReducer,
-  ModalReducer,
   CategoryReducer,
   BookingReducer,
   ListColorReducer,

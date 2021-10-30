@@ -12,7 +12,7 @@ export default class DrawerContent extends React.Component {
     this.props.navigation.navigate('HomeScreenStack');
   };
   onStoreInfoPress = () => {
-    this.props.navigation.navigate('StoreInfoScreen');
+    this.props.navigation.navigate('StoreScreenStack');
   };
   onManagePress = () => {
     this.props.navigation.navigate('ManageItemScreenStack', {

@@ -37,7 +37,6 @@ class CardItem extends React.Component {
     {iconName: 'trash', backgroundColor: '#ee4035'},
   ];
   handleDetailItem = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     this.props.isShownOption && this.props.isManagementScreen
       ? this.setState({isShow: !this.state.isShow})
       : this.props.navigation.navigate('DetailItemScreen', {
@@ -46,6 +45,7 @@ class CardItem extends React.Component {
   };
   handleUpdertItem = () => {};
   showOptionItem = (item, index) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     return (
       <TouchableOpacity key={index} onPress={() => this.handleUpdertItem()}>
         <Icon

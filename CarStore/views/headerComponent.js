@@ -61,7 +61,7 @@ export default class HeaderComponent extends React.Component {
               fontSize: 20,
               width: '90%',
               fontWeight: 'bold',
-              color: '#fff',
+              color: '#000',
               textAlign: 'center',
             }}>
             {this.props.screenTitle ?? ''}

@@ -2,9 +2,9 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import React from 'react';
 import DrawerContent from './DrawerContent';
 import HomeScreenStack from './drawer-stack/HomeScreenStack';
-import StoreInfoScreen from '../../views/store-screen/StoreInfoScreen';
 import ManageItemScreenStack from './drawer-stack/ManageITemScreenStack';
 import SettingScreenStack from './drawer-stack/SettingScreenStack';
+import StoreScreenStack from './drawer-stack/StoreScreenStack';
 const Drawer = createDrawerNavigator();
 
 export default class RootDrawer extends React.Component {
@@ -30,8 +30,8 @@ export default class RootDrawer extends React.Component {
           options={{
             headerShown: false,
           }}
-          name="StoreInfoScreen"
-          component={StoreInfoScreen}
+          name="StoreScreenStack"
+          component={StoreScreenStack}
         />
         <Drawer.Screen
           options={{

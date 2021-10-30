@@ -7,6 +7,7 @@ import ListColorReducer from './ListColorReducer';
 import CartReducer from './CartReducer';
 import CategoryReducer from './CategoryReducer';
 import BookingReducer from './BookingReducer';
+import StoreInfoReducer from './StoreInfoReducer';
 import persistReducer from 'redux-persist/es/persistReducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const authPersistConfig = {
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   CategoryReducer,
   BookingReducer,
   ListColorReducer,
+  StoreInfoReducer,
 });
 
 export default rootReducer;

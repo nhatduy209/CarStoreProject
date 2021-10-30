@@ -15,4 +15,6 @@ export const APP_URL = {
   RECOVERY_PASSWORD: URL_HEROKU + 'account/recoverpassword',
   SEARCH_CAR: URL_HEROKU + 'car/search',
   SIGN_UP: URL_HEROKU + 'account/register',
+  GET_STORE_INFO: URL_HEROKU + 'store/getinfo',
+  EDIT_STORE_INFO: URL_HEROKU + 'store/editinfo',
 };

@@ -5,6 +5,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
 } from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../headerComponent';
@@ -30,81 +33,86 @@ class EditStoreInfoScreen extends React.Component {
   };
   render() {
     return (
-      <View style={styles.container}>
-        <HeaderComponent navigation={this.props.navigation} />
-        <View style={styles.bodyContent}>
-          <Text
-            style={{
-              fontSize: 36,
-              fontWeight: '700',
-              alignSelf: 'center',
-              marginBottom: 50,
-            }}>
-            Edit Store
-          </Text>
-          <Text style={styles.inputLabel}>Name Store</Text>
-          <View style={styles.Input}>
-            <TextInput
-              style={{flex: 1, color: '#000'}}
-              placeholder={'Address'}
-              value={this.state.name_store}
-            />
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}>
+        <ScrollView style={styles.container}>
+          <HeaderComponent navigation={this.props.navigation} />
+          <View style={styles.bodyContent}>
+            <Text
+              style={{
+                fontSize: 36,
+                fontWeight: '700',
+                alignSelf: 'center',
+                marginBottom: 50,
+              }}>
+              Edit Store
+            </Text>
+            <Text style={styles.inputLabel}>Name Store</Text>
+            <View style={styles.Input}>
+              <TextInput
+                style={{flex: 1, color: '#000'}}
+                placeholder={'Address'}
+                value={this.state.name_store}
+              />
+            </View>
+            <Text style={styles.inputLabel}>Address</Text>
+            <View style={styles.Input}>
+              <TextInput
+                style={{flex: 1, color: '#000'}}
+                placeholder={'Address'}
+                onChangeText={value => this.setState({address: value})}
+                value={this.state.address}
+              />
+            </View>
+            <Text style={styles.inputLabel}>Phone Number</Text>
+            <View style={styles.Input}>
+              <TextInput
+                style={{flex: 1, color: '#000'}}
+                placeholder={'Phone number'}
+                onChangeText={value => this.setState({phoneNumber: value})}
+                value={this.state.phone}
+              />
+            </View>
+            <Text style={styles.inputLabel}>Introduction</Text>
+            <View style={styles.Input}>
+              <TextInput
+                style={{flex: 1, color: '#000'}}
+                placeholder={'Introduction'}
+                onChangeText={value => this.setState({intro: value})}
+                value={this.state.intro}
+              />
+            </View>
+            <View style={styles.groupButton}>
+              <TouchableOpacity
+                style={styles.editButton}
+                onPress={() => this.handleEdit()}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: '#ffe',
+                    textAlign: 'center',
+                  }}>
+                  Edit
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.cancelButton}
+                onPress={() => this.props.navigation.goBack()}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: '#ffe',
+                    textAlign: 'center',
+                  }}>
+                  Cancel
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <Text style={styles.inputLabel}>Address</Text>
-          <View style={styles.Input}>
-            <TextInput
-              style={{flex: 1, color: '#000'}}
-              placeholder={'Address'}
-              onChangeText={value => this.setState({address: value})}
-              value={this.state.address}
-            />
-          </View>
-          <Text style={styles.inputLabel}>Phone Number</Text>
-          <View style={styles.Input}>
-            <TextInput
-              style={{flex: 1, color: '#000'}}
-              placeholder={'Phone number'}
-              onChangeText={value => this.setState({phoneNumber: value})}
-              value={this.state.phone}
-            />
-          </View>
-          <Text style={styles.inputLabel}>Introduction</Text>
-          <View style={styles.Input}>
-            <TextInput
-              style={{flex: 1, color: '#000'}}
-              placeholder={'Introduction'}
-              onChangeText={value => this.setState({intro: value})}
-              value={this.state.intro}
-            />
-          </View>
-          <View style={styles.groupButton}>
-            <TouchableOpacity
-              style={styles.editButton}
-              onPress={() => this.handleEdit()}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: '#ffe',
-                  textAlign: 'center',
-                }}>
-                Edit
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.cancelButton}
-              onPress={() => this.props.navigation.goBack()}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: '#ffe',
-                  textAlign: 'center',
-                }}>
-                Cancel
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }

@@ -4,7 +4,6 @@ import {ACTION_NAME} from './ActionName';
 
 export const updateItem = data => async dispatch => {
   var manageItem = new ManageItemBusiness();
-  console.log('action', data);
   var res = await manageItem.updateItemBusiness(data);
 
   console.log('res', res);

@@ -44,25 +44,26 @@ class ColorPickerComponent extends React.Component {
       this.props.setStateColor();
     }
   }
-  handleAddColor = () => {
+  handleAddColor = item => {
+    if (item !== 'add') {
+      item = this.props.listColor.colors.find(el => el.color === item);
+    }
     this.props.navigation.push('AddImageItemScreen', {
+      data: item,
       action: this.props.currentScreen,
     });
   };
   renderItem({item}) {
-    if (item === 'add' && this.props.isManageItem) {
+    if (this.props.isManageItem) {
       return (
         <TouchableOpacity
-          onPress={() => this.handleAddColor()}
-          style={[styles.addBox, {backgroundColor: '#ccc'}]}>
-          <Icon name="plus" size={20} />
+          onPress={() => this.handleAddColor(item)}
+          style={[
+            styles.addBox,
+            {backgroundColor: item === 'add' ? '#ccc' : handleColor(item)},
+          ]}>
+          {item === 'add' ? <Icon name="plus" size={20} /> : <View />}
         </TouchableOpacity>
-      );
-    } else {
-      return (
-        <TouchableOpacity
-          style={[styles.colorBox, {backgroundColor: handleColor(item)}]}
-        />
       );
     }
   }

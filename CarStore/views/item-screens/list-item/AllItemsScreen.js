@@ -1,6 +1,14 @@
 /* eslint-disable react/no-did-mount-set-state */
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  UIManager,
+  LayoutAnimation,
+  Platform,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import CardItem from './CardItem';
@@ -8,7 +16,14 @@ import {searchCar} from '../../../redux/action/search-car/SearchAction';
 import HeaderComponent from '../../headerComponent';
 import {getListCar} from '../../../redux/action/get-list-car/GetListCar';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+import {setDefaultListColor} from '../../../redux/action/list-color/ListColorAction';
 import {reloadListItem} from '../../../redux/action/manage-item-action/ReloadListItemAction';
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 class AllItemsScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -31,9 +46,14 @@ class AllItemsScreen extends React.Component {
   }
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
       this.setState({
         countItem: this.props.car.data ? this.props.car.data.length : 0,
       });
+    }
+    if (this.props.reload) {
+      this.props.getListCar();
+      this.props.reloadListItem();
     }
     if (!this.state.listItems) {
       this.setState({listItems: this.props.search_car});
@@ -65,9 +85,10 @@ class AllItemsScreen extends React.Component {
       <View style={styles.addContainer}>
         <Text style={{fontSize: 20}}>Item Count: {this.state.countItem}</Text>
         <TouchableOpacity
-          onPress={() =>
-            this.props.navigation.navigate('UpsertItemScreen', {action: 'Add'})
-          }
+          onPress={() => {
+            this.props.setDefaultListColor();
+            this.props.navigation.navigate('UpsertItemScreen', {action: 'Add'});
+          }}
           style={[
             styles.btnBuy,
             styles.shadowBox,
@@ -134,6 +155,7 @@ export default connect(mapStateToProps, {
   getListCar,
   searchCar,
   reloadListItem,
+  setDefaultListColor,
 })(AllItemsScreen);
 
 const styles = StyleSheet.create({

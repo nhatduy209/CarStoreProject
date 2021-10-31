@@ -25,7 +25,6 @@ class DetailItemScreen extends React.Component {
     };
   }
   componentDidMount() {
-    console.log('props', this.props.route.params.data);
     // console.log('state', this.props.car);
     this.setState({itemInfo: this.props.route.params.data});
     const list = this.props.car.data.filter(item => {
@@ -53,7 +52,6 @@ class DetailItemScreen extends React.Component {
       quantity: this.state.quantity,
       price: this.state.itemInfo.prices,
     };
-    console.log('user', this.props.user);
     this.props.addToCart(data);
 
     // const data={

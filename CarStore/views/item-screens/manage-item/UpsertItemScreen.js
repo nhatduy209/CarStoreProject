@@ -6,6 +6,9 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
 } from 'react-native';
 import HeaderComponent from '../../headerComponent';
 import {connect} from 'react-redux';
@@ -13,8 +16,11 @@ import {FlatList} from 'react-native-gesture-handler';
 import ColorPickerComponent from '../component/ColorPickerComponent';
 import {addItem} from '../../../redux/action/manage-item-action/AddItemAction';
 import {updateItem} from '../../../redux/action/manage-item-action/UpdateItemAction';
-import {setDefaultListColor} from '../../../redux/action/list-color/ListColorAction';
+import {updateQuantity} from '../../../redux/action/manage-item-action/UpdateQuantityAction';
+import {addColor} from '../../../redux/action/manage-item-action/AddColorAction';
 import {setColor} from '../../../redux/action/list-color/ListColorAction';
+import {getListCar} from '../../../redux/action/get-list-car/GetListCar';
+import {reloadListItem} from '../../../redux/action/manage-item-action/ReloadListItemAction';
 class UpsertItemScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -22,11 +28,11 @@ class UpsertItemScreen extends React.Component {
       id: '',
       name: '',
       category: '',
-      prices: 0,
+      prices: '',
       listColor: this.props.listColor,
-      height: 0,
-      length: 0,
-      width: 0,
+      height: '',
+      length: '',
+      width: '',
       description: '',
       img: '',
       screenTitle: '',
@@ -35,6 +41,7 @@ class UpsertItemScreen extends React.Component {
   }
   list = [
     {
+      disabled: this.props.route.params.action === 'Add' ? true : false,
       title: 'name',
       isColor: false,
       onChange: value => this.setState({name: value}),
@@ -75,23 +82,26 @@ class UpsertItemScreen extends React.Component {
     },
   ];
   setData = data => {
-    console.log('data', data);
-    this.props.setColor(data.color);
+    if (data) {
+      this.props.setColor(data.color);
+    }
     this.setState({
-      id: data._id,
-      name: data.name,
-      category: data.category,
-      prices: data.prices,
-      height: data.height,
-      width: data.width,
-      length: data.length,
-      description: data.description,
+      id: data?._id ?? '',
+      name: data?.name ?? '',
+      category: data?.category ?? '',
+      prices: data?.prices ?? '',
+      height: data?.height ?? '',
+      width: data?.width ?? '',
+      length: data?.length ?? '',
+      description: data?.description ?? '',
+      listColor: data?.color ?? this.props.listColor,
     });
   };
   componentDidMount() {
     switch (this.props.route.params.action) {
       case 'Add':
         this.setState({screenTitle: 'Add Item'});
+        this.setData();
         break;
       case 'Edit':
         this.setState({screenTitle: 'Edit Item'});
@@ -118,6 +128,7 @@ class UpsertItemScreen extends React.Component {
     } else {
       return (
         <TextInput
+          editable={item.disabled ?? true}
           onChangeText={value => item.onChange(value)}
           placeholder={item.title}
           style={styles.input}
@@ -145,14 +156,15 @@ class UpsertItemScreen extends React.Component {
           break;
         case 'Edit':
           this.props.updateItem(data);
+          this.props.addColor(data);
+          this.props.updateQuantity(data);
           break;
         default:
           this.setState({screenTitle: 'View Item'});
           break;
       }
-      this.props.setDefaultListColor();
-      this.props.navigation.push('ManageItemsScreen');
     }
+    this.props.navigation.push('ManageItemsScreen');
   };
   renderHeader = () => {
     return <Text style={styles.screenTitle}>{this.state.screenTitle}</Text>;
@@ -175,6 +187,7 @@ class UpsertItemScreen extends React.Component {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={() => this.props.navigation.goBack()}
           style={[styles.btnBuy, styles.shadowBox, {backgroundColor: '#ccc'}]}>
           <Text style={styles.btnText}>Cancel</Text>
         </TouchableOpacity>
@@ -183,33 +196,42 @@ class UpsertItemScreen extends React.Component {
   };
   render() {
     return (
-      <View>
-        <HeaderComponent navigation={this.props.navigation} />
-        <FlatList
-          ListHeaderComponent={this.renderHeader}
-          data={this.list}
-          renderItem={item => this.renderInput({...item})}
-          keyExtractor={item => item.title}
-          showsHorizontalScrollIndicator={false}
-          ItemSeparatorComponent={this.separateItem}
-          style={{paddingTop: 30, paddingHorizontal: 20}}
-          ListFooterComponent={this.renderFooter}
-        />
-      </View>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}>
+        <ScrollView style={{height: '100%'}}>
+          <HeaderComponent navigation={this.props.navigation} />
+          <FlatList
+            ListHeaderComponent={this.renderHeader}
+            data={this.list}
+            renderItem={item => this.renderInput({...item})}
+            keyExtractor={item => item.title}
+            showsHorizontalScrollIndicator={false}
+            ItemSeparatorComponent={this.separateItem}
+            style={{paddingTop: 30, paddingHorizontal: 20}}
+            ListFooterComponent={this.renderFooter}
+          />
+        </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }
 const mapStateToProps = state => {
   return {
     listColor: state.ListColorReducer.colors,
+    reload: state.CarReducer.reload ?? false,
   };
 };
 
 export default connect(mapStateToProps, {
   addItem,
   updateItem,
-  setDefaultListColor,
   setColor,
+  getListCar,
+  reloadListItem,
+  addColor,
+  updateQuantity,
 })(UpsertItemScreen);
 const styles = StyleSheet.create({
   screenTitle: {

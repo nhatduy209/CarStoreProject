@@ -29,8 +29,32 @@ export default class ManageItemBusiness {
       height: data.height,
       length: data.length,
       description: data.description,
-      color: data.color,
       price: data.prices,
+    };
+    var result = await postService.PostAPI(url, params);
+
+    console.log('RESULT ----', result);
+    return result;
+  };
+  addColorBusiness = async data => {
+    var postService = new PostService();
+    const url = URL_HEROKU + 'car/addnewcolor';
+    const params = {
+      name: data.name,
+      arrayColor: data.color,
+    };
+    var result = await postService.PostAPI(url, params);
+
+    console.log('RESULT ----', result);
+    return result;
+  };
+  updateQuantityBusiness = async data => {
+    var postService = new PostService();
+    const url = URL_HEROKU + 'car/updatequantity';
+    const params = {
+      name: data.name,
+      numberInStore: data.numberInStore,
+      color: data.color,
     };
     var result = await postService.PostAPI(url, params);
 

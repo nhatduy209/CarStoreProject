@@ -36,12 +36,12 @@ class CardItem extends React.Component {
     {
       iconName: 'info',
       backgroundColor: '#7289da',
-      onPress: () => this.handleUpdertItem(),
+      onPress: () => this.handleUpdertItem('Detail'),
     },
     {
       iconName: 'pencil',
       backgroundColor: '#99cc33',
-      onPress: () => this.handleUpdertItem(),
+      onPress: () => this.handleUpdertItem('Edit'),
     },
     {
       iconName: 'trash',
@@ -57,13 +57,15 @@ class CardItem extends React.Component {
           data: this.props.data,
         });
   };
-  handleUpdertItem = () => {
+  handleUpdertItem = type => {
+    this.setState({isShow: !this.state.isShow});
     this.props.navigation.navigate('UpsertItemScreen', {
-      action: 'Edit',
+      action: type,
       data: this.props.data,
     });
   };
   handleRemoveItem = () => {
+    this.setState({isShow: !this.state.isShow});
     this.props.removeItem(this.props.data.name);
     this.props.getListCar();
   };

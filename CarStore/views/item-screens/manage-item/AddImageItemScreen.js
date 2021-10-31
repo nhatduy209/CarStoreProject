@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  TextInput,
-  Text,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import HeaderComponent from '../../headerComponent';
 import * as ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -21,15 +14,36 @@ class AddImageItemsScreen extends React.Component {
     super(props);
     this.state = {
       oldColor: '#f77100',
-      colorDescription: '',
+      numberInStore: 0,
       isBlack: false,
       img: '',
       url: '',
+      action: '',
     };
   }
   componentDidMount() {
     // console.log("prop",this.props.listColor)
+    if (this.props.route.params?.data !== 'add') {
+      const data = this.props.route.params?.data;
+      // eslint-disable-next-line react/no-did-mount-set-state
+      this.setState({
+        oldColor: data.color === '#000' ? '#f77100' : data.color,
+        numberInStore: data.numberInStore,
+        isBlack: data.color === '#000',
+        url: data.url,
+        action: 'edit',
+      });
+    }
   }
+  handleChangeQuantity = type => {
+    if (type) {
+      this.setState({numberInStore: this.state.numberInStore + 1});
+    } else {
+      this.state.numberInStore === 0
+        ? console.log(0)
+        : this.setState({numberInStore: this.state.numberInStore - 1});
+    }
+  };
   handleGallery = () => {
     const Options = {};
     ImagePicker.launchImageLibrary(Options, response => {
@@ -50,15 +64,32 @@ class AddImageItemsScreen extends React.Component {
   };
   changeColor = (colorRgb, resType) =>
     resType === 'end' && this.setState({oldColor: colorRgb});
+  checkExistColor = color => {
+    return this.props.listColor.colors.find(el => {
+      return el.color === color;
+    });
+  };
   handleAddColor = () => {
     const newColor = {
       color: this.state.isBlack ? '#000' : this.state.oldColor,
-      description: this.state.colorDescription,
+      numberInStore: this.state.numberInStore,
       img: this.state.img,
       url: this.state.url,
     };
-    const listColor = this.props.listColor.colors;
-    this.props.addColor({listColor: listColor, newColor: newColor});
+    if (this.state.img === '' && this.state.action !== 'edit') {
+      return;
+    }
+    let listColor = this.props.listColor.colors;
+    if (this.checkExistColor(newColor.color)) {
+      listColor.forEach((el, index) => {
+        if (el.color === newColor.color) {
+          listColor[index] = newColor;
+        }
+      });
+    } else {
+      listColor.push(newColor);
+    }
+    this.props.addColor({listColor: listColor});
     this.props.navigation.navigate('UpsertItemScreen', {
       action: this.props.route.params.action,
     });
@@ -109,27 +140,26 @@ class AddImageItemsScreen extends React.Component {
             style={styles.colorPicker}
           />
         </View>
-        <Text
-          style={{
-            marginVertical: 12,
-            fontSize: 20,
-            fontWeight: '600',
-            paddingHorizontal: '10%',
-          }}>
-          Color Description
-        </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingHorizontal: '10%',
-          }}>
-          <TextInput
-            style={styles.colorDescription}
-            placeholderTextColor="#ccc"
-            onChange={value => this.setState({colorDescription: value})}
-            placeholder="Type your description"
-          />
+        <View style={styles.inputGroup}>
+          <Text style={[styles.name, {width: '40%', color: '#222'}]}>
+            Quantity:
+          </Text>
+          <View style={styles.count}>
+            <TouchableOpacity onPress={() => this.handleChangeQuantity(false)}>
+              <Icon name="minus" />
+            </TouchableOpacity>
+            <Text style={{marginHorizontal: 16}}>
+              {this.state.numberInStore}
+            </Text>
+            <TouchableOpacity onPress={() => this.handleChangeQuantity(true)}>
+              <Icon name="plus" />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.inputGroup}>
+          <Text style={[styles.name, {width: '50%', color: '#222'}]}>
+            Color Review:
+          </Text>
           <TouchableOpacity
             onPress={() => this.setState({isBlack: true})}
             style={[
@@ -179,6 +209,18 @@ const styles = StyleSheet.create({
     height: 200,
     width: 200,
   },
+  inputGroup: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: '10%',
+    height: 70,
+    alignItems: 'center',
+    width: '90%',
+    alignSelf: 'center',
+  },
+  name: {
+    fontSize: 20,
+  },
   iconPickImage: {
     padding: 12,
     backgroundColor: '#ccc',
@@ -201,16 +243,8 @@ const styles = StyleSheet.create({
   colorReview: {
     height: 50,
     width: 50,
-    marginTop: 12,
+    marginHorizontal: 4,
     borderRadius: 50,
-    padding: 8,
-  },
-  colorDescription: {
-    borderColor: '#ccc',
-    borderBottomWidth: 1,
-    paddingVertical: 12,
-    width: '60%',
-    color: '#000',
   },
   btnText: {
     textAlign: 'center',
@@ -226,5 +260,14 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     marginTop: 20,
     alignSelf: 'center',
+  },
+  count: {
+    backgroundColor: '#ccc',
+    borderRadius: 20,
+    padding: 10,
+    width: '50%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });

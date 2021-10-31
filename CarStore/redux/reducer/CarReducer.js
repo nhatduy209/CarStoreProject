@@ -19,16 +19,35 @@ const CarReducer = (state = CAR_STATE, action) => {
     case MANAGE_ACTION_NAME.ADD_ITEM_ACTION.ADD_ITEM_ACTION_SUCCESS:
       return {
         ...state,
+        reload: true,
       };
     case MANAGE_ACTION_NAME.ADD_ITEM_ACTION.ADD_ITEM_ACTION_FAIL:
+      return {
+        ...state,
+      };
+    case MANAGE_ACTION_NAME.ADD_COLOR_ACTION.ADD_COLOR_ACTION_SUCCESS:
+      return {
+        ...state,
+      };
+    case MANAGE_ACTION_NAME.ADD_COLOR_ACTION.ADD_COLOR_ACTION_FAIL:
       return {
         ...state,
       };
     case MANAGE_ACTION_NAME.UPDATE_ITEM_ACTION.UPDATE_ITEM_ACTION_SUCCESS:
       return {
         ...state,
+        reload: true,
       };
     case MANAGE_ACTION_NAME.UPDATE_ITEM_ACTION.UPDATE_ITEM_ACTION_FAIL:
+      return {
+        ...state,
+      };
+    case MANAGE_ACTION_NAME.UPDATE_QUANTITY_ACTION
+      .UPDATE_QUANTITY_ACTION_SUCCESS:
+      return {
+        ...state,
+      };
+    case MANAGE_ACTION_NAME.UPDATE_QUANTITY_ACTION.UPDATE_QUANTITY_ACTION_FAIL:
       return {
         ...state,
       };
@@ -40,7 +59,6 @@ const CarReducer = (state = CAR_STATE, action) => {
     case MANAGE_ACTION_NAME.REMOVE_ITEM_ACTION.REMOVE_ITEM_ACTION_SUCCESS:
       return {
         ...state,
-        reload: true,
       };
     case MANAGE_ACTION_NAME.REMOVE_ITEM_ACTION.REMOVE_ITEM_ACTION_FAIL:
       return {

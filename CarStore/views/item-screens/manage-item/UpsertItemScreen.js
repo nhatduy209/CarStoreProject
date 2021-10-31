@@ -82,7 +82,7 @@ class UpsertItemScreen extends React.Component {
     },
   ];
   setData = data => {
-    if (data) {
+    if (data?.color) {
       this.props.setColor(data.color);
     }
     this.setState({
@@ -98,10 +98,10 @@ class UpsertItemScreen extends React.Component {
     });
   };
   componentDidMount() {
+    console.log('data', this.props.route.params?.data);
     switch (this.props.route.params.action) {
       case 'Add':
         this.setState({screenTitle: 'Add Item'});
-        this.setData();
         break;
       case 'Edit':
         this.setState({screenTitle: 'Edit Item'});
@@ -156,7 +156,7 @@ class UpsertItemScreen extends React.Component {
           break;
         case 'Edit':
           this.props.updateItem(data);
-          this.props.addColor(data);
+          // this.props.addColor(data);
           this.props.updateQuantity(data);
           break;
         default:

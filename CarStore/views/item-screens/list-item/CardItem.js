@@ -65,6 +65,7 @@ class CardItem extends React.Component {
     });
   };
   handleRemoveItem = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     this.setState({isShow: !this.state.isShow});
     this.props.removeItem(this.props.data.name);
     this.props.getListCar();

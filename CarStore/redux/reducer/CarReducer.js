@@ -59,6 +59,7 @@ const CarReducer = (state = CAR_STATE, action) => {
     case MANAGE_ACTION_NAME.REMOVE_ITEM_ACTION.REMOVE_ITEM_ACTION_SUCCESS:
       return {
         ...state,
+        reload: true,
       };
     case MANAGE_ACTION_NAME.REMOVE_ITEM_ACTION.REMOVE_ITEM_ACTION_FAIL:
       return {

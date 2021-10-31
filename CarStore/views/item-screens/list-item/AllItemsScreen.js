@@ -46,7 +46,6 @@ class AllItemsScreen extends React.Component {
   }
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
       this.setState({
         countItem: this.props.car.data ? this.props.car.data.length : 0,
       });
@@ -77,7 +76,7 @@ class AllItemsScreen extends React.Component {
   };
 
   renderFooter = () => {
-    return <View style={{height: 100}} />;
+    return <View style={{height: 80}} />;
   };
   showAddContainer = () => {
     <Text>Count Item {this.state.countItem}</Text>;
@@ -135,7 +134,7 @@ class AllItemsScreen extends React.Component {
             keyExtractor={item => item.name}
             showsHorizontalScrollIndicator={false}
             ItemSeparatorComponent={this.separateItem}
-            style={{paddingTop: 120}}
+            style={{paddingTop: 80}}
             ListFooterComponent={this.renderFooter}
           />
         )}

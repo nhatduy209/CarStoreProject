@@ -22,14 +22,14 @@ class AddImageItemsScreen extends React.Component {
     };
   }
   componentDidMount() {
-    // console.log("prop",this.props.listColor)
+    console.log('prop', this.props.route.params?.data);
     if (this.props.route.params?.data !== 'add') {
       const data = this.props.route.params?.data;
       // eslint-disable-next-line react/no-did-mount-set-state
       this.setState({
-        oldColor: data.color === '#000' ? '#f77100' : data.color,
-        numberInStore: data.numberInStore,
-        isBlack: data.color === '#000',
+        oldColor: data?.color === '#000' ? '#f77100' : data.color,
+        numberInStore: data?.numberInStore,
+        isBlack: data?.color === '#000',
         url: data.url,
         action: 'edit',
       });

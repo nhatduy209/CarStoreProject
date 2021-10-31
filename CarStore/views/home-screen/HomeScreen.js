@@ -18,7 +18,7 @@ import RevealCycle from './RevealCycle';
 import RenderCarOnSale from './RenderCarOnSale';
 import {searchCar} from '../../redux/action/search-car/SearchAction';
 import {getListCategory} from '../../redux/action/get-list-category/GetListCategory';
-import ModalWarningLogin from '../modal/ModalWarningLogin';
+import {ModalComponent} from '../modal/ModalComponent';
 import AllItemsScreen from '../item-screens/list-item/AllItemsScreen';
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -26,6 +26,7 @@ class HomeScreen extends React.Component {
     this.state = {
       searchText: '',
       visible: false,
+      isShow: false,
     };
   }
 
@@ -61,12 +62,11 @@ class HomeScreen extends React.Component {
   };
 
   renderCarOnSale = ({item}) => {
-    //const imgURL = (this.props.car.data[0].img  === undefined ? "" : this.props.car.data[0].img);
     return <RenderCarOnSale item={item} />;
   };
 
   renderRevealCycle = () => {
-    return <RevealCycle navigation={this.props.navigation} />;
+    return <RevealCycle navigation={this.props.navigation} state={this} />;
   };
 
   separateItem = () => {
@@ -131,7 +131,14 @@ class HomeScreen extends React.Component {
     } else {
       return (
         <View style={styles.Container}>
-          <ModalWarningLogin navigation={this.props.navigation} />
+          <ModalComponent
+            navigation={this.props.navigation}
+            state={this}
+            isShow={this.state.isShow}
+            descriptionText="You are not login, please login first"
+            textAction="Sign in"
+            textCancel="Cancel"
+          />
           <ScrollView showsVerticalScrollIndicator={false}>
             <this.renderRevealCycle />
             {/* Search input text  */}
@@ -218,7 +225,6 @@ const mapStateToProps = state => {
   return {
     car: state.CarReducer.car,
     search_car: state.SearchReducer.car,
-    isShow: state.ModalReducer.isShow,
     category: state.CategoryReducer.category,
   };
 };

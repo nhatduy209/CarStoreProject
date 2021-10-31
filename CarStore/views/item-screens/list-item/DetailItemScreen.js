@@ -101,13 +101,13 @@ class DetailItemScreen extends React.Component {
                   alignItems: 'center',
                   width: '100%',
                 }}>
-                <Image
+                {/* <Image
                   style={[
                     styles.imageItem,
                     {width: 60, height: 60, borderRadius: 120},
                   ]}
-                  source={require('../../../images/categories-car/toyota.png')}
-                />
+                  source={require('../../../images/categories/toyota.png')}
+                /> */}
                 <View style={styles.chat}>
                   <Icon name="heart" size={24} />
                   <Text>Chat with seller</Text>

@@ -1,10 +1,9 @@
-import {URL_HEROKU} from '../config/URL';
+import {APP_URL} from '../config/URL';
 import PostService from '../service/PostService';
 
 export default class BookingBusiness {
   booking = async data => {
     var postAPI = new PostService();
-    const url = URL_HEROKU + 'meetings/create';
     const params = {
       full_name: data.full_name,
       clients_email: data.clients_email,
@@ -19,7 +18,7 @@ export default class BookingBusiness {
         color: data.car_booking.color,
       },
     };
-    const result = await postAPI.PostAPI(url, params);
+    const result = await postAPI.PostAPI(APP_URL.BOOKING, params);
     console.log('-----RESULT-------', result);
     return result;
   };

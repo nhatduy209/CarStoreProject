@@ -1,9 +1,8 @@
-import {URL_HEROKU} from '../config/URL';
+import {APP_URL} from '../config/URL';
 import PostService from '../service/PostService';
 export default class ChangeInfoBusiness {
   changeInfoBusiness = async data => {
     var postService = new PostService();
-    const url = URL_HEROKU + 'account/changeinfo';
 
     const params = {
       name: 'di',
@@ -13,7 +12,7 @@ export default class ChangeInfoBusiness {
       address: data.address,
       password: '111',
     };
-    var result = await postService.PostAPI(url, params);
+    var result = await postService.PostAPI(APP_URL.CHANGE_INFO, params);
 
     console.log('RESULT business ----', result.data);
     return result.data;

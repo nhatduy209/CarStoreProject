@@ -50,7 +50,6 @@ class CardItem extends React.Component {
     },
   ];
   handleDetailItem = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     this.props.isShownOption && this.props.isManagementScreen
       ? this.setState({isShow: !this.state.isShow})
       : this.props.navigation.navigate('DetailItemScreen', {
@@ -71,6 +70,7 @@ class CardItem extends React.Component {
     this.props.getListCar();
   };
   showOptionItem = (item, index) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     return (
       <TouchableOpacity key={index} onPress={() => item.onPress()}>
         <Icon

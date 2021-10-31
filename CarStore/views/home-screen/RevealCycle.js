@@ -4,20 +4,25 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import CircleTransition from 'react-native-circle-reveal-view';
 import {connect} from 'react-redux';
 import {STATUS} from '../../config/Status';
-import {showModalNotLogin} from '../../redux/action/show-modal/ShowModalAction';
-
+import {logout} from '../../redux/action/login-action/LoginAction';
 const marginL = 20;
+
 class RevealCycle extends React.Component {
   constructor(props) {
     super(props);
   }
+
+  logout = () => {
+    this.props.logout();
+    this.props.navigation.navigate('LoginScreen');
+  };
 
   renderSignInIcons = () => {
     if (this.props.user.status === STATUS.SUCCESS) {
       return (
         <TouchableOpacity
           style={{marginLeft: marginL, marginVertical: 8}}
-          onPress={() => this.props.navigation.navigate('LoginScreen')}>
+          onPress={this.logout}>
           <Icon name="sign-out-alt" size={28} />
         </TouchableOpacity>
       );
@@ -25,7 +30,7 @@ class RevealCycle extends React.Component {
       return (
         <TouchableOpacity
           style={{marginLeft: marginL, marginVertical: 8}}
-          onPress={() => this.props.navigation.navigate('LoginScreen')}>
+          onPress={this.logout}>
           <Icon name="sign-in-alt" size={28} />
         </TouchableOpacity>
       );
@@ -36,16 +41,24 @@ class RevealCycle extends React.Component {
     if (this.props.user.status === STATUS.SUCCESS) {
       this.props.navigation.navigate('ProfileScreen');
     } else {
-      this.props.showModalNotLogin();
+      this.props.state.setState({isShow: true});
     }
   };
 
   handleGoToCart = () => {
-    this.props.navigation.navigate('CartStack');
+    if (this.props.user.status === STATUS.SUCCESS) {
+      this.props.navigation.navigate('CartStack');
+    } else {
+      this.props.state.setState({isShow: true});
+    }
   };
 
   handleGoToCalendar = () => {
-    this.props.navigation.navigate('CalendarStack');
+    if (this.props.user.status === STATUS.SUCCESS) {
+      this.props.navigation.navigate('CalendarStack');
+    } else {
+      this.props.state.setState({isShow: true});
+    }
   };
 
   render() {
@@ -104,8 +117,7 @@ class RevealCycle extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.UserReducer.user,
-    isShow: state.ModalReducer.isShow,
   };
 };
 
-export default connect(mapStateToProps, {showModalNotLogin})(RevealCycle);
+export default connect(mapStateToProps, {logout})(RevealCycle);

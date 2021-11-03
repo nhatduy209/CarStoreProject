@@ -25,6 +25,7 @@ import auth from '@react-native-firebase/auth';
 import * as Animatable from 'react-native-animatable';
 import {STATUS} from '../../config/Status';
 import {ProcessLoading} from '../modal/ProcessLoading';
+import {ToastAndroid} from 'react-native';
 const storeData = async value => {
   try {
     const jsonValue = JSON.stringify(value);
@@ -97,12 +98,20 @@ class LoginScreen extends React.Component {
 
   componentDidUpdate() {
     if (this.props.user?.status === STATUS.SUCCESS) {
+      if (this.state.loading) {
+        this.setState({loading: false});
+      }
       this.props.navigation.navigate('RootDrawer');
+    } else if (this.props.user?.status === STATUS.FAIL) {
+      ToastAndroid.show(
+        'Invalid account, check and try again',
+        ToastAndroid.LONG,
+      );
+      if (this.state.loading) {
+        this.setState({loading: false});
+      }
+      this.props.user.status = undefined;
     }
-    if (this.state.loading) {
-      this.setState({loading: false});
-    }
-
   }
 
   handleGoogleSignin = async () => {
@@ -140,6 +149,7 @@ class LoginScreen extends React.Component {
   };
 
   handleLogin = async () => {
+    this.setState({loading: true});
     if (this.state.isRemember) {
       const loginInfo = {
         email: this.state.email,
@@ -151,7 +161,6 @@ class LoginScreen extends React.Component {
       removeUserLogin();
     }
     this.props.login(this.state.email, this.state.password);
-    this.setState({loading: true});
   };
 
   render() {

@@ -97,11 +97,12 @@ class LoginScreen extends React.Component {
 
   componentDidUpdate() {
     if (this.props.user?.status === STATUS.SUCCESS) {
-      if (this.state.loading) {
-        this.setState({loading: false});
-      }
       this.props.navigation.navigate('RootDrawer');
     }
+    if (this.state.loading) {
+      this.setState({loading: false});
+    }
+
   }
 
   handleGoogleSignin = async () => {

@@ -191,6 +191,9 @@ dependencies {
     //import the firebase BoM
     implementation platform('com.google.firebase:firebase-bom:28.4.0')
 
+    implementation project(':react-native-push-notification')
+
+
     implementation ('com.google.firebase:firebase-analytics')
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules

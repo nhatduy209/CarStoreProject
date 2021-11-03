@@ -41,6 +41,7 @@ class CalendarScreen extends React.Component {
       ) {
         this.props.navigation.navigate('BookingDetailScreen', {booking: item});
       }
+      this.props.navigation.navigate('BookingDetailScreen');
     });
   };
 

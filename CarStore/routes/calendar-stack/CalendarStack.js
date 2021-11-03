@@ -26,7 +26,7 @@ export default class CalendarStack extends React.Component {
           name="BookingDetailScreen"
           component={BookingDetailScreen}
           options={{
-            title: 'Booking',
+            headerShown: false,
           }}
         />
       </Stack.Navigator>

@@ -14,7 +14,7 @@ import RelatedItemList from './RelatedItemList';
 import ColorPickerComponent from '../component/ColorPickerComponent';
 import {addToCart} from '../../../redux/action/add-to-cart/AddToCart';
 import {connect} from 'react-redux';
-
+import STATUS from '../../../config/Status';
 class DetailItemScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -52,12 +52,12 @@ class DetailItemScreen extends React.Component {
       quantity: this.state.quantity,
       price: this.state.itemInfo.prices,
     };
-    this.props.addToCart(data);
-
-    // const data={
-    //   email:this.props.user
-    // }
-    //Todo
+    this.props.addToCart(data).then(res => {
+      console.log('res', res);
+      if (res.status === STATUS.SUCCESS) {
+        this.props.navigation.navigate('CartStack');
+      }
+    });
   }
   render() {
     return (

@@ -17,4 +17,5 @@ export const addToCart = data => async dispatch => {
       data: res,
     });
   }
+  return res;
 };

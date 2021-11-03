@@ -27,7 +27,6 @@ export default class GetService {
         status: STATUS.SUCCESS,
       };
     } catch (err) {
-      console.log('response----', err);
       return {
         data: {},
         status: STATUS.FAIL,

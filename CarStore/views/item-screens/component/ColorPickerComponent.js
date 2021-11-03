@@ -2,6 +2,8 @@
 import React from 'react';
 import {View, StyleSheet, FlatList, TouchableOpacity, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {connect} from 'react-redux';
+import {setStateColor} from '../../../redux/action/list-color/ListColorAction';
 const handleColor = item => {
   switch (item.toUpperCase()) {
     case 'SILVER':
@@ -12,7 +14,7 @@ const handleColor = item => {
       return item;
   }
 };
-export default class ColorPickerComponent extends React.Component {
+class ColorPickerComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,7 +22,6 @@ export default class ColorPickerComponent extends React.Component {
     };
   }
   componentDidMount() {
-    console.log('picker', this.props.data);
     const list = [];
     this.props.data
       ? this.props.data.forEach(element => list.push(element.color))
@@ -28,34 +29,41 @@ export default class ColorPickerComponent extends React.Component {
     list.push('add');
     this.setState({listColor: list});
   }
+  changeListColor = listData => {
+    const list = [];
+    listData.forEach(element => list.push(element.color));
+    list.push('add');
+    this.setState({listColor: list});
+  };
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
-      console.log(this.props.data);
-      const list = [];
-      this.props.data
-        ? this.props.data.forEach(element => list.push(element.color))
-        : console.log(1);
-      list.push('add');
-      this.setState({listColor: list});
+      this.changeListColor(this.props.data);
+    }
+    if (this.props.listColor.addState === 'SUCCESS') {
+      this.changeListColor(this.props.listColor.colors);
+      this.props.setStateColor();
     }
   }
-  handleAddColor = () => {
-    this.props.navigation.push('AddImageItemScreen');
+  handleAddColor = item => {
+    if (item !== 'add') {
+      item = this.props.listColor.colors.find(el => el.color === item);
+    }
+    this.props.navigation.push('AddImageItemScreen', {
+      data: item,
+      action: this.props.currentScreen,
+    });
   };
   renderItem({item}) {
-    if (item === 'add' && this.props.isManageItem) {
+    if (this.props.isManageItem) {
       return (
         <TouchableOpacity
-          onPress={() => this.handleAddColor()}
-          style={[styles.addBox, {backgroundColor: '#ccc'}]}>
-          <Icon name="plus" size={20} />
+          onPress={() => this.handleAddColor(item)}
+          style={[
+            styles.addBox,
+            {backgroundColor: item === 'add' ? '#ccc' : handleColor(item)},
+          ]}>
+          {item === 'add' ? <Icon name="plus" size={20} /> : <View />}
         </TouchableOpacity>
-      );
-    } else {
-      return (
-        <TouchableOpacity
-          style={[styles.colorBox, {backgroundColor: handleColor(item)}]}
-        />
       );
     }
   }
@@ -79,6 +87,13 @@ export default class ColorPickerComponent extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    listColor: state.ListColorReducer,
+  };
+};
+
+export default connect(mapStateToProps, {setStateColor})(ColorPickerComponent);
 const styles = StyleSheet.create({
   colorBox: {
     width: 50,

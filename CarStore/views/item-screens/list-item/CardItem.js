@@ -13,7 +13,8 @@ import {
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import {removeItem} from '../../../redux/action/manage-item-action/RemoveItemAction';
+import {getListCar} from '../../../redux/action/get-list-car/GetListCar';
 if (
   Platform.OS === 'android' &&
   UIManager.setLayoutAnimationEnabledExperimental
@@ -32,9 +33,21 @@ class CardItem extends React.Component {
     this.setState({isShow: false});
   }
   listOptionIcons = [
-    {iconName: 'info', backgroundColor: '#7289da'},
-    {iconName: 'pencil', backgroundColor: '#99cc33'},
-    {iconName: 'trash', backgroundColor: '#ee4035'},
+    {
+      iconName: 'info',
+      backgroundColor: '#7289da',
+      onPress: () => this.handleUpdertItem('Detail'),
+    },
+    {
+      iconName: 'pencil',
+      backgroundColor: '#99cc33',
+      onPress: () => this.handleUpdertItem('Edit'),
+    },
+    {
+      iconName: 'trash',
+      backgroundColor: '#ee4035',
+      onPress: () => this.handleRemoveItem(),
+    },
   ];
   handleDetailItem = () => {
     this.props.isShownOption && this.props.isManagementScreen
@@ -43,11 +56,23 @@ class CardItem extends React.Component {
           data: this.props.data,
         });
   };
-  handleUpdertItem = () => {};
+  handleUpdertItem = type => {
+    this.setState({isShow: !this.state.isShow});
+    this.props.navigation.navigate('UpsertItemScreen', {
+      action: type,
+      data: this.props.data,
+    });
+  };
+  handleRemoveItem = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    this.setState({isShow: !this.state.isShow});
+    this.props.removeItem(this.props.data.name);
+    this.props.getListCar();
+  };
   showOptionItem = (item, index) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     return (
-      <TouchableOpacity key={index} onPress={() => this.handleUpdertItem()}>
+      <TouchableOpacity key={index} onPress={() => item.onPress()}>
         <Icon
           style={[styles.iconStyle, {backgroundColor: item.backgroundColor}]}
           name={item.iconName}
@@ -104,7 +129,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {})(CardItem);
+export default connect(mapStateToProps, {removeItem, getListCar})(CardItem);
 
 const styles = StyleSheet.create({
   options: {

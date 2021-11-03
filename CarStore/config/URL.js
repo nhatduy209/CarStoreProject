@@ -17,4 +17,9 @@ export const APP_URL = {
   SIGN_UP: URL_HEROKU + 'account/register',
   GET_STORE_INFO: URL_HEROKU + 'store/getinfo',
   EDIT_STORE_INFO: URL_HEROKU + 'store/editinfo',
+  ADD_ITEM: URL_HEROKU + 'car/add',
+  UPDATE_ITEM: URL_HEROKU + 'car/update',
+  ADD_NEW_COLOR: URL_HEROKU + 'car/addnewcolor',
+  UPDATE_QUANTITY: URL_HEROKU + 'car/updatequantity',
+  REMOVE_ITEM: URL_HEROKU + 'car/remove',
 };

@@ -19,6 +19,16 @@ export default class BookingBusiness {
       },
     };
     const result = await postAPI.PostAPI(APP_URL.BOOKING, params);
+    return result;
+  };
+
+  cancel = async data => {
+    var postAPI = new PostService();
+    const params = {
+      id_meeting: data.id_meeting,
+      email: data.clients_email,
+    };
+    const result = await postAPI.PostAPI(APP_URL.CANCEL_BOOKING, params);
     console.log('-----RESULT-------', result);
     return result;
   };

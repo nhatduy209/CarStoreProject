@@ -294,13 +294,13 @@ class BookingScreen extends React.Component {
     );
   }
 }
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   return {
     user: state.UserReducer.user.data,
     cart: state.CartReducer.cart,
     booking: state.BookingReducer,
   };
-}
+};
 export default connect(mapStateToProps, {createBooking, changeShowModalState})(
   BookingScreen,
 );

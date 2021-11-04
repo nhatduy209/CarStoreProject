@@ -7,14 +7,20 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import HeaderComponent from '../headerComponent';
-
-export default class BookingDetailScreen extends React.Component {
+import {connect} from 'react-redux';
+import {cancelBooking} from '../../redux/action/booking/BookingAction';
+class BookingDetailScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       info: 'hihi',
     };
   }
+
+  handleCancel = params => {
+    const data = {id_meeitng: params.id, email: params.email};
+    this.props.cancelBooking(data);
+  };
   render() {
     // const {booking} = this.props.route.params;
     // console.log('BOOKING DETAILS', booking);
@@ -64,7 +70,9 @@ export default class BookingDetailScreen extends React.Component {
             <Text style={{flex: 1, color: '#000'}}>{this.state.info}</Text>
           </View>
           <View style={styles.groupButton}>
-            <TouchableOpacity style={styles.editButton}>
+            <TouchableOpacity
+              style={styles.editButton}
+              onPress={this.handleCancel}>
               <Text
                 style={{
                   fontSize: 16,
@@ -92,6 +100,8 @@ export default class BookingDetailScreen extends React.Component {
     );
   }
 }
+
+export default connect({cancelBooking})(BookingDetailScreen);
 
 const styles = StyleSheet.create({
   bodyContent: {

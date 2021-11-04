@@ -3,6 +3,7 @@ import {ACTION_NAME} from '../action/booking/ActionName';
 
 const BOOKING_STATE = {
   STATUS_BOOKING: STATUS.FAIL,
+  CANCEL_BOOKING: STATUS.FAIL,
   showModal: false,
 };
 
@@ -27,6 +28,16 @@ const BookingReducer = (state = BOOKING_STATE, action) => {
       return {
         ...state,
         showModal: action.data,
+      };
+    case ACTION_NAME.BOOKING_ACTION.CANCEL_BOOKING_SUCCESS:
+      return {
+        ...state,
+        CANCEL_BOOKING: STATUS.SUCCESS,
+      };
+    case ACTION_NAME.BOOKING_ACTION.CANCEL_BOOKING_SUCCESS:
+      return {
+        ...state,
+        CANCEL_BOOKING: STATUS.FAIL,
       };
     default:
       return state;

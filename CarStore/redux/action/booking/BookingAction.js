@@ -22,3 +22,19 @@ export const changeShowModalState = (isShown = false) => {
     data: isShown,
   };
 };
+
+export const cancelBooking = data => async dispatch => {
+  var bookingBusiness = new BookingBusiness();
+  const result = bookingBusiness.cancel(data.data);
+  if (result.status === STATUS.SUCCESS) {
+    dispatch({
+      type: ACTION_NAME.BOOKING_ACTION.CANCEL_BOOKING_SUCCESS,
+      data: result.data,
+    });
+  } else {
+    dispatch({
+      type: ACTION_NAME.BOOKING_ACTION.CANCEL_BOOKING_FAIL,
+      data: result.data,
+    });
+  }
+};

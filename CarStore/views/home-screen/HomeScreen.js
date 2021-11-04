@@ -198,7 +198,7 @@ class HomeScreen extends React.Component {
             {/* Car on sale  */}
             <View style={{flexDirection: 'row', paddingTop: 10}}>
               <View style={{flex: 1}}>
-                <Text style={{fontSize: 18, fontWeight: '900'}}>Discount</Text>
+                <Text style={{fontSize: 18, fontWeight: '900'}}>Best sale</Text>
               </View>
               <View style={{justifyContent: 'flex-end'}}>
                 <Text style={{color: '#66b8ff'}}>Show all</Text>

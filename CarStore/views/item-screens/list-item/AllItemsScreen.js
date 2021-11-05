@@ -8,6 +8,7 @@ import {
   UIManager,
   LayoutAnimation,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
@@ -31,34 +32,42 @@ class AllItemsScreen extends React.Component {
       countItem: 0,
       listItems: [],
     };
+    // get limit item in db
+    this.start = 0;
+    this.end = 5;
+    this.canLoadMore = true;
   }
   componentDidMount() {
-    if (this.props.isSearch) {
-      this.setState({listItems: this.props.search_car.data});
-    } else {
-      this.props.getListCar();
-      this.setState({listItems: this.props.car.data});
-      this.setState({
-        countItem: this.props.car.data ? this.props.car.data.length : 0,
-      });
-    }
+    // if (this.props.isSearch) {
+    //   this.setState({listItems: this.props.search_car.data});
+    // } else {
+    //   this.props.getListCar(this.start, this.end);
+    //   this.setState({listItems: this.props.car.data});
+    //   this.setState({
+    //     countItem: this.props.car.data ? this.props.car.data.length : 0,
+    //   });
+    // }
     // console.log('prop', this.props.car);
   }
   componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
-      this.setState({
-        countItem: this.props.car.data ? this.props.car.data.length : 0,
-      });
-    }
-    if (this.props.reload) {
-      this.props.getListCar();
-      this.props.reloadListItem();
-    }
-    if (!this.state.listItems) {
-      this.setState({listItems: this.props.search_car});
-      this.setState({
-        countItem: this.props.car.data ? this.props.car.data.length : 0,
-      });
+    // if (prevProps !== this.props) {
+    //   this.setState({
+    //     countItem: this.props.car.data ? this.props.car.data.length : 0,
+    //   });
+    // }
+    // if (this.props.reload) {
+    //   this.props.getListCar();
+    //   this.props.reloadListItem();
+    // }
+    // if (!this.state.listItems) {
+    //   this.setState({listItems: this.props.search_car});
+    //   this.setState({
+    //     countItem: this.props.car.data ? this.props.car.data.length : 0,
+    //   });
+    // }
+    console.log(' LENGTH ---- ', prevProps.car.length, this.props.car.length);
+    if (prevProps.car.length === this.props.car.length) {
+      this.canLoadMore = false;
     }
   }
   renderItem({item, navigation}) {
@@ -75,9 +84,12 @@ class AllItemsScreen extends React.Component {
     return <View style={{width: 10}} />;
   };
 
-  renderFooter = () => {
-    return <View style={{height: 80}} />;
-  };
+  renderFooter = () => (
+    <View style={{height: 80}}>
+      <ActivityIndicator size="large" color="red" />
+    </View>
+  );
+
   showAddContainer = () => {
     <Text>Count Item {this.state.countItem}</Text>;
     return (
@@ -100,6 +112,17 @@ class AllItemsScreen extends React.Component {
   };
   renderHeader = () => {
     return this.props.isManagementScreen ? this.showAddContainer() : <View />;
+  };
+
+  loadMoreItem = () => {
+    console.log('THIS --', this.canLoadMore);
+    if (this.canLoadMore) {
+      this.start += 5;
+      this.end = 5;
+      this.props.getListCar(this.start, this.end);
+    } else {
+      alert('All cars is shown on screen');
+    }
   };
   render() {
     return (
@@ -127,7 +150,7 @@ class AllItemsScreen extends React.Component {
         ) : (
           <FlatList
             ListHeaderComponent={this.renderHeader}
-            data={this.props.car.data}
+            data={this.props.car}
             renderItem={item =>
               this.renderItem({...item, navigation: this.props.navigation})
             }
@@ -135,7 +158,12 @@ class AllItemsScreen extends React.Component {
             showsHorizontalScrollIndicator={false}
             ItemSeparatorComponent={this.separateItem}
             style={{paddingTop: 80}}
-            ListFooterComponent={this.renderFooter}
+            ListFooterComponent={this.renderFooter()}
+            onEndReachedThreshold={1}
+            onEndReached={({distanceFromEnd}) =>
+              // problem
+              this.loadMoreItem()
+            }
           />
         )}
       </View>

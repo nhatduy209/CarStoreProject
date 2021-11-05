@@ -101,7 +101,7 @@ class BookingDetailScreen extends React.Component {
   }
 }
 
-export default connect({cancelBooking})(BookingDetailScreen);
+export default connect(null, {cancelBooking})(BookingDetailScreen);
 
 const styles = StyleSheet.create({
   bodyContent: {

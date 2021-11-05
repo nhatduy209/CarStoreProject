@@ -31,7 +31,7 @@ class HomeScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getListCar();
+    this.props.getListCar(0, 5);
     this.props.getListCategory();
     this.backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
@@ -207,7 +207,7 @@ class HomeScreen extends React.Component {
 
             <FlatList
               horizontal
-              data={this.props.car.data}
+              data={this.props.car}
               renderItem={this.renderCarOnSale}
               keyExtractor={item => item.name}
               showsHorizontalScrollIndicator={false}

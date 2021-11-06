@@ -29,6 +29,7 @@ export default class BookingBusiness {
       email: data.email,
     };
     const result = await postAPI.PostAPI(APP_URL.CANCEL_BOOKING, params);
+    console.log('result', result);
     return result;
   };
 }

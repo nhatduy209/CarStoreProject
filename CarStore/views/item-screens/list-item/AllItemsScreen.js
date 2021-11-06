@@ -1,4 +1,3 @@
-/* eslint-disable react/no-did-mount-set-state */
 import React from 'react';
 import {
   View,
@@ -6,7 +5,6 @@ import {
   StyleSheet,
   Image,
   UIManager,
-  LayoutAnimation,
   Platform,
   ActivityIndicator,
 } from 'react-native';
@@ -121,6 +119,7 @@ class AllItemsScreen extends React.Component {
       this.end = 5;
       this.props.getListCar(this.start, this.end);
     } else {
+      // eslint-disable-next-line no-alert
       alert('All cars is shown on screen');
     }
   };

@@ -49,23 +49,25 @@ export default class HeaderComponent extends React.Component {
             position: 'relative',
             top: 16,
           }}>
-          <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-            <Icon
-              name="arrow-left"
-              size={16}
-              style={{color: '#999', marginRight: 5}}
-            />
-          </TouchableOpacity>
-          <Text
-            style={{
-              fontSize: 20,
-              width: '90%',
-              fontWeight: 'bold',
-              color: '#000',
-              textAlign: 'center',
-            }}>
-            {this.props.screenTitle ?? ''}
-          </Text>
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+              <Icon
+                name="arrow-left"
+                size={16}
+                style={{color: '#999', marginRight: 5}}
+              />
+            </TouchableOpacity>
+            <Text
+              style={{
+                fontSize: 20,
+                width: '90%',
+                fontWeight: 'bold',
+                color: '#000',
+                textAlign: 'center',
+              }}>
+              {this.props.screenTitle ?? ''}
+            </Text>
+          </View>
         </View>
         {this.props.search ? (
           <View style={styles.Input}>

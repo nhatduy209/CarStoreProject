@@ -41,7 +41,10 @@ export default class SettingScreen extends React.Component {
           {/* list item */}
           <View>
             <Text style={styles.groupItemTitle}>Account</Text>
-            <SettingItemComponent />
+            <SettingItemComponent
+              subItem={-1}
+              navigation={this.props.navigation}
+            />
             <Text style={styles.groupItemTitle}>Settings</Text>
             {this.listItem.map((item, index) =>
               this.renderSettingItem(item, index),

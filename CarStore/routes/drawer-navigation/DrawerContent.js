@@ -1,8 +1,11 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {connect} from 'react-redux';
 
-export default class DrawerContent extends React.Component {
+const avatarUrlDefault =
+  'https://cdn-icons.flaticon.com/png/512/3899/premium/3899618.png?token=exp=1633858815~hmac=a43363f78b47cd09622836ef7277fbfb';
+class DrawerContent extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -82,14 +85,23 @@ export default class DrawerContent extends React.Component {
         }}>
         <View
           style={{
-            height: '15%',
+            height: 120,
+            width: 120,
             alignSelf: 'center',
+            alignItems: 'center',
             justifyContent: 'center',
             marginTop: '10%',
+            backgroundColor: '#ccc',
+            borderRadius: 60,
           }}>
           <Image
-            source={require('../../images/avatar.jpg')}
-            style={{resizeMode: 'center', width: 100, height: 100}}
+            source={{uri: this.props.user.avatar ?? avatarUrlDefault}}
+            style={{
+              resizeMode: 'center',
+              width: 100,
+              height: 100,
+              borderRadius: 500,
+            }}
           />
         </View>
         <View
@@ -99,9 +111,11 @@ export default class DrawerContent extends React.Component {
             marginBottom: '10%',
           }}>
           <Text style={{fontSize: 25, fontWeight: 'bold', color: '#fff'}}>
-            username
+            {this.props.user.userName ?? 'di hong cu te'}
           </Text>
-          <Text style={{color: '#fff'}}>email</Text>
+          <Text style={{color: '#fff'}}>
+            {this.props.user.email ?? 'mail@gmail.com'}
+          </Text>
         </View>
         {/* list item in drawer  */}
         <View>
@@ -114,7 +128,12 @@ export default class DrawerContent extends React.Component {
     );
   }
 }
-
+function mapStateToProps(state) {
+  return {
+    user: state.UserReducer.user.data.data,
+  };
+}
+export default connect(mapStateToProps, {})(DrawerContent);
 const styles = StyleSheet.create({
   headerStyle: {
     height: 200,

@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 
@@ -57,9 +58,11 @@ class SettingItemComponent extends React.Component {
             {!this.props.item ? 'Personal Info' : 'something'}
           </Text>
         </View>
-        <View style={styles.moreIcon}>
+        <TouchableOpacity
+          style={styles.moreIcon}
+          onPress={() => this.props.navigation.navigate('ProfileScreen')}>
           <Icon name="angle-right" size={20} />
-        </View>
+        </TouchableOpacity>
       </View>
     );
   }

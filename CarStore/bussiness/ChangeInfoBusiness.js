@@ -6,7 +6,7 @@ export default class ChangeInfoBusiness {
 
     const params = {
       name: 'di',
-      url: data.url,
+      image: data.url,
       email: data.email,
       phone: data.phoneNum,
       address: data.address,

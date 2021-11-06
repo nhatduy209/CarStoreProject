@@ -13,17 +13,22 @@ class BookingDetailScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      info: 'hihi',
+      isShow: true,
+      descriptionText: '',
+      textAction: '',
+      textCancel: '',
     };
   }
-
-  handleCancel = params => {
-    const data = {id_meeitng: params.id, email: params.email};
+  handleCancel = async params => {
+    const data = {id_meeitng: params.id_meeting, email: params.clients_email};
     this.props.cancelBooking(data);
+    this.props.navigation.goBack();
+  };
+  fortmatDate = date => {
+    return new Date(date).toISOString().slice(0, 10);
   };
   render() {
-    // const {booking} = this.props.route.params;
-    // console.log('BOOKING DETAILS', booking);
+    const {booking} = this.props.route.params;
     return (
       <ScrollView>
         <HeaderComponent navigation={this.props.navigation} />
@@ -39,35 +44,43 @@ class BookingDetailScreen extends React.Component {
           </Text>
           <Text style={styles.inputLabel}>Email contact</Text>
           <View style={styles.Input}>
-            <Text style={{flex: 1, color: '#000'}}>{this.state.info}</Text>
+            <Text style={{flex: 1, color: '#000'}}>
+              {booking.clients_email}
+            </Text>
           </View>
-          <Text style={styles.inputLabel}>Choose your car</Text>
+          <Text style={styles.inputLabel}>Car booking</Text>
           <View style={styles.Input}>
-            <Text style={{flex: 1, color: '#000'}}>{this.state.info}</Text>
+            <Text style={{flex: 1, color: '#000'}}>
+              {booking.choosenCar ?? 'Xe của di'}
+            </Text>
           </View>
           <Text style={styles.inputLabel}>Full name</Text>
           <View style={styles.Input}>
-            <Text style={{flex: 1, color: '#000'}}>{this.state.info}</Text>
+            <Text style={{flex: 1, color: '#000'}}>{booking.full_name}</Text>
           </View>
           <Text style={styles.inputLabel}>Country</Text>
           <View style={styles.Input}>
-            <Text style={{flex: 1, color: '#000'}}>{this.state.info}</Text>
+            <Text style={{flex: 1, color: '#000'}}>{booking.country}</Text>
           </View>
           <Text style={styles.inputLabel}>Birthday</Text>
           <View style={styles.Input}>
-            <Text style={{flex: 1, color: '#000'}}>{this.state.info}</Text>
+            <Text style={{flex: 1, color: '#000'}}>
+              {this.fortmatDate(booking.birthday)}
+            </Text>
           </View>
           <Text style={styles.inputLabel}>Personal ID</Text>
           <View style={styles.Input}>
-            <Text style={{flex: 1, color: '#000'}}>{this.state.info}</Text>
+            <Text style={{flex: 1, color: '#000'}}>{booking.personal_id}</Text>
           </View>
           <Text style={styles.inputLabel}>Phone number</Text>
           <View style={styles.Input}>
-            <Text style={{flex: 1, color: '#000'}}>{this.state.info}</Text>
+            <Text style={{flex: 1, color: '#000'}}>{booking.phone_number}</Text>
           </View>
-          <Text style={styles.inputLabel}>Pick contact date</Text>
+          <Text style={styles.inputLabel}>Meeting date</Text>
           <View style={styles.Input}>
-            <Text style={{flex: 1, color: '#000'}}>{this.state.info}</Text>
+            <Text style={{flex: 1, color: '#000'}}>
+              {this.fortmatDate(booking.date_meeting)}
+            </Text>
           </View>
           <View style={styles.groupButton}>
             <TouchableOpacity
@@ -84,7 +97,7 @@ class BookingDetailScreen extends React.Component {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.cancelButton}
-              onPress={() => this.props.navigation.goBack()}>
+              onPress={() => this.handleCancel(booking)}>
               <Text
                 style={{
                   fontSize: 16,
@@ -101,7 +114,7 @@ class BookingDetailScreen extends React.Component {
   }
 }
 
-export default connect({cancelBooking})(BookingDetailScreen);
+export default connect(null, {cancelBooking})(BookingDetailScreen);
 
 const styles = StyleSheet.create({
   bodyContent: {

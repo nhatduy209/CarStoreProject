@@ -207,6 +207,7 @@ class LoginScreen extends React.Component {
                   style={{paddingHorizontal: 20}}
                 />
                 <TextInput
+                  testID="email"
                   style={{flex: 1, color: '#000'}}
                   onChangeText={value => this.setState({email: value})}
                   value={this.state.email}
@@ -219,6 +220,7 @@ class LoginScreen extends React.Component {
               <View style={styles.Input}>
                 <Icon name="lock" size={20} style={{paddingHorizontal: 20}} />
                 <TextInput
+                  testID="password"
                   style={{flex: 1, color: '#000'}}
                   onChangeText={value => this.setState({password: value})}
                   secureTextEntry
@@ -250,12 +252,9 @@ class LoginScreen extends React.Component {
             <TouchableOpacity
               style={styles.loginButton}
               onPress={this.handleLogin}>
-              <Animatable.Text
-                animation="tada"
-                iterationCount="infinite"
-                style={styles.loginText}>
+              <Text testID="btnLogin" style={styles.loginText}>
                 LOGIN
-              </Animatable.Text>
+              </Text>
             </TouchableOpacity>
 
             <Text style={{textAlign: 'center', fontSize: 17}}>

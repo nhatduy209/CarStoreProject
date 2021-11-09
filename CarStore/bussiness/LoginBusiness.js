@@ -7,6 +7,7 @@ export default class LoginBusiness {
     const params = {
       email: data.email,
       password: data.password,
+      tokenDevice: data.tokenDevice,
     };
     var result = await postService.PostAPI(APP_URL.LOGIN, params);
     return result;
@@ -21,6 +22,17 @@ export default class LoginBusiness {
       photoURL: data.displayName,
     };
     var result = await postService.PostAPI(APP_URL.LOGIN_WITH_EMAIL, params);
+    return result;
+  };
+
+  logoutBusiness = async data => {
+    var postService = new PostService();
+
+    const params = {
+      email: data.email,
+      tokenDevice: data.tokenDevice,
+    };
+    var result = await postService.PostAPI(APP_URL.LOGOUT, params);
     return result;
   };
 }

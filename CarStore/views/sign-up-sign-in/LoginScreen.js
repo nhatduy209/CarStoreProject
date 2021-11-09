@@ -26,29 +26,20 @@ import * as Animatable from 'react-native-animatable';
 import {STATUS} from '../../config/Status';
 import {ProcessLoading} from '../modal/ProcessLoading';
 import {ToastAndroid} from 'react-native';
-const storeData = async value => {
-  try {
-    const jsonValue = JSON.stringify(value);
-    await AsyncStorage.setItem('login_key', jsonValue);
-    console.log('STORE DATA SUCCESS-----');
-  } catch (e) {
-    // saving error
-  }
-};
+import {LOGIN_KEY, TOKEN_DEVICE} from '../../config/StorageKey';
+import {_storeData, _retrieveData} from '../../common/Utils';
 
 const removeUserLogin = async () => {
   try {
-    await AsyncStorage.removeItem('login_key');
+    await AsyncStorage.removeItem(LOGIN_KEY);
   } catch (e) {
     // remove error
   }
-
-  console.log('Done.');
 };
 
 const getUserlogin = async () => {
   try {
-    const jsonValue = await AsyncStorage.getItem('login_key');
+    const jsonValue = await AsyncStorage.getItem(LOGIN_KEY);
     return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (e) {
     // error reading value
@@ -149,6 +140,7 @@ class LoginScreen extends React.Component {
   };
 
   handleLogin = async () => {
+    const tokenDevice = await _retrieveData(TOKEN_DEVICE);
     this.setState({loading: true});
     if (this.state.isRemember) {
       const loginInfo = {
@@ -156,11 +148,12 @@ class LoginScreen extends React.Component {
         password: this.state.password,
         isRemember: this.state.isRemember,
       };
-      storeData(loginInfo);
+      const jsonValue = JSON.stringify(loginInfo);
+      _storeData(LOGIN_KEY, jsonValue);
     } else {
       removeUserLogin();
     }
-    this.props.login(this.state.email, this.state.password);
+    this.props.login(this.state.email, this.state.password, tokenDevice);
   };
 
   render() {

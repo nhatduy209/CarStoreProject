@@ -23,4 +23,5 @@ export const APP_URL = {
   ADD_NEW_COLOR: URL_HEROKU + 'car/addnewcolor',
   UPDATE_QUANTITY: URL_HEROKU + 'car/updatequantity',
   REMOVE_ITEM: URL_HEROKU + 'car/remove',
+  LOGOUT: URL_HEROKU + 'account/logout',
 };

@@ -27,7 +27,7 @@ class DetailItemScreen extends React.Component {
   componentDidMount() {
     // console.log('state', this.props.car);
     this.setState({itemInfo: this.props.route.params.data});
-    const list = this.props.car.data.filter(item => {
+    const list = this.props.car.filter(item => {
       return item.category === this.props.route.params.data.category;
     });
     this.setState({relatedItems: list});
@@ -35,7 +35,7 @@ class DetailItemScreen extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.route.params.data !== this.props.route.params.data) {
       this.setState({itemInfo: this.props.route.params.data});
-      const list = this.props.car.data.filter(item => {
+      const list = this.props.car.filter(item => {
         return item.category === this.props.route.params.data.category;
       });
       this.setState({relatedItems: list});

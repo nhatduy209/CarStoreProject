@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import HeaderComponent from '../headerComponent';
 import {LineChart, PieChart} from 'react-native-chart-kit';
@@ -35,7 +36,7 @@ export default class StatisticScreen extends React.Component {
   getLabel = month => {
     let labels = [];
     const currentMonth = month.getMonth();
-    while (labels.length < 12) {
+    while (labels.length < 6) {
       labels.push(((currentMonth + labels.length) % 12) + 1);
     }
     return labels.reverse();
@@ -73,7 +74,7 @@ export default class StatisticScreen extends React.Component {
       },
     ];
     return (
-      <View style={{height: Dimensions.get('window').height}}>
+      <ScrollView style={{height: Dimensions.get('window').height}}>
         <HeaderComponent navigation={this.props.navigation} />
         <View style={styles.statisticContainer}>
           <Text
@@ -118,7 +119,7 @@ export default class StatisticScreen extends React.Component {
                 labels: this.getLabel(month),
                 datasets: [
                   {
-                    data: [50, 100, 12, 67, 88, 34, 50, 190, 120, 79, 9, 34],
+                    data: [50, 100, 12, 67, 88, 34],
                   },
                 ],
               }}
@@ -149,7 +150,7 @@ export default class StatisticScreen extends React.Component {
             />
           </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -158,6 +159,7 @@ const styles = StyleSheet.create({
     height: '100%',
     paddingHorizontal: 16,
     marginTop: 60,
+    marginBottom: 20,
   },
   groupItemTitle: {
     fontSize: 24,
@@ -187,11 +189,13 @@ const styles = StyleSheet.create({
   },
   subStatistic: {
     padding: 20,
-    borderRadius: 8,
+    borderRadius: 12,
+    backgroundColor: '#fff',
+    marginVertical: 4,
     shadowColor: '#bbb',
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 0.5,
     },
     shadowOpacity: 0.25,
     shadowRadius: 2,

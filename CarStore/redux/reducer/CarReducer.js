@@ -4,6 +4,7 @@ const CAR_STATE = {
   car: [],
 };
 
+// TODO ACTION PASS HAY FAIL CŨNG ĐỀU RETURN GIỐNG NHAU
 const CarReducer = (state = CAR_STATE, action) => {
   switch (action.type) {
     case ACTION_NAME.GET_LIST_CAR.GET_LIST_CAR_SUCCESS:

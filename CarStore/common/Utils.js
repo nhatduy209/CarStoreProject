@@ -19,3 +19,12 @@ export const _retrieveData = async key => {
     // Error retrieving data
   }
 };
+
+export const validateFunc = (item, isEmail = false) => {
+  if (isEmail) {
+    return item.includes('@');
+  } else if (!isEmail && item.length) {
+    return true;
+  }
+  return false;
+};

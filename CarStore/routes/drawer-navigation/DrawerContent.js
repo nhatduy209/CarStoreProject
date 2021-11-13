@@ -17,6 +17,9 @@ class DrawerContent extends React.Component {
   onStoreInfoPress = () => {
     this.props.navigation.navigate('StoreScreenStack');
   };
+  onStatisticPress = () => {
+    this.props.navigation.navigate('StatisticScreen');
+  };
   onManagePress = () => {
     this.props.navigation.navigate('ManageItemScreenStack', {
       isManagementScreen: true,
@@ -54,7 +57,7 @@ class DrawerContent extends React.Component {
     {
       iconName: 'snapchat',
       textContent: 'Statistic',
-      handlePress: this.onSettingPress,
+      handlePress: this.onStatisticPress,
     },
     {
       iconName: 'check',
@@ -62,6 +65,15 @@ class DrawerContent extends React.Component {
       handlePress: this.onHomePress,
     },
   ];
+  cloneListDrawerItems = () => {
+    if (this.props.user?.role !== 'admin') {
+      return this.listDrawerItems.filter(
+        item =>
+          item.textContent !== 'Statistic' && item.textContent !== 'Product',
+      );
+    }
+    return this.listDrawerItems;
+  };
   renderDrawerItem(item, index) {
     return (
       <TouchableOpacity key={index} onPress={item.handlePress}>
@@ -95,7 +107,7 @@ class DrawerContent extends React.Component {
             borderRadius: 60,
           }}>
           <Image
-            source={{uri: this.props.user.avatar ?? avatarUrlDefault}}
+            source={{uri: this.props.user?.avatar ?? avatarUrlDefault}}
             style={{
               resizeMode: 'center',
               width: 100,
@@ -111,16 +123,16 @@ class DrawerContent extends React.Component {
             marginBottom: '10%',
           }}>
           <Text style={{fontSize: 25, fontWeight: 'bold', color: '#fff'}}>
-            {this.props.user.userName ?? 'di hong cu te'}
+            {this.props.user?.userName ?? 'di hong cu te'}
           </Text>
           <Text style={{color: '#fff'}}>
-            {this.props.user.email ?? 'mail@gmail.com'}
+            {this.props.user?.email ?? 'mail@gmail.com'}
           </Text>
         </View>
         {/* list item in drawer  */}
         <View>
           {/* each item  */}
-          {this.listDrawerItems.map((item, index) =>
+          {this.cloneListDrawerItems().map((item, index) =>
             this.renderDrawerItem(item, index),
           )}
         </View>
@@ -130,7 +142,7 @@ class DrawerContent extends React.Component {
 }
 function mapStateToProps(state) {
   return {
-    user: state.UserReducer.user.data.data,
+    user: state.UserReducer.user?.data?.data,
   };
 }
 export default connect(mapStateToProps, {})(DrawerContent);

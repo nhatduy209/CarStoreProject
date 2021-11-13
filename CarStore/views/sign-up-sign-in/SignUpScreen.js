@@ -12,6 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import {signUp} from '../../redux/action/login-action/SignUpAction';
+import {STATUS} from '../../config/Status';
 
 class SignUpScreen extends React.Component {
   constructor(props) {
@@ -39,7 +40,11 @@ class SignUpScreen extends React.Component {
       hidePassword: !this.state.hidePassword,
     });
   };
-
+  componentDidUpdate() {
+    if (this.props.user?.status === STATUS.SUCCESS) {
+      this.props.navigation.navigate('LoginScreen');
+    }
+  }
   render() {
     return (
       <KeyboardAvoidingView

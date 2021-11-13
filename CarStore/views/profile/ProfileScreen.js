@@ -28,7 +28,6 @@ class ProfileScreen extends React.Component {
       email: this.props.user.data.email,
     };
   }
-
   handlePhotos = () => {
     const Options = {};
     ImagePicker.launchImageLibrary(Options, response => {

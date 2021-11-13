@@ -57,12 +57,12 @@ const UserReducer = (state = USER_STATE, action) => {
     case CHANGE_INFO_ACTION_NAME.CHANGE_INFO_ACTION.CHANGE_INFO_SUCCESS:
       return {
         ...state,
-        user: {data: action.data.data, status: 'SUCCESS'},
+        user: {data: action.data, status: 'SUCCESS'},
       };
     case CHANGE_INFO_ACTION_NAME.CHANGE_INFO_ACTION.CHANGE_INFO_FAIL:
       return {
         ...state,
-        user: {data: action.data, status: 'SUCCESS'},
+        user: {data: action.data, status: 'FAIL'},
       };
 
     default:

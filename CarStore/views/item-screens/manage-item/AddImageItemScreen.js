@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+} from 'react-native';
 import HeaderComponent from '../../headerComponent';
 import * as ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -96,7 +103,7 @@ class AddImageItemsScreen extends React.Component {
   };
   render() {
     return (
-      <View>
+      <ScrollView>
         <HeaderComponent navigation={this.props.navigation} />
         <View
           style={{
@@ -191,7 +198,7 @@ class AddImageItemsScreen extends React.Component {
           ]}>
           <Text style={styles.btnText}>Add</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     );
   }
 }

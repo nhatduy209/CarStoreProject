@@ -66,7 +66,6 @@ class AllItemsScreen extends React.Component {
     // }
     if (prevProps.car.length === this.props.car.length) {
       this.canLoadMore = false;
-      ToastAndroid.show('All Cars have been shown', ToastAndroid.LONG);
     }
   }
   renderItem({item, navigation}) {
@@ -90,10 +89,9 @@ class AllItemsScreen extends React.Component {
   );
 
   showAddContainer = () => {
-    <Text>Count Item {this.state.countItem}</Text>;
     return (
       <View style={styles.addContainer}>
-        <Text style={{fontSize: 20}}>Item Count: {this.state.countItem}</Text>
+        <Text style={{fontSize: 20}}>Item Count: {this.props.car.length}</Text>
         <TouchableOpacity
           onPress={() => {
             this.props.setDefaultListColor();
@@ -114,16 +112,15 @@ class AllItemsScreen extends React.Component {
   };
 
   loadMoreItem = () => {
-    console.log('THIS --', this.canLoadMore);
     if (this.canLoadMore) {
       this.start += 5;
       this.props.getListCar(this.start, this.end);
     } else {
-      // eslint-disable-next-line no-alert
-      alert('All cars is shown on screen');
+      ToastAndroid.show('All Cars have been shown', ToastAndroid.LONG);
     }
   };
   render() {
+    console.log('THIS  LENGTH--', this.props.car.length);
     return (
       <View style={{backgroundColor: !this.state.listItems ? '#fff' : '#eee'}}>
         {this.props.isSearch ? (

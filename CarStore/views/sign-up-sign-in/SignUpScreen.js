@@ -22,10 +22,7 @@ class SignUpScreen extends React.Component {
       email: '',
       password: '',
       hidePassword: true,
-      icon: 'eye-slash',
       confirmPassword: '',
-      hideConfirmPassword: true,
-      iconConfirm: 'eye-slash',
       phone: '',
     };
   }
@@ -41,13 +38,6 @@ class SignUpScreen extends React.Component {
   handleHidePassowrd = () => {
     this.setState({
       hidePassword: !this.state.hidePassword,
-      icon: this.state.hidePassword ? 'eye-slash' : 'eye',
-    });
-  };
-  handleHideConfirmedPassowrd = () => {
-    this.setState({
-      hideConfirmPassword: !this.state.hideConfirmPassword,
-      iconConfirm: this.state.hideConfirmPassword ? 'eye' : 'eye-slash',
     });
   };
   componentDidUpdate() {
@@ -123,7 +113,7 @@ class SignUpScreen extends React.Component {
               <View style={styles.Input}>
                 <Icon
                   onPress={this.handleHidePassowrd}
-                  name={this.state.icon}
+                  name={this.state.hidePassword ? 'eye-slash' : 'eye'}
                   size={16}
                   style={{color: '#555', marginRight: 5}}
                 />
@@ -141,8 +131,8 @@ class SignUpScreen extends React.Component {
 
               <View style={styles.Input}>
                 <Icon
-                  onPress={this.handleHideConfirmedPassowrd}
-                  name={this.state.iconConfirm}
+                  onPress={this.handleHidePassowrd}
+                  name={this.state.hidePassword ? 'eye-slash' : 'eye'}
                   size={16}
                   style={{color: '#555', marginRight: 5}}
                 />
@@ -150,7 +140,7 @@ class SignUpScreen extends React.Component {
                 <TextInput
                   style={{flex: 1, color: '#000'}}
                   placeholder={'Confirm password'}
-                  secureTextEntry={this.state.hideConfirmPassword}
+                  secureTextEntry={this.state.hidePassword}
                   onChangeText={value =>
                     this.setState({
                       passwordConfirmed: value,

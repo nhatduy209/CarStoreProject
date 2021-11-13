@@ -7,6 +7,7 @@ import {
   UIManager,
   Platform,
   ActivityIndicator,
+  ToastAndroid,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
@@ -31,7 +32,7 @@ class AllItemsScreen extends React.Component {
       listItems: [],
     };
     // get limit item in db
-    this.start = 0;
+    this.start = this.props.car.length;
     this.end = 5;
     this.canLoadMore = true;
   }
@@ -63,9 +64,9 @@ class AllItemsScreen extends React.Component {
     //     countItem: this.props.car.data ? this.props.car.data.length : 0,
     //   });
     // }
-    console.log(' LENGTH ---- ', prevProps.car.length, this.props.car.length);
     if (prevProps.car.length === this.props.car.length) {
       this.canLoadMore = false;
+      ToastAndroid.show('All Cars have been shown', ToastAndroid.LONG);
     }
   }
   renderItem({item, navigation}) {
@@ -116,7 +117,6 @@ class AllItemsScreen extends React.Component {
     console.log('THIS --', this.canLoadMore);
     if (this.canLoadMore) {
       this.start += 5;
-      this.end = 5;
       this.props.getListCar(this.start, this.end);
     } else {
       // eslint-disable-next-line no-alert

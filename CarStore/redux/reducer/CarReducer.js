@@ -7,7 +7,11 @@ const CAR_STATE = {
 const CarReducer = (state = CAR_STATE, action) => {
   switch (action.type) {
     case ACTION_NAME.GET_LIST_CAR.GET_LIST_CAR_SUCCESS:
-      console.log('STATE ---', action.data.data.length, state.car.length);
+      if (action.data.data[0]?.name === state.car[0]?.name) {
+        return {
+          ...state,
+        };
+      }
       return {
         ...state,
         car: [...state.car, ...action.data.data],

@@ -3,8 +3,10 @@ import {View, TouchableOpacity, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import CircleTransition from 'react-native-circle-reveal-view';
 import {connect} from 'react-redux';
-import {STATUS} from '../../config/Status';
+import {STATUS, STATUS_LOGOUT} from '../../config/Status';
 import {logout} from '../../redux/action/login-action/LoginAction';
+import {_retrieveData} from '../../common/Utils';
+import {TOKEN_DEVICE} from '../../config/StorageKey';
 const marginL = 20;
 
 class RevealCycle extends React.Component {
@@ -12,10 +14,18 @@ class RevealCycle extends React.Component {
     super(props);
   }
 
-  logout = () => {
-    this.props.logout();
+  logout = async () => {
+    const getToken = await _retrieveData(TOKEN_DEVICE);
+
+    this.props.logout(this.props.user.data.data.email, getToken);
     this.props.navigation.navigate('LoginScreen');
   };
+
+  componentDidUpdate() {
+    if (this.props.user.status === STATUS_LOGOUT.SUCCESS) {
+      this.props.navigation.navigate('LoginScreen');
+    }
+  }
 
   renderSignInIcons = () => {
     if (this.props.user.status === STATUS.SUCCESS) {

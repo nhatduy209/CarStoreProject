@@ -8,6 +8,7 @@ import {
   ScrollView,
   TextInput,
   Dimensions,
+  ToastAndroid,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {connect} from 'react-redux';
@@ -15,18 +16,24 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import * as ImagePicker from 'react-native-image-picker';
 import Moment from 'react-moment';
 import {changeInfo} from '../../redux/action/change-info/ChangeInfoAction';
+import {STATUS} from '../../config/Status';
 class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: this.props.user?.data?.avatar ?? 'Set avatar',
-      phoneNum: this.props.user.data?.phoneNum ?? 'Set your phone number',
+      url: this.props.user?.data?.image ?? 'Set avatar',
+      phoneNum: this.props.user.data?.phone ?? 'Set your phone number',
       gender: this.props.user?.data?.gender ?? true, // true is male and false is female
       isCalendarVisible: false,
       date: this.props.user?.data?.birthday ?? new Date(),
       address: this.props.user?.data?.address ?? 'Set your address ',
       email: this.props.user.data.email,
+      name: this.props.user?.data?.name ?? 'Your name',
     };
+  }
+
+  componentDidMount() {
+    console.log('user', this.props.user);
   }
   handlePhotos = () => {
     const Options = {};
@@ -45,22 +52,26 @@ class ProfileScreen extends React.Component {
     this.setState({
       url: this.props.user.data.avatar,
       email: this.props.user.data.email,
+      name: this.props.user.data.name,
       phoneNum: this.props.user.data.phoneNum,
       gender: this.props.user.data.gender, // true is male and false is female
       isCalendarVisible: false,
       date: this.props.user.data.birthday,
       address: this.props.user.data.address,
+      Avatar: null,
     });
   };
   handleSave = () => {
     // TODO TRAN THANH TOAN HANDLE SAVE INFO
     const data = {
       url: this.state.url,
+      name: this.state.name,
       email: this.state.email,
       phoneNum: this.state.phoneNum,
       gender: this.state.gender, // true is male and false is female
       isCalendarVisible: this.state.isCalendarVisible,
       date: this.state.date,
+      password: this.props.user.data.password,
       address: this.state.address,
     };
     this.props.changeInfo({data, Avatar: this.state.Avatar});
@@ -83,7 +94,11 @@ class ProfileScreen extends React.Component {
       this.setState({gender: false});
     }
   };
-
+  componentDidUpdate() {
+    if (this.props.updateStatus && this.props.updateStatus === STATUS.SUCCESS) {
+      ToastAndroid.show('Update info successfully', ToastAndroid.LONG);
+    }
+  }
   render() {
     const date = new Date(this.state.date);
     const isGender = this.state.gender
@@ -119,6 +134,17 @@ class ProfileScreen extends React.Component {
                 }}
                 value={this.state.email}
                 editable={false}
+              />
+            </View>
+
+            <View style={styles.detailInfo}>
+              <Text style={styles.textStyleTitle}> Name</Text>
+              <TextInput
+                style={styles.textStyleData}
+                onChangeText={value => {
+                  this.setState({name: value});
+                }}
+                value={this.state.name}
               />
             </View>
 
@@ -220,6 +246,7 @@ class ProfileScreen extends React.Component {
 function mapStateToProps(state) {
   return {
     user: state.UserReducer.user.data,
+    updateStatus: state.UserReducer.user.updateStatus,
   };
 }
 export default connect(mapStateToProps, {changeInfo})(ProfileScreen);

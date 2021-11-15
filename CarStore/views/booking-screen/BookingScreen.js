@@ -282,7 +282,7 @@ class BookingScreen extends React.Component {
                 backgroundColor: '#ffffff',
                 flex: 1,
               }}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                 <Text style={styles.txtButton}>Cancel</Text>
               </TouchableOpacity>
             </View>

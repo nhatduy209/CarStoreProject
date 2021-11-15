@@ -58,7 +58,7 @@ class AllItemsScreen extends React.Component {
         </View>
       );
     } else {
-      return <View style={{height: 50}}></View>;
+      return <View style={{height: 50}} />;
     }
   };
 

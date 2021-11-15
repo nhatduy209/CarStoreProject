@@ -25,6 +25,7 @@ class HomeScreen extends React.Component {
       searchText: '',
       visible: false,
       isShow: false,
+      isSearch: false,
     };
   }
 
@@ -61,19 +62,17 @@ class HomeScreen extends React.Component {
     if (value.length > 0) {
       this.setState({visible: true});
     } else {
-      this.setState({visible: false});
+      this.setState({visible: false, isSearch: false});
     }
   };
 
   handleSearchPress = () => {
     this.props.searchCar(this.state.searchText);
+    this.setState({isSearch: true});
   };
 
   render() {
-    if (
-      this.props.search_car?.length >= 0 &&
-      this.state.searchText.length > 0
-    ) {
+    if (this.props.search_car?.length >= 0 && this.state.isSearch) {
       return (
         <View style={styles.Container}>
           <ScrollView showsVerticalScrollIndicator={false}>

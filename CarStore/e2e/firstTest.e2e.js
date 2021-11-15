@@ -15,7 +15,7 @@ describe('Example', () => {
     await element(by.id('email')).tapReturnKey();
     await waitFor(element(by.id('loginBtn')))
       .toBeVisible()
-      .withTimeout(3000);
+      .withTimeout(6000);
     await element(by.id('loginBtn')).tap();
   });
 });

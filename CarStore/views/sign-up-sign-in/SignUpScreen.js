@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import {signUp} from '../../redux/action/login-action/SignUpAction';
 import {STATUS} from '../../config/Status';
+import {testIds} from '../../config/TestID';
 
 class SignUpScreen extends React.Component {
   constructor(props) {
@@ -51,7 +52,9 @@ class SignUpScreen extends React.Component {
         style={styles.container}
         behavior={Platform.OS === 'ios' ? 'padding' : null}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}>
-        <ScrollView style={{height: '100%'}}>
+        <ScrollView
+          style={{height: '100%'}}
+          testID={testIds.SignUp_Screen.scrollView}>
           <View style={{alignItems: 'center', marginVertical: '8%'}}>
             <Text style={{fontSize: 32, fontWeight: '500'}}>
               Create Account
@@ -69,6 +72,7 @@ class SignUpScreen extends React.Component {
                   style={{color: '#555', marginRight: 5}}
                 />
                 <TextInput
+                  testID={testIds.SignUp_Screen.textInputName}
                   style={{flex: 1, color: '#000'}}
                   placeholder={'Name'}
                   onChangeText={value => this.setState({name: value})}
@@ -85,6 +89,7 @@ class SignUpScreen extends React.Component {
                   style={{color: '#555', marginRight: 5}}
                 />
                 <TextInput
+                  testID={testIds.SignUp_Screen.textInputPhone}
                   style={{flex: 1, color: '#000'}}
                   placeholder={'Phone'}
                   onChangeText={value => this.setState({phone: value})}
@@ -101,6 +106,7 @@ class SignUpScreen extends React.Component {
                   style={{color: '#555', marginRight: 5}}
                 />
                 <TextInput
+                  testID={testIds.SignUp_Screen.textInputEmail}
                   style={{flex: 1, color: '#000'}}
                   placeholder={'Email'}
                   onChangeText={value => this.setState({email: value})}
@@ -118,6 +124,7 @@ class SignUpScreen extends React.Component {
                   style={{color: '#555', marginRight: 5}}
                 />
                 <TextInput
+                  testID={testIds.SignUp_Screen.textInputPassword}
                   style={{flex: 1, color: '#000'}}
                   placeholder={'Password'}
                   secureTextEntry={this.state.hidePassword}
@@ -138,6 +145,7 @@ class SignUpScreen extends React.Component {
                 />
 
                 <TextInput
+                  testID={testIds.SignUp_Screen.textInputConfirmPassword}
                   style={{flex: 1, color: '#000'}}
                   placeholder={'Confirm password'}
                   secureTextEntry={this.state.hidePassword}
@@ -152,6 +160,7 @@ class SignUpScreen extends React.Component {
             </View>
 
             <TouchableOpacity
+              testID={testIds.SignUp_Screen.buttonSignUp}
               style={styles.signUpButton}
               onPress={this.handleSignUp}>
               <Text style={styles.loginText}>SIGN UP</Text>

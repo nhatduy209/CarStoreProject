@@ -28,6 +28,7 @@ import {ProcessLoading} from '../modal/ProcessLoading';
 import {ToastAndroid} from 'react-native';
 import {LOGIN_KEY, TOKEN_DEVICE} from '../../config/StorageKey';
 import {_storeData, _retrieveData} from '../../common/Utils';
+import {testIds} from '../../config/TestID';
 
 const removeUserLogin = async () => {
   try {
@@ -200,7 +201,7 @@ class LoginScreen extends React.Component {
                   style={{paddingHorizontal: 20}}
                 />
                 <TextInput
-                  testID="email"
+                  testID={testIds.txtEmail}
                   style={{flex: 1, color: '#000'}}
                   onChangeText={value => this.setState({email: value})}
                   value={this.state.email}
@@ -213,7 +214,7 @@ class LoginScreen extends React.Component {
               <View style={styles.Input}>
                 <Icon name="lock" size={20} style={{paddingHorizontal: 20}} />
                 <TextInput
-                  testID="password"
+                  testID={testIds.txtPassword}
                   style={{flex: 1, color: '#000'}}
                   onChangeText={value => this.setState({password: value})}
                   secureTextEntry
@@ -243,11 +244,10 @@ class LoginScreen extends React.Component {
             </View>
 
             <TouchableOpacity
+              testID={testIds.buttonLogin}
               style={styles.loginButton}
               onPress={this.handleLogin}>
-              <Text testID="btnLogin" style={styles.loginText}>
-                LOGIN
-              </Text>
+              <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
 
             <Text style={{textAlign: 'center', fontSize: 17}}>
@@ -298,6 +298,7 @@ class LoginScreen extends React.Component {
             }}>
             <Text>Don't have account ? </Text>
             <TouchableOpacity
+              testID={testIds.SignUp_Screen.buttonSignUp}
               onPress={() => this.props.navigation.navigate('SignUpScreen')}>
               <Text style={{color: '#00e6e6'}}>Sign up</Text>
             </TouchableOpacity>

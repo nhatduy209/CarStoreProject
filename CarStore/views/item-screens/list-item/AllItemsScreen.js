@@ -17,7 +17,6 @@ import HeaderComponent from '../../headerComponent';
 import {getListCar} from '../../../redux/action/get-list-car/GetListCar';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {setDefaultListColor} from '../../../redux/action/list-color/ListColorAction';
-import {reloadListItem} from '../../../redux/action/manage-item-action/ReloadListItemAction';
 if (
   Platform.OS === 'android' &&
   UIManager.setLayoutAnimationEnabledExperimental
@@ -27,43 +26,11 @@ if (
 class AllItemsScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      countItem: 0,
-      listItems: [],
-    };
-    // get limit item in db
     this.start = this.props.car.length;
     this.end = 5;
     this.canLoadMore = true;
   }
-  componentDidMount() {
-    // if (this.props.isSearch) {
-    //   this.setState({listItems: this.props.search_car.data});
-    // } else {
-    //   this.props.getListCar(this.start, this.end);
-    //   this.setState({listItems: this.props.car.data});
-    //   this.setState({
-    //     countItem: this.props.car.data ? this.props.car.data.length : 0,
-    //   });
-    // }
-    // console.log('prop', this.props.car);
-  }
   componentDidUpdate(prevProps) {
-    // if (prevProps !== this.props) {
-    //   this.setState({
-    //     countItem: this.props.car.data ? this.props.car.data.length : 0,
-    //   });
-    // }
-    // if (this.props.reload) {
-    //   this.props.getListCar();
-    //   this.props.reloadListItem();
-    // }
-    // if (!this.state.listItems) {
-    //   this.setState({listItems: this.props.search_car});
-    //   this.setState({
-    //     countItem: this.props.car.data ? this.props.car.data.length : 0,
-    //   });
-    // }
     if (prevProps.car.length === this.props.car.length) {
       this.canLoadMore = false;
     }
@@ -82,11 +49,18 @@ class AllItemsScreen extends React.Component {
     return <View style={{width: 10}} />;
   };
 
-  renderFooter = () => (
-    <View style={{height: 80}}>
-      <ActivityIndicator size="large" color="red" />
-    </View>
-  );
+  renderFooter = () => {
+    const isSearch = this.props.isSearch ?? false;
+    if (this.canLoadMore && !isSearch) {
+      return (
+        <View style={{height: 80}}>
+          <ActivityIndicator size="large" color="red" />
+        </View>
+      );
+    } else {
+      return <View style={{height: 50}}></View>;
+    }
+  };
 
   showAddContainer = () => {
     return (
@@ -119,10 +93,25 @@ class AllItemsScreen extends React.Component {
       ToastAndroid.show('All Cars have been shown', ToastAndroid.LONG);
     }
   };
+
+  renderEmpty = () => (
+    <View>
+      <Text style={{position: 'absolute', top: '30%', alignSelf: 'center'}}>
+        No result
+      </Text>
+      <Image
+        source={require('../../../images/car.png')}
+        style={{resizeMode: 'center', width: '100%'}}
+      />
+    </View>
+  );
+
   render() {
-    console.log('THIS  LENGTH--', this.props.car.length);
     return (
-      <View style={{backgroundColor: !this.state.listItems ? '#fff' : '#eee'}}>
+      <View
+        style={{
+          backgroundColor: !this.props.listSearchItems ? '#fff' : '#eee',
+        }}>
         {this.props.isSearch ? (
           <View />
         ) : (
@@ -131,37 +120,26 @@ class AllItemsScreen extends React.Component {
             screenTitle={this.props.screenTitle}
           />
         )}
-
-        {!this.state.listItems ? (
-          <View>
-            <Text
-              style={{position: 'absolute', top: '30%', alignSelf: 'center'}}>
-              No result
-            </Text>
-            <Image
-              source={require('../../../images/car.png')}
-              style={{resizeMode: 'center', width: '100%'}}
-            />
-          </View>
-        ) : (
-          <FlatList
-            ListHeaderComponent={this.renderHeader}
-            data={this.props.car}
-            renderItem={item =>
-              this.renderItem({...item, navigation: this.props.navigation})
-            }
-            keyExtractor={item => item.name}
-            showsHorizontalScrollIndicator={false}
-            ItemSeparatorComponent={this.separateItem}
-            style={{paddingTop: 80}}
-            ListFooterComponent={this.renderFooter()}
-            onEndReachedThreshold={1}
-            onEndReached={({distanceFromEnd}) =>
-              // problem
-              this.loadMoreItem()
-            }
-          />
-        )}
+        <FlatList
+          ListHeaderComponent={this.renderHeader}
+          data={
+            this.props.isSearch ? this.props.listSearchItems : this.props.car
+          }
+          renderItem={item =>
+            this.renderItem({...item, navigation: this.props.navigation})
+          }
+          ListEmptyComponent={this.renderEmpty}
+          keyExtractor={item => item.name}
+          showsHorizontalScrollIndicator={false}
+          ItemSeparatorComponent={this.separateItem}
+          style={{paddingTop: 80}}
+          ListFooterComponent={this.renderFooter}
+          onEndReachedThreshold={1}
+          onEndReached={({distanceFromEnd}) =>
+            // problem
+            this.loadMoreItem()
+          }
+        />
       </View>
     );
   }
@@ -169,7 +147,6 @@ class AllItemsScreen extends React.Component {
 const mapStateToProps = state => {
   return {
     car: state.CarReducer.car,
-    reload: state.CarReducer.reload ?? false,
     search_car: state.SearchReducer.car,
   };
 };
@@ -177,7 +154,6 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   getListCar,
   searchCar,
-  reloadListItem,
   setDefaultListColor,
 })(AllItemsScreen);
 

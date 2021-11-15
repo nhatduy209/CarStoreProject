@@ -72,11 +72,10 @@ class HomeScreen extends React.Component {
   };
 
   render() {
-    const count =
-      this.props.search_car?.length === undefined
-        ? 0
-        : this.props.search_car.length;
-    if (this.state.searchText.length > 0 && count >= 0) {
+    if (
+      this.props.search_car?.length >= 0 &&
+      this.state.searchText.length > 0
+    ) {
       return (
         <View style={styles.Container}>
           <ScrollView showsVerticalScrollIndicator={false}>
@@ -107,7 +106,7 @@ class HomeScreen extends React.Component {
             {/* end  Search input text  */}
             <AllItemsScreen
               navigation={this.props.navigation}
-              listItems={this.props.search_car.data}
+              listSearchItems={this.props.search_car}
               isSearch={true}
             />
           </ScrollView>

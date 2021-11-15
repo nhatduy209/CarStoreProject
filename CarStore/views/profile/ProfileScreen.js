@@ -27,13 +27,9 @@ class ProfileScreen extends React.Component {
       isCalendarVisible: false,
       date: this.props.user?.data?.birthday ?? new Date(),
       address: this.props.user?.data?.address ?? 'Set your address ',
-      email: this.props.user.data.email,
+      email: this.props.user?.data?.email ?? 'mail',
       name: this.props.user?.data?.name ?? 'Your name',
     };
-  }
-
-  componentDidMount() {
-    console.log('user', this.props.user);
   }
   handlePhotos = () => {
     const Options = {};

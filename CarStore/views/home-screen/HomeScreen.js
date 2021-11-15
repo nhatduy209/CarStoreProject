@@ -8,8 +8,6 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  BackHandler,
-  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {getListCar} from '../../redux/action/get-list-car/GetListCar';

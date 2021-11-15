@@ -107,7 +107,7 @@ class DrawerContent extends React.Component {
             borderRadius: 60,
           }}>
           <Image
-            source={{uri: this.props.user?.avatar ?? avatarUrlDefault}}
+            source={{uri: this.props.user?.image ?? avatarUrlDefault}}
             style={{
               resizeMode: 'center',
               width: 100,

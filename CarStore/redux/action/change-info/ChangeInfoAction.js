@@ -16,8 +16,7 @@ export const changeInfo = data => async dispatch => {
 
   var changeInfoBusiness = new ChangeInfoBusiness();
   const result = await changeInfoBusiness.changeInfoBusiness(data.data);
-  console.log('changee', result);
-  if (result.result === STATUS.SUCCESS) {
+  if (result.data.result === STATUS.SUCCESS) {
     dispatch({
       type: ACTION_NAME.CHANGE_INFO_ACTION.CHANGE_INFO_SUCCESS,
       data: result,

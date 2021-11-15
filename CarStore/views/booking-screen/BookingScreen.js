@@ -78,13 +78,11 @@ class BookingScreen extends React.Component {
     this.props.createBooking({data});
   };
   handleModalButton = () => {
-    return this.props.booking.BOOKING_STATUS === 'SUCCESS'
+    return this.props.booking.STATUS_BOOKING === 'SUCCESS'
       ? 'Go to calendar'
       : ' Close';
   };
   handleCloseModal = () => {
-    // if (this.props.booking.BOOKING_STATUS === 'SUCCESS') {
-    // }
     this.props.navigation.navigate('CalendarStack');
     this.props.changeShowModalState();
   };
@@ -284,7 +282,7 @@ class BookingScreen extends React.Component {
                 backgroundColor: '#ffffff',
                 flex: 1,
               }}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                 <Text style={styles.txtButton}>Cancel</Text>
               </TouchableOpacity>
             </View>

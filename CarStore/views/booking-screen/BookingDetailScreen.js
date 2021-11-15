@@ -8,7 +8,10 @@ import {
 } from 'react-native';
 import HeaderComponent from '../headerComponent';
 import {connect} from 'react-redux';
-import {cancelBooking} from '../../redux/action/booking/BookingAction';
+import {
+  confirmBooking,
+  cancelBooking,
+} from '../../redux/action/booking/BookingAction';
 class BookingDetailScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -22,6 +25,11 @@ class BookingDetailScreen extends React.Component {
   handleCancel = async params => {
     const data = {id_meeitng: params.id_meeting, email: params.clients_email};
     this.props.cancelBooking(data);
+    this.props.navigation.goBack();
+  };
+  handleConfirm = async params => {
+    const data = {id_meeitng: params.id_meeting, email: params.clients_email};
+    this.props.confirmBooking(data);
     this.props.navigation.goBack();
   };
   fortmatDate = date => {
@@ -85,7 +93,7 @@ class BookingDetailScreen extends React.Component {
           <View style={styles.groupButton}>
             <TouchableOpacity
               style={styles.editButton}
-              onPress={this.handleCancel}>
+              onPress={() => this.handleConfirm(booking)}>
               <Text
                 style={{
                   fontSize: 16,
@@ -114,7 +122,9 @@ class BookingDetailScreen extends React.Component {
   }
 }
 
-export default connect(null, {cancelBooking})(BookingDetailScreen);
+export default connect(null, {cancelBooking, confirmBooking})(
+  BookingDetailScreen,
+);
 
 const styles = StyleSheet.create({
   bodyContent: {

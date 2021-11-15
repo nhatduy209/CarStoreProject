@@ -32,4 +32,15 @@ export default class BookingBusiness {
     console.log('result', result);
     return result;
   };
+
+  cofirm = async data => {
+    var postAPI = new PostService();
+    const params = {
+      id_meeting: data.id_meeting,
+      clients_email: data.email,
+    };
+    const result = await postAPI.PostAPI(APP_URL.CONFIRM_BOOKING, params);
+    console.log('result', result);
+    return result;
+  };
 }

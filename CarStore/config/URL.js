@@ -10,6 +10,7 @@ export const APP_URL = {
   DELETE_CART_ITEM: URL_HEROKU + 'cart/delete',
   BOOKING: URL_HEROKU + 'meetings/create',
   CANCEL_BOOKING: URL_HEROKU + 'meetings/cancel',
+  CONFIRM_BOOKING: URL_HEROKU + 'meetings/confirm',
   GET_LIST_CAR: URL_HEROKU + 'car',
   GET_LIST_CATEGORY: URL_HEROKU + 'category/getlist',
   MANAGE_ADD_ITEM: URL_HEROKU + 'car/add',

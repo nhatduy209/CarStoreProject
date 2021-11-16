@@ -36,7 +36,10 @@ class HomeScreen extends React.Component {
 
   renderCategories = ({item}) => {
     return (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          this.props.navigation.navigate('CarCategory', {category: item.name})
+        }>
         <View style={styles.renderItemStyle}>
           <Image source={{uri: item.image}} style={{width: 100, height: 100}} />
           <Text style={{fontWeight: 'bold'}}>{item.name}</Text>
@@ -152,14 +155,6 @@ class HomeScreen extends React.Component {
                   Categories
                 </Text>
               </View>
-              <View style={{justifyContent: 'flex-end'}}>
-                <TouchableOpacity
-                  onPress={() =>
-                    this.props.navigation.navigate('AllItemsScreen')
-                  }>
-                  <Text style={{color: '#66b8ff'}}>Show all</Text>
-                </TouchableOpacity>
-              </View>
             </View>
 
             {/* flatlist category */}
@@ -182,7 +177,12 @@ class HomeScreen extends React.Component {
                 <Text style={{fontSize: 18, fontWeight: '900'}}>Best sale</Text>
               </View>
               <View style={{justifyContent: 'flex-end'}}>
-                <Text style={{color: '#66b8ff'}}>Show all</Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate('AllItemsScreen')
+                  }>
+                  <Text style={{color: '#66b8ff'}}>Show all</Text>
+                </TouchableOpacity>
               </View>
             </View>
 

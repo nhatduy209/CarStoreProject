@@ -65,6 +65,12 @@ class LoginScreen extends React.Component {
       'hardwareBackPress',
       this.backAction,
     );
+    if (this.props.user?.status === STATUS.SUCCESS) {
+      if (this.state.loading) {
+        this.setState({loading: false});
+      }
+      this.props.navigation.navigate('RootDrawer');
+    }
     getUserlogin().then(res => {
       if (res) {
         this.setState({

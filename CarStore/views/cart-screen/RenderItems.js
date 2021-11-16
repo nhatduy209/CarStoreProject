@@ -14,7 +14,7 @@ class RenderItems extends React.Component {
   };
 
   render() {
-    const {img, car_name, quantity, color, price, category} = this.props.item;
+    const {img, car_name, color, price, category} = this.props.item;
     return (
       <View style={styles.container}>
         <Image source={{uri: img}} style={{width: 150, height: '100%'}} />
@@ -37,15 +37,6 @@ class RenderItems extends React.Component {
           </View>
           <View style={{flexDirection: 'row'}}>
             <Text style={{fontWeight: 'bold', fontSize: 15}}>{price}USD</Text>
-
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-end',
-                flex: 1,
-              }}>
-              <Text>{quantity}items</Text>
-            </View>
           </View>
         </View>
       </View>

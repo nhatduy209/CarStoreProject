@@ -141,7 +141,8 @@ class BookingScreen extends React.Component {
                 this.setState({selectedCar: itemValue})
               }>
               {this.props.cart.data.map((item, index) => {
-                return <Picker.Item label={item.car_name} value={item} />;
+                const carSelected = item.car_name + ' (' + item.color + ')';
+                return <Picker.Item label={carSelected} value={item} />;
               })}
             </Picker>
           </View>

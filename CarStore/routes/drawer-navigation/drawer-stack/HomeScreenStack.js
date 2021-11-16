@@ -6,6 +6,7 @@ import ProfileScreen from '../../../views/profile/ProfileScreen';
 import CartStack from '../../cart-stack/CartStack';
 import StoreInfoScreen from '../../../views/store-screen/StoreInfoScreen';
 import CalendarStack from '../../calendar-stack/CalendarStack';
+import RenderCarCategory from '../../../views/home-screen/RenderCarCategory';
 const Stack = createStackNavigator();
 
 const NavigationDrawerStructureLeft = props => {
@@ -69,6 +70,12 @@ export default class HomeScreenStack extends React.Component {
           options={{
             title: 'Profile',
           }}
+        />
+
+        <Stack.Screen
+          name="CarCategory"
+          component={RenderCarCategory}
+          options={({route}) => ({title: route.params.category})}
         />
 
         <Stack.Screen

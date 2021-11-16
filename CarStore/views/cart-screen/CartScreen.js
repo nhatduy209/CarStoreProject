@@ -16,7 +16,6 @@ class CartScreen extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log('UPDATE DELTE 0-------', this.props.status);
     if (this.props.status === 'DELETE_SUCCESS') {
       this.props.getListCartActon(this.props.user.data.email);
     }

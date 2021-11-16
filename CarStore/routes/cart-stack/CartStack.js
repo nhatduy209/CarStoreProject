@@ -14,8 +14,7 @@ const NavigationStackStructureLeft = props => {
     <View style={{flexDirection: 'row'}}>
       <TouchableOpacity
         style={{marginLeft: 20}}
-        onPress={() => props.navigationProps.navigate('Home')}
-      >
+        onPress={() => props.navigationProps.goBack()}>
         {/*Donute Button Image */}
         <Icon name="arrow-left" size={20} />
       </TouchableOpacity>

@@ -2,6 +2,7 @@ import {ACTION_NAME} from '../action/get-list-car/ActionName';
 import {ACTION_NAME as MANAGE_ACTION_NAME} from '../action/manage-item-action/ActionName';
 const CAR_STATE = {
   car: [],
+  car_category: [],
 };
 
 const CarReducer = (state = CAR_STATE, action) => {
@@ -20,6 +21,17 @@ const CarReducer = (state = CAR_STATE, action) => {
       return {
         ...state,
         car: action.data,
+      };
+
+    case ACTION_NAME.GET_LIST_CAR_BY_CATEGORY.GET_LIST_CAR_BY_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        car_category: [...action.data.data.data],
+      };
+    case ACTION_NAME.GET_LIST_CAR_BY_CATEGORY.GET_LIST_CAR_BY_CATEGORY_FAIL:
+      return {
+        ...state,
+        car_category: [],
       };
     case MANAGE_ACTION_NAME.ADD_ITEM_ACTION.ADD_ITEM_ACTION_SUCCESS:
       return {

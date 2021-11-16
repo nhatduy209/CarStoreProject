@@ -15,4 +15,20 @@ export default class GetListCarBusiness {
 
     return result;
   };
+
+  getListCarByCategoryBusiness = async (start, end, category) => {
+    const params = {
+      start,
+      end,
+      category,
+    };
+    var getService = new GetService();
+
+    var result = await getService.getApiWithParams(
+      APP_URL.GET_LIST_CAR_BY_CATEGORY,
+      params,
+    );
+
+    return result;
+  };
 }

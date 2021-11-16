@@ -4,6 +4,9 @@ export const testIds = {
   txtEmail: 'txtEmail',
   revealCycle: 'revealCycle',
   btnEditProfile: 'btnEditProfile',
+  switchButton: 'switchBtn',
+  toogleReview: 'toogleReview',
+  logoutButton: 'logoutBtn',
   SignUp_Screen: {
     scrollView: 'scrollView',
     textInputName: 'txtName',

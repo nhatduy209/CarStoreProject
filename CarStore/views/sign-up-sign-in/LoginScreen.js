@@ -233,6 +233,7 @@ class LoginScreen extends React.Component {
             {/*end input field */}
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Switch
+                testID={testIds.switchButton}
                 trackColor={{false: '#767577', true: '#81b0ff'}}
                 thumbColor={'#f4f3f4'}
                 ios_backgroundColor="#3e3e3e"

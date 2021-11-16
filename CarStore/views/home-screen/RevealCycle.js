@@ -7,6 +7,7 @@ import {STATUS, STATUS_LOGOUT} from '../../config/Status';
 import {logout} from '../../redux/action/login-action/LoginAction';
 import {_retrieveData} from '../../common/Utils';
 import {TOKEN_DEVICE} from '../../config/StorageKey';
+import {testIds} from '../../config/TestID';
 const marginL = 20;
 
 class RevealCycle extends React.Component {
@@ -18,12 +19,11 @@ class RevealCycle extends React.Component {
     const getToken = await _retrieveData(TOKEN_DEVICE);
 
     this.props.logout(this.props.user.data.data.email, getToken);
-    this.props.navigation.navigate('LoginScreen');
   };
 
   componentDidUpdate() {
     if (this.props.user.status === STATUS_LOGOUT.SUCCESS) {
-      this.props.navigation.navigate('LoginScreen');
+      this.props.navigation.push('LoginScreen');
     }
   }
 
@@ -31,6 +31,7 @@ class RevealCycle extends React.Component {
     if (this.props.user.status === STATUS.SUCCESS) {
       return (
         <TouchableOpacity
+          testID={testIds.logoutButton}
           style={{marginLeft: marginL, marginVertical: 8}}
           onPress={this.logout}>
           <Icon name="sign-out-alt" size={28} />
@@ -39,6 +40,7 @@ class RevealCycle extends React.Component {
     } else {
       return (
         <TouchableOpacity
+          testID={testIds.logoutButton}
           style={{marginLeft: marginL, marginVertical: 8}}
           onPress={this.logout}>
           <Icon name="sign-in-alt" size={28} />
@@ -75,6 +77,7 @@ class RevealCycle extends React.Component {
     return (
       <View>
         <TouchableOpacity
+          testID={testIds.toogleReview}
           style={{marginLeft: 'auto', marginTop: 5, marginBottom: 10}}
           onPress={() => {
             this.transitedView.toggle();

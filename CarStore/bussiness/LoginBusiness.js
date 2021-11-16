@@ -19,7 +19,7 @@ export default class LoginBusiness {
     const params = {
       email: data.email,
       displayName: data.displayName,
-      photoURL: data.displayName,
+      photoURL: data.photoURL,
     };
     var result = await postService.PostAPI(APP_URL.LOGIN_WITH_EMAIL, params);
     return result;

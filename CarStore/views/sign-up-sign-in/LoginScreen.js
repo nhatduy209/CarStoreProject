@@ -121,7 +121,8 @@ class LoginScreen extends React.Component {
     try {
       const {idToken} = await GoogleSignin.signIn();
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      console.log('auth', auth().currentUser.providerData);
+      console.log('auth', idToken);
+      console.log('auth', auth().currentUser);
       this.props.loginWithEmail(auth().currentUser);
       //TODO :  add api sign up here
       return auth().signInWithCredential(googleCredential);

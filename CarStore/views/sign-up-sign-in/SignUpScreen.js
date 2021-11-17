@@ -12,7 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import {signUp} from '../../redux/action/login-action/SignUpAction';
-import {STATUS} from '../../config/Status';
+import {STATUS_SIGNUP} from '../../config/Status';
 import {testIds} from '../../config/TestID';
 
 class SignUpScreen extends React.Component {
@@ -42,7 +42,7 @@ class SignUpScreen extends React.Component {
     });
   };
   componentDidUpdate() {
-    if (this.props.user?.status === STATUS.SUCCESS) {
+    if (this.props.user?.status === STATUS_SIGNUP.SUCCESS) {
       this.props.navigation.navigate('LoginScreen');
     }
   }

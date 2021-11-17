@@ -115,6 +115,26 @@ describe('Scenario SignUp ', () => {
 
     await element(by.id(id.testIds.SignUp_Screen.buttonSignUp)).tap();
 
+    await waitFor(element(by.id(id.testIds.txtEmail)))
+      .toBeVisible()
+      .withTimeout(5000);
+
+    await element(by.id(id.testIds.txtEmail)).clearText();
+    await element(by.id(id.testIds.txtEmail)).typeText(accountCreate.email);
+    await element(by.id(id.testIds.txtEmail)).tapReturnKey();
+
+    await waitFor(element(by.id(id.testIds.txtPassword)))
+      .toBeVisible()
+      .withTimeout(5000);
+
+    await element(by.id(id.testIds.txtPassword)).clearText();
+    await element(by.id(id.testIds.txtPassword)).typeText(
+      accountCreate.password,
+    );
+    await element(by.id(id.testIds.txtEmail)).tap();
+
+    await element(by.id(id.testIds.txtEmail)).tapReturnKey();
+
     await waitFor(element(by.id(id.testIds.buttonLogin)))
       .toBeVisible()
       .withTimeout(5000);

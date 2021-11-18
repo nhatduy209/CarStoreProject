@@ -6,7 +6,6 @@ import {
   Image,
   UIManager,
   Platform,
-  ActivityIndicator,
   ToastAndroid,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -28,11 +27,11 @@ class RenderCarCategory extends React.Component {
     this.canLoadMore = true;
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.car.length === this.props.car.length) {
-      this.canLoadMore = false;
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (prevProps.car.length === this.props.car.length) {
+  //     this.canLoadMore = false;
+  //   }
+  // }
 
   renderItem({item, navigation}) {
     return (
@@ -49,16 +48,17 @@ class RenderCarCategory extends React.Component {
   };
 
   renderFooter = () => {
-    const isSearch = this.props.isSearch ?? false;
-    if (this.canLoadMore && !isSearch) {
-      return (
-        <View style={{height: 80}}>
-          <ActivityIndicator size="large" color="red" />
-        </View>
-      );
-    } else {
-      return <View style={{height: 50}} />;
-    }
+    // const isSearch = this.props.isSearch ?? false;
+    // if (this.canLoadMore && !isSearch) {
+    //   return (
+    //     <View style={{height: 80}}>
+    //       <ActivityIndicator size="large" color="red" />
+    //     </View>
+    //   );
+    // } else {
+    //   return <View style={{height: 50}} />;
+    // }
+    return <View style={{height: 70}} />;
   };
 
   showAddContainer = () => {

@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {connect} from 'react-redux';
 
 const avatarUrlDefault =
-  'https://cdn-icons.flaticon.com/png/512/3899/premium/3899618.png?token=exp=1633858815~hmac=a43363f78b47cd09622836ef7277fbfb';
+  'https://firebasestorage.googleapis.com/v0/b/carsstoreproject-9c1c1.appspot.com/o/avatarPerson.jpeg?alt=media&token=39961bdc-9cf6-4d9e-bead-0d4206f8b564';
 class DrawerContent extends React.Component {
   constructor(props) {
     super(props);
@@ -123,7 +123,7 @@ class DrawerContent extends React.Component {
             marginBottom: '10%',
           }}>
           <Text style={{fontSize: 25, fontWeight: 'bold', color: '#fff'}}>
-            {this.props.user?.userName ?? 'di hong cu te'}
+            {this.props.user?.name ?? 'Add your name'}
           </Text>
           <Text style={{color: '#fff'}}>
             {this.props.user?.email ?? 'mail@gmail.com'}

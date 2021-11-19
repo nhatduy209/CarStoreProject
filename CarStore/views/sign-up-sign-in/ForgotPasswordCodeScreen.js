@@ -33,7 +33,7 @@ class ForgotPasswordCodeScreen extends React.Component {
   }
 
   componentDidMount() {
-    setInterval(
+    this.interval = setInterval(
       () => this.setState({countDown: this.state.countDown - 1}),
       1000,
     );

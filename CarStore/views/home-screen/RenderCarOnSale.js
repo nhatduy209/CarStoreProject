@@ -28,15 +28,7 @@ export default class RenderCarOnSale extends React.Component {
             </View>
 
             <View style={{paddingHorizontal: 5}}>
-              <Text
-                style={{
-                  textDecorationLine: 'line-through',
-                  textDecorationStyle: 'solid',
-                }}>
-                {this.props.item.prices} USD
-              </Text>
-
-              <Text style={{textDecorationStyle: 'solid'}}>180.000 USD</Text>
+              <Text>{this.props.item.prices} USD</Text>
             </View>
           </View>
         </View>

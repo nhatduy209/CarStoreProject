@@ -95,27 +95,16 @@ class DrawerContent extends React.Component {
           borderBottomRightRadius: 20,
           backgroundColor: 'rgb(32,45,70)',
         }}>
-        <View
+        <Image
+          source={{uri: this.props.user?.image ?? avatarUrlDefault}}
           style={{
-            height: 120,
             width: 120,
-            alignSelf: 'center',
-            alignItems: 'center',
-            justifyContent: 'center',
+            height: 120,
             marginTop: '10%',
-            backgroundColor: '#ccc',
             borderRadius: 60,
-          }}>
-          <Image
-            source={{uri: this.props.user?.image ?? avatarUrlDefault}}
-            style={{
-              resizeMode: 'center',
-              width: 100,
-              height: 100,
-              borderRadius: 500,
-            }}
-          />
-        </View>
+            alignSelf: 'center',
+          }}
+        />
         <View
           style={{
             alignItems: 'center',

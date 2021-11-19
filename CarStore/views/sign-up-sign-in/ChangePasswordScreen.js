@@ -26,14 +26,14 @@ class ChangePasswordScreen extends React.Component {
       error: '',
     };
   }
-  handleChangePassword = () => {
+  handleChangePassword = async () => {
     const data = {
       email: this.props.email,
       password: this.state.password,
     };
     if (this.state.password.length > 0) {
       if (this.state.password.localeCompare(this.state.confirmPassword) === 0) {
-        this.props.changepassword(data);
+        await this.props.changepassword(data);
         this.props.navigation.navigate('LoginScreen');
       } else {
         this.setState({error: 'Confirm password not match!'});

@@ -17,15 +17,20 @@ class RevealCycle extends React.Component {
 
   logout = async () => {
     const getToken = await _retrieveData(TOKEN_DEVICE);
-
     this.props.logout(this.props.user.data.data.email, getToken);
   };
 
   componentDidUpdate() {
     if (this.props.user.status === STATUS_LOGOUT.SUCCESS) {
+      this.transitedView.collapse();
       this.props.navigation.push('LoginScreen');
     }
   }
+
+  logoutNotSignIn = () => {
+    this.transitedView.collapse();
+    this.props.navigation.push('LoginScreen');
+  };
 
   renderSignInIcons = () => {
     if (this.props.user.status === STATUS.SUCCESS) {
@@ -42,7 +47,7 @@ class RevealCycle extends React.Component {
         <TouchableOpacity
           testID={testIds.logoutButton}
           style={{marginLeft: marginL, marginVertical: 8}}
-          onPress={this.logout}>
+          onPress={this.logoutNotSignIn}>
           <Icon name="sign-in-alt" size={28} />
         </TouchableOpacity>
       );

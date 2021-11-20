@@ -1,6 +1,7 @@
 export const STATUS = {
   SUCCESS: 'SUCCESS',
   FAIL: 'FAIL',
+  NONE: 'NONE',
 };
 
 export const STATUS_LOGOUT = {

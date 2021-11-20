@@ -31,8 +31,6 @@ export const getListCarByCategory =
       category,
     );
 
-    console.log('RES HERE --', res);
-
     if (res.status === STATUS.SUCCESS) {
       dispatch({
         type: ACTION_NAME.GET_LIST_CAR_BY_CATEGORY
@@ -47,3 +45,10 @@ export const getListCarByCategory =
       });
     }
   };
+
+export const reloadListCarCategory = () => async dispatch => {
+  dispatch({
+    type: ACTION_NAME.GET_LIST_CAR_BY_CATEGORY.GET_LIST_CAR_BY_CATEGORY_RELOAD,
+    data: {},
+  });
+};

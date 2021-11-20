@@ -34,19 +34,17 @@ class HomeScreen extends React.Component {
     this.props.getListCategory();
   }
 
-  renderCategories = ({item}) => {
-    return (
-      <TouchableOpacity
-        onPress={() =>
-          this.props.navigation.navigate('CarCategory', {category: item.name})
-        }>
-        <View style={styles.renderItemStyle}>
-          <Image source={{uri: item.image}} style={{width: 100, height: 100}} />
-          <Text style={{fontWeight: 'bold'}}>{item.name}</Text>
-        </View>
-      </TouchableOpacity>
-    );
-  };
+  renderCategories = ({item}) => (
+    <TouchableOpacity
+      onPress={() =>
+        this.props.navigation.navigate('CarCategory', {category: item.name})
+      }>
+      <View style={styles.renderItemStyle}>
+        <Image source={{uri: item.image}} style={{width: 100, height: 100}} />
+        <Text style={{fontWeight: 'bold'}}>{item.name}</Text>
+      </View>
+    </TouchableOpacity>
+  );
 
   renderCarOnSale = ({item}) => {
     return <RenderCarOnSale item={item} />;
@@ -174,7 +172,9 @@ class HomeScreen extends React.Component {
             {/* Car on sale  */}
             <View style={{flexDirection: 'row', paddingTop: 10}}>
               <View style={{flex: 1}}>
-                <Text style={{fontSize: 18, fontWeight: '900'}}>Best sale</Text>
+                <Text style={{fontSize: 18, fontWeight: '900'}}>
+                  All Car in store{' '}
+                </Text>
               </View>
               <View style={{justifyContent: 'flex-end'}}>
                 <TouchableOpacity

@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {connect} from 'react-redux';
 
 const avatarUrlDefault =
-  'https://firebasestorage.googleapis.com/v0/b/carsstoreproject-9c1c1.appspot.com/o/avatarPerson.jpeg?alt=media&token=39961bdc-9cf6-4d9e-bead-0d4206f8b564';
+  'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg';
 class DrawerContent extends React.Component {
   constructor(props) {
     super(props);
@@ -101,6 +101,7 @@ class DrawerContent extends React.Component {
             width: 120,
             height: 120,
             marginTop: '10%',
+            marginBottom: 12,
             borderRadius: 60,
             alignSelf: 'center',
           }}
@@ -111,7 +112,7 @@ class DrawerContent extends React.Component {
             justifyContent: 'center',
             marginBottom: '10%',
           }}>
-          <Text style={{fontSize: 25, fontWeight: 'bold', color: '#fff'}}>
+          <Text style={{fontSize: 20, fontWeight: 'bold', color: '#fff'}}>
             {this.props.user?.name ?? 'Add your name'}
           </Text>
           <Text style={{color: '#fff'}}>

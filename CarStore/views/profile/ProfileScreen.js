@@ -17,11 +17,13 @@ import * as ImagePicker from 'react-native-image-picker';
 import Moment from 'react-moment';
 import {changeInfo} from '../../redux/action/change-info/ChangeInfoAction';
 import {STATUS} from '../../config/Status';
+const avatarUrlDefault =
+  'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg';
 class ProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: this.props.user?.data?.image ?? 'Set avatar',
+      url: this.props.user?.data?.image ?? avatarUrlDefault,
       phoneNum: this.props.user.data?.phone ?? 'Set your phone number',
       gender: this.props.user?.data?.gender ?? true, // true is male and false is female
       isCalendarVisible: false,
@@ -46,14 +48,14 @@ class ProfileScreen extends React.Component {
 
   handleReset = () => {
     this.setState({
-      url: this.props.user.data.avatar,
+      url: this.props.user?.data?.image ?? avatarUrlDefault,
       email: this.props.user.data.email,
       name: this.props.user.data.name,
-      phoneNum: this.props.user.data.phoneNum,
+      phoneNum: this.props.user.data?.phone ?? 'Set your phone number',
       gender: this.props.user.data.gender, // true is male and false is female
       isCalendarVisible: false,
       date: this.props.user.data.birthday,
-      address: this.props.user.data.address,
+      address: this.props.user?.data?.address ?? 'Set your address ',
       Avatar: null,
     });
   };

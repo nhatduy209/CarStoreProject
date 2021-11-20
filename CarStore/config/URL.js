@@ -13,6 +13,7 @@ export const APP_URL = {
   CONFIRM_BOOKING: URL_HEROKU + 'meetings/confirm',
   GET_LIST_CAR: URL_HEROKU + 'car',
   GET_LIST_CAR_BY_CATEGORY: URL_HEROKU + 'car/filtercategory',
+  GET_LIST_CAR_BY_PRICE: URL_HEROKU + 'car/filterprice',
   GET_LIST_CATEGORY: URL_HEROKU + 'category/getlist',
   MANAGE_ADD_ITEM: URL_HEROKU + 'car/add',
   RECOVERY_PASSWORD: URL_HEROKU + 'account/recoverpassword',

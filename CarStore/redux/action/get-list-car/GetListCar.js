@@ -46,6 +46,23 @@ export const getListCarByCategory =
     }
   };
 
+export const getListCarByPrice = (min, max) => async dispatch => {
+  var getListCarBusiness = new GetListCarBusiness();
+  var res = await getListCarBusiness.getListCarByPriceBusiness(min, max);
+  console.log('res', res);
+  if (res.result === STATUS.SUCCESS) {
+    dispatch({
+      type: ACTION_NAME.GET_LIST_CAR_BY_PRICE.GET_LIST_CAR_BY_PRICE_SUCCESS,
+      data: res,
+    });
+  } else {
+    dispatch({
+      type: ACTION_NAME.GET_LIST_CAR_BY_PRICE.GET_LIST_CAR_BY_PRICE_FAIL,
+      data: res,
+    });
+  }
+};
+
 export const reloadListCarCategory = () => async dispatch => {
   dispatch({
     type: ACTION_NAME.GET_LIST_CAR_BY_CATEGORY.GET_LIST_CAR_BY_CATEGORY_RELOAD,

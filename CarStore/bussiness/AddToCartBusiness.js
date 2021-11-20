@@ -10,6 +10,7 @@ export default class AddToCartBusiness {
       color: data.color,
       quantity: data.quantity,
       price: data.price,
+      carImage: data.url,
     };
     var result = await postService.PostAPI(APP_URL.ADD_TO_CART, params);
 

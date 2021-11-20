@@ -12,6 +12,7 @@ class CartScreen extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props.cart.data);
     this.props.getListCartActon(this.props.user.data.email);
   }
 

@@ -26,7 +26,9 @@ class ColorPickerComponent extends React.Component {
     this.props.data
       ? this.props.data.forEach(element => list.push(element.color))
       : console.log(1);
-    list.push('add');
+    if (this.props.isManageItem) {
+      list.push('add');
+    }
     this.setState({listColor: list});
   }
   changeListColor = listData => {
@@ -58,6 +60,17 @@ class ColorPickerComponent extends React.Component {
       return (
         <TouchableOpacity
           onPress={() => this.handleAddColor(item)}
+          style={[
+            styles.addBox,
+            {backgroundColor: item === 'add' ? '#ccc' : handleColor(item)},
+          ]}>
+          {item === 'add' ? <Icon name="plus" size={20} /> : <View />}
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <TouchableOpacity
+          onPress={() => console.log('push')}
           style={[
             styles.addBox,
             {backgroundColor: item === 'add' ? '#ccc' : handleColor(item)},

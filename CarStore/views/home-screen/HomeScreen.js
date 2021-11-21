@@ -47,7 +47,7 @@ class HomeScreen extends React.Component {
   );
 
   renderCarOnSale = ({item}) => {
-    return <RenderCarOnSale item={item} />;
+    return <RenderCarOnSale item={item} navigation={this.props.navigation} />;
   };
 
   renderRevealCycle = () => {

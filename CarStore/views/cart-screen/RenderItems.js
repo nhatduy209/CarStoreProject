@@ -14,10 +14,13 @@ class RenderItems extends React.Component {
   };
 
   render() {
-    const {img, car_name, color, price, category} = this.props.item;
+    const {car_img, car_name, color, price, category} = this.props.item;
     return (
       <View style={styles.container}>
-        <Image source={{uri: img}} style={{width: 150, height: '100%'}} />
+        <Image
+          source={{uri: car_img}}
+          style={{width: 150, height: '100%', resizeMode: 'contain'}}
+        />
 
         <View style={{flex: 1}}>
           <View style={{marginBottom: 30, flexDirection: 'row'}}>

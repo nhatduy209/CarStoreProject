@@ -5,32 +5,25 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 
 const avatarUrlDefault =
-  'https://cdn-icons.flaticon.com/png/512/3899/premium/3899618.png?token=exp=1633858815~hmac=a43363f78b47cd09622836ef7277fbfb';
+  'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg';
 class SettingItemComponent extends React.Component {
   constructor(props) {
     super(props);
   }
   renderIcon = () => {
     return !this.props.item ? (
-      <View
-        style={[
-          styles.iconBackground,
-          {height: 80, width: 80, borderRadius: 50},
-        ]}>
-        <Image
-          source={{
-            uri: this.props.user
-              ? this.props.user.data.avatar
-              : avatarUrlDefault,
-          }}
-          style={{
-            height: 70,
-            width: 70,
-            resizeMode: 'center',
-            borderRadius: 500,
-          }}
-        />
-      </View>
+      <Image
+        source={{
+          uri: this.props.user?.data?.image
+            ? this.props.user.data.image
+            : avatarUrlDefault,
+        }}
+        style={{
+          height: 80,
+          width: 80,
+          borderRadius: 40,
+        }}
+      />
     ) : (
       <View style={styles.iconBackground}>
         <Icon
@@ -51,11 +44,13 @@ class SettingItemComponent extends React.Component {
             alignItems: 'center',
             width: '60%',
           }}>
-          <Text style={{fontSize: 18, width: '70%'}}>
-            {!this.props.item ? 'di đĩ' : this.props.item.name}
+          <Text style={{fontSize: 18, width: '90%', textAlign: 'left'}}>
+            {!this.props.item
+              ? this.props.user?.data?.name
+              : this.props.item.name}
           </Text>
-          <Text style={{color: '#aaa', width: '60%'}}>
-            {!this.props.item ? 'Personal Info' : 'something'}
+          <Text style={{color: '#aaa', width: '90%', textAlign: 'left'}}>
+            {!this.props.item ? this.props.user.data.email : ''}
           </Text>
         </View>
         <TouchableOpacity

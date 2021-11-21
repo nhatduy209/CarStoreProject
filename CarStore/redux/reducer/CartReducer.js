@@ -30,6 +30,16 @@ const CartReducer = (state = CART_STATE, action) => {
         ...state,
         status: 'DELETE_FAIL',
       };
+    case ACTION_NAME.ADD_TO_CART_ACTION.ADD_TO_CART_SUCCESS:
+      return {
+        ...state,
+        status: 'ADD_SUCCESS',
+      };
+    case ACTION_NAME.ADD_TO_CART_ACTION.ADD_TO_CART_FAIL:
+      return {
+        ...state,
+        status: 'ADD_FAIL',
+      };
     default:
       return state;
   }

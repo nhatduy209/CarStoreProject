@@ -7,14 +7,14 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import HeaderComponent from '../../headerComponent';
 import RelatedItemList from './RelatedItemList';
 import ColorPickerComponent from '../component/ColorPickerComponent';
-import {addToCart} from '../../../redux/action/add-to-cart/AddToCart';
+import {addToCart} from '../../../redux/action/cart-action/AddToCart';
 import {connect} from 'react-redux';
-import STATUS from '../../../config/Status';
+import {STATUS} from '../../../config/Status';
 class DetailItemScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -25,24 +25,25 @@ class DetailItemScreen extends React.Component {
     };
   }
   componentDidMount() {
-    // console.log('state', this.props.car);
     this.setState({itemInfo: this.props.route.params.data});
     const list = this.props.car.filter(item => {
       return item.category === this.props.route.params.data.category;
     });
     this.setState({relatedItems: list});
   }
-  componentDidUpdate(prevProps) {
-    if (prevProps.route.params.data !== this.props.route.params.data) {
-      this.setState({itemInfo: this.props.route.params.data});
-      const list = this.props.car.filter(item => {
-        return item.category === this.props.route.params.data.category;
-      });
-      this.setState({relatedItems: list});
+  componentDidUpdate() {
+    const name = this.state.itemInfo.name;
+    if (this.props.cart.status === 'ADD_SUCCESS') {
+      ToastAndroid.show(`Add ${name} to cart successfully`, ToastAndroid.LONG);
+      this.props.cart.status = STATUS.FAIL;
     }
-  }
-  handleRelatedItem({item}) {
-    this.setState({itemInfo: item});
+    if (this.props.cart.status === 'ADD_FAIL') {
+      ToastAndroid.show(
+        `${name} already exist in your cart`,
+        ToastAndroid.LONG,
+      );
+      this.props.cart.status = STATUS.FAIL;
+    }
   }
   handleAddToCart() {
     const data = {
@@ -51,13 +52,9 @@ class DetailItemScreen extends React.Component {
       color: this.state.itemInfo.color[0].color,
       quantity: this.state.quantity,
       price: this.state.itemInfo.prices,
+      url: this.state.itemInfo.img,
     };
-    this.props.addToCart(data).then(res => {
-      console.log('res', res);
-      if (res.status === STATUS.SUCCESS) {
-        this.props.navigation.navigate('CartStack');
-      }
-    });
+    this.props.addToCart(data);
   }
   render() {
     return (
@@ -94,67 +91,28 @@ class DetailItemScreen extends React.Component {
                 <Text>Star rating</Text>
               </View>
             </View>
-            <View style={[styles.contact, styles.shadowBox, {padding: 16}]}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  width: '100%',
-                }}>
-                {/* <Image
-                  style={[
-                    styles.imageItem,
-                    {width: 60, height: 60, borderRadius: 120},
-                  ]}
-                  source={require('../../../images/categories/toyota.png')}
-                /> */}
-                <View style={styles.chat}>
-                  <Icon name="heart" size={24} />
-                  <Text>Chat with seller</Text>
-                </View>
-              </View>
-            </View>
             <View>
               <View
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
                   paddingHorizontal: 20,
+                  marginTop: 20,
                 }}>
                 <Text>Related items</Text>
-                <Text>Show all</Text>
               </View>
               <RelatedItemList
                 data={this.state.relatedItems}
                 navigation={this.props.navigation}
               />
             </View>
-            <View style={[{padding: 16, paddingLeft: 30}]}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={[styles.name, {width: '30%', color: '#222'}]}>
-                  Quantity:
-                </Text>
-                <View
-                  style={[
-                    styles.count,
-                    {
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                    },
-                  ]}>
-                  <TouchableOpacity>
-                    <Icon name="minus" />
-                  </TouchableOpacity>
-                  <Text style={{marginHorizontal: 16}}>1</Text>
-                  <TouchableOpacity>
-                    <Icon name="plus" />
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
             <View>
-              <ColorPickerComponent data={this.state.itemInfo.color} />
+              <ColorPickerComponent data={this.props.route.params.data.color} />
+            </View>
+            <View
+              style={{
+                paddingHorizontal: 20,
+                marginTop: 20,
+              }}>
+              <Text>Description</Text>
             </View>
             <View style={[styles.Description, {padding: 16}]}>
               <View style={{alignItems: 'center'}}>
@@ -194,12 +152,13 @@ class DetailItemScreen extends React.Component {
         </ScrollView>
         <View style={styles.btnContainer}>
           <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('CartStack')}
             style={[
               styles.btnBuy,
               styles.shadowBox,
               {backgroundColor: '#9695c1'},
             ]}>
-            <Text style={styles.btn__text}>Buy</Text>
+            <Text style={styles.btn__text}>Go to cart</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.handleAddToCart()}
@@ -219,6 +178,7 @@ const mapStateToProps = state => {
   return {
     user: state.UserReducer.user,
     car: state.CarReducer.car,
+    cart: state.CartReducer,
   };
 };
 

@@ -6,7 +6,7 @@ export default class SearchCarBusiness {
     var postService = new PostService();
 
     const params = {
-      name: data.name,
+      name: data.name.trim(),
     };
 
     var result = await postService.PostAPI(APP_URL.SEARCH_CAR, params);

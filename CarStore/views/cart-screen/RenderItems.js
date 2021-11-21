@@ -29,11 +29,11 @@ class RenderItems extends React.Component {
               </Text>
             </View>
 
-            <TouchableOpacity
-              onPress={this.handleDelete}
-              style={{alignItems: 'flex-end', flex: 1}}>
-              <Icon name="trash-alt" size={30} />
-            </TouchableOpacity>
+            <View style={{flex: 1, alignItems: 'flex-end'}}>
+              <TouchableOpacity onPress={this.handleDelete}>
+                <Icon name="trash-alt" size={30} />
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={{flexDirection: 'row'}}>
             <Text style={{fontWeight: 'bold', fontSize: 15}}>{price}USD</Text>

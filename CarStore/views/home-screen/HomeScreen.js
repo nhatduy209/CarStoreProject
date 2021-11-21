@@ -72,6 +72,33 @@ class HomeScreen extends React.Component {
     this.setState({isSearch: true});
   };
 
+  renderIcon = () => (
+    <View style={{flexDirection: 'row'}}>
+      <TouchableOpacity onPress={this.handleSearchPress}>
+        <View
+          style={{
+            alignItems: 'center',
+            width: 50,
+          }}>
+          <Icon name="search" size={18} style={{color: '#bbbbbb'}} />
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() =>
+          this.setState({searchText: '', isSearch: false, visible: false})
+        }>
+        <View
+          style={{
+            alignItems: 'center',
+            width: 50,
+          }}>
+          <Icon name="times" size={18} style={{color: '#bbbbbb'}} />
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
+
   render() {
     if (this.props.search_car?.length >= 0 && this.state.isSearch) {
       return (
@@ -89,17 +116,7 @@ class HomeScreen extends React.Component {
                 value={this.state.searchText}
               />
 
-              {this.state.visible && (
-                <TouchableOpacity onPress={this.handleSearchPress}>
-                  <View
-                    style={{
-                      alignItems: 'center',
-                      width: 80,
-                    }}>
-                    <Icon name="search" size={18} style={{color: '#bbbbbb'}} />
-                  </View>
-                </TouchableOpacity>
-              )}
+              {this.state.visible && this.renderIcon()}
             </View>
             {/* end  Search input text  */}
             <AllItemsScreen
@@ -134,17 +151,7 @@ class HomeScreen extends React.Component {
                 value={this.state.searchText}
               />
 
-              {this.state.visible && (
-                <TouchableOpacity onPress={this.handleSearchPress}>
-                  <View
-                    style={{
-                      alignItems: 'center',
-                      width: 80,
-                    }}>
-                    <Icon name="search" size={18} style={{color: '#bbbbbb'}} />
-                  </View>
-                </TouchableOpacity>
-              )}
+              {this.state.visible && this.renderIcon()}
             </View>
             {/* end  Search input text  */}
             <View style={{flexDirection: 'row', paddingTop: 10}}>

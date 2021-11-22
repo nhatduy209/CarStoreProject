@@ -8,14 +8,21 @@ import CategoryReducer from './CategoryReducer';
 import BookingReducer from './BookingReducer';
 import StoreInfoReducer from './StoreInfoReducer';
 import persistReducer from 'redux-persist/es/persistReducer';
+import LanguageReducer from './ChangeLanguageReducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const authPersistConfig = {
   key: 'auth',
   storage: AsyncStorage,
 };
 
+const languagePersistConfig = {
+  key: 'language',
+  storage: AsyncStorage,
+};
+
 const rootReducer = combineReducers({
   UserReducer: persistReducer(authPersistConfig, UserReducer),
+  LanguageReducer: persistReducer(languagePersistConfig, LanguageReducer),
   CarReducer,
   CartReducer,
   SearchReducer,

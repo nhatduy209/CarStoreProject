@@ -7,7 +7,12 @@ export default class RenderCarOnSale extends React.Component {
 
   render() {
     return (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          this.props.navigation.navigate('DetailItemScreen', {
+            data: this.props.item,
+          })
+        }>
         <View style={styles.renderCarOnSale}>
           <Image
             source={{uri: this.props.item.img}}
@@ -20,14 +25,14 @@ export default class RenderCarOnSale extends React.Component {
           />
 
           <View style={{paddingVertical: 20}}>
-            <View style={{flexDirection: 'row', padding: 5}}>
+            <View style={{flexDirection: 'row', padding: 8}}>
               <Text style={{fontWeight: 'bold'}}>{this.props.item.name}</Text>
               <Text style={{marginLeft: 'auto'}}>
                 {this.props.item.category}
               </Text>
             </View>
 
-            <View style={{paddingHorizontal: 5}}>
+            <View style={{paddingHorizontal: 8}}>
               <Text>{this.props.item.prices} USD</Text>
             </View>
           </View>

@@ -67,9 +67,6 @@ class CartScreen extends React.Component {
           <View style={{flex: 1}}>
             <Text style={{fontSize: 15}}>{count} items</Text>
           </View>
-          <TouchableOpacity style={{alignItems: 'flex-end'}}>
-            <Text style={{fontSize: 15}}>Delete all</Text>
-          </TouchableOpacity>
         </View>
         <View style={{borderBottomWidth: 1, marginVertical: 15}} />
 

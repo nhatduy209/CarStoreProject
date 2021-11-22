@@ -19,7 +19,6 @@ class ForgotPasswordCodeScreen extends React.Component {
       isSent: false,
       inputValue: [],
       prevIndex: null,
-      recoverCode: '',
       isIncorrect: false,
       countDown: 80,
     };
@@ -43,15 +42,7 @@ class ForgotPasswordCodeScreen extends React.Component {
     if (typeof this.props.user.recoverCode === 'undefined') {
       this.props.navigation.goBack();
     }
-    if (
-      this.state.recoverCode === '' &&
-      typeof this.props.user.recoverCode.data !== 'undefined'
-    ) {
-      console.log('res', this.props.user.recoverCode.data.data);
-      this.setState({recoverCode: this.props.user.recoverCode.data.data});
-    }
     if (this.state.countDown === 0) {
-      this.setState({recoverCode: ''});
       this.props.navigation.goBack();
     }
   }
@@ -100,7 +91,7 @@ class ForgotPasswordCodeScreen extends React.Component {
     const input = this.state.inputValue.toString().split(',').join('');
     if (
       input.length === 5 &&
-      input.localeCompare(this.state.recoverCode) === 0
+      input.localeCompare(this.props.user.recoverCode?.data?.data) === 0
     ) {
       this.setState({isIncorrect: false});
       this.props.navigation.navigate('ChangePasswordScreen');

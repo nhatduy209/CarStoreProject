@@ -18,6 +18,7 @@ import {searchCar} from '../../redux/action/search-car/SearchAction';
 import {getListCategory} from '../../redux/action/get-list-category/GetListCategory';
 import {ModalComponent} from '../modal/ModalComponent';
 import AllItemsScreen from '../item-screens/list-item/AllItemsScreen';
+import AppText from '../../i18/AppText';
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -47,7 +48,7 @@ class HomeScreen extends React.Component {
   );
 
   renderCarOnSale = ({item}) => {
-    return <RenderCarOnSale item={item} />;
+    return <RenderCarOnSale item={item} navigation={this.props.navigation} />;
   };
 
   renderRevealCycle = () => {
@@ -72,6 +73,33 @@ class HomeScreen extends React.Component {
     this.setState({isSearch: true});
   };
 
+  renderIcon = () => (
+    <View style={{flexDirection: 'row'}}>
+      <TouchableOpacity onPress={this.handleSearchPress}>
+        <View
+          style={{
+            alignItems: 'center',
+            width: 50,
+          }}>
+          <Icon name="search" size={18} style={{color: '#bbbbbb'}} />
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() =>
+          this.setState({searchText: '', isSearch: false, visible: false})
+        }>
+        <View
+          style={{
+            alignItems: 'center',
+            width: 50,
+          }}>
+          <Icon name="times" size={18} style={{color: '#bbbbbb'}} />
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
+
   render() {
     if (this.props.search_car?.length >= 0 && this.state.isSearch) {
       return (
@@ -89,17 +117,7 @@ class HomeScreen extends React.Component {
                 value={this.state.searchText}
               />
 
-              {this.state.visible && (
-                <TouchableOpacity onPress={this.handleSearchPress}>
-                  <View
-                    style={{
-                      alignItems: 'center',
-                      width: 80,
-                    }}>
-                    <Icon name="search" size={18} style={{color: '#bbbbbb'}} />
-                  </View>
-                </TouchableOpacity>
-              )}
+              {this.state.visible && this.renderIcon()}
             </View>
             {/* end  Search input text  */}
             <AllItemsScreen
@@ -134,24 +152,54 @@ class HomeScreen extends React.Component {
                 value={this.state.searchText}
               />
 
-              {this.state.visible && (
-                <TouchableOpacity onPress={this.handleSearchPress}>
-                  <View
-                    style={{
-                      alignItems: 'center',
-                      width: 80,
-                    }}>
-                    <Icon name="search" size={18} style={{color: '#bbbbbb'}} />
-                  </View>
-                </TouchableOpacity>
-              )}
+              {this.state.visible && this.renderIcon()}
             </View>
-            {/* end  Search input text  */}
+
+            <View style={{flexDirection: 'row', paddingTop: 10}}>
+              <View style={{flex: 1}}>
+                <Text style={{fontSize: 18, fontWeight: '900'}}>New Car</Text>
+              </View>
+            </View>
+
+            {/* flatlist category */}
+            <View style={{padding: 10}}>
+              <FlatList
+                horizontal
+                data={this.props.car}
+                renderItem={this.renderCarOnSale}
+                keyExtractor={item => item.name}
+                showsHorizontalScrollIndicator={false}
+                ItemSeparatorComponent={this.separateItem}
+              />
+            </View>
+
             <View style={{flexDirection: 'row', paddingTop: 10}}>
               <View style={{flex: 1}}>
                 <Text style={{fontSize: 18, fontWeight: '900'}}>
-                  Categories
+                  Top choice
                 </Text>
+              </View>
+            </View>
+
+            {/* flatlist category */}
+            <View style={{padding: 10}}>
+              <FlatList
+                horizontal
+                data={this.props.car}
+                renderItem={this.renderCarOnSale}
+                keyExtractor={item => item.name}
+                showsHorizontalScrollIndicator={false}
+                ItemSeparatorComponent={this.separateItem}
+              />
+            </View>
+
+            {/* end  Search input text  */}
+            <View style={{flexDirection: 'row', paddingTop: 10}}>
+              <View style={{flex: 1}}>
+                <AppText
+                  style={{fontSize: 18, fontWeight: '900'}}
+                  i18nKey={'Categories'}
+                />
               </View>
             </View>
 
@@ -172,16 +220,17 @@ class HomeScreen extends React.Component {
             {/* Car on sale  */}
             <View style={{flexDirection: 'row', paddingTop: 10}}>
               <View style={{flex: 1}}>
-                <Text style={{fontSize: 18, fontWeight: '900'}}>
-                  All Car in store{' '}
-                </Text>
+                <AppText
+                  style={{fontSize: 18, fontWeight: '900'}}
+                  i18nKey={'AllCarInStore'}
+                />
               </View>
               <View style={{justifyContent: 'flex-end'}}>
                 <TouchableOpacity
                   onPress={() =>
                     this.props.navigation.navigate('AllItemsScreen')
                   }>
-                  <Text style={{color: '#66b8ff'}}>Show all</Text>
+                  <AppText style={{color: '#66b8ff'}} i18nKey={'ShowAll'} />
                 </TouchableOpacity>
               </View>
             </View>

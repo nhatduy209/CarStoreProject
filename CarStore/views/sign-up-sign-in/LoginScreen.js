@@ -29,6 +29,7 @@ import {ToastAndroid} from 'react-native';
 import {LOGIN_KEY, TOKEN_DEVICE} from '../../config/StorageKey';
 import {_storeData, _retrieveData} from '../../common/Utils';
 import {testIds} from '../../config/TestID';
+import AppText from '../../i18/AppText';
 
 const removeUserLogin = async () => {
   try {
@@ -172,7 +173,7 @@ class LoginScreen extends React.Component {
           <TouchableOpacity
             style={{flexDirection: 'row', alignItems: 'center'}}
             onPress={() => this.props.navigation.navigate('RootDrawer')}>
-            <Text style={{marginRight: 5, fontSize: 20}}>Skip</Text>
+            <AppText style={{marginRight: 5, fontSize: 20}} i18nKey={'Skip'} />
             <Icon name="arrow-right" size={18} />
           </TouchableOpacity>
         </Animatable.View>
@@ -182,15 +183,15 @@ class LoginScreen extends React.Component {
           animation="fadeInUp"
           iterationCount={1}
           duration={2000}>
-          <Text
+          <AppText
             style={{
               fontSize: 25,
               textAlign: 'center',
               color: '#33DDFF',
               fontWeight: '600',
-            }}>
-            WELCOME
-          </Text>
+            }}
+            i18nKey={'Welcome'}
+          />
           <View style={{alignItems: 'center'}}>
             <Image
               source={require('../../images/ferrari-welcome.jpeg')}
@@ -218,7 +219,7 @@ class LoginScreen extends React.Component {
             </View>
 
             <View>
-              <Text style={styles.emailAndPassWord}>Password</Text>
+              <AppText style={styles.emailAndPassWord} i18nKey={'Password'} />
               <View style={styles.Input}>
                 <Icon name="lock" size={20} style={{paddingHorizontal: 20}} />
                 <TextInput
@@ -241,14 +242,20 @@ class LoginScreen extends React.Component {
                 onValueChange={value => this.handleRememberChange(value)}
                 value={this.state.isRemember}
               />
-              <Text style={{color: this.state.colorRemember}}>Remember</Text>
+              <AppText
+                style={{color: this.state.colorRemember}}
+                i18nKey={'Remember'}
+              />
 
               <TouchableOpacity
                 style={{marginLeft: 40, flex: 1}}
                 onPress={() =>
                   this.props.navigation.navigate('ForgotPasswordScreen')
                 }>
-                <Text style={{textAlign: 'right'}}>Forgot password</Text>
+                <AppText
+                  style={{textAlign: 'right'}}
+                  i18nKey={'ForgetPassword'}
+                />
               </TouchableOpacity>
             </View>
 
@@ -256,13 +263,13 @@ class LoginScreen extends React.Component {
               testID={testIds.buttonLogin}
               style={styles.loginButton}
               onPress={this.handleLogin}>
-              <Text style={styles.loginText}>LOGIN</Text>
+              <AppText style={styles.loginText} i18nKey={'Login'} />
             </TouchableOpacity>
 
-            <Text style={{textAlign: 'center', fontSize: 17}}>
-              {' '}
-              -------------- Or --------------
-            </Text>
+            <AppText
+              style={{textAlign: 'center', fontSize: 17}}
+              i18nKey={'Or'}
+            />
 
             <View style={{flexDirection: 'row', marginVertical: 10}}>
               <TouchableOpacity
@@ -275,9 +282,11 @@ class LoginScreen extends React.Component {
                   size={20}
                   style={{color: 'white', marginRight: 5}}
                 />
-                <Text style={{color: 'white', fontSize: 12}}>
-                  Login with Facebook
-                </Text>
+
+                <AppText
+                  style={{color: 'white', fontSize: 12}}
+                  i18nKey={'LoginWithFacebook'}
+                />
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -292,9 +301,10 @@ class LoginScreen extends React.Component {
                   size={20}
                   style={{color: 'white', marginRight: 5}}
                 />
-                <Text style={{color: 'white', fontSize: 12}}>
-                  Login with Google
-                </Text>
+                <AppText
+                  style={{color: 'white', fontSize: 12}}
+                  i18nKey={'LoginWithGoogle'}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -305,11 +315,14 @@ class LoginScreen extends React.Component {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text>Don't have account ? </Text>
+            <AppText i18nKey={'DontHaveAccount'} />
             <TouchableOpacity
               testID={testIds.SignUp_Screen.buttonSignUp}
               onPress={() => this.props.navigation.navigate('SignUpScreen')}>
-              <Text style={{color: '#00e6e6'}}>Sign up</Text>
+              <AppText
+                style={{color: '#00e6e6', marginLeft: 5}}
+                i18nKey={'SignUp'}
+              />
             </TouchableOpacity>
           </View>
         </Animatable.View>

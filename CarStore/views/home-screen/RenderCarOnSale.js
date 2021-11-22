@@ -7,7 +7,12 @@ export default class RenderCarOnSale extends React.Component {
 
   render() {
     return (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          this.props.navigation.navigate('DetailItemScreen', {
+            data: this.props.item,
+          })
+        }>
         <View style={styles.renderCarOnSale}>
           <Image
             source={{uri: this.props.item.img}}

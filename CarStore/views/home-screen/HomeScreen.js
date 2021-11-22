@@ -146,6 +146,45 @@ class HomeScreen extends React.Component {
                 </TouchableOpacity>
               )}
             </View>
+
+            <View style={{flexDirection: 'row', paddingTop: 10}}>
+              <View style={{flex: 1}}>
+                <Text style={{fontSize: 18, fontWeight: '900'}}>New Car</Text>
+              </View>
+            </View>
+
+            {/* flatlist category */}
+            <View style={{padding: 10}}>
+              <FlatList
+                horizontal
+                data={this.props.car}
+                renderItem={this.renderCarOnSale}
+                keyExtractor={item => item.name}
+                showsHorizontalScrollIndicator={false}
+                ItemSeparatorComponent={this.separateItem}
+              />
+            </View>
+
+            <View style={{flexDirection: 'row', paddingTop: 10}}>
+              <View style={{flex: 1}}>
+                <Text style={{fontSize: 18, fontWeight: '900'}}>
+                  Top choice
+                </Text>
+              </View>
+            </View>
+
+            {/* flatlist category */}
+            <View style={{padding: 10}}>
+              <FlatList
+                horizontal
+                data={this.props.car}
+                renderItem={this.renderCarOnSale}
+                keyExtractor={item => item.name}
+                showsHorizontalScrollIndicator={false}
+                ItemSeparatorComponent={this.separateItem}
+              />
+            </View>
+
             {/* end  Search input text  */}
             <View style={{flexDirection: 'row', paddingTop: 10}}>
               <View style={{flex: 1}}>

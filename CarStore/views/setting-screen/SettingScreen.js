@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import HeaderComponent from '../headerComponent';
 import SettingItemComponent from './SettingItemComponent';
-
+import AppText from '../../i18/AppText';
 export default class SettingScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -15,11 +15,13 @@ export default class SettingScreen extends React.Component {
       iconName: 'globe',
       name: 'Language',
       isAccount: false,
+      statusItem: 'English',
       color: '#ff7400',
     },
     {
       iconName: 'bell',
       name: 'Notifications',
+      statusItem: 'turn off',
       isAccount: false,
       color: '#189ad3',
     },
@@ -45,7 +47,8 @@ export default class SettingScreen extends React.Component {
               subItem={-1}
               navigation={this.props.navigation}
             />
-            <Text style={styles.groupItemTitle}>Settings</Text>
+            {/* <Text style={styles.groupItemTitle}>Settings</Text> */}
+            <AppText style={styles.groupItemTitle} i18nKey={'Settings'} />
             {this.listItem.map((item, index) =>
               this.renderSettingItem(item, index),
             )}

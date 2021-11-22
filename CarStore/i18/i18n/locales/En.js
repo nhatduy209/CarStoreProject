@@ -1,0 +1,17 @@
+export default {
+  Settings: 'Settings',
+  Login: 'Login',
+  Password: 'Password',
+  Remember: 'Remember',
+  Skip: 'Skip',
+  ForgetPassword: 'ForgetPassword',
+  Welcome: 'Welcome',
+  DontHaveAccount: "Don't have account",
+  SignUp: 'Sign Up',
+  LoginWithGoogle: 'Login with Google',
+  LoginWithFacebook: 'Login with Facebook',
+  Categories: 'Categories',
+  Or: '--------------------Or--------------------',
+  AllCarInStore: 'All Car in store',
+  ShowAll: 'Show all',
+};

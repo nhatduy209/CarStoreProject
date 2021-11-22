@@ -203,6 +203,8 @@ dependencies {
     //import the firebase BoM
     implementation platform('com.google.firebase:firebase-bom:28.4.0')
 
+    implementation project(':react-native-i18n')
+
     implementation project(':react-native-push-notification')
 
 

@@ -50,7 +50,7 @@ export const getListCarByPrice = (min, max) => async dispatch => {
   var getListCarBusiness = new GetListCarBusiness();
   var res = await getListCarBusiness.getListCarByPriceBusiness(min, max);
   console.log('res', res);
-  if (res.result === STATUS.SUCCESS) {
+  if (res.status === STATUS.SUCCESS) {
     dispatch({
       type: ACTION_NAME.GET_LIST_CAR_BY_PRICE.GET_LIST_CAR_BY_PRICE_SUCCESS,
       data: res,

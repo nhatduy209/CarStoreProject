@@ -14,8 +14,12 @@ import {connect} from 'react-redux';
 import CardItem from './CardItem';
 import {searchCar} from '../../../redux/action/search-car/SearchAction';
 import HeaderComponent from '../../headerComponent';
-import {getListCar} from '../../../redux/action/get-list-car/GetListCar';
+import {
+  getListCar,
+  getListCarByPrice,
+} from '../../../redux/action/get-list-car/GetListCar';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+import Select from '@redmin_delishaj/react-native-select';
 import {setDefaultListColor} from '../../../redux/action/list-color/ListColorAction';
 if (
   Platform.OS === 'android' &&
@@ -29,6 +33,8 @@ class AllItemsScreen extends React.Component {
     this.start = this.props.car.length;
     this.end = 5;
     this.canLoadMore = true;
+    this.minPrice = null;
+    this.maxPrice = null;
   }
   componentDidUpdate(prevProps) {
     if (prevProps.car.length === this.props.car.length) {
@@ -86,6 +92,71 @@ class AllItemsScreen extends React.Component {
     return this.props.isManagementScreen ? this.showAddContainer() : <View />;
   };
 
+  prices = () => {
+    const list = [];
+    for (let i = 2; i < 21; i++) {
+      const item = {
+        text: (i * 10000).toString(),
+        value: i * 10000,
+      };
+      list.push(item);
+    }
+    return list;
+  };
+
+  config = {
+    fontSize: 18,
+    textColor: '#000',
+    borderWidth: 0.5,
+    borderColor: '#eee',
+    borderRadius: 10,
+  };
+
+  renderHeaderImplement = () => {
+    return (
+      <View style={{flexDirection: 'row', paddingLeft: 20, marginTop: 40}}>
+        <View style={{width: '50%'}}>
+          <Text style={{fontSize: 20, paddingVertical: 8}}>Min price</Text>
+          <Select
+            data={this.prices()}
+            onSelect={value => this.setMinPrice(value)}
+            value={this.minPrice}
+            config={this.config}
+          />
+        </View>
+        <View style={{width: '50%'}}>
+          <Text style={{fontSize: 20, paddingVertical: 8}}>Max price</Text>
+          <Select
+            data={this.prices()}
+            onSelect={value => this.setMaxPrice(value)}
+            value={this.maxPrice}
+            config={this.config}
+          />
+        </View>
+      </View>
+    );
+  };
+
+  getListCarByPrice = () => {
+    if (this.minPrice && this.maxPrice) {
+      this.props.getListCarByPrice(this.minPrice, this.maxPrice);
+    } else {
+      // this.props.getListCar();
+    }
+  };
+
+  setMaxPrice = value => {
+    console.log(value);
+    this.maxPrice = value;
+    this.getListCarByPrice();
+  };
+
+  setMinPrice = value => {
+    console.log(value);
+    this.minPrice = value;
+    this.getListCarByPrice();
+  };
+
   loadMoreItem = () => {
     if (this.canLoadMore) {
       this.start += 5;
@@ -105,6 +176,42 @@ class AllItemsScreen extends React.Component {
     </View>
   );
 
+  renderListCar = () => {
+    return this.minPrice && this.maxPrice ? (
+      <FlatList
+        ListHeaderComponent={this.renderHeader}
+        data={this.props.carPrice}
+        renderItem={item =>
+          this.renderItem({...item, navigation: this.props.navigation})
+        }
+        keyExtractor={item => item.name}
+        showsHorizontalScrollIndicator={false}
+        ItemSeparatorComponent={this.separateItem}
+        ListFooterComponent={<View style={{height: 70}} />}
+        style={{paddingTop: 10}}
+      />
+    ) : (
+      <FlatList
+        ListHeaderComponent={this.renderHeader}
+        data={this.props.isSearch ? this.props.listSearchItems : this.props.car}
+        renderItem={item =>
+          this.renderItem({...item, navigation: this.props.navigation})
+        }
+        ListEmptyComponent={this.renderEmpty}
+        keyExtractor={item => item.name}
+        showsHorizontalScrollIndicator={false}
+        ItemSeparatorComponent={this.separateItem}
+        style={{paddingTop: 80}}
+        ListFooterComponent={this.renderFooter}
+        onEndReachedThreshold={1}
+        onEndReached={({distanceFromEnd}) =>
+          // problem
+          this.loadMoreItem()
+        }
+      />
+    );
+  };
+
   render() {
     return (
       <View
@@ -119,26 +226,8 @@ class AllItemsScreen extends React.Component {
             screenTitle={this.props.screenTitle}
           />
         )}
-        <FlatList
-          ListHeaderComponent={this.renderHeader}
-          data={
-            this.props.isSearch ? this.props.listSearchItems : this.props.car
-          }
-          renderItem={item =>
-            this.renderItem({...item, navigation: this.props.navigation})
-          }
-          ListEmptyComponent={this.renderEmpty}
-          keyExtractor={item => item.name}
-          showsHorizontalScrollIndicator={false}
-          ItemSeparatorComponent={this.separateItem}
-          style={{paddingTop: 80}}
-          ListFooterComponent={this.renderFooter}
-          onEndReachedThreshold={1}
-          onEndReached={({distanceFromEnd}) =>
-            // problem
-            this.loadMoreItem()
-          }
-        />
+        {this.renderHeaderImplement()}
+        {this.renderListCar()}
       </View>
     );
   }
@@ -146,6 +235,7 @@ class AllItemsScreen extends React.Component {
 const mapStateToProps = state => {
   return {
     car: state.CarReducer.car,
+    carPrice: state.CarReducer.car_price,
     search_car: state.SearchReducer.car,
   };
 };
@@ -154,6 +244,7 @@ export default connect(mapStateToProps, {
   getListCar,
   searchCar,
   setDefaultListColor,
+  getListCarByPrice,
 })(AllItemsScreen);
 
 const styles = StyleSheet.create({

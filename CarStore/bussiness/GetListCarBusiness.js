@@ -23,7 +23,7 @@ export default class GetListCarBusiness {
       maxPrices,
     };
     var postService = new PostService();
-    console.log('p', params, APP_URL.GET_LIST_CAR_BY_PRICE);
+
     var result = await postService.PostAPI(
       APP_URL.GET_LIST_CAR_BY_PRICE,
       params,

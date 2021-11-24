@@ -110,7 +110,6 @@ class RenderCarCategory extends React.Component {
 
   getListCarByPrice = () => {
     if (this.minPrice && this.maxPrice) {
-      console.log('hi');
       this.props.getListCarByPrice(this.minPrice, this.maxPrice);
     }
   };
@@ -162,6 +161,43 @@ class RenderCarCategory extends React.Component {
     this.props.reloadListCarCategory();
   }
 
+  renderListCar = () => {
+    return this.minPrice && this.maxPrice ? (
+      <FlatList
+        ListHeaderComponent={this.renderHeader}
+        data={this.props.carPrice}
+        renderItem={item =>
+          this.renderItem({...item, navigation: this.props.navigation})
+        }
+        ListEmptyComponent={this.renderEmpty}
+        keyExtractor={item => item.name}
+        showsHorizontalScrollIndicator={false}
+        ItemSeparatorComponent={this.separateItem}
+        style={{paddingTop: 10}}
+        ListFooterComponent={this.renderFooter}
+      />
+    ) : (
+      <FlatList
+        ListHeaderComponent={this.renderHeader}
+        data={this.props.car}
+        renderItem={item =>
+          this.renderItem({...item, navigation: this.props.navigation})
+        }
+        ListEmptyComponent={this.renderEmpty}
+        keyExtractor={item => item.name}
+        showsHorizontalScrollIndicator={false}
+        ItemSeparatorComponent={this.separateItem}
+        style={{paddingTop: 10}}
+        ListFooterComponent={this.renderFooter}
+        onEndReachedThreshold={1}
+        onEndReached={({distanceFromEnd}) =>
+          // problem
+          this.loadMoreItem()
+        }
+      />
+    );
+  };
+
   render() {
     return (
       <View
@@ -170,24 +206,7 @@ class RenderCarCategory extends React.Component {
           flex: 1,
         }}>
         {this.renderHeaderImplement()}
-        <FlatList
-          ListHeaderComponent={this.renderHeader}
-          data={this.props.car}
-          renderItem={item =>
-            this.renderItem({...item, navigation: this.props.navigation})
-          }
-          ListEmptyComponent={this.renderEmpty}
-          keyExtractor={item => item.name}
-          showsHorizontalScrollIndicator={false}
-          ItemSeparatorComponent={this.separateItem}
-          style={{paddingTop: 10}}
-          ListFooterComponent={this.renderFooter}
-          onEndReachedThreshold={1}
-          onEndReached={({distanceFromEnd}) =>
-            // problem
-            this.loadMoreItem()
-          }
-        />
+        {this.renderListCar()}
       </View>
     );
   }

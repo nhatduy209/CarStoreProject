@@ -75,7 +75,10 @@ export default class HomeScreenStack extends React.Component {
         <Stack.Screen
           name="CarCategory"
           component={RenderCarCategory}
-          options={({route}) => ({title: route.params.category})}
+          options={
+            (({route}) => ({title: route.params.category}),
+            {headerShown: false})
+          }
         />
 
         <Stack.Screen

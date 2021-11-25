@@ -18,11 +18,11 @@ export default class GetListCarBusiness {
   };
 
   getListCarByPriceBusiness = async (minPrices, maxPrices) => {
+    var postService = new PostService();
     const params = {
       minPrices,
       maxPrices,
     };
-    var postService = new PostService();
 
     var result = await postService.PostAPI(
       APP_URL.GET_LIST_CAR_BY_PRICE,

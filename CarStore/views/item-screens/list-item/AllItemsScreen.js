@@ -112,6 +112,18 @@ class AllItemsScreen extends React.Component {
     borderRadius: 10,
   };
 
+  checkTypeOfValue = (min, max) => {
+    if (
+      !min ||
+      typeof min === 'undefined' ||
+      !max ||
+      typeof max === 'undefined'
+    ) {
+      return false;
+    }
+    return true;
+  };
+
   renderHeaderImplement = () => {
     return (
       <View style={{flexDirection: 'row', paddingLeft: 20, marginTop: 40}}>
@@ -138,22 +150,24 @@ class AllItemsScreen extends React.Component {
   };
 
   getListCarByPrice = () => {
-    if (this.minPrice && this.maxPrice) {
+    console.log('max', typeof this.maxPrice, this.maxPrice);
+    console.log('min', typeof this.minPrice, this.minPrice);
+    if (
+      this.checkTypeOfValue(this.minPrice, this.maxPrice) &&
+      this.minPrice < this.maxPrice
+    ) {
+      console.log('search');
       this.props.getListCarByPrice(this.minPrice, this.maxPrice);
-    } else {
-      // this.props.getListCar();
     }
   };
 
   setMaxPrice = value => {
-    console.log(value);
-    this.maxPrice = value;
+    this.maxPrice = parseInt(value, 10);
     this.getListCarByPrice();
   };
 
   setMinPrice = value => {
-    console.log(value);
-    this.minPrice = value;
+    this.minPrice = parseInt(value, 10);
     this.getListCarByPrice();
   };
 
@@ -177,7 +191,8 @@ class AllItemsScreen extends React.Component {
   );
 
   renderListCar = () => {
-    return this.minPrice && this.maxPrice ? (
+    return this.checkTypeOfValue(this.minPrice, this.maxPrice) &&
+      this.minPrice < this.maxPrice ? (
       <FlatList
         ListHeaderComponent={this.renderHeader}
         data={this.props.carPrice}

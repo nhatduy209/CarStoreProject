@@ -115,12 +115,14 @@ class RenderCarCategory extends React.Component {
   };
 
   setMaxPrice = value => {
-    this.maxPrice = value;
+    this.maxPrice = parseInt(value, 10);
+    console.log(typeof this.maxPrice);
     this.getListCarByPrice();
   };
 
   setMinPrice = value => {
-    this.minPrice = value;
+    this.minPrice = parseInt(value, 10);
+    console.log(typeof this.minPrice, this.minPrice);
     this.getListCarByPrice();
   };
 

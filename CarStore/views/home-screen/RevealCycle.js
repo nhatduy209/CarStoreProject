@@ -33,7 +33,7 @@ class RevealCycle extends React.Component {
   };
 
   renderSignInIcons = () => {
-    if (this.props?.user?.status === STATUS.SUCCESS) {
+    if (this.props?.user?.data?.data.email) {
       return (
         <TouchableOpacity
           testID={testIds.logoutButton}
@@ -55,7 +55,7 @@ class RevealCycle extends React.Component {
   };
 
   handleGoToUserProfile = () => {
-    if (this.props?.user?.status === STATUS.SUCCESS) {
+    if (this.props?.user?.data?.data.email) {
       this.props.navigation.navigate('ProfileScreen');
     } else {
       this.props.state.setState({isShow: true});
@@ -63,7 +63,7 @@ class RevealCycle extends React.Component {
   };
 
   handleGoToCart = () => {
-    if (this.props?.user?.status === STATUS.SUCCESS) {
+    if (this.props?.user?.data?.data.email) {
       this.props.navigation.navigate('CartStack');
     } else {
       this.props.state.setState({isShow: true});
@@ -71,7 +71,7 @@ class RevealCycle extends React.Component {
   };
 
   handleGoToCalendar = () => {
-    if (this.props?.user?.status === STATUS.SUCCESS) {
+    if (this.props?.user?.data?.data.email) {
       this.props.navigation.navigate('CalendarStack');
     } else {
       this.props.state.setState({isShow: true});

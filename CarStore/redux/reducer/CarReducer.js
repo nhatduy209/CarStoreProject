@@ -42,6 +42,23 @@ const CarReducer = (state = CAR_STATE, action) => {
         car_category: [],
         status_loading: STATUS.NONE,
       };
+    case ACTION_NAME.GET_LIST_CAR_BY_PRICE.GET_LIST_CAR_BY_PRICE_SUCCESS:
+      return {
+        ...state,
+        car_price: action.data.data.data,
+        status_loading: STATUS.SUCCESS,
+      };
+    case ACTION_NAME.GET_LIST_CAR_BY_PRICE.GET_LIST_CAR_BY_PRICE_FAIL:
+      return {
+        ...state,
+        car_price: null,
+      };
+    case ACTION_NAME.GET_LIST_CAR_BY_PRICE.GET_LIST_CAR_BY_PRICE_RELOAD:
+      return {
+        ...state,
+        car_price: null,
+        status_loading: STATUS.NONE,
+      };
     case MANAGE_ACTION_NAME.ADD_ITEM_ACTION.ADD_ITEM_ACTION_SUCCESS:
       return {
         ...state,

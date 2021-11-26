@@ -1,5 +1,6 @@
 import {APP_URL} from '../config/URL';
 import GetService from '../service/GetService';
+import PostService from '../service/PostService';
 export default class GetListCarBusiness {
   getListCarBusiness = async (start, end) => {
     const params = {
@@ -10,6 +11,21 @@ export default class GetListCarBusiness {
 
     var result = await getService.getApiWithParams(
       APP_URL.GET_LIST_CAR,
+      params,
+    );
+
+    return result;
+  };
+
+  getListCarByPriceBusiness = async (minPrices, maxPrices) => {
+    var postService = new PostService();
+    const params = {
+      minPrices,
+      maxPrices,
+    };
+
+    var result = await postService.PostAPI(
+      APP_URL.GET_LIST_CAR_BY_PRICE,
       params,
     );
 

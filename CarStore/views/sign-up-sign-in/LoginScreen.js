@@ -68,6 +68,7 @@ class LoginScreen extends React.Component {
     );
     if (this.props.user?.status === STATUS.SUCCESS) {
       if (this.state.loading) {
+        // eslint-disable-next-line react/no-did-mount-set-state
         this.setState({loading: false});
       }
       this.props.navigation.navigate('RootDrawer');

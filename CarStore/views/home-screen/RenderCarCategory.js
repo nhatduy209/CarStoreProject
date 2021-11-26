@@ -10,9 +10,12 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import CardItem from '../item-screens/list-item/CardItem';
+import FilterByPrice from '../item-screens/list-item/FilterByPrice';
+import HeaderComponent from '../headerComponent';
 import {
   getListCarByCategory,
   reloadListCarCategory,
+  getListCarByPrice,
 } from '../../redux/action/get-list-car/GetListCar';
 import {FlatList} from 'react-native-gesture-handler';
 if (
@@ -27,6 +30,9 @@ class RenderCarCategory extends React.Component {
     this.start = this.props.car.length;
     this.end = 5;
     this.canLoadMore = true;
+    this.state = {
+      filterByPrice: false,
+    };
   }
 
   renderItem({item, navigation}) {
@@ -41,7 +47,7 @@ class RenderCarCategory extends React.Component {
   }
   separateItem = () => <View style={{width: 10}} />;
 
-  renderFooter = () => <View style={{height: 70}} />;
+  renderFooter = () => <View style={{height: 80}} />;
 
   renderHeader = () => {
     return this.props.isManagementScreen ? this.showAddContainer() : <View />;
@@ -79,7 +85,7 @@ class RenderCarCategory extends React.Component {
           alignItems: 'center',
           backgroundColor: '#ffffff',
         }}>
-        <ActivityIndicator size="large" color="#bbbbbb"></ActivityIndicator>
+        <ActivityIndicator size="large" color="#bbbbbb" />
       </View>
     );
   };
@@ -96,6 +102,41 @@ class RenderCarCategory extends React.Component {
     this.props.reloadListCarCategory();
   }
 
+  renderListCar = () => {
+    return this.state.filterByPrice ? (
+      <View />
+    ) : (
+      <FlatList
+        ListHeaderComponent={this.renderHeader}
+        data={this.props.car}
+        renderItem={item =>
+          this.renderItem({...item, navigation: this.props.navigation})
+        }
+        ListEmptyComponent={this.renderEmpty}
+        keyExtractor={item => item.name}
+        showsHorizontalScrollIndicator={false}
+        ItemSeparatorComponent={this.separateItem}
+        style={{marginTop: 50}}
+        ListFooterComponent={this.renderFooter}
+        onEndReachedThreshold={1}
+        onEndReached={({distanceFromEnd}) =>
+          // problem
+          this.loadMoreItem()
+        }
+      />
+    );
+  };
+
+  renderFilter = () => {
+    return this.props.isManagementScreen ? (
+      <View />
+    ) : (
+      <FilterByPrice
+        listFilterByPrice={value => this.setState({filterByPrice: value})}
+      />
+    );
+  };
+
   render() {
     return (
       <View
@@ -103,24 +144,9 @@ class RenderCarCategory extends React.Component {
           backgroundColor: '#ffffff',
           flex: 1,
         }}>
-        <FlatList
-          ListHeaderComponent={this.renderHeader}
-          data={this.props.car}
-          renderItem={item =>
-            this.renderItem({...item, navigation: this.props.navigation})
-          }
-          ListEmptyComponent={this.renderEmpty}
-          keyExtractor={item => item.name}
-          showsHorizontalScrollIndicator={false}
-          ItemSeparatorComponent={this.separateItem}
-          style={{paddingTop: 80}}
-          ListFooterComponent={this.renderFooter}
-          onEndReachedThreshold={1}
-          onEndReached={({distanceFromEnd}) =>
-            // problem
-            this.loadMoreItem()
-          }
-        />
+        <HeaderComponent navigation={this.props.navigation} />
+        {this.renderFilter()}
+        {this.renderListCar()}
       </View>
     );
   }
@@ -128,6 +154,7 @@ class RenderCarCategory extends React.Component {
 const mapStateToProps = state => {
   return {
     car: state.CarReducer.car_category,
+    carPrice: state.CarReducer.car_price,
     status: state.CarReducer.status_loading,
   };
 };
@@ -135,4 +162,5 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   getListCarByCategory,
   reloadListCarCategory,
+  getListCarByPrice,
 })(RenderCarCategory);

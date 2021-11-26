@@ -14,9 +14,13 @@ import {connect} from 'react-redux';
 import CardItem from './CardItem';
 import {searchCar} from '../../../redux/action/search-car/SearchAction';
 import HeaderComponent from '../../headerComponent';
-import {getListCar} from '../../../redux/action/get-list-car/GetListCar';
+import {
+  getListCar,
+  getListCarByPrice,
+} from '../../../redux/action/get-list-car/GetListCar';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {setDefaultListColor} from '../../../redux/action/list-color/ListColorAction';
+import FilterByPrice from './FilterByPrice';
 if (
   Platform.OS === 'android' &&
   UIManager.setLayoutAnimationEnabledExperimental
@@ -29,6 +33,9 @@ class AllItemsScreen extends React.Component {
     this.start = this.props.car.length;
     this.end = 5;
     this.canLoadMore = true;
+    this.state = {
+      filterByPrice: false,
+    };
   }
   componentDidUpdate(prevProps) {
     if (prevProps.car.length === this.props.car.length) {
@@ -54,12 +61,12 @@ class AllItemsScreen extends React.Component {
     const isSearch = this.props.isSearch ?? false;
     if (this.canLoadMore && !isSearch) {
       return (
-        <View style={{height: 80}}>
+        <View style={{height: 160}}>
           <ActivityIndicator size="large" color="red" />
         </View>
       );
     } else {
-      return <View style={{height: 50}} />;
+      return <View style={{height: 200}} />;
     }
   };
 
@@ -105,12 +112,44 @@ class AllItemsScreen extends React.Component {
     </View>
   );
 
+  renderListCar = () => {
+    return this.state.filterByPrice ? (
+      <View />
+    ) : (
+      <FlatList
+        ListHeaderComponent={this.renderHeader}
+        data={this.props.isSearch ? this.props.listSearchItems : this.props.car}
+        renderItem={item =>
+          this.renderItem({...item, navigation: this.props.navigation})
+        }
+        ListEmptyComponent={this.renderEmpty}
+        keyExtractor={item => item.name}
+        showsHorizontalScrollIndicator={false}
+        ItemSeparatorComponent={this.separateItem}
+        style={{marginTop: 50}}
+        ListFooterComponent={this.renderFooter}
+        onEndReachedThreshold={1}
+        onEndReached={({distanceFromEnd}) =>
+          // problem
+          this.loadMoreItem()
+        }
+      />
+    );
+  };
+
+  renderFilter = () => {
+    return this.props.isManagementScreen ? (
+      <View />
+    ) : (
+      <FilterByPrice
+        listFilterByPrice={value => this.setState({filterByPrice: value})}
+      />
+    );
+  };
+
   render() {
     return (
-      <View
-        style={{
-          backgroundColor: !this.props.listSearchItems ? '#fff' : '#eee',
-        }}>
+      <View style={{backgroundColor: '#fff'}}>
         {this.props.isSearch ? (
           <View />
         ) : (
@@ -119,26 +158,8 @@ class AllItemsScreen extends React.Component {
             screenTitle={this.props.screenTitle}
           />
         )}
-        <FlatList
-          ListHeaderComponent={this.renderHeader}
-          data={
-            this.props.isSearch ? this.props.listSearchItems : this.props.car
-          }
-          renderItem={item =>
-            this.renderItem({...item, navigation: this.props.navigation})
-          }
-          ListEmptyComponent={this.renderEmpty}
-          keyExtractor={item => item.name}
-          showsHorizontalScrollIndicator={false}
-          ItemSeparatorComponent={this.separateItem}
-          style={{paddingTop: 80}}
-          ListFooterComponent={this.renderFooter}
-          onEndReachedThreshold={1}
-          onEndReached={({distanceFromEnd}) =>
-            // problem
-            this.loadMoreItem()
-          }
-        />
+        {this.renderFilter()}
+        {this.renderListCar()}
       </View>
     );
   }
@@ -146,6 +167,7 @@ class AllItemsScreen extends React.Component {
 const mapStateToProps = state => {
   return {
     car: state.CarReducer.car,
+    carPrice: state.CarReducer.car_price,
     search_car: state.SearchReducer.car,
   };
 };
@@ -154,6 +176,7 @@ export default connect(mapStateToProps, {
   getListCar,
   searchCar,
   setDefaultListColor,
+  getListCarByPrice,
 })(AllItemsScreen);
 
 const styles = StyleSheet.create({

@@ -14,4 +14,9 @@ export default {
   Or: '--------------------Or--------------------',
   AllCarInStore: 'All Car in store',
   ShowAll: 'Show all',
+  warningEmptyEmail: 'You are missing email',
+  warningEmptyName: 'You are missing name',
+  warningEmptyPhone: 'You are missing phone number',
+  warningEmptyPassword: 'You are missing password',
+  warningEmptyConfirmPassword: 'Your confirm password and password not match',
 };

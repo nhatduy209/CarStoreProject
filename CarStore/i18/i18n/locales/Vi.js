@@ -14,4 +14,9 @@ export default {
   Or: '--------------------Hoặc--------------------',
   AllCarInStore: 'Tất cả các xe',
   ShowAll: 'Xem tất cả',
+  warningEmptyEmail: 'Bạn nhập thiếu email',
+  warningEmptyName: 'Bạn nhập thiếu tên',
+  warningEmptyPhone: 'Bạn nhập thiếu số điện thoại',
+  warningEmptyPassword: 'Bạn nhập thiếu mật khẩu',
+  warningEmptyConfirmPassword: 'Mật khẩu xác nhận chưa giống',
 };

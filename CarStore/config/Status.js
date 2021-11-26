@@ -12,4 +12,5 @@ export const STATUS_LOGOUT = {
 export const STATUS_SIGNUP = {
   SUCCESS: 'SIGNUP_SUCCESS',
   FAIL: 'SIGNUP_FAIL',
+  NONE: 'SIGNUP_NONE',
 };

@@ -19,3 +19,15 @@ export const _retrieveData = async key => {
     // Error retrieving data
   }
 };
+
+// dataValidate : object
+export const handleValidate = dataValidate => {
+  const revertArray = Object.entries(dataValidate);
+  return revertArray.map((item, index) => {
+    console.log('ITEM --', item);
+    return {
+      index,
+      isCorrect: item[1].length > 0,
+    };
+  });
+};

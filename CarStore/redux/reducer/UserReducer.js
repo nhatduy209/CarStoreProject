@@ -1,4 +1,4 @@
-import {STATUS} from '../../config/Status';
+import {STATUS, STATUS_SIGNUP} from '../../config/Status';
 import {ACTION_NAME} from '../action/login-action/ActionName';
 import {ACTION_NAME as CHANGE_INFO_ACTION_NAME} from '../action/change-info/ActionName';
 import {REHYDRATE} from 'redux-persist';
@@ -32,6 +32,12 @@ const UserReducer = (state = USER_STATE, action) => {
       return {
         ...state,
         user: action.data,
+      };
+
+    case ACTION_NAME.SIGNUP_ACTION.SIGNUP_ACTION_RELOAD:
+      return {
+        ...state,
+        user: {status: STATUS_SIGNUP.NONE},
       };
     case ACTION_NAME.RECOVERPASSWORD_ACTION.RECOVERPASSWORD_ACTION:
       return {

@@ -8,13 +8,18 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Platform,
+  ToastAndroid,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
-import {signUp} from '../../redux/action/login-action/SignUpAction';
+import {
+  signUp,
+  realoadSignUpStatus,
+} from '../../redux/action/login-action/SignUpAction';
 import {STATUS_SIGNUP} from '../../config/Status';
 import {testIds} from '../../config/TestID';
-
+import {handleValidate} from '../../common/Utils';
+import AppText from '../../i18/AppText';
 class SignUpScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -25,16 +30,36 @@ class SignUpScreen extends React.Component {
       hidePassword: true,
       confirmPassword: '',
       phone: '',
+      showWarning: false,
     };
+    this.arrayCheck = [];
   }
   handleSignUp = () => {
+    let count = 0;
     const signupInfo = {
       email: this.state.email,
       password: this.state.password,
       phone: this.state.phone,
       name: this.state.name,
     };
-    this.props.signUp(signupInfo);
+    this.arrayCheck = handleValidate(signupInfo);
+    this.arrayCheck.map(item => {
+      if (!item.isCorrect) {
+        this.setState({showWarning: true});
+        return;
+      } else {
+        count++;
+      }
+    });
+    if (this.state.confirmPassword !== this.state.password) {
+      ToastAndroid.show(
+        'Check your confirm password and your password again',
+        ToastAndroid.LONG,
+      );
+    }
+    if (count === this.arrayCheck.length) {
+      this.props.signUp(signupInfo);
+    }
   };
   handleHidePassowrd = () => {
     this.setState({
@@ -44,6 +69,10 @@ class SignUpScreen extends React.Component {
   componentDidUpdate() {
     if (this.props.user?.status === STATUS_SIGNUP.SUCCESS) {
       this.props.navigation.navigate('LoginScreen');
+      this.props.realoadSignUpStatus();
+    } else if (this.props.user?.status === STATUS_SIGNUP.FAIL) {
+      ToastAndroid.show('Email has already been used', ToastAndroid.LONG);
+      this.props.realoadSignUpStatus();
     }
   }
   render() {
@@ -79,6 +108,11 @@ class SignUpScreen extends React.Component {
                   value={this.state.name}
                 />
               </View>
+              {this.state.showWarning && !this.arrayCheck[3].isCorrect && (
+                <AppText
+                  style={{color: 'red'}}
+                  i18nKey={'warningEmptyName'}></AppText>
+              )}
             </View>
             <View>
               <Text style={styles.emailAndPassWord}>Phone</Text>
@@ -96,6 +130,11 @@ class SignUpScreen extends React.Component {
                   value={this.state.phone}
                 />
               </View>
+              {this.state.showWarning && !this.arrayCheck[2].isCorrect && (
+                <AppText
+                  style={{color: 'red'}}
+                  i18nKey={'warningEmptyPhone'}></AppText>
+              )}
             </View>
             <View>
               <Text style={styles.emailAndPassWord}>Email</Text>
@@ -113,6 +152,11 @@ class SignUpScreen extends React.Component {
                   value={this.state.email}
                 />
               </View>
+              {this.state.showWarning && !this.arrayCheck[0].isCorrect && (
+                <AppText
+                  style={{color: 'red'}}
+                  i18nKey={'warningEmptyEmail'}></AppText>
+              )}
             </View>
             <View>
               <Text style={styles.emailAndPassWord}>Password</Text>
@@ -132,6 +176,11 @@ class SignUpScreen extends React.Component {
                   value={this.state.password}
                 />
               </View>
+              {this.state.showWarning && !this.arrayCheck[1].isCorrect && (
+                <AppText
+                  style={{color: 'red'}}
+                  i18nKey={'warningEmptyPassword'}></AppText>
+              )}
             </View>
             <View>
               <Text style={styles.emailAndPassWord}>Confirm password</Text>
@@ -151,12 +200,17 @@ class SignUpScreen extends React.Component {
                   secureTextEntry={this.state.hidePassword}
                   onChangeText={value =>
                     this.setState({
-                      passwordConfirmed: value,
+                      confirmPassword: value,
                     })
                   }
-                  value={this.state.passwordConfirmed}
+                  value={this.state.confirmPassword}
                 />
               </View>
+              {this.state.confirmPassword !== this.state.password && (
+                <AppText
+                  style={{color: 'red'}}
+                  i18nKey={'warningEmptyConfirmPassword'}></AppText>
+              )}
             </View>
 
             <TouchableOpacity
@@ -190,7 +244,9 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {signUp})(SignUpScreen);
+export default connect(mapStateToProps, {signUp, realoadSignUpStatus})(
+  SignUpScreen,
+);
 
 const styles = StyleSheet.create({
   container: {

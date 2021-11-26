@@ -10,3 +10,10 @@ export const signUp = data => async dispatch => {
     data: res,
   });
 };
+
+export const realoadSignUpStatus = () => dispatch => {
+  dispatch({
+    type: ACTION_NAME.SIGNUP_ACTION.SIGNUP_ACTION_RELOAD,
+    data: {},
+  });
+};

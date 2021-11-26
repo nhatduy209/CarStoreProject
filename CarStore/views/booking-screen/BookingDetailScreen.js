@@ -91,18 +91,21 @@ class BookingDetailScreen extends React.Component {
             </Text>
           </View>
           <View style={styles.groupButton}>
-            <TouchableOpacity
-              style={styles.editButton}
-              onPress={() => this.handleConfirm(booking)}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: '#ffe',
-                  textAlign: 'center',
-                }}>
-                Confirm
-              </Text>
-            </TouchableOpacity>
+            {this.props.user.data.role === 'Admin' && (
+              <TouchableOpacity
+                style={styles.editButton}
+                onPress={() => this.handleConfirm(booking)}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: '#ffe',
+                    textAlign: 'center',
+                  }}>
+                  Confirm Booking
+                </Text>
+              </TouchableOpacity>
+            )}
+
             <TouchableOpacity
               style={styles.cancelButton}
               onPress={() => this.handleCancel(booking)}>
@@ -112,7 +115,7 @@ class BookingDetailScreen extends React.Component {
                   color: '#ffe',
                   textAlign: 'center',
                 }}>
-                Cancel
+                Cancel Booking
               </Text>
             </TouchableOpacity>
           </View>
@@ -122,7 +125,13 @@ class BookingDetailScreen extends React.Component {
   }
 }
 
-export default connect(null, {cancelBooking, confirmBooking})(
+const mapStateToProps = state => {
+  return {
+    user: state.UserReducer.user.data,
+  };
+};
+
+export default connect(mapStateToProps, {cancelBooking, confirmBooking})(
   BookingDetailScreen,
 );
 

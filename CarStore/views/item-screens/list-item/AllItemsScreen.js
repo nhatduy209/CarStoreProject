@@ -61,12 +61,12 @@ class AllItemsScreen extends React.Component {
     const isSearch = this.props.isSearch ?? false;
     if (this.canLoadMore && !isSearch) {
       return (
-        <View style={{height: 80}}>
+        <View style={{height: 160}}>
           <ActivityIndicator size="large" color="red" />
         </View>
       );
     } else {
-      return <View style={{height: 50}} />;
+      return <View style={{height: 200}} />;
     }
   };
 
@@ -149,7 +149,7 @@ class AllItemsScreen extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={{backgroundColor: '#fff'}}>
         {this.props.isSearch ? (
           <View />
         ) : (

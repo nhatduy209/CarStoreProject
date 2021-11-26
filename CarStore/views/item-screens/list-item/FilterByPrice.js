@@ -6,6 +6,7 @@ import {
   Platform,
   StyleSheet,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 import {connect} from 'react-redux';
 import CardItem from './CardItem';
@@ -93,6 +94,10 @@ class FilterByPrice extends React.Component {
       this.props.listFilterByPrice(true);
       this.props.getListCarByPrice(this.minPrice, this.maxPrice);
     } else {
+      ToastAndroid.show(
+        'The maximum price must be greater than the minimum price',
+        ToastAndroid.LONG,
+      );
       this.setState({filter: false});
       this.props.listFilterByPrice(false);
     }
@@ -117,8 +122,8 @@ class FilterByPrice extends React.Component {
         keyExtractor={item => item.name}
         showsHorizontalScrollIndicator={false}
         ItemSeparatorComponent={this.separateItem}
-        ListFooterComponent={<View style={{height: 70}} />}
-        style={{paddingTop: 10}}
+        ListFooterComponent={<View style={{height: 240}} />}
+        style={{paddingTop: 10, marginBottom: 60}}
       />
     ) : (
       <View />
@@ -131,6 +136,7 @@ class FilterByPrice extends React.Component {
         style={{
           top: 30,
           marginLeft: 16,
+          backgroundColor: '#fff',
         }}>
         {this.renderHeaderImplement()}
         {this.renderList()}

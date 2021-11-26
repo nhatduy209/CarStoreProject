@@ -47,7 +47,7 @@ class RenderCarCategory extends React.Component {
   }
   separateItem = () => <View style={{width: 10}} />;
 
-  renderFooter = () => <View style={{height: 70}} />;
+  renderFooter = () => <View style={{height: 80}} />;
 
   renderHeader = () => {
     return this.props.isManagementScreen ? this.showAddContainer() : <View />;

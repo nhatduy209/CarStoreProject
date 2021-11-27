@@ -142,6 +142,7 @@ class AllItemsScreen extends React.Component {
       <View />
     ) : (
       <FilterByPrice
+        navigation={this.props.navigation}
         listFilterByPrice={value => this.setState({filterByPrice: value})}
       />
     );

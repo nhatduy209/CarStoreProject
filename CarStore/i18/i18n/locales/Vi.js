@@ -21,4 +21,6 @@ export default {
   warningEmptyConfirmPassword: 'Mật khẩu xác nhận chưa giống',
   Language: 'English',
   ChangeLanguage: 'Thay đổi ngôn ngữ :',
+  NewCar: 'Xe mới',
+  TopChoice: 'Lựa chọn hàng đầu',
 };

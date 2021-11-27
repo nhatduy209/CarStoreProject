@@ -21,4 +21,6 @@ export default {
   warningEmptyConfirmPassword: 'Your confirm password and password not match',
   Language: 'VietNamese',
   ChangeLanguage: 'Change language to :',
+  NewCar: 'New Car',
+  TopChoice: 'Top Choice',
 };

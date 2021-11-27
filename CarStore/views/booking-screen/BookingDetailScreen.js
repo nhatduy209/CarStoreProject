@@ -91,7 +91,7 @@ class BookingDetailScreen extends React.Component {
             </Text>
           </View>
           <View style={styles.groupButton}>
-            {this.props.user.data.role === 'Admin' && (
+            {this.props.user.data.role === 'admin' && (
               <TouchableOpacity
                 style={styles.editButton}
                 onPress={() => this.handleConfirm(booking)}>

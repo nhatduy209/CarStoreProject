@@ -28,6 +28,12 @@ const UserReducer = (state = USER_STATE, action) => {
         user: action.data,
       };
 
+    case ACTION_NAME.RELOAD_LOGIN_STATUS:
+      return {
+        ...state,
+        user: {status: STATUS.NONE},
+      };
+
     case ACTION_NAME.SIGNUP_ACTION.SIGNUP_ACTION:
       return {
         ...state,

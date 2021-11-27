@@ -10,19 +10,16 @@ import StoreInfoReducer from './StoreInfoReducer';
 import persistReducer from 'redux-persist/es/persistReducer';
 import LanguageReducer from './ChangeLanguageReducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const authPersistConfig = {
-  key: 'auth',
-  storage: AsyncStorage,
-};
 
-const languagePersistConfig = {
-  key: 'language',
+const rootPersistConfig = {
+  key: 'root',
   storage: AsyncStorage,
+  whitelist: ['LanguageReducer', 'UserReducer'],
 };
 
 const rootReducer = combineReducers({
-  UserReducer: persistReducer(authPersistConfig, UserReducer),
-  LanguageReducer: persistReducer(languagePersistConfig, LanguageReducer),
+  UserReducer,
+  LanguageReducer,
   CarReducer,
   CartReducer,
   SearchReducer,
@@ -32,4 +29,4 @@ const rootReducer = combineReducers({
   StoreInfoReducer,
 });
 
-export default rootReducer;
+export default persistReducer(rootPersistConfig, rootReducer);

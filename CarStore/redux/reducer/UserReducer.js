@@ -9,11 +9,12 @@ const USER_STATE = {
 };
 
 const UserReducer = (state = USER_STATE, action) => {
+  console.log('ACTION --', action);
   switch (action.type) {
     case REHYDRATE:
       return {
         ...state,
-        user: action.payload?.user,
+        user: action.payload?.UserReducer.user,
       };
 
     case ACTION_NAME.LOGIN_ACTION.LOGIN_ACTION:

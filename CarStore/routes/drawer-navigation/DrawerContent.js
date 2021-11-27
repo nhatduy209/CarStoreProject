@@ -42,7 +42,7 @@ class DrawerContent extends React.Component {
     {
       iconName: 'book',
       textContent: 'Policy',
-      handlePress: () => this.props.navigation.navigate('PaymentScreen'),
+      handlePress: this.onHomePress,
     },
     {
       iconName: 'phone',

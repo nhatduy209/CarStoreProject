@@ -26,20 +26,6 @@ export default class HeaderComponent extends React.Component {
           borderBottomLeftRadius: 50,
           borderBottomRightRadius: 50,
         }}>
-        {this.props.showBackground ? (
-          <Image
-            source={require('../images/headerbg.png')}
-            style={{
-              resizeMode: 'stretch',
-              height: 100,
-              opacity: 0.8,
-              width: '100%',
-              position: 'absolute',
-            }}
-          />
-        ) : (
-          <View />
-        )}
         <View
           style={{
             flexDirection: 'row',

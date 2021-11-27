@@ -30,7 +30,9 @@ class BookingDetailScreen extends React.Component {
   handleConfirm = async params => {
     const data = {id_meeitng: params.id_meeting, email: params.clients_email};
     this.props.confirmBooking(data);
-    this.props.navigation.goBack();
+    this.props.navigation.push('PaymentScreen', {
+      bookingDetail: this.props.route.params.booking,
+    });
   };
   fortmatDate = date => {
     return new Date(date).toISOString().slice(0, 10);
@@ -91,7 +93,7 @@ class BookingDetailScreen extends React.Component {
             </Text>
           </View>
           <View style={styles.groupButton}>
-            {this.props.user.data.role === 'Admin' && (
+            {this.props.user.data.role === 'admin' && (
               <TouchableOpacity
                 style={styles.editButton}
                 onPress={() => this.handleConfirm(booking)}>

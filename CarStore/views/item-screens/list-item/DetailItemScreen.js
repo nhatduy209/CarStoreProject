@@ -56,6 +56,25 @@ class DetailItemScreen extends React.Component {
     };
     this.props.addToCart(data);
   }
+  renderRelatedItem = () => {
+    return this.state.relatedItems.length === 0 ? (
+      <View style={{height: 20}} />
+    ) : (
+      <View>
+        <View
+          style={{
+            paddingHorizontal: 20,
+            marginTop: 20,
+          }}>
+          <Text>Related items</Text>
+        </View>
+        <RelatedItemList
+          data={this.state.relatedItems}
+          navigation={this.props.navigation}
+        />
+      </View>
+    );
+  };
   render() {
     return (
       <View style={{height: '100%'}}>
@@ -91,19 +110,7 @@ class DetailItemScreen extends React.Component {
                 <Text>Star rating</Text>
               </View>
             </View>
-            <View>
-              <View
-                style={{
-                  paddingHorizontal: 20,
-                  marginTop: 20,
-                }}>
-                <Text>Related items</Text>
-              </View>
-              <RelatedItemList
-                data={this.state.relatedItems}
-                navigation={this.props.navigation}
-              />
-            </View>
+            {this.renderRelatedItem()}
             <View>
               <ColorPickerComponent data={this.props.route.params.data.color} />
             </View>

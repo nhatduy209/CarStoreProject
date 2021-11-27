@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ToastAndroid,
+  Image,
 } from 'react-native';
 import {connect} from 'react-redux';
 import CardItem from './CardItem';
@@ -112,19 +113,38 @@ class FilterByPrice extends React.Component {
       this.props.listFilterByPrice(false);
     }
   };
+  renderEmpty = () => {
+    return !this.props.carPrice ? (
+      <View>
+        <Text style={{position: 'absolute', top: '30%', alignSelf: 'center'}}>
+          No result
+        </Text>
+        <Image
+          source={require('../../../images/car.png')}
+          style={{resizeMode: 'center', width: '100%'}}
+        />
+      </View>
+    ) : (
+      <View />
+    );
+  };
   renderList = () => {
     return this.state.filter ? (
-      <FlatList
-        data={this.props.carPrice}
-        renderItem={item =>
-          this.renderItem({...item, navigation: this.props.navigation})
-        }
-        keyExtractor={item => item.name}
-        showsHorizontalScrollIndicator={false}
-        ItemSeparatorComponent={this.separateItem}
-        ListFooterComponent={<View style={{height: 240}} />}
-        style={{paddingTop: 10, marginBottom: 60}}
-      />
+      <View>
+        {this.renderEmpty()}
+        <FlatList
+          data={this.props.carPrice}
+          renderItem={item =>
+            this.renderItem({...item, navigation: this.props.navigation})
+          }
+          ListEmptyComponent={this.renderEmpty}
+          keyExtractor={item => item.name}
+          showsHorizontalScrollIndicator={false}
+          ItemSeparatorComponent={this.separateItem}
+          ListFooterComponent={<View style={{height: 240}} />}
+          style={{paddingTop: 10, marginBottom: 60}}
+        />
+      </View>
     ) : (
       <View />
     );

@@ -4,28 +4,21 @@ import HeaderComponent from '../headerComponent';
 import {FlatList} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import {getListCar} from '../../redux/action/get-list-car/GetListCar';
+import {getHistoryItem} from '../../redux/action/history-item/HistoryItemAction';
 import PurchaseItemComponent from './PurchaseItemComponent';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 const deliveryStatus = [
   {
     value: 0,
-    label: 'confirming',
+    label: 'Booking',
   },
   {
     value: 1,
-    label: 'confirmed',
+    label: 'Confirmed',
   },
   {
     value: 2,
-    label: 'delivering',
-  },
-  {
-    value: 3,
-    label: 'deliveried',
-  },
-  {
-    value: 4,
-    label: 'not confirmed',
+    label: 'Payment',
   },
 ];
 class PurchaseHistoryScreen extends React.Component {
@@ -34,17 +27,23 @@ class PurchaseHistoryScreen extends React.Component {
     this.state = {
       currentTab: 0,
     };
+    this.car = [];
   }
   componentDidMount() {
-    this.props.getListCar(0, 5);
+    this.props.getHistoryItem(this.props.user.data?.email);
   }
+
   renderItem = ({item, navigation}) => {
     return <PurchaseItemComponent item={item} navigation={navigation} />;
   };
   renderHeaderItem = ({item}) => {
     return (
       <TouchableOpacity
-        style={item.value === this.state.currentTab ? styles.selectedTab : ''}
+        style={
+          item.value === this.state.currentTab
+            ? styles.selectedTab
+            : styles.unSelectedTab
+        }
         onPress={() => this.setState({currentTab: item.value})}>
         <Text
           style={[
@@ -65,9 +64,27 @@ class PurchaseHistoryScreen extends React.Component {
     return <View style={{height: 10}} />;
   };
   separateHeaderItem = () => {
-    return <View style={{width: 20}} />;
+    return <View style={{width: 50}} />;
   };
+
+  shouldRenderCar = () => {
+    switch (this.state.currentTab) {
+      case 0:
+        this.car = this.props.historyItem.bookingItem;
+        break;
+      case 1:
+        this.car = this.props.historyItem.confirmedItem;
+        break;
+      case 2:
+        this.car = this.props.historyItem.historyItem;
+        break;
+      default:
+        break;
+    }
+  };
+
   render() {
+    this.shouldRenderCar();
     return (
       <View style={{backgroundColor: '#fff'}}>
         <HeaderComponent navigation={this.props.navigation} />
@@ -98,7 +115,7 @@ class PurchaseHistoryScreen extends React.Component {
           ItemSeparatorComponent={this.separateHeaderItem}
         />
         <FlatList
-          data={this.props.car}
+          data={this.car}
           renderItem={item =>
             this.renderItem({...item, navigation: this.props.navigation})
           }
@@ -114,11 +131,14 @@ class PurchaseHistoryScreen extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    car: state.CarReducer.car,
+    user: state.UserReducer.user.data,
+    historyItem: state.HistoryItemReducer.historyItem,
   };
 };
 
-export default connect(mapStateToProps, {getListCar})(PurchaseHistoryScreen);
+export default connect(mapStateToProps, {getListCar, getHistoryItem})(
+  PurchaseHistoryScreen,
+);
 const styles = StyleSheet.create({
   purchaseHistoryContainer: {
     height: '100%',
@@ -127,6 +147,12 @@ const styles = StyleSheet.create({
   selectedTab: {
     borderColor: 'rgb(32,45,70)',
     borderBottomWidth: 2,
+    width: 100,
+  },
+  unSelectedTab: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 100,
   },
   shadowBox: {
     shadowColor: '#333',

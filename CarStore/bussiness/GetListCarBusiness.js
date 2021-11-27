@@ -77,4 +77,17 @@ export default class GetListCarBusiness {
 
     return result;
   };
+
+  getListHistoryItemsBusiness = async email => {
+    const params = {
+      email,
+    };
+    var getService = new GetService();
+    var result = await getService.getApiWithParams(
+      APP_URL.GET_HISTORY_ITEM,
+      params,
+    );
+
+    return result;
+  };
 }

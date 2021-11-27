@@ -45,7 +45,7 @@ export default class PurchaseItemComponent extends React.Component {
               justifyContent: 'space-between',
               width: '70%',
             }}>
-            <Text style={{fontSize: 20}}>{this.props.item?.name}</Text>
+            <Text style={{fontSize: 20}}>{this.props.item?.car_name}</Text>
             <View style={{flexDirection: 'row'}}>
               <View
                 style={{
@@ -56,7 +56,7 @@ export default class PurchaseItemComponent extends React.Component {
                   marginRight: 12,
                 }}
               />
-              <Text>màu</Text>
+              <Text>{this.props.item?.color}</Text>
             </View>
             <Text
               style={{

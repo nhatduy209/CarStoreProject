@@ -30,4 +30,5 @@ export const APP_URL = {
   REMOVE_ITEM: URL_HEROKU + 'car/remove',
   LOGOUT: URL_HEROKU + 'account/logout',
   GET_MEETINGS: URL_HEROKU + 'meetings/getmeetings',
+  GET_HISTORY_ITEM: URL_HEROKU + 'account/gethistoryitems',
 };

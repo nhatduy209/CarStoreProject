@@ -9,7 +9,6 @@ const USER_STATE = {
 };
 
 const UserReducer = (state = USER_STATE, action) => {
-  console.log('ACTION --', action);
   switch (action.type) {
     case REHYDRATE:
       return {

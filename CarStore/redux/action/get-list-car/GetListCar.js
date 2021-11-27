@@ -21,6 +21,44 @@ export const getListCar =
     }
   };
 
+export const getListNewCar =
+  (start = 0, end = 5) =>
+  async dispatch => {
+    var getListCarBusiness = new GetListCarBusiness();
+    var res = await getListCarBusiness.getNewCarBusiness(start, end);
+
+    if (res.status === STATUS.SUCCESS) {
+      dispatch({
+        type: ACTION_NAME.GET_LIST_NEWCAR.GET_LIST_NEWCAR_SUCCESS,
+        data: res,
+      });
+    } else {
+      dispatch({
+        type: ACTION_NAME.GET_LIST_NEWCAR.GET_LIST_NEWCAR_FAIL,
+        data: res,
+      });
+    }
+  };
+
+export const getListTopChoice =
+  (start = 0, end = 5) =>
+  async dispatch => {
+    var getListCarBusiness = new GetListCarBusiness();
+    var res = await getListCarBusiness.getTopChoiceCarBusiness(start, end);
+
+    if (res.status === STATUS.SUCCESS) {
+      dispatch({
+        type: ACTION_NAME.GET_LIST_TOPCHOICE.GET_LIST_TOPCHOICE_SUCCESS,
+        data: res,
+      });
+    } else {
+      dispatch({
+        type: ACTION_NAME.GET_LIST_TOPCHOICE.GET_LIST_TOPCHOICE_FAIL,
+        data: res,
+      });
+    }
+  };
+
 export const getListCarByCategory =
   (start = 0, end = 5, category) =>
   async dispatch => {

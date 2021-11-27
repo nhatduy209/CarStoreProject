@@ -17,6 +17,36 @@ export default class GetListCarBusiness {
     return result;
   };
 
+  getNewCarBusiness = async (start, end) => {
+    const params = {
+      start,
+      end,
+    };
+    var getService = new GetService();
+
+    var result = await getService.getApiWithParams(
+      APP_URL.GET_LIST_NEW_CAR,
+      params,
+    );
+
+    return result;
+  };
+
+  getTopChoiceCarBusiness = async (start, end) => {
+    const params = {
+      start,
+      end,
+    };
+    var getService = new GetService();
+
+    var result = await getService.getApiWithParams(
+      APP_URL.GET_LIST_TOP_CHOICE,
+      params,
+    );
+
+    return result;
+  };
+
   getListCarByPriceBusiness = async (minPrices, maxPrices) => {
     var postService = new PostService();
     const params = {

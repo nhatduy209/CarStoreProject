@@ -66,7 +66,7 @@ class AllItemsScreen extends React.Component {
         </View>
       );
     } else {
-      return <View style={{height: 200}} />;
+      return <View style={{height: 150}} />;
     }
   };
 
@@ -150,7 +150,11 @@ class AllItemsScreen extends React.Component {
 
   render() {
     return (
-      <View style={{backgroundColor: '#fff'}}>
+      <View
+        style={{
+          backgroundColor: '#fff',
+          paddingBottom: this.props.isManagementScreen ? 0 : 120,
+        }}>
         {this.props.isSearch ? (
           <View />
         ) : (

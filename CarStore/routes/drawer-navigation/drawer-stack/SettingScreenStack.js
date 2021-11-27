@@ -2,6 +2,7 @@ import React from 'react';
 import {Image, View, TouchableOpacity} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import SettingScreen from '../../../views/setting-screen/SettingScreen';
+import PurchaseHistoryScreen from '../../../views/purchase-history-screen/PurchaseHistoryScreen';
 const Stack = createStackNavigator();
 
 const NavigationDrawerStructureLeft = props => {
@@ -36,6 +37,19 @@ export default class ManageItemScreenStack extends React.Component {
         <Stack.Screen
           name="SettingScreen"
           component={SettingScreen}
+          options={{
+            headerShown: false,
+            title: '',
+            headerLeft: () => (
+              <NavigationDrawerStructureLeft
+                navigationProps={this.props.navigation}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="PurchaseHistoryScreen"
+          component={PurchaseHistoryScreen}
           options={{
             headerShown: false,
             title: '',

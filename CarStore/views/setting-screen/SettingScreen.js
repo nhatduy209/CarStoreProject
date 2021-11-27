@@ -3,6 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import HeaderComponent from '../headerComponent';
 import SettingItemComponent from './SettingItemComponent';
 import AppText from '../../i18/AppText';
+import {ScrollView} from 'react-native-gesture-handler';
 export default class SettingScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -11,6 +12,13 @@ export default class SettingScreen extends React.Component {
     return <SettingItemComponent key={index} item={item} />;
   };
   listItem = [
+    {
+      iconName: 'clipboard',
+      name: 'Purchase History',
+      isAccount: false,
+      color: '#00b159',
+      clickEvent: () => this.props.navigation.navigate('PurchaseHistoryScreen'),
+    },
     {
       iconName: 'globe',
       name: 'Language',
@@ -24,17 +32,19 @@ export default class SettingScreen extends React.Component {
       statusItem: 'turn off',
       isAccount: false,
       color: '#189ad3',
+      clickEvent: () => console.log('Notification'),
     },
     {
       iconName: 'comment',
       name: 'Help',
       isAccount: false,
       color: '#005b96',
+      clickEvent: () => console.log('help'),
     },
   ];
   render() {
     return (
-      <View>
+      <ScrollView>
         <HeaderComponent navigation={this.props.navigation} />
         <View style={styles.settingContainer}>
           <Text style={{fontSize: 40, paddingBottom: 40, fontWeight: '700'}}>
@@ -54,7 +64,7 @@ export default class SettingScreen extends React.Component {
             )}
           </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -62,7 +72,7 @@ const styles = StyleSheet.create({
   settingContainer: {
     height: '100%',
     paddingHorizontal: 30,
-    marginTop: 120,
+    marginTop: 80,
   },
   groupItemTitle: {
     fontSize: 24,

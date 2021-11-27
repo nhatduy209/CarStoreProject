@@ -51,7 +51,19 @@ class SettingItemComponent extends React.Component {
   );
 
   handleItem = () => {
-    this.setState({isNotShow: false});
+    this.props.item?.name === 'Language'
+      ? this.setState({isNotShow: false})
+      : this.props.item?.clickEvent();
+  };
+
+  renderCollase = () => {
+    if (this.props.item?.name === 'Language') {
+      return (
+        <Collapsible collapsed={this.state.isNotShow}>
+          {this.changeLanguageOption()}
+        </Collapsible>
+      );
+    }
   };
 
   render() {
@@ -91,9 +103,7 @@ class SettingItemComponent extends React.Component {
             <Icon name="angle-right" size={20} />
           </TouchableOpacity>
         </View>
-        <Collapsible collapsed={this.state.isNotShow}>
-          {this.changeLanguageOption()}
-        </Collapsible>
+        {this.renderCollase()}
       </View>
     );
   }

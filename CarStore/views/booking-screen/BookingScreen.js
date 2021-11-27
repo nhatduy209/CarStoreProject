@@ -49,7 +49,7 @@ class BookingScreen extends React.Component {
   onChangeBirthday = (event, selectedDate) => {
     const date = new Date();
     const currentDate = selectedDate || date;
-    this.setState({date: currentDate, isCalendarVisibleBirthday: false});
+    this.setState({birthday: currentDate, isCalendarVisibleBirthday: false});
   };
 
   showDatepicker = () => {

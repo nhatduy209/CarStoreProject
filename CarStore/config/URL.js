@@ -12,6 +12,8 @@ export const APP_URL = {
   CANCEL_BOOKING: URL_HEROKU + 'meetings/cancel',
   CONFIRM_BOOKING: URL_HEROKU + 'meetings/confirm',
   GET_LIST_CAR: URL_HEROKU + 'car',
+  GET_LIST_NEW_CAR: URL_HEROKU + 'car/newcar',
+  GET_LIST_TOP_CHOICE: URL_HEROKU + 'car/topchoice',
   GET_LIST_CAR_BY_CATEGORY: URL_HEROKU + 'car/filtercategory',
   GET_LIST_CAR_BY_PRICE: URL_HEROKU + 'car/filterprice',
   GET_LIST_CATEGORY: URL_HEROKU + 'category/getlist',
@@ -27,4 +29,5 @@ export const APP_URL = {
   UPDATE_QUANTITY: URL_HEROKU + 'car/updatequantity',
   REMOVE_ITEM: URL_HEROKU + 'car/remove',
   LOGOUT: URL_HEROKU + 'account/logout',
+  GET_MEETINGS: URL_HEROKU + 'meetings/getmeetings',
 };

@@ -19,4 +19,6 @@ export default {
   warningEmptyPhone: 'Bạn nhập thiếu số điện thoại',
   warningEmptyPassword: 'Bạn nhập thiếu mật khẩu',
   warningEmptyConfirmPassword: 'Mật khẩu xác nhận chưa giống',
+  Language: 'English',
+  ChangeLanguage: 'Thay đổi ngôn ngữ :',
 };

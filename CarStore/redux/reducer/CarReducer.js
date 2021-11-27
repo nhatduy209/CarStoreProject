@@ -5,6 +5,8 @@ const CAR_STATE = {
   car: [],
   car_category: [],
   status_loading: STATUS.NONE,
+  topchoice: [],
+  newcar: [],
 };
 
 const CarReducer = (state = CAR_STATE, action) => {
@@ -19,7 +21,37 @@ const CarReducer = (state = CAR_STATE, action) => {
         ...state,
         car: [...state.car, ...action.data.data],
       };
+
+    case ACTION_NAME.GET_LIST_NEWCAR.GET_LIST_NEWCAR_SUCCESS:
+      console.log('NEW CAR --', action.data.data.data);
+      if (action.data.data.data[0]?.name === state.newcar[0]?.name) {
+        return {
+          ...state,
+        };
+      }
+      return {
+        ...state,
+        newcar: [...state.newcar, ...action.data.data.data],
+      };
+
+    case ACTION_NAME.GET_LIST_TOPCHOICE.GET_LIST_TOPCHOICE_SUCCESS:
+      if (action.data.data.data[0]?.name === state.topchoice[0]?.name) {
+        return {
+          ...state,
+        };
+      }
+      return {
+        ...state,
+        topchoice: [...state.topchoice, ...action.data.data.data],
+      };
+
     case ACTION_NAME.GET_LIST_CAR.GET_LIST_CAR_FAIL:
+      return {
+        ...state,
+        car: action.data,
+      };
+
+    case ACTION_NAME.GET_LIST_NEWCAR.GET_LIST_NEWCAR_FAIL:
       return {
         ...state,
         car: action.data,

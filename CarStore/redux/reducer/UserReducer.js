@@ -13,7 +13,7 @@ const UserReducer = (state = USER_STATE, action) => {
     case REHYDRATE:
       return {
         ...state,
-        user: action.payload?.user,
+        user: action.payload?.UserReducer.user,
       };
 
     case ACTION_NAME.LOGIN_ACTION.LOGIN_ACTION:

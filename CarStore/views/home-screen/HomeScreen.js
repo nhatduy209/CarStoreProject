@@ -10,7 +10,11 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {getListCar} from '../../redux/action/get-list-car/GetListCar';
+import {
+  getListCar,
+  getListNewCar,
+  getListTopChoice,
+} from '../../redux/action/get-list-car/GetListCar';
 import {connect} from 'react-redux';
 import RevealCycle from './RevealCycle';
 import RenderCarOnSale from './RenderCarOnSale';
@@ -32,6 +36,8 @@ class HomeScreen extends React.Component {
 
   componentDidMount() {
     this.props.getListCar(0, 5);
+    this.props.getListNewCar(0, 5);
+    this.props.getListTopChoice(0, 5);
     this.props.getListCategory();
   }
 
@@ -189,7 +195,7 @@ class HomeScreen extends React.Component {
             <View style={{padding: 10}}>
               <FlatList
                 horizontal
-                data={this.props.car}
+                data={this.props.newcar}
                 renderItem={this.renderCarOnSale}
                 keyExtractor={item => item.name}
                 showsHorizontalScrollIndicator={false}
@@ -209,7 +215,7 @@ class HomeScreen extends React.Component {
             <View style={{padding: 10}}>
               <FlatList
                 horizontal
-                data={this.props.car}
+                data={this.props.topchoice}
                 renderItem={this.renderCarOnSale}
                 keyExtractor={item => item.name}
                 showsHorizontalScrollIndicator={false}
@@ -254,6 +260,8 @@ class HomeScreen extends React.Component {
 const mapStateToProps = state => {
   return {
     car: state.CarReducer.car,
+    newcar: state.CarReducer.newcar,
+    topchoice: state.CarReducer.topchoice,
     search_car: state.SearchReducer.car,
     category: state.CategoryReducer.category,
   };
@@ -263,6 +271,8 @@ export default connect(mapStateToProps, {
   getListCar,
   searchCar,
   getListCategory,
+  getListNewCar,
+  getListTopChoice,
 })(HomeScreen);
 
 const styles = new StyleSheet.create({

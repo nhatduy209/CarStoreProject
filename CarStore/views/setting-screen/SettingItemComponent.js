@@ -3,9 +3,9 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Collapsible from 'react-native-collapsible';
-
+import AppText from '../../i18/AppText';
 import {connect} from 'react-redux';
-
+import {changeLanguage} from '../../redux/action/change-language/ChangeLanguageAction';
 const avatarUrlDefault =
   'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg';
 class SettingItemComponent extends React.Component {
@@ -39,14 +39,17 @@ class SettingItemComponent extends React.Component {
   };
   changeLanguageOption = () => (
     <TouchableOpacity
-      onPress={() => this.setState({isNotShow: true})}
+      onPress={() => {
+        this.setState({isNotShow: true});
+        this.props.changeLanguage(this.props.language === 'en' ? 'vi' : 'en');
+      }}
       style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
         margin: 10,
       }}>
-      <Text style={{fontSize: 18}}>Change Language to </Text>
-      <Text style={{fontSize: 18}}>Vietnamese</Text>
+      <AppText style={{fontSize: 18}} i18nKey={'ChangeLanguage'} />
+      <AppText style={{fontSize: 18}} i18nKey={'Language'} />
     </TouchableOpacity>
   );
 
@@ -111,9 +114,10 @@ class SettingItemComponent extends React.Component {
 function mapStateToProps(state) {
   return {
     user: state.UserReducer.user.data,
+    language: state.LanguageReducer.language,
   };
 }
-export default connect(mapStateToProps, {})(SettingItemComponent);
+export default connect(mapStateToProps, {changeLanguage})(SettingItemComponent);
 const styles = StyleSheet.create({
   settingItemContainer: {
     marginVertical: 10,

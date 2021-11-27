@@ -19,4 +19,6 @@ export default {
   warningEmptyPhone: 'You are missing phone number',
   warningEmptyPassword: 'You are missing password',
   warningEmptyConfirmPassword: 'Your confirm password and password not match',
+  Language: 'VietNamese',
+  ChangeLanguage: 'Change language to :',
 };

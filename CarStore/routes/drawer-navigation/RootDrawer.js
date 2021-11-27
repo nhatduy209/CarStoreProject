@@ -6,6 +6,7 @@ import ManageItemScreenStack from './drawer-stack/ManageITemScreenStack';
 import SettingScreenStack from './drawer-stack/SettingScreenStack';
 import StoreScreenStack from './drawer-stack/StoreScreenStack';
 import StatisticScreen from '../../views/statistic-screen/StatictisScreen';
+import PaymentScreen from '../../views/payment-screen/PaymentScreen';
 const Drawer = createDrawerNavigator();
 
 export default class RootDrawer extends React.Component {
@@ -54,6 +55,13 @@ export default class RootDrawer extends React.Component {
           }}
           name="StatisticScreen"
           component={StatisticScreen}
+        />
+        <Drawer.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="PaymentScreen"
+          component={PaymentScreen}
         />
       </Drawer.Navigator>
     );

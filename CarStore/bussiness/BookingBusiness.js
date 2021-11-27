@@ -1,5 +1,6 @@
 import {APP_URL} from '../config/URL';
 import PostService from '../service/PostService';
+import GetService from '../service/GetService';
 
 export default class BookingBusiness {
   booking = async data => {
@@ -41,6 +42,15 @@ export default class BookingBusiness {
     };
     const result = await postAPI.PostAPI(APP_URL.CONFIRM_BOOKING, params);
     console.log('result', result);
+    return result;
+  };
+
+  getMeetings = async email => {
+    var getAPI = new GetService();
+    const params = {
+      email,
+    };
+    const result = await getAPI.getApiWithParams(APP_URL.GET_MEETINGS, params);
     return result;
   };
 }

@@ -10,6 +10,8 @@ export default class ChangeInfoBusiness {
       phone: data.phoneNum,
       address: data.address,
       password: data.password,
+      gender: data.gender,
+      birthday: data.date,
     };
     var result = await postService.PostAPI(APP_URL.CHANGE_INFO, params);
 

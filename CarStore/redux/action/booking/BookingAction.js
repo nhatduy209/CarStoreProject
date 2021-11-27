@@ -56,3 +56,19 @@ export const confirmBooking = data => async dispatch => {
     });
   }
 };
+
+export const getMeetings = email => async dispatch => {
+  var bookingBusiness = new BookingBusiness();
+  const result = await bookingBusiness.getMeetings(email);
+  if (result.status === STATUS.SUCCESS) {
+    dispatch({
+      type: ACTION_NAME.BOOKING_ACTION.GET_LIST_MEETINGS_SUCCESS,
+      data: result.data,
+    });
+  } else {
+    dispatch({
+      type: ACTION_NAME.BOOKING_ACTION.GET_LIST_MEETINGS_FAIL,
+      data: result.data,
+    });
+  }
+};

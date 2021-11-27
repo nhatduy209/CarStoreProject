@@ -5,6 +5,7 @@ const BOOKING_STATE = {
   STATUS_BOOKING: STATUS.FAIL,
   CANCEL_BOOKING: STATUS.FAIL,
   showModal: false,
+  meetings: {},
 };
 
 const BookingReducer = (state = BOOKING_STATE, action) => {
@@ -38,6 +39,18 @@ const BookingReducer = (state = BOOKING_STATE, action) => {
       return {
         ...state,
         CANCEL_BOOKING: STATUS.FAIL,
+      };
+
+    case ACTION_NAME.BOOKING_ACTION.GET_LIST_MEETINGS_SUCCESS:
+      console.log('DATA MEETINGS ---', action.data);
+      return {
+        ...state,
+        meetings: action.data.data,
+      };
+    case ACTION_NAME.BOOKING_ACTION.GET_LIST_MEETINGS_FAIL:
+      return {
+        ...state,
+        meetings: [],
       };
     default:
       return state;

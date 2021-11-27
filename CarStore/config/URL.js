@@ -27,4 +27,5 @@ export const APP_URL = {
   UPDATE_QUANTITY: URL_HEROKU + 'car/updatequantity',
   REMOVE_ITEM: URL_HEROKU + 'car/remove',
   LOGOUT: URL_HEROKU + 'account/logout',
+  GET_MEETINGS: URL_HEROKU + 'meetings/getmeetings',
 };

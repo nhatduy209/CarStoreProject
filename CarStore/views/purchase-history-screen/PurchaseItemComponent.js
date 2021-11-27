@@ -37,7 +37,7 @@ export default class PurchaseItemComponent extends React.Component {
               resizeMode: 'center',
               marginHorizontal: 8,
             }}
-            source={{uri: this.props.item?.img}}
+            source={{uri: this.props.item?.image}}
           />
           <View
             style={{

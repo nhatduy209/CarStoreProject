@@ -32,7 +32,7 @@ class BookingScreen extends React.Component {
       phoneNum: this.props.user.data.phoneNum,
       email: this.props.user.data.email,
       personalID: '',
-      selectedCar: 'choose your car',
+      selectedCar: this.props.cart.data[0],
       fullName: '',
     };
   }
@@ -71,8 +71,10 @@ class BookingScreen extends React.Component {
       date_meeting: this.state.date,
       car_booking: {
         car_name: this.state.selectedCar.car_name,
-        image: this.state.selectedCar.img,
+        prices: this.state.selectedCar.price,
         color: this.state.selectedCar.color,
+        category: this.state.selectedCar.category,
+        image: this.state.selectedCar.car_img,
       },
     };
     this.props.createBooking({data});
@@ -137,9 +139,10 @@ class BookingScreen extends React.Component {
             <Picker
               mode="dropdown"
               selectedValue={this.state.selectedCar}
-              onValueChange={(itemValue, itemIndex) =>
-                this.setState({selectedCar: itemValue})
-              }>
+              onValueChange={(itemValue, itemIndex) => {
+                console.log('ITEM VALUE __', itemValue);
+                this.setState({selectedCar: itemValue});
+              }}>
               {this.props.cart.data.map((item, index) => {
                 const carSelected = item.car_name + ' (' + item.color + ')';
                 return <Picker.Item label={carSelected} value={item} />;

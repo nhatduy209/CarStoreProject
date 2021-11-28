@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import HeaderComponent from '../headerComponent';
 import {FlatList} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
@@ -114,17 +114,19 @@ class PurchaseHistoryScreen extends React.Component {
           }}
           ItemSeparatorComponent={this.separateHeaderItem}
         />
-        <FlatList
-          data={this.car}
-          renderItem={item =>
-            this.renderItem({...item, navigation: this.props.navigation})
-          }
-          keyExtractor={item => item.name}
-          showsHorizontalScrollIndicator={false}
-          ItemSeparatorComponent={this.separateItem}
-          style={styles.purchaseHistoryContainer}
-          ListFooterComponent={this.renderFooter}
-        />
+        <ScrollView>
+          <FlatList
+            data={this.car}
+            renderItem={item =>
+              this.renderItem({...item, navigation: this.props.navigation})
+            }
+            keyExtractor={(item, index) => index.toString()}
+            showsHorizontalScrollIndicator={false}
+            ItemSeparatorComponent={this.separateItem}
+            style={styles.purchaseHistoryContainer}
+            ListFooterComponent={this.renderFooter}
+          />
+        </ScrollView>
       </View>
     );
   }

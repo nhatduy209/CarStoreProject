@@ -9,6 +9,7 @@ import BookingReducer from './BookingReducer';
 import StoreInfoReducer from './StoreInfoReducer';
 import persistReducer from 'redux-persist/es/persistReducer';
 import LanguageReducer from './ChangeLanguageReducer';
+import HistoryItemReducer from './HistoryItemReducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const rootPersistConfig = {
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   CategoryReducer,
   BookingReducer,
   ListColorReducer,
+  HistoryItemReducer,
   StoreInfoReducer,
 });
 

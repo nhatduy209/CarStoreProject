@@ -31,3 +31,10 @@ export const logout = (email, tokenDevice) => async dispatch => {
     data,
   });
 };
+
+export const reload = () => async dispatch => {
+  dispatch({
+    type: ACTION_NAME.RELOAD_LOGIN_STATUS,
+    data: {},
+  });
+};

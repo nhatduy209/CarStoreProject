@@ -23,7 +23,6 @@ const CarReducer = (state = CAR_STATE, action) => {
       };
 
     case ACTION_NAME.GET_LIST_NEWCAR.GET_LIST_NEWCAR_SUCCESS:
-      console.log('NEW CAR --', action.data.data.data);
       if (action.data.data.data[0]?.name === state.newcar[0]?.name) {
         return {
           ...state,

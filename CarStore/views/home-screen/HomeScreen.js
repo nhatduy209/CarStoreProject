@@ -188,7 +188,10 @@ class HomeScreen extends React.Component {
             {/* flatlist new car */}
             <View style={{flexDirection: 'row', paddingTop: 10}}>
               <View style={{flex: 1}}>
-                <Text style={{fontSize: 18, fontWeight: '900'}}>New Car</Text>
+                <AppText
+                  style={{fontSize: 18, fontWeight: '900'}}
+                  i18nKey={'NewCar'}
+                />
               </View>
             </View>
 
@@ -206,9 +209,10 @@ class HomeScreen extends React.Component {
             {/* flatlist top choice */}
             <View style={{flexDirection: 'row', paddingTop: 10}}>
               <View style={{flex: 1}}>
-                <Text style={{fontSize: 18, fontWeight: '900'}}>
-                  Top choice
-                </Text>
+                <AppText
+                  style={{fontSize: 18, fontWeight: '900'}}
+                  i18nKey={'TopChoice'}
+                />
               </View>
             </View>
 

@@ -16,6 +16,7 @@ import {connect} from 'react-redux';
 import {
   login,
   loginWithEmail,
+  reload,
 } from '../../redux/action/login-action/LoginAction';
 import {
   GoogleSignin,
@@ -97,6 +98,7 @@ class LoginScreen extends React.Component {
   };
 
   componentDidUpdate() {
+    console.log('HELLO ---', this.props.user?.status);
     if (this.props.user?.status === STATUS.SUCCESS) {
       if (this.state.loading) {
         this.setState({loading: false});
@@ -107,10 +109,10 @@ class LoginScreen extends React.Component {
         'Invalid account, check and try again',
         ToastAndroid.LONG,
       );
+      this.props.reload();
       if (this.state.loading) {
         this.setState({loading: false});
       }
-      this.props.user.status = undefined;
     }
   }
 
@@ -338,7 +340,9 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {login, loginWithEmail})(LoginScreen);
+export default connect(mapStateToProps, {login, loginWithEmail, reload})(
+  LoginScreen,
+);
 
 const styles = StyleSheet.create({
   container: {

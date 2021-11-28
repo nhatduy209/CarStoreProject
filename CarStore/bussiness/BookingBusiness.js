@@ -17,6 +17,8 @@ export default class BookingBusiness {
         car_name: data.car_booking.car_name,
         image: data.car_booking.image,
         color: data.car_booking.color,
+        prices: data.car_booking.prices,
+        category: data.car_booking.category,
       },
     };
     const result = await postAPI.PostAPI(APP_URL.BOOKING, params);

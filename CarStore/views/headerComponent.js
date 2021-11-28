@@ -49,7 +49,7 @@ export default class HeaderComponent extends React.Component {
             position: 'relative',
             top: 16,
           }}>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
               <Icon
                 name="arrow-left"
@@ -59,7 +59,7 @@ export default class HeaderComponent extends React.Component {
             </TouchableOpacity>
             <Text
               style={{
-                fontSize: 20,
+                fontSize: 25,
                 width: '90%',
                 fontWeight: 'bold',
                 color: '#000',

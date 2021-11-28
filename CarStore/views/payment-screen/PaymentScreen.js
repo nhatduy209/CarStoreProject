@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image, Text} from 'react-native';
 import HeaderComponent from '../headerComponent';
 import {ScrollView} from 'react-native-gesture-handler';
 import AppText from '../../i18/AppText';
@@ -52,23 +52,14 @@ class PaymentScreen extends React.Component {
   render() {
     const {bookingDetail} = this.props.route.params;
     return (
-      <View style={{backgroundColor: '#f2f2f2'}}>
+      <View style={{backgroundColor: '#fff'}}>
         <HeaderComponent
           navigation={this.props.navigation}
           screenTitle={'Payment'}
         />
         <ScrollView style={{height: '100%'}}>
           <Image
-            style={{
-              width: '100%',
-              height: 420,
-              borderRadius: 210,
-              marginRight: -100,
-              marginTop: -100,
-              alignSelf: 'flex-end',
-              borderColor: '#ffc100',
-              borderWidth: 16,
-            }}
+            style={styles.carImage}
             source={{
               uri: bookingDetail.car_booking?.image ?? defaultUrl,
             }}
@@ -76,44 +67,28 @@ class PaymentScreen extends React.Component {
           {/* car info */}
           <View
             style={{position: 'absolute', top: 100, left: 20, width: '50%'}}>
-            <AppText
-              style={[styles.carInfo, styles.shadowBox]}
-              //   i18nKey={'Name'}
-            >
+            <Text style={[styles.carInfo, styles.shadowBox]}>
               {bookingDetail.car_booking?.car_name ?? 'null nè'}
-            </AppText>
-            <AppText
-              style={[styles.carInfo, styles.shadowBox, {marginTop: 12}]}
-              //   i18nKey={'Category'}
-            >
+            </Text>
+            <Text style={[styles.carInfo, styles.shadowBox, {marginTop: 12}]}>
               {bookingDetail.car_booking?.category ?? 'null nè'}
-            </AppText>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                width: '80%',
-                alignItems: 'center',
-                marginVertical: 8,
-                borderRadius: 30,
-              }}>
+            </Text>
+            <View style={styles.price_color}>
               <View
                 style={{
-                  backgroundColor: '#2dc937',
+                  backgroundColor: bookingDetail.car_booking?.color,
                   borderRadius: 25,
                   height: 40,
                   width: 40,
                 }}
               />
-              <AppText
-                style={[styles.carInfo, styles.shadowBox]}
-                //   i18nKey={'price: $120000'}
-              >
-                ${bookingDetail.car_booking?.price ?? 'null nè'}
-              </AppText>
+              <Text style={[styles.carInfo, styles.shadowBox]}>
+                ${bookingDetail.car_booking?.prices ?? 'null nè'}
+              </Text>
             </View>
           </View>
-          <View style={[styles.paymentContainer, {marginLeft: 20}]}>
+
+          <View style={[styles.paymentContainer]}>
             {/* user info */}
             <View
               style={[
@@ -121,76 +96,29 @@ class PaymentScreen extends React.Component {
                 styles.shadowBox,
                 {
                   backgroundColor: '#0f293c',
-                  flexDirection: 'row',
-                  alignItems: 'center',
                 },
               ]}>
               <Image
-                style={{
-                  height: 90,
-                  width: 90,
-                  borderRadius: 10,
-                  borderColor: '#aaa',
-                  borderWidth: 5,
-                  resizeMode: 'cover',
-                }}
+                style={styles.avatar}
                 source={{
-                  uri: 'https://media-cdn.laodong.vn/Storage/NewsPortal/2019/6/10/738354/595097.jpg',
+                  uri: bookingDetail.image ?? defaultUrl,
                 }}
               />
               <View style={{marginLeft: 12}}>
-                <AppText
-                  style={{marginLeft: 12, color: '#fff', fontSize: 20}}
-                  //   i18nKey={'price: $120000'}
-                >
+                <Text style={{marginLeft: 12, color: '#fff', fontSize: 20}}>
                   {bookingDetail.full_name}
-                </AppText>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    paddingHorizontal: 8,
-                    marginTop: 16,
-                  }}>
-                  <Icon
-                    name="envelope"
-                    size={20}
-                    color={'#fff'}
-                    style={{marginRight: 12}}
-                  />
-                  <AppText
-                    style={{
-                      color: '#fff',
-                      fontSize: 16,
-                    }}
-                    //   i18nKey={'price: $120000'}
-                  >
+                </Text>
+                <View style={styles.rowInfo}>
+                  <Icon name="envelope" style={styles.iconStyle} />
+                  <Text style={styles.infoText}>
                     {bookingDetail.clients_email}
-                  </AppText>
+                  </Text>
                 </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    paddingHorizontal: 8,
-                    marginTop: 16,
-                  }}>
-                  <Icon
-                    name="phone"
-                    size={20}
-                    color={'#fff'}
-                    style={{marginRight: 12}}
-                  />
-                  <AppText
-                    style={{
-                      color: '#fff',
-                      fontSize: 16,
-                      width: '85%',
-                    }}
-                    //   i18nKey={'price: $120000'}
-                  >
+                <View style={styles.rowInfo}>
+                  <Icon name="phone" style={styles.iconStyle} />
+                  <Text style={styles.infoText}>
                     {bookingDetail.phone_number}
-                  </AppText>
+                  </Text>
                 </View>
               </View>
             </View>
@@ -203,97 +131,37 @@ class PaymentScreen extends React.Component {
                 {
                   backgroundColor: '#f56701',
                   marginTop: 30,
-                  flexDirection: 'row',
-                  alignItems: 'center',
                 },
               ]}>
               <Image
-                style={{
-                  height: 90,
-                  width: 90,
-                  borderRadius: 10,
-                  borderColor: '#eee',
-                  borderWidth: 5,
-                  resizeMode: 'cover',
-                }}
+                style={styles.avatar}
                 source={{
                   uri: this.props.user.image,
                 }}
               />
               <View style={{marginLeft: 12}}>
-                <AppText
-                  style={{marginLeft: 12, fontSize: 20, color: '#fff'}}
-                  //   i18nKey={'price: $120000'}
-                >
+                <Text style={{marginLeft: 12, fontSize: 20, color: '#fff'}}>
                   {this.props.user.name}
-                </AppText>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    paddingHorizontal: 8,
-                    marginTop: 16,
-                  }}>
-                  <Icon
-                    name="envelope"
-                    size={20}
-                    style={{marginRight: 12, color: '#fff'}}
-                  />
-                  <AppText
-                    style={{
-                      fontSize: 16,
-                      color: '#fff',
-                    }}
-                    //   i18nKey={'price: $120000'}
-                  >
-                    {this.props.user.email}
-                  </AppText>
+                </Text>
+                <View style={styles.rowInfo}>
+                  <Icon name="envelope" style={styles.iconStyle} />
+                  <Text style={styles.infoText}>{this.props.user.email}</Text>
                 </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    paddingHorizontal: 8,
-                    marginTop: 16,
-                  }}>
-                  <Icon
-                    name="map"
-                    size={20}
-                    style={{marginRight: 12, color: '#fff'}}
-                  />
-                  <AppText
-                    style={{
-                      fontSize: 16,
-                      width: '70%',
-                      color: '#fff',
-                    }}
-                    //   i18nKey={'price: $120000'}
-                  >
+                <View style={styles.rowInfo}>
+                  <Icon name="map" style={styles.iconStyle} />
+                  <Text style={styles.infoText}>
                     {this.props.user.phoneNum}
-                  </AppText>
+                  </Text>
                 </View>
               </View>
             </View>
           </View>
+
           <TouchableOpacity onPress={this.createPayment}>
             <AppText
-              style={[
-                styles.carInfo,
-                styles.shadowBox,
-                {
-                  marginBottom: 20,
-                  width: '80%',
-                  textAlign: 'center',
-                  alignSelf: 'center',
-                  backgroundColor: '#0f293c',
-                  color: '#fff',
-                  fontSize: 20,
-                },
-              ]}
-              //   i18nKey={'price: $120000'}
-            >
-              Confirm Payment
-            </AppText>
+              style={[styles.carInfo, styles.shadowBox, styles.confirmButton]}
+              i18nKey={'Confirm'}
+            />
           </TouchableOpacity>
         </ScrollView>
       </View>
@@ -320,6 +188,53 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
   },
+  infoText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  rowInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 8,
+    marginTop: 16,
+  },
+  iconStyle: {
+    marginRight: 12,
+    fontSize: 20,
+    color: '#fff',
+  },
+  price_color: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '80%',
+    alignItems: 'center',
+    marginVertical: 8,
+    borderRadius: 30,
+  },
+  avatar: {
+    height: 90,
+    width: 90,
+    borderRadius: 10,
+    borderColor: '#eee',
+    borderWidth: 5,
+    resizeMode: 'cover',
+  },
+  carImage: {
+    width: '110%',
+    height: 300,
+    marginRight: -120,
+    alignSelf: 'flex-end',
+    resizeMode: 'contain',
+  },
+  confirmButton: {
+    marginBottom: 20,
+    width: '80%',
+    textAlign: 'center',
+    alignSelf: 'center',
+    backgroundColor: '#0f293c',
+    color: '#fff',
+    fontSize: 20,
+  },
   shadowBox: {
     shadowColor: '#000',
     shadowOffset: {width: 10, height: 0},
@@ -331,8 +246,9 @@ const styles = StyleSheet.create({
     marginTop: 12,
     borderRadius: 20,
     padding: 24,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  carInfoContainer: {},
   carInfo: {
     borderRadius: 30,
     paddingVertical: 16,

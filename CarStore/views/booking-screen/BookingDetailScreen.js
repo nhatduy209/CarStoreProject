@@ -14,6 +14,7 @@ import {
   cancelBooking,
 } from '../../redux/action/booking/BookingAction';
 import AppText from '../../i18/AppText';
+import Moment from 'react-moment';
 class BookingDetailScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -65,6 +66,15 @@ class BookingDetailScreen extends React.Component {
             <View style={styles.info}>
               <AppText i18nKey={'FullName'} style={styles.textInfo} />
               <Text> {booking.full_name}</Text>
+            </View>
+
+            <View style={styles.info}>
+              <AppText i18nKey={'Birthday'} style={styles.textInfo} />
+              <Moment
+                date={booking.birthday}
+                format="DD/MM/YYYY"
+                element={Text}
+              />
             </View>
 
             <View style={styles.info}>
@@ -128,6 +138,15 @@ class BookingDetailScreen extends React.Component {
               ) : (
                 <AppText i18nKey={'WaitingConfirm'} />
               )}
+            </View>
+
+            <View style={styles.info}>
+              <AppText i18nKey={'DateMeeting'} style={styles.textInfo} />
+              <Moment
+                date={booking.date_meeting}
+                format="DD/MM/YYYY"
+                element={Text}
+              />
             </View>
           </View>
 

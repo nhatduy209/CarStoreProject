@@ -43,4 +43,7 @@ export default {
   Price: 'Giá',
   MeetingInfo: 'Thông tin buổi gặp mặt',
   ID: 'ID',
+  Confirm: 'Xác Nhận',
+  Pay: 'Thanh toán',
+  Cancel: 'Hủy',
 };

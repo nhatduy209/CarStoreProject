@@ -31,7 +31,7 @@ class BookingDetailScreen extends React.Component {
     this.props.navigation.goBack();
   };
   handleConfirm = async params => {
-    const data = {id_meeitng: params.id_meeting, email: params.clients_email};
+    const data = {id_meeting: params.id_meeting, email: params.clients_email};
     this.props.confirmBooking(data);
     this.props.navigation.push('PaymentScreen', {
       bookingDetail: this.props.route.params.booking,
@@ -163,23 +163,29 @@ class BookingDetailScreen extends React.Component {
                     color: '#ffe',
                     textAlign: 'center',
                   }}>
-                  Confirm Booking
+                  {booking.status_meeting ? (
+                    <AppText i18nKey={'Confirm'} />
+                  ) : (
+                    <AppText i18nKey={'Pay'} />
+                  )}
                 </Text>
               </TouchableOpacity>
             )}
 
-            <TouchableOpacity
-              style={{...styles.Button, backgroundColor: '#ccc'}}
-              onPress={() => this.handleCancel(booking)}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: '#ffe',
-                  textAlign: 'center',
-                }}>
-                Cancel Booking
-              </Text>
-            </TouchableOpacity>
+            {!booking.status_meeting && (
+              <TouchableOpacity
+                style={{...styles.Button, backgroundColor: '#ccc'}}
+                onPress={() => this.handleCancel(booking)}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: '#ffe',
+                    textAlign: 'center',
+                  }}>
+                  <AppText i18nKey={'Cancel'} />
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </ScrollView>

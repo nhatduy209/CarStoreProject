@@ -43,7 +43,7 @@ class PaymentScreen extends React.Component {
   componentDidUpdate() {
     if (this.props.paymentStatus === 'SUCCESS') {
       console.log('success');
-      this.props.navigation.goBack();
+      this.props.navigation.navigate('CalendarScreen');
       this.props.setStatusDefault();
     } else {
       console.log('fail');
@@ -65,7 +65,6 @@ class PaymentScreen extends React.Component {
               borderRadius: 210,
               marginRight: -100,
               marginTop: -100,
-              marginBottom: 12,
               alignSelf: 'flex-end',
               borderColor: '#ffc100',
               borderWidth: 16,

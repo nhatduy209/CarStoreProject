@@ -17,7 +17,7 @@ export const createPayment = data => async dispatch => {
     });
   }
 };
-export const setStatusDefault = dispatch => {
+export const setStatusDefault = () => dispatch => {
   dispatch({
     type: ACTION_NAME.SET_STATUS_DEFAULT,
   });

@@ -153,7 +153,7 @@ class BookingDetailScreen extends React.Component {
           <View style={styles.groupButton}>
             {this.props.user.data.role === 'admin' && (
               <TouchableOpacity
-                style={{...styles.Button, color: '#363b74'}}
+                style={{...styles.Button, backgroundColor: '#363b74'}}
                 onPress={() => this.handleConfirm(booking)}>
                 <Text
                   style={{
@@ -167,7 +167,7 @@ class BookingDetailScreen extends React.Component {
             )}
 
             <TouchableOpacity
-              style={{...styles.Button, color: '#ccc'}}
+              style={{...styles.Button, backgroundColor: '#ccc'}}
               onPress={() => this.handleCancel(booking)}>
               <Text
                 style={{

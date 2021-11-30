@@ -26,9 +26,9 @@ class BookingDetailScreen extends React.Component {
     };
   }
   handleCancel = async params => {
-    const data = {id_meeitng: params.id_meeting, email: params.clients_email};
+    const data = {id_meeting: params.id_meeting, email: params.clients_email};
     this.props.cancelBooking(data);
-    this.props.navigation.goBack();
+    this.props.navigation.push('CalendarStack');
   };
   handleConfirm = async params => {
     const data = {id_meeitng: params.id_meeting, email: params.clients_email};
@@ -40,7 +40,6 @@ class BookingDetailScreen extends React.Component {
   };
   render() {
     const {booking} = this.props.route.params;
-    console.log('HELLO --', booking);
     return (
       <ScrollView>
         <View
@@ -167,8 +166,12 @@ class BookingDetailScreen extends React.Component {
             )}
 
             <TouchableOpacity
-              style={{...styles.Button, backgroundColor: '#ccc'}}
-              onPress={() => this.handleCancel(booking)}>
+              style={{
+                ...styles.Button,
+                backgroundColor: booking.status_meeting ? '#bbbbbb' : '#008b8b',
+              }}
+              onPress={() => this.handleCancel(booking)}
+              disabled={booking.status_meeting}>
               <Text
                 style={{
                   fontSize: 16,

@@ -2,7 +2,9 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {connect} from 'react-redux';
-
+import {_retrieveData} from '../../common/Utils';
+import {TOKEN_DEVICE} from '../../config/StorageKey';
+import {logout} from '../../redux/action/login-action/LoginAction';
 const avatarUrlDefault =
   'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg';
 class DrawerContent extends React.Component {
@@ -28,6 +30,12 @@ class DrawerContent extends React.Component {
   onSettingPress = () => {
     this.props.navigation.navigate('SettingScreenStack');
   };
+
+  logout = async () => {
+    const getToken = await _retrieveData(TOKEN_DEVICE);
+    this.props.logout(this.props?.user.email, getToken);
+  };
+
   listDrawerItems = [
     {
       iconName: 'home',
@@ -62,7 +70,7 @@ class DrawerContent extends React.Component {
     {
       iconName: 'check',
       textContent: 'Log out',
-      handlePress: this.onHomePress,
+      handlePress: this.logout,
     },
   ];
   cloneListDrawerItems = () => {
@@ -135,7 +143,7 @@ function mapStateToProps(state) {
     user: state.UserReducer.user?.data?.data,
   };
 }
-export default connect(mapStateToProps, {})(DrawerContent);
+export default connect(mapStateToProps, {logout})(DrawerContent);
 const styles = StyleSheet.create({
   headerStyle: {
     height: 200,

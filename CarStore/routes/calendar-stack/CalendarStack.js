@@ -2,6 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import CalendarScreen from '../../views/calendar-screen/CalendarScreen';
 import BookingDetailScreen from '../../views/booking-screen/BookingDetailScreen';
+import PaymentScreen from '../../views/payment-screen/PaymentScreen';
 const Stack = createStackNavigator();
 
 export default class CalendarStack extends React.Component {
@@ -25,6 +26,14 @@ export default class CalendarStack extends React.Component {
         <Stack.Screen
           name="BookingDetailScreen"
           component={BookingDetailScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="PaymentScreen"
+          component={PaymentScreen}
           options={{
             headerShown: false,
           }}

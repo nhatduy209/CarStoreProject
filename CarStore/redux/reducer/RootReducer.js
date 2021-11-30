@@ -10,6 +10,7 @@ import StoreInfoReducer from './StoreInfoReducer';
 import persistReducer from 'redux-persist/es/persistReducer';
 import LanguageReducer from './ChangeLanguageReducer';
 import HistoryItemReducer from './HistoryItemReducer';
+import PaymentReducer from './PaymentReducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const rootPersistConfig = {
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   ListColorReducer,
   HistoryItemReducer,
   StoreInfoReducer,
+  PaymentReducer,
 });
 
 export default persistReducer(rootPersistConfig, rootReducer);

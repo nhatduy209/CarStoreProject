@@ -31,9 +31,11 @@ class BookingDetailScreen extends React.Component {
     this.props.navigation.push('CalendarStack');
   };
   handleConfirm = async params => {
-    const data = {id_meeitng: params.id_meeting, email: params.clients_email};
+    const data = {id_meeting: params.id_meeting, email: params.clients_email};
     this.props.confirmBooking(data);
-    this.props.navigation.goBack();
+    this.props.navigation.push('PaymentScreen', {
+      bookingDetail: this.props.route.params.booking,
+    });
   };
   fortmatDate = date => {
     return new Date(date).toISOString().slice(0, 10);
@@ -160,7 +162,11 @@ class BookingDetailScreen extends React.Component {
                     color: '#ffe',
                     textAlign: 'center',
                   }}>
-                  Confirm Booking
+                  {booking.status_meeting ? (
+                    <AppText i18nKey={'Confirm'} />
+                  ) : (
+                    <AppText i18nKey={'Pay'} />
+                  )}
                 </Text>
               </TouchableOpacity>
             )}

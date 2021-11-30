@@ -43,7 +43,6 @@ export default class BookingBusiness {
       clients_email: data.email,
     };
     const result = await postAPI.PostAPI(APP_URL.CONFIRM_BOOKING, params);
-    console.log('result', result);
     return result;
   };
 

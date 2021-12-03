@@ -48,7 +48,7 @@ class CalendarScreen extends React.Component {
       if (
         date.dateString === moment.utc(item.date_meeting).format('YYYY-MM-DD')
       ) {
-        this.props.navigation.navigate('BookingDetailScreen', {booking: item});
+        this.props.navigation.push('BookingDetailScreen', {booking: item});
       }
     });
   };

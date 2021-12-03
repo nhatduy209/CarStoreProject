@@ -72,3 +72,9 @@ export const getMeetings = email => async dispatch => {
     });
   }
 };
+
+export const reloadConfirm = () => dispatch => {
+  dispatch({
+    type: ACTION_NAME.BOOKING_ACTION.RELOAD_CONFIRM_BOOKING,
+  });
+};

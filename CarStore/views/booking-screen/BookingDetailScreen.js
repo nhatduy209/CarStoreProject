@@ -12,6 +12,7 @@ import {connect} from 'react-redux';
 import {
   confirmBooking,
   cancelBooking,
+  reloadConfirm,
 } from '../../redux/action/booking/BookingAction';
 import AppText from '../../i18/AppText';
 import Moment from 'react-moment';
@@ -32,10 +33,11 @@ class BookingDetailScreen extends React.Component {
   };
   handleConfirm = async params => {
     const data = {id_meeting: params.id_meeting, email: params.clients_email};
-    this.props.confirmBooking(data);
-    this.props.navigation.push('PaymentScreen', {
-      bookingDetail: this.props.route.params.booking,
-    });
+    params.status_meeting
+      ? this.props.navigation.push('PaymentScreen', {
+          bookingDetail: this.props.route.params.booking,
+        })
+      : this.props.confirmBooking(data);
   };
   fortmatDate = date => {
     return new Date(date).toISOString().slice(0, 10);
@@ -45,6 +47,11 @@ class BookingDetailScreen extends React.Component {
     if (this.props.statusCancelBooking === STATUS.SUCCESS) {
       this.props.navigation.push('CalendarScreen');
       this.props.navigation.navigate('CalendarScreen');
+    }
+    if (this.props.confirmStatus === STATUS.SUCCESS) {
+      this.props.navigation.push('CalendarScreen');
+      this.props.navigation.navigate('CalendarScreen');
+      this.props.reloadConfirm();
     }
   }
 
@@ -186,14 +193,14 @@ class BookingDetailScreen extends React.Component {
               }}
               onPress={() => this.handleCancel(booking)}
               disabled={booking.status_meeting}>
-              <Text
+              <AppText
                 style={{
                   fontSize: 16,
                   color: '#ffe',
                   textAlign: 'center',
-                }}>
-                Cancel Booking
-              </Text>
+                }}
+                i18nKey={'Cancel'}
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -206,12 +213,15 @@ const mapStateToProps = state => {
   return {
     user: state.UserReducer.user.data,
     statusCancelBooking: state.BookingReducer.CANCEL_BOOKING,
+    confirmStatus: state.BookingReducer.confirmStatus,
   };
 };
 
-export default connect(mapStateToProps, {cancelBooking, confirmBooking})(
-  BookingDetailScreen,
-);
+export default connect(mapStateToProps, {
+  cancelBooking,
+  confirmBooking,
+  reloadConfirm,
+})(BookingDetailScreen);
 
 const styles = StyleSheet.create({
   bodyContent: {

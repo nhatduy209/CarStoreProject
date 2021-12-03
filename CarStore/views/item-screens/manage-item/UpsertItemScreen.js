@@ -13,6 +13,7 @@ import {
 import HeaderComponent from '../../headerComponent';
 import {connect} from 'react-redux';
 import {FlatList} from 'react-native-gesture-handler';
+import {Picker} from '@react-native-picker/picker';
 import ColorPickerComponent from '../component/ColorPickerComponent';
 import {addItem} from '../../../redux/action/manage-item-action/AddItemAction';
 import {updateItem} from '../../../redux/action/manage-item-action/UpdateItemAction';
@@ -20,14 +21,13 @@ import {updateQuantity} from '../../../redux/action/manage-item-action/UpdateQua
 import {addColor} from '../../../redux/action/manage-item-action/AddColorAction';
 import {setColor} from '../../../redux/action/list-color/ListColorAction';
 import {getListCar} from '../../../redux/action/get-list-car/GetListCar';
-import {reloadListItem} from '../../../redux/action/manage-item-action/ReloadListItemAction';
+import {ProcessLoading} from '../../modal/ProcessLoading';
 class UpsertItemScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       id: '',
       name: '',
-      category: '',
       prices: '',
       listColor: this.props.listColor,
       height: '',
@@ -37,6 +37,8 @@ class UpsertItemScreen extends React.Component {
       img: '',
       screenTitle: '',
       action: '',
+      selectedCategory: this.props.category?.data[0]?.name ?? '',
+      loading: false,
     };
   }
   list = [
@@ -88,7 +90,7 @@ class UpsertItemScreen extends React.Component {
     this.setState({
       id: data?._id ?? '',
       name: data?.name ?? '',
-      category: data?.category ?? '',
+      selectedCategory: data?.category ?? '',
       prices: data?.prices ?? '',
       height: data?.height ?? '',
       width: data?.width ?? '',
@@ -113,6 +115,13 @@ class UpsertItemScreen extends React.Component {
     }
     this.setState({action: this.props.route.params.action});
   }
+  componentDidUpdate() {
+    if (this.props.reload) {
+      this.setState({loading: false});
+      this.setData();
+      this.props.navigation.push('ManageItemsScreen');
+    }
+  }
   renderInput({item}) {
     if (item.isColor) {
       return (
@@ -126,7 +135,22 @@ class UpsertItemScreen extends React.Component {
         </View>
       );
     } else {
-      return (
+      return item.title === 'category' ? (
+        <Picker
+          mode="dropdown"
+          selectedValue={this.state.selectedCategory}
+          onValueChange={(itemValue, itemIndex) => {
+            console.log('ITEM VALUE __', itemValue);
+            this.setState({selectedCategory: itemValue});
+          }}>
+          {this.props.category.data?.map((el, index) => {
+            const catSelected = el.name;
+            return (
+              <Picker.Item label={catSelected} value={el.name} key={index} />
+            );
+          })}
+        </Picker>
+      ) : (
         <TextInput
           editable={item.disabled ?? true}
           onChangeText={value => item.onChange(value)}
@@ -141,7 +165,7 @@ class UpsertItemScreen extends React.Component {
   handleUpsertItem = () => {
     const data = {
       name: this.state.name,
-      category: this.state.category,
+      category: this.state.selectedCategory,
       prices: parseInt(this.state.prices, 10),
       color: this.props.listColor,
       height: this.state.height,
@@ -164,7 +188,7 @@ class UpsertItemScreen extends React.Component {
           break;
       }
     }
-    this.props.navigation.push('ManageItemsScreen');
+    this.setState({loading: true});
   };
   renderHeader = () => {
     return <Text style={styles.screenTitle}>{this.state.screenTitle}</Text>;
@@ -213,6 +237,7 @@ class UpsertItemScreen extends React.Component {
             ListFooterComponent={this.renderFooter}
           />
         </ScrollView>
+        <ProcessLoading visible={this.state.loading} />
       </KeyboardAvoidingView>
     );
   }
@@ -221,6 +246,7 @@ const mapStateToProps = state => {
   return {
     listColor: state.ListColorReducer.colors,
     reload: state.CarReducer.reload ?? false,
+    category: state.CategoryReducer.category.data,
   };
 };
 
@@ -229,7 +255,6 @@ export default connect(mapStateToProps, {
   updateItem,
   setColor,
   getListCar,
-  reloadListItem,
   addColor,
   updateQuantity,
 })(UpsertItemScreen);

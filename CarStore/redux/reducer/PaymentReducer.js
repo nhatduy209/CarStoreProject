@@ -17,6 +17,7 @@ const PaymentReducer = (state = PAYMENT_STATE, action) => {
       return {
         ...state,
         status: STATUS.FAIL,
+        message: action.data.message,
       };
     case ACTION_NAME.SET_STATUS_DEFAULT:
       return {

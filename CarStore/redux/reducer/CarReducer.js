@@ -138,6 +138,7 @@ const CarReducer = (state = CAR_STATE, action) => {
     case MANAGE_ACTION_NAME.REMOVE_ITEM_ACTION.REMOVE_ITEM_ACTION_FAIL:
       return {
         ...state,
+        reload: false,
       };
     default:
       return state;

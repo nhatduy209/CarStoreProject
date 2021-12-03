@@ -4,7 +4,7 @@ import HeaderComponent from '../headerComponent';
 import {getStoreInfo} from '../../redux/action/store-info/StoreInfoAction';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
-
+import AppText from '../../i18/AppText';
 class StoreInfoScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -14,23 +14,21 @@ class StoreInfoScreen extends React.Component {
   }
   componentDidMount() {
     this.props.getStoreInfo();
-    // eslint-disable-next-line react/no-did-mount-set-state
-    this.setState({role: this.props.user.data.data.role});
   }
   renderButton = () => {
-    if (this.state.role === 'member') {
+    if (this.props.user.data.data.role === 'admin') {
       return (
         <TouchableOpacity
           style={styles.editButton}
           onPress={() => this.props.navigation.navigate('EditStoreInfoScreen')}>
-          <Text
+          <AppText
             style={{
               fontSize: 24,
               color: '#ffe',
               textAlign: 'center',
-            }}>
-            Edit
-          </Text>
+            }}
+            i18nKey={'Edit'}
+          />
         </TouchableOpacity>
       );
     }
@@ -72,7 +70,7 @@ class StoreInfoScreen extends React.Component {
               marginTop: 120,
               textAlign: 'center',
             }}>
-            Welcome to {this.props.storeInfo.name_store}
+            Welcome to {this.props.storeInfo.nameStore}
           </Text>
           <Text style={styles.subInfoContainer}>
             <Text style={styles.titleStyle}>Address: </Text>
@@ -132,7 +130,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: '#363b74',
     padding: 12,
-    width: 100,
+    width: 150,
     alignSelf: 'center',
   },
   subInfoContainer: {fontSize: 20, color: '#000', marginTop: 12},

@@ -25,6 +25,7 @@ class DetailItemScreen extends React.Component {
     };
   }
   componentDidMount() {
+    console.log(this.props.route.params.data);
     this.setState({itemInfo: this.props.route.params.data});
     const list = this.props.car.filter(item => {
       return item.category === this.props.route.params.data.category;
@@ -88,7 +89,9 @@ class DetailItemScreen extends React.Component {
           <View style={styles.itemImageContainer}>
             <Image
               style={[styles.imageItem, {width: '100%', height: '100%'}]}
-              source={{uri: this.state.itemInfo.img}}
+              source={{
+                uri: this.state.itemInfo.img ?? this.state.itemInfo.car_img,
+              }}
             />
           </View>
           <View style={styles.infoContainer}>
@@ -100,10 +103,10 @@ class DetailItemScreen extends React.Component {
               ]}>
               <View style={{flexDirection: 'row'}}>
                 <Text style={[styles.name, {width: '70%'}]}>
-                  {this.state.itemInfo.name}
+                  {this.state.itemInfo.name ?? this.state.itemInfo.car_name}
                 </Text>
                 <Text style={[styles.price, {width: '30%'}]}>
-                  ${this.state.itemInfo.prices}
+                  ${this.state.itemInfo.prices ?? this.state.itemInfo.price}
                 </Text>
               </View>
               <View style={{marginVertical: 16, paddingHorizontal: 16}}>

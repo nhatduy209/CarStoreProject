@@ -18,6 +18,7 @@ import {
   getListCar,
   getListCarByPrice,
 } from '../../../redux/action/get-list-car/GetListCar';
+import {reloadListItem} from '../../../redux/action/manage-item-action/ReloadListItemAction';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {setDefaultListColor} from '../../../redux/action/list-color/ListColorAction';
 import FilterByPrice from './FilterByPrice';
@@ -41,6 +42,12 @@ class AllItemsScreen extends React.Component {
     if (prevProps.car.length === this.props.car.length) {
       this.canLoadMore = false;
       ToastAndroid.show('All Cars have been shown', ToastAndroid.LONG);
+    }
+    if (this.props.reload) {
+      console.log('reload', this.props.car.length, prevProps.car.length);
+      this.start = 0;
+      this.props.getListCar(this.start, this.end);
+      this.props.reloadListItem();
     }
   }
   renderItem({item, navigation}) {
@@ -172,6 +179,7 @@ class AllItemsScreen extends React.Component {
 const mapStateToProps = state => {
   return {
     car: state.CarReducer.car,
+    reload: state.CarReducer.reload ?? false,
     carPrice: state.CarReducer.car_price,
     search_car: state.SearchReducer.car,
   };
@@ -182,6 +190,7 @@ export default connect(mapStateToProps, {
   searchCar,
   setDefaultListColor,
   getListCarByPrice,
+  reloadListItem,
 })(AllItemsScreen);
 
 const styles = StyleSheet.create({

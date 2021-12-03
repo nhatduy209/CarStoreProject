@@ -25,8 +25,6 @@ export const addItem = data => async dispatch => {
   );
   data.color = newList;
   var res = await manageItem.addItemBusiness(data);
-
-  console.log('res', res);
   if (res.status === STATUS.SUCCESS) {
     dispatch({
       type: ACTION_NAME.ADD_ITEM_ACTION.ADD_ITEM_ACTION_SUCCESS,

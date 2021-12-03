@@ -163,7 +163,7 @@ class BookingDetailScreen extends React.Component {
                     color: '#ffe',
                     textAlign: 'center',
                   }}>
-                  {booking.status_meeting ? (
+                  {!booking.status_meeting ? (
                     <AppText i18nKey={'Confirm'} />
                   ) : (
                     <AppText i18nKey={'Pay'} />

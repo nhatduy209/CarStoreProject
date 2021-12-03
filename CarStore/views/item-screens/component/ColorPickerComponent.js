@@ -23,7 +23,8 @@ class ColorPickerComponent extends React.Component {
   }
   componentDidMount() {
     const list = [];
-    this.props.data
+    // eslint-disable-next-line valid-typeof
+    this.props.data && typeof this.props.data === 'array'
       ? this.props.data.forEach(element => list.push(element.color))
       : console.log(1);
     if (this.props.isManageItem) {
@@ -74,9 +75,8 @@ class ColorPickerComponent extends React.Component {
           style={[
             styles.addBox,
             {backgroundColor: item === 'add' ? '#ccc' : handleColor(item)},
-          ]}>
-          {item === 'add' ? <Icon name="plus" size={20} /> : <View />}
-        </TouchableOpacity>
+          ]}
+        />
       );
     }
   }

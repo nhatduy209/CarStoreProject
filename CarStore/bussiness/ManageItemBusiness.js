@@ -12,6 +12,7 @@ export default class ManageItemBusiness {
       description: data.description,
       color: data.color,
       price: data.prices,
+      img: data.color[0].url,
     };
     var result = await postService.PostAPI(APP_URL.ADD_ITEM, params);
 
@@ -28,6 +29,7 @@ export default class ManageItemBusiness {
       length: data.length,
       description: data.description,
       price: data.prices,
+      img: data.color[0].url ?? '',
     };
     var result = await postService.PostAPI(APP_URL.UPDATE_ITEM, params);
 

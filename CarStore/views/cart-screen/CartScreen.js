@@ -23,7 +23,7 @@ class CartScreen extends React.Component {
   }
 
   renderCartItem = ({item}) => {
-    return <RenderItems item={item} />;
+    return <RenderItems item={item} navigation={this.props.navigation} />;
   };
 
   itemSeparatorComponent = () => {

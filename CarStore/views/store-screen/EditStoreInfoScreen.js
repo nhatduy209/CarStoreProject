@@ -20,7 +20,7 @@ class EditStoreInfoScreen extends React.Component {
       address: this.props.storeInfo.address,
       phone: this.props.storeInfo.phone,
       intro: this.props.storeInfo.intro,
-      name_store: this.props.storeInfo.name_store,
+      nameStore: this.props.storeInfo.nameStore,
     };
   }
   componentDidMount() {
@@ -54,7 +54,7 @@ class EditStoreInfoScreen extends React.Component {
               <TextInput
                 style={{flex: 1, color: '#000'}}
                 placeholder={'Address'}
-                value={this.state.name_store}
+                value={this.state.Store}
               />
             </View>
             <Text style={styles.inputLabel}>Address</Text>

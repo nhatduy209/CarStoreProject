@@ -16,7 +16,13 @@ class RenderItems extends React.Component {
   render() {
     const {car_img, car_name, color, price, category} = this.props.item;
     return (
-      <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() =>
+          this.props.navigation.push('DetailItemScreen', {
+            data: this.props.item,
+          })
+        }
+        style={styles.container}>
         <Image
           source={{uri: car_img}}
           style={{width: 150, height: '100%', resizeMode: 'contain'}}
@@ -42,7 +48,7 @@ class RenderItems extends React.Component {
             <Text style={{fontWeight: 'bold', fontSize: 15}}>{price}USD</Text>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }

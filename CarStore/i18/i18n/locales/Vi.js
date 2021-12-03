@@ -46,4 +46,7 @@ export default {
   Confirm: 'Xác Nhận',
   Pay: 'Thanh toán',
   Cancel: 'Hủy',
+  Accept: 'Đồng ý',
+  Edit: 'Chỉnh sửa',
+  DeleteItem: 'Bạn có chắc muốn xóa sản phẩm này?',
 };

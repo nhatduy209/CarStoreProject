@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Image, Text} from 'react-native';
+import {View, StyleSheet, Image, Text, ToastAndroid} from 'react-native';
 import HeaderComponent from '../headerComponent';
 import {ScrollView} from 'react-native-gesture-handler';
 import AppText from '../../i18/AppText';
@@ -41,12 +41,15 @@ class PaymentScreen extends React.Component {
     this.props.createPayment(data);
   };
   componentDidUpdate() {
-    if (this.props.paymentStatus === 'SUCCESS') {
+    if (this.props.payment.status === 'SUCCESS') {
       console.log('success');
       this.props.navigation.navigate('CalendarScreen');
       this.props.setStatusDefault();
     } else {
-      console.log('fail');
+      ToastAndroid.show(
+        this.props.payment.message ?? 'This car is sold out',
+        ToastAndroid.LONG,
+      );
     }
   }
   render() {
@@ -160,7 +163,7 @@ class PaymentScreen extends React.Component {
           <TouchableOpacity onPress={this.createPayment}>
             <AppText
               style={[styles.carInfo, styles.shadowBox, styles.confirmButton]}
-              i18nKey={'Confirm'}
+              i18nKey={'Pay'}
             />
           </TouchableOpacity>
         </ScrollView>
@@ -171,7 +174,7 @@ class PaymentScreen extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.UserReducer.user?.data?.data,
-    paymentStatus: state.PaymentReducer?.status,
+    payment: state.PaymentReducer,
   };
 };
 

@@ -43,4 +43,10 @@ export default {
   Price: 'Price',
   MeetingInfo: 'Info meeting',
   ID: 'ID',
+  Confirm: 'Confirm',
+  Pay: 'Payment',
+  Cancel: 'Cancel',
+  Accept: 'Accept',
+  Edit: 'Edit',
+  DeleteItem: 'Are you sure to delete this car?',
 };

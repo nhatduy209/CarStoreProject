@@ -15,6 +15,7 @@ import {
 } from '../../redux/action/booking/BookingAction';
 import AppText from '../../i18/AppText';
 import Moment from 'react-moment';
+import {STATUS} from '../../config/Status';
 class BookingDetailScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -26,9 +27,8 @@ class BookingDetailScreen extends React.Component {
     };
   }
   handleCancel = async params => {
-    const data = {id_meeitng: params.id_meeting, email: params.clients_email};
+    const data = {id_meeting: params.id_meeting, email: params.clients_email};
     this.props.cancelBooking(data);
-    this.props.navigation.goBack();
   };
   handleConfirm = async params => {
     const data = {id_meeting: params.id_meeting, email: params.clients_email};
@@ -40,9 +40,16 @@ class BookingDetailScreen extends React.Component {
   fortmatDate = date => {
     return new Date(date).toISOString().slice(0, 10);
   };
+
+  componentDidUpdate() {
+    if (this.props.statusCancelBooking === STATUS.SUCCESS) {
+      this.props.navigation.push('CalendarScreen');
+      this.props.navigation.navigate('CalendarScreen');
+    }
+  }
+
   render() {
     const {booking} = this.props.route.params;
-    console.log('HELLO --', booking);
     return (
       <ScrollView>
         <View
@@ -172,20 +179,22 @@ class BookingDetailScreen extends React.Component {
               </TouchableOpacity>
             )}
 
-            {!booking.status_meeting && (
-              <TouchableOpacity
-                style={{...styles.Button, backgroundColor: '#ccc'}}
-                onPress={() => this.handleCancel(booking)}>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    color: '#ffe',
-                    textAlign: 'center',
-                  }}>
-                  <AppText i18nKey={'Cancel'} />
-                </Text>
-              </TouchableOpacity>
-            )}
+            <TouchableOpacity
+              style={{
+                ...styles.Button,
+                backgroundColor: booking.status_meeting ? '#bbbbbb' : '#008b8b',
+              }}
+              onPress={() => this.handleCancel(booking)}
+              disabled={booking.status_meeting}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: '#ffe',
+                  textAlign: 'center',
+                }}>
+                Cancel Booking
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
@@ -196,6 +205,7 @@ class BookingDetailScreen extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.UserReducer.user.data,
+    statusCancelBooking: state.BookingReducer.CANCEL_BOOKING,
   };
 };
 

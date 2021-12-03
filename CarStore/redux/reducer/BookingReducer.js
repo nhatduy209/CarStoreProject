@@ -35,7 +35,7 @@ const BookingReducer = (state = BOOKING_STATE, action) => {
         ...state,
         CANCEL_BOOKING: STATUS.SUCCESS,
       };
-    case ACTION_NAME.BOOKING_ACTION.CANCEL_BOOKING_SUCCESS:
+    case ACTION_NAME.BOOKING_ACTION.CANCEL_BOOKING_FAIL:
       return {
         ...state,
         CANCEL_BOOKING: STATUS.FAIL,

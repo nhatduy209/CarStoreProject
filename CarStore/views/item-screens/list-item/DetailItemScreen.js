@@ -15,6 +15,7 @@ import ColorPickerComponent from '../component/ColorPickerComponent';
 import {addToCart} from '../../../redux/action/cart-action/AddToCart';
 import {connect} from 'react-redux';
 import {STATUS} from '../../../config/Status';
+import {ModalComponent} from '../../modal/ModalComponent';
 class DetailItemScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -22,6 +23,7 @@ class DetailItemScreen extends React.Component {
       itemInfo: {},
       relatedItems: [],
       quantity: 0,
+      isShow: false,
     };
   }
   componentDidMount() {
@@ -47,15 +49,19 @@ class DetailItemScreen extends React.Component {
     }
   }
   handleAddToCart() {
-    const data = {
-      email: this.props.user.data.data.email,
-      name: this.state.itemInfo.name,
-      color: this.state.itemInfo.color[0].color,
-      quantity: this.state.quantity,
-      price: this.state.itemInfo.prices,
-      url: this.state.itemInfo.img,
-    };
-    this.props.addToCart(data);
+    if (this.props.user?.data?.data?.email) {
+      const data = {
+        email: this.props.user.data.data.email,
+        name: this.state.itemInfo.name,
+        color: this.state.itemInfo.color[0].color,
+        quantity: this.state.quantity,
+        price: this.state.itemInfo.prices,
+        url: this.state.itemInfo.img,
+      };
+      this.props.addToCart(data);
+    } else {
+      this.setState({isShow: true});
+    }
   }
   renderRelatedItem = () => {
     return this.state.relatedItems.length === 0 ? (
@@ -82,6 +88,14 @@ class DetailItemScreen extends React.Component {
         <HeaderComponent
           navigation={this.props.navigation}
           screenTitle={this.props.route.params.data.name}
+        />
+        <ModalComponent
+          navigation={this.props.navigation}
+          state={this}
+          isShow={this.state.isShow}
+          descriptionText="You are not login, please login first"
+          textAction="Sign in"
+          textCancel="Cancel"
         />
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -162,7 +176,9 @@ class DetailItemScreen extends React.Component {
         </ScrollView>
         <View style={styles.btnContainer}>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('CartStack')}
+            onPress={() => {
+              this.props.navigation.navigate('CartStack');
+            }}
             style={[
               styles.btnBuy,
               styles.shadowBox,

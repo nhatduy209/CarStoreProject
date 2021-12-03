@@ -1,4 +1,11 @@
-import {Text, View, StyleSheet, FlatList, Dimensions} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  FlatList,
+  Dimensions,
+  ToastAndroid,
+} from 'react-native';
 import React from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import RenderItems from './RenderItems';
@@ -12,7 +19,6 @@ class CartScreen extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.cart.data);
     this.props.getListCartActon(this.props.user.data.email);
   }
 
@@ -54,7 +60,14 @@ class CartScreen extends React.Component {
   };
 
   handleContact = () => {
-    this.props.navigation.navigate('BookingScreen');
+    if (this.props.cart.data.length) {
+      this.props.navigation.navigate('BookingScreen');
+    } else {
+      ToastAndroid.show(
+        "You don't have any car to set appointment",
+        ToastAndroid.LONG,
+      );
+    }
   };
 
   render() {

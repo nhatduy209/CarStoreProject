@@ -5,8 +5,12 @@ import {CalendarList} from 'react-native-calendars';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import {getMeetings} from '../../redux/action/booking/BookingAction';
-let list_meetings = {};
 class CalendarScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.list_meetings = {};
+  }
+
   showDateMeetings = () => {
     try {
       let objSample = {
@@ -25,14 +29,15 @@ class CalendarScreen extends React.Component {
       };
       const currentDate = moment(new Date());
       this.props.meetings.map(item => {
+        console.log('Ô HELE', item.date_meeting);
         const newDate = moment.utc(item.date_meeting).format('YYYY-MM-DD');
         if (moment(item.date_meeting).isAfter(currentDate)) {
-          list_meetings[newDate] = objSample.key1;
+          this.list_meetings[newDate] = objSample.key1;
         } else {
-          list_meetings[newDate] = objSample.key2;
+          this.list_meetings[newDate] = objSample.key2;
         }
       });
-      return list_meetings;
+      return this.list_meetings;
     } catch {
       return {};
     }
@@ -52,7 +57,13 @@ class CalendarScreen extends React.Component {
     this.props.getMeetings(this.props.user.email);
   }
 
+  componentWillUnmount() {
+    console.log('GO HẺE');
+    this.list_meetings = {};
+  }
+
   render() {
+    console.log('MEETING ---', this.list_meetings);
     return (
       <View style={styles.container}>
         <View style={{alignItems: 'center', padding: 20}}>

@@ -15,6 +15,7 @@ import {
 } from '../../redux/action/booking/BookingAction';
 import AppText from '../../i18/AppText';
 import Moment from 'react-moment';
+import {STATUS} from '../../config/Status';
 class BookingDetailScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -28,7 +29,6 @@ class BookingDetailScreen extends React.Component {
   handleCancel = async params => {
     const data = {id_meeting: params.id_meeting, email: params.clients_email};
     this.props.cancelBooking(data);
-    this.props.navigation.push('CalendarStack');
   };
   handleConfirm = async params => {
     const data = {id_meeting: params.id_meeting, email: params.clients_email};
@@ -40,6 +40,14 @@ class BookingDetailScreen extends React.Component {
   fortmatDate = date => {
     return new Date(date).toISOString().slice(0, 10);
   };
+
+  componentDidUpdate() {
+    if (this.props.statusCancelBooking === STATUS.SUCCESS) {
+      this.props.navigation.push('CalendarScreen');
+      this.props.navigation.navigate('CalendarScreen');
+    }
+  }
+
   render() {
     const {booking} = this.props.route.params;
     return (
@@ -197,6 +205,7 @@ class BookingDetailScreen extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.UserReducer.user.data,
+    statusCancelBooking: state.BookingReducer.CANCEL_BOOKING,
   };
 };
 

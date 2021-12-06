@@ -17,6 +17,7 @@ import {
   createBooking,
   changeShowModalState,
 } from '../../redux/action/booking/BookingAction';
+import AppText from '../../i18/AppText';
 
 class BookingScreen extends React.Component {
   constructor(props) {
@@ -108,12 +109,14 @@ class BookingScreen extends React.Component {
             </View>
           </View>
         </Modal>
-        <Text style={{fontSize: 23, marginTop: 20}}>
-          Booking an Appointment
-        </Text>
-        <Text style={{fontSize: 16, marginTop: 10}}>
-          Serving you is our pleasure , please fill in some information below
-        </Text>
+        <AppText
+          style={{fontSize: 23, marginTop: 20}}
+          i18nKey={'bookingAnAppointment'}
+        />
+        <AppText
+          style={{fontSize: 16, marginTop: 10}}
+          i18nKey={'bookingPleasure'}
+        />
 
         <View
           style={{
@@ -126,7 +129,7 @@ class BookingScreen extends React.Component {
 
         <ScrollView>
           <View style={styles.inputView}>
-            <Text style={styles.textInfo}>Email Contact</Text>
+            <AppText style={styles.textInfo} i18nKey={'emailContact'} />
             <TextInput
               style={styles.inputInfo}
               value={email}
@@ -135,7 +138,7 @@ class BookingScreen extends React.Component {
           </View>
 
           <View style={styles.inputView}>
-            <Text style={styles.textInfo}>Choose your car</Text>
+            <AppText style={styles.textInfo} i18nKey={'chooseYourCar'} />
             <Picker
               mode="dropdown"
               selectedValue={this.state.selectedCar}
@@ -151,7 +154,7 @@ class BookingScreen extends React.Component {
           </View>
 
           <View style={styles.inputView}>
-            <Text style={styles.textInfo}>Full name</Text>
+            <AppText style={styles.textInfo} i18nKey={'fullName'} />
             <TextInput
               onChangeText={value => this.setState({fullName: value})}
               style={styles.inputInfo}
@@ -159,7 +162,7 @@ class BookingScreen extends React.Component {
           </View>
 
           <View style={styles.inputView}>
-            <Text style={styles.textInfo}>Country</Text>
+            <AppText style={styles.textInfo} i18nKey={'country'} />
             <TouchableOpacity
               onPress={() => this.setState({countryVisible: true})}>
               <View
@@ -182,7 +185,7 @@ class BookingScreen extends React.Component {
           </View>
 
           <View style={styles.inputView}>
-            <Text style={styles.textInfo}>Your birthday</Text>
+            <AppText style={styles.textInfo} i18nKey={'yourbirthday'} />
             <View
               style={{
                 ...styles.inputInfo,
@@ -211,7 +214,7 @@ class BookingScreen extends React.Component {
           </View>
 
           <View style={styles.inputView}>
-            <Text style={styles.textInfo}>Personal ID</Text>
+            <AppText style={styles.textInfo} i18nKey={'PersonalID'} />
             <TextInput
               style={styles.inputInfo}
               onChangeText={value => this.setState({personalID: value})}
@@ -219,7 +222,7 @@ class BookingScreen extends React.Component {
           </View>
 
           <View style={styles.inputView}>
-            <Text style={styles.textInfo}>Phone number</Text>
+            <AppText style={styles.textInfo} i18nKey={'PhoneNumber'} />
             <TextInput
               style={styles.inputInfo}
               value={phoneNum}
@@ -228,7 +231,7 @@ class BookingScreen extends React.Component {
           </View>
 
           <View style={styles.inputView}>
-            <Text style={styles.textInfo}>Pick contact date</Text>
+            <AppText style={styles.textInfo} i18nKey={'pickContactDate'} />
             <View
               style={{
                 ...styles.inputInfo,
@@ -287,7 +290,7 @@ class BookingScreen extends React.Component {
                 flex: 1,
               }}>
               <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                <Text style={styles.txtButton}>Cancel</Text>
+                <AppText style={styles.txtButton} i18nKey={'Cancel'} />
               </TouchableOpacity>
             </View>
           </View>

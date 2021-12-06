@@ -13,6 +13,7 @@ import {connect} from 'react-redux';
 import CardItem from './CardItem';
 import {getListCarByPrice} from '../../../redux/action/get-list-car/GetListCar';
 import {FlatList, TextInput} from 'react-native-gesture-handler';
+import AppText from '../../../i18/AppText';
 if (
   Platform.OS === 'android' &&
   UIManager.setLayoutAnimationEnabledExperimental
@@ -55,7 +56,10 @@ class FilterByPrice extends React.Component {
         }}>
         <View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{fontSize: 20, paddingVertical: 8}}>Min price</Text>
+            <AppText
+              style={{fontSize: 20, paddingVertical: 8}}
+              i18nKey={'minPrice'}
+            />
             <TextInput
               style={styles.filterInput}
               keyboardType="numeric"
@@ -64,7 +68,10 @@ class FilterByPrice extends React.Component {
             />
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{fontSize: 20, paddingVertical: 8}}>Max price</Text>
+            <AppText
+              style={{fontSize: 20, paddingVertical: 8}}
+              i18nKey={'maxPrice'}
+            />
             <TextInput
               style={styles.filterInput}
               keyboardType="numeric"
@@ -83,7 +90,10 @@ class FilterByPrice extends React.Component {
             margin: 20,
           }}
           onPress={() => this.handelFilter()}>
-          <Text style={{alignSelf: 'center', fontSize: 16}}>filter</Text>
+          <AppText
+            style={{alignSelf: 'center', fontSize: 16}}
+            i18nKey={'filter'}
+          />
         </TouchableOpacity>
       </View>
     );
@@ -93,7 +103,11 @@ class FilterByPrice extends React.Component {
     if (this.minPrice < this.maxPrice) {
       this.setState({filter: true});
       this.props.listFilterByPrice(true);
-      this.props.getListCarByPrice(this.minPrice, this.maxPrice);
+      this.props.getListCarByPrice(
+        this.minPrice,
+        this.maxPrice,
+        this.props.category,
+      );
     } else {
       ToastAndroid.show(
         'The maximum price must be greater than the minimum price',
@@ -116,9 +130,10 @@ class FilterByPrice extends React.Component {
   renderEmpty = () => {
     return !this.props.carPrice ? (
       <View>
-        <Text style={{position: 'absolute', top: '30%', alignSelf: 'center'}}>
-          No result
-        </Text>
+        <AppText
+          style={{position: 'absolute', top: '30%', alignSelf: 'center'}}
+          i18nKey={'NoResult'}
+        />
         <Image
           source={require('../../../images/car.png')}
           style={{resizeMode: 'center', width: '100%'}}

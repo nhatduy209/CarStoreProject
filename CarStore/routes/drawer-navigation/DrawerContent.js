@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {_retrieveData} from '../../common/Utils';
 import {TOKEN_DEVICE} from '../../config/StorageKey';
 import {logout} from '../../redux/action/login-action/LoginAction';
+import AppText from '../../i18/AppText';
 const avatarUrlDefault =
   'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg';
 class DrawerContent extends React.Component {
@@ -54,7 +55,7 @@ class DrawerContent extends React.Component {
     },
     {
       iconName: 'phone',
-      textContent: 'Store Info',
+      textContent: 'StoreInfo',
       handlePress: this.onStoreInfoPress,
     },
     {
@@ -69,7 +70,7 @@ class DrawerContent extends React.Component {
     },
     {
       iconName: 'check',
-      textContent: 'Log out',
+      textContent: 'Logout',
       handlePress: this.logout,
     },
   ];
@@ -89,7 +90,7 @@ class DrawerContent extends React.Component {
           <View style={styles.iconStyle}>
             <Icon size={20} name={item.iconName} color={'#bae1ff'} />
           </View>
-          <Text style={styles.itemText}>{item.textContent}</Text>
+          <AppText style={styles.itemText} i18nKey={item.textContent} />
         </View>
       </TouchableOpacity>
     );

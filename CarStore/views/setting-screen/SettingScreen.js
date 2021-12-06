@@ -14,7 +14,7 @@ export default class SettingScreen extends React.Component {
   listItem = [
     {
       iconName: 'clipboard',
-      name: 'Purchase History',
+      name: 'PurchaseHistory',
       isAccount: false,
       color: '#00b159',
       clickEvent: () => this.props.navigation.navigate('PurchaseHistoryScreen'),
@@ -23,16 +23,8 @@ export default class SettingScreen extends React.Component {
       iconName: 'globe',
       name: 'Language',
       isAccount: false,
-      statusItem: 'English',
+      statusItem: 'CurrentLanguage',
       color: '#ff7400',
-    },
-    {
-      iconName: 'bell',
-      name: 'Notifications',
-      statusItem: 'turn off',
-      isAccount: false,
-      color: '#189ad3',
-      clickEvent: () => console.log('Notification'),
     },
     {
       iconName: 'comment',
@@ -47,12 +39,13 @@ export default class SettingScreen extends React.Component {
       <ScrollView>
         <HeaderComponent navigation={this.props.navigation} />
         <View style={styles.settingContainer}>
-          <Text style={{fontSize: 40, paddingBottom: 40, fontWeight: '700'}}>
-            Settings
-          </Text>
+          <AppText
+            style={{fontSize: 40, paddingBottom: 40, fontWeight: '700'}}
+            i18nKey={'Setting'}
+          />
           {/* list item */}
           <View>
-            <Text style={styles.groupItemTitle}>Account</Text>
+            <AppText style={styles.groupItemTitle} i18nKey={'Account'} />
             <SettingItemComponent
               subItem={-1}
               navigation={this.props.navigation}

@@ -64,7 +64,7 @@ class RevealCycle extends React.Component {
 
   handleGoToCart = () => {
     if (this.props?.user?.data?.data?.email) {
-      this.props.navigation.navigate('CartStack');
+      this.props.navigation.push('CartStack');
     } else {
       this.props.state.setState({isShow: true});
     }

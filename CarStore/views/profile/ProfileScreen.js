@@ -15,8 +15,12 @@ import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as ImagePicker from 'react-native-image-picker';
 import Moment from 'react-moment';
-import {changeInfo} from '../../redux/action/change-info/ChangeInfoAction';
+import {
+  changeInfo,
+  reloađUpateStatus,
+} from '../../redux/action/change-info/ChangeInfoAction';
 import {STATUS} from '../../config/Status';
+import {ProcessLoading} from '../modal/ProcessLoading';
 const avatarUrlDefault =
   'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg';
 class ProfileScreen extends React.Component {
@@ -31,6 +35,7 @@ class ProfileScreen extends React.Component {
       address: this.props.user?.data?.address ?? 'Set your address ',
       email: this.props.user?.data?.email ?? 'mail',
       name: this.props.user?.data?.name ?? 'Your name',
+      loading: false,
     };
   }
   handlePhotos = () => {
@@ -73,6 +78,7 @@ class ProfileScreen extends React.Component {
       address: this.state.address,
     };
     this.props.changeInfo({data, Avatar: this.state.Avatar});
+    this.setState({loading: true});
   };
 
   onChange = (event, selectedDate) => {
@@ -95,6 +101,10 @@ class ProfileScreen extends React.Component {
   componentDidUpdate() {
     if (this.props.updateStatus && this.props.updateStatus === STATUS.SUCCESS) {
       ToastAndroid.show('Update info successfully', ToastAndroid.LONG);
+      if (this.state.loading) {
+        this.setState({loading: false});
+      }
+      this.props.reloađUpateStatus();
     }
   }
   render() {
@@ -104,6 +114,7 @@ class ProfileScreen extends React.Component {
       : {colorMale: '#bbbbbb', colorFemale: 'pink'};
     return (
       <View style={styles.container}>
+        <ProcessLoading visible={this.state.loading} />
         <View style={styles.avtImage}>
           <TouchableOpacity onPress={this.handlePhotos}>
             <Image
@@ -247,7 +258,9 @@ function mapStateToProps(state) {
     updateStatus: state.UserReducer.user.updateStatus,
   };
 }
-export default connect(mapStateToProps, {changeInfo})(ProfileScreen);
+export default connect(mapStateToProps, {changeInfo, reloađUpateStatus})(
+  ProfileScreen,
+);
 const styles = StyleSheet.create({
   container: {
     flex: 1,

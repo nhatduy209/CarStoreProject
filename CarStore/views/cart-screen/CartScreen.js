@@ -12,6 +12,7 @@ import RenderItems from './RenderItems';
 import {connect} from 'react-redux';
 import {getListCartActon} from '../../redux/action/cart-action/GetListCart';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import AppText from '../../i18/AppText';
 class CartScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -74,7 +75,7 @@ class CartScreen extends React.Component {
     const count = this.props.cart?.data?.length ?? 0;
     return (
       <View style={styles.container}>
-        <Text style={{fontSize: 27}}>YOUR CART</Text>
+        <AppText style={{fontSize: 27}} i18nKey={'yourCart'} />
 
         <View style={{flexDirection: 'row'}}>
           <View style={{flex: 1}}>
@@ -92,7 +93,7 @@ class CartScreen extends React.Component {
           />
         </View>
         <View style={{marginTop: 10, flexDirection: 'row'}}>
-          <Text style={{fontSize: 16}}>Sub total</Text>
+          <AppText style={{fontSize: 16}} i18nKey={'subTotal'} />
           <Text style={{fontSize: 16}}>
             {' '}
             {this.handleTotal().toString()}USD
@@ -117,9 +118,11 @@ class CartScreen extends React.Component {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Text style={{fontSize: 20, color: '#ffffff'}}>
-                Contact us now{' '}
-              </Text>
+              <AppText
+                style={{fontSize: 20, color: '#ffffff'}}
+                i18nKey={'contactUs'}
+              />
+              <Text>{'  '}</Text>
               <Icon name="car" size={30} color="#ffffff" />
             </View>
           </TouchableOpacity>
@@ -129,9 +132,10 @@ class CartScreen extends React.Component {
               backgroundColor: '#e6f3ff',
             }}
             onPress={this.handleContinueShopping}>
-            <Text style={{textAlign: 'center', fontSize: 20}}>
-              Continue Shopping
-            </Text>
+            <AppText
+              style={{textAlign: 'center', fontSize: 20}}
+              i18nKey={'continueShopping'}
+            />
           </TouchableOpacity>
         </View>
       </View>

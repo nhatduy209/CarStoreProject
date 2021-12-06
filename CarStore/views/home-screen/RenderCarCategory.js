@@ -18,6 +18,7 @@ import {
   getListCarByPrice,
 } from '../../redux/action/get-list-car/GetListCar';
 import {FlatList} from 'react-native-gesture-handler';
+import AppText from '../../i18/AppText';
 if (
   Platform.OS === 'android' &&
   UIManager.setLayoutAnimationEnabledExperimental
@@ -69,9 +70,10 @@ class RenderCarCategory extends React.Component {
   renderEmpty = () => {
     return this.props.status === 'SUCCESS' ? (
       <View>
-        <Text style={{position: 'absolute', top: '30%', alignSelf: 'center'}}>
-          No result
-        </Text>
+        <AppText
+          style={{position: 'absolute', top: '30%', alignSelf: 'center'}}
+          i18nKey={'NoResult'}
+        />
         <Image
           source={require('../../images/car.png')}
           style={{resizeMode: 'center', width: '100%'}}
@@ -133,6 +135,7 @@ class RenderCarCategory extends React.Component {
     ) : (
       <FilterByPrice
         navigation={this.props.navigation}
+        category={this.props.route.params.category}
         listFilterByPrice={value => this.setState({filterByPrice: value})}
       />
     );

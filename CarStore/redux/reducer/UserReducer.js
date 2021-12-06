@@ -11,6 +11,7 @@ const USER_STATE = {
 const UserReducer = (state = USER_STATE, action) => {
   switch (action.type) {
     case REHYDRATE:
+      console.log('ACTION --', action);
       return {
         ...state,
         user: action.payload?.UserReducer.user,
@@ -75,6 +76,11 @@ const UserReducer = (state = USER_STATE, action) => {
       return {
         ...state,
         user: {updateStatus: STATUS.FAIL},
+      };
+    case CHANGE_INFO_ACTION_NAME.RELOAD_UPLOAD:
+      return {
+        ...state,
+        user: {updateStatus: STATUS.NONE},
       };
 
     default:

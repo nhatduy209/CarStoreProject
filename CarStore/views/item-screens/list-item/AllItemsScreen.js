@@ -41,8 +41,8 @@ class AllItemsScreen extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.car.length === this.props.car.length) {
       this.canLoadMore = false;
-      ToastAndroid.show('All Cars have been shown', ToastAndroid.LONG);
     }
+
     if (this.props.reload) {
       console.log('reload', this.props.car.length, prevProps.car.length);
       this.start = 0;
@@ -101,9 +101,13 @@ class AllItemsScreen extends React.Component {
   };
 
   loadMoreItem = () => {
+    console.log('HELLo', this.canLoadMore);
     if (this.canLoadMore) {
       this.start += 5;
       this.props.getListCar(this.start, this.end);
+    } else {
+      this.canLoadMore = false;
+      ToastAndroid.show('All Cars have been shown', ToastAndroid.LONG);
     }
   };
 

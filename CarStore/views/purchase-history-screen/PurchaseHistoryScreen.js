@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Image} from 'react-native';
 import HeaderComponent from '../headerComponent';
 import {FlatList} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
@@ -83,6 +83,18 @@ class PurchaseHistoryScreen extends React.Component {
     }
   };
 
+  renderEmpty = () => (
+    <View>
+      <Text style={{position: 'absolute', top: '30%', alignSelf: 'center'}}>
+        No result
+      </Text>
+      <Image
+        source={require('../../images/car.png')}
+        style={{resizeMode: 'center', width: '100%'}}
+      />
+    </View>
+  );
+
   render() {
     this.shouldRenderCar();
     return (
@@ -125,6 +137,7 @@ class PurchaseHistoryScreen extends React.Component {
             ItemSeparatorComponent={this.separateItem}
             style={styles.purchaseHistoryContainer}
             ListFooterComponent={this.renderFooter}
+            ListEmptyComponent={this.renderEmpty}
           />
         </ScrollView>
       </View>

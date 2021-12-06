@@ -28,3 +28,10 @@ export const changeInfo = data => async dispatch => {
     });
   }
 };
+
+export const reloađUpateStatus = () => dispatch => {
+  dispatch({
+    type: ACTION_NAME.RELOAD_UPLOAD,
+    data: {},
+  });
+};

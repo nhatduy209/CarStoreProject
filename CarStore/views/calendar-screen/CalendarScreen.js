@@ -12,6 +12,7 @@ class CalendarScreen extends React.Component {
   }
 
   showDateMeetings = () => {
+    this.list_meetings = {};
     try {
       let objSample = {
         key1: {
@@ -63,7 +64,8 @@ class CalendarScreen extends React.Component {
   }
 
   render() {
-    console.log('MEETING ---', this.list_meetings);
+    let calendarEvents = JSON.parse(JSON.stringify(this.showDateMeetings()));
+    console.log('CALENDAR ---', calendarEvents);
     return (
       <View style={styles.container}>
         <View style={{alignItems: 'center', padding: 20}}>
@@ -83,7 +85,7 @@ class CalendarScreen extends React.Component {
           // Enable paging on horizontal, default = false
           pagingEnabled={true}
           // Set custom calendarWidth.
-          markedDates={this.showDateMeetings()}
+          markedDates={calendarEvents}
           onDayPress={date => this.handleDayPress(date)}
           minDate={new Date()}
         />

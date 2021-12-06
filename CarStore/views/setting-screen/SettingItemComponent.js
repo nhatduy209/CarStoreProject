@@ -49,7 +49,7 @@ class SettingItemComponent extends React.Component {
         margin: 10,
       }}>
       <AppText style={{fontSize: 18}} i18nKey={'ChangeLanguage'} />
-      <AppText style={{fontSize: 18}} i18nKey={'Language'} />
+      <AppText style={{fontSize: 18}} i18nKey={'LanguageChange'} />
     </TouchableOpacity>
   );
 
@@ -80,16 +80,22 @@ class SettingItemComponent extends React.Component {
               alignItems: 'center',
               width: '60%',
             }}>
-            <Text style={{fontSize: 18, ...styles.text}}>
-              {!this.props.item
-                ? this.props.user?.data?.name
-                : this.props.item.name}
-            </Text>
+            {!this.props.item ? (
+              <Text style={{fontSize: 18, ...styles.text}}>
+                {this.props.user?.data?.name}
+              </Text>
+            ) : (
+              <AppText
+                style={{fontSize: 18, ...styles.text}}
+                i18nKey={this.props.item.name}
+              />
+            )}
 
             {this.props.item?.statusItem && (
-              <Text style={{color: '#bbbbbb'}}>
-                {this.props.item.statusItem}
-              </Text>
+              <AppText
+                style={{color: '#bbbbbb'}}
+                i18nKey={this.props.item.statusItem}
+              />
             )}
 
             <Text style={{color: '#aaa', ...styles.text}}>

@@ -32,4 +32,6 @@ export const APP_URL = {
   GET_MEETINGS: URL_HEROKU + 'meetings/getmeetings',
   CREATE_PAYMENT: URL_HEROKU + 'payment/create',
   GET_HISTORY_ITEM: URL_HEROKU + 'account/gethistoryitems',
+  GET_LIST_COMMENT: URL_HEROKU + 'car/listcomment',
+  ADD_COMMENT: URL_HEROKU + 'car/addcomment',
 };

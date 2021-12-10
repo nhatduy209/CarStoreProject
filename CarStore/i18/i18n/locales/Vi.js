@@ -76,4 +76,12 @@ export default {
   country: 'Quốc gia',
   yourbirthday: 'Ngày sinh',
   pickContactDate: 'Chọn ngày gặp mặt',
+  commentItem: 'Đánh giá sản phẩm',
+  seeAllComment: 'Xem tất cả đánh giá',
+  feedback: 'Đánh giá',
+  post: 'Đăng',
+  unRated: 'Chưa được đánh giá',
+  rated: 'Đã đánh giá',
+  rate: 'Đánh giá',
+  purchaseHistory: 'Lịch sử mua hàng',
 };

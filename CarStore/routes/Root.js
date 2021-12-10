@@ -10,6 +10,7 @@ import AllItemsScreen from '../views/item-screens/list-item/AllItemsScreen';
 import DetailItemsScreen from '../views/item-screens/list-item/DetailItemScreen';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import RootDrawer from './drawer-navigation/RootDrawer';
+import CommentScreen from '../views/item-screens/comment/CommentScreen';
 const Stack = createNativeStackNavigator();
 
 export class Root extends React.Component {
@@ -86,6 +87,14 @@ export class Root extends React.Component {
           }}
           name="DetailItemScreen"
           component={DetailItemsScreen}
+        />
+
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="CommentScreen"
+          component={CommentScreen}
         />
         <Stack.Screen
           options={{

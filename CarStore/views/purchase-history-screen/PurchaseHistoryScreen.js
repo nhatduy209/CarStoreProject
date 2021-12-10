@@ -1,12 +1,26 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+  Modal,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
 import HeaderComponent from '../headerComponent';
 import {FlatList} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import {getListCar} from '../../redux/action/get-list-car/GetListCar';
 import {getHistoryItem} from '../../redux/action/history-item/HistoryItemAction';
 import PurchaseItemComponent from './PurchaseItemComponent';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import AppText from '../../i18/AppText';
+import {Rating} from 'react-native-ratings';
+import {addComment, reload} from '../../redux/action/comment/CommentAction';
+import {STATUS} from '../../config/Status';
+
 const deliveryStatus = [
   {
     value: 0,
@@ -26,6 +40,11 @@ class PurchaseHistoryScreen extends React.Component {
     super(props);
     this.state = {
       currentTab: 0,
+      isShow: false,
+      isType: false,
+      comment: '',
+      rating: 0,
+      itemRating: {},
     };
     this.car = [];
   }
@@ -33,8 +52,26 @@ class PurchaseHistoryScreen extends React.Component {
     this.props.getHistoryItem(this.props.user.data?.email);
   }
 
-  renderItem = ({item, navigation}) => {
-    return <PurchaseItemComponent item={item} navigation={navigation} />;
+  componentDidUpdate() {
+    if (this.props.comment.canAddComment === STATUS.SUCCESS) {
+      this.props.getHistoryItem(this.props.user.data?.email);
+      this.props.reload();
+      this.setState({isShow: false});
+    }
+    if (this.props.comment.canAddComment === STATUS.FAIL) {
+      this.props.reload();
+    }
+  }
+
+  renderItem = ({item, navigation, isPaid = false}) => {
+    return (
+      <PurchaseItemComponent
+        item={item}
+        navigation={navigation}
+        isPaid={isPaid}
+        state={this}
+      />
+    );
   };
   renderHeaderItem = ({item}) => {
     return (
@@ -95,22 +132,105 @@ class PurchaseHistoryScreen extends React.Component {
     </View>
   );
 
+  typing = value => {
+    if (!this.state.isType) {
+      this.setState({isType: true});
+    }
+    this.setState({comment: value});
+  };
+
+  ratingCompleted = value => {
+    this.setState({rating: parseFloat(value)});
+  };
+
+  handleRating = () => {
+    this.props.addComment({
+      comment: this.state.comment,
+      rating: this.state.rating,
+      email: this.props.user.data.email,
+      ...this.state.itemRating,
+    });
+  };
+
+  renderModal = () => (
+    <Modal visible={this.state.isShow} transparent={true} animationType="slide">
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: '#ffffff',
+          marginTop: '30%',
+        }}>
+        <View style={{flexDirection: 'row', margin: 20}}>
+          <TouchableOpacity
+            onPress={() => this.setState({isShow: false, isType: false})}>
+            <Icon name="times" size={30} />
+          </TouchableOpacity>
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              flex: 1,
+            }}>
+            <AppText style={{fontSize: 20}} i18nKey={'feedback'} />
+          </View>
+        </View>
+        <View style={{marginHorizontal: 50, marginBottom: 10}}>
+          <TextInput
+            onChangeText={this.typing}
+            editable
+            multiline
+            maxLength={40}
+            style={{
+              ...styles.inputText,
+              backgroundColor: this.state.isType ? '#ffffff' : '#f5f5f5',
+              borderWidth: this.state.isType ? 1 : 0,
+              borderColor: this.state.isType ? 'red' : '#f5f5f5',
+            }}
+            placeholder="Share what you think"></TextInput>
+
+          <View style={{alignItems: 'flex-start'}}>
+            <Rating
+              style={{marginTop: 10}}
+              type="star"
+              ratingCount={5}
+              imageSize={20}
+              onFinishRating={this.ratingCompleted}
+              startingValue={this.state.rating}
+            />
+          </View>
+
+          <View style={{alignItems: 'flex-end'}}>
+            <TouchableOpacity
+              onPress={() => this.handleRating()}
+              style={{backgroundColor: '#c63939', borderRadius: 10}}>
+              <AppText
+                i18nKey={'post'}
+                style={{fontSize: 18, color: '#ffffff', padding: 10}}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+
   render() {
     this.shouldRenderCar();
     return (
-      <View style={{backgroundColor: '#fff'}}>
+      <View ststtyle={{backgroundColor: '#fff'}}>
         <HeaderComponent navigation={this.props.navigation} />
-        <Text
+        {this.renderModal()}
+        <AppText
           style={{
             fontSize: 32,
             paddingBottom: 20,
             paddingHorizontal: 30,
             marginTop: 60,
-            fontWeight: '700',
+            fontWeight: '500',
             alignSelf: 'center',
-          }}>
-          Purchase History
-        </Text>
+          }}
+          i18nKey={'purchaseHistory'}
+        />
         <FlatList
           data={deliveryStatus}
           horizontal
@@ -130,7 +250,16 @@ class PurchaseHistoryScreen extends React.Component {
           <FlatList
             data={this.car}
             renderItem={item =>
-              this.renderItem({...item, navigation: this.props.navigation})
+              this.state.currentTab === 2
+                ? this.renderItem({
+                    ...item,
+                    navigation: this.props.navigation,
+                    isPaid: true,
+                  })
+                : this.renderItem({
+                    ...item,
+                    navigation: this.props.navigation,
+                  })
             }
             keyExtractor={(item, index) => index.toString()}
             showsHorizontalScrollIndicator={false}
@@ -148,12 +277,16 @@ const mapStateToProps = state => {
   return {
     user: state.UserReducer.user.data,
     historyItem: state.HistoryItemReducer.historyItem,
+    comment: state.CommentReducer,
   };
 };
 
-export default connect(mapStateToProps, {getListCar, getHistoryItem})(
-  PurchaseHistoryScreen,
-);
+export default connect(mapStateToProps, {
+  getListCar,
+  getHistoryItem,
+  addComment,
+  reload,
+})(PurchaseHistoryScreen);
 const styles = StyleSheet.create({
   purchaseHistoryContainer: {
     height: '100%',
@@ -175,5 +308,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 3,
     elevation: 6,
+  },
+  inputText: {
+    height: 150,
+    borderRadius: 20,
+    width: '100%',
   },
 });

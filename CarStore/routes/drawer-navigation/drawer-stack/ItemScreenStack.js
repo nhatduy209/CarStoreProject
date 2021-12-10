@@ -1,8 +1,10 @@
 import React from 'react';
 import AllItemsScreen from '../../../views/item-screens/AllItemsScreen';
-import DetailItemScreen from '../../../views/item-screens/DetailItemScreen';
+import DetailItemScreen from '../../../views/item-screens/list-item/DetailItemScreen';
 import {Image, View, TouchableOpacity} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
+import CommentScreen from '../../../views/item-screens/comment/CommentScreen';
+
 const Stack = createStackNavigator();
 
 const NavigationDrawerStructureLeft = props => {
@@ -50,6 +52,20 @@ export default class ItemScreenStack extends React.Component {
         <Stack.Screen
           name="DetailItemScreen"
           component={DetailItemScreen}
+          options={{
+            headerShown: false,
+            title: '',
+            headerLeft: () => (
+              <NavigationDrawerStructureLeft
+                navigationProps={this.props.navigation}
+              />
+            ),
+          }}
+        />
+
+        <Stack.Screen
+          name="CommentScreen"
+          component={CommentScreen}
           options={{
             headerShown: false,
             title: '',

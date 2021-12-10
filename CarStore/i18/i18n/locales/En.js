@@ -76,4 +76,12 @@ export default {
   country: 'Country',
   yourbirthday: 'Your birthday',
   pickContactDate: 'Pick contact date',
+  commentItem: 'Comment,Rating item',
+  seeAllComment: 'See all comment',
+  feedback: 'Feedback',
+  post: 'Post',
+  unRated: 'Unrated',
+  rated: 'Rated',
+  rate: 'Rate item',
+  purchaseHistory: 'Purchase history',
 };

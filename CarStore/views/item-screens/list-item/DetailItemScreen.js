@@ -16,6 +16,10 @@ import {addToCart} from '../../../redux/action/cart-action/AddToCart';
 import {connect} from 'react-redux';
 import {STATUS} from '../../../config/Status';
 import {ModalComponent} from '../../modal/ModalComponent';
+import AppText from '../../../i18/AppText';
+import {Rating} from 'react-native-ratings';
+import {getListComment} from '../../../redux/action/comment/CommentAction';
+
 class DetailItemScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -24,9 +28,11 @@ class DetailItemScreen extends React.Component {
       relatedItems: [],
       quantity: 0,
       isShow: false,
+      rating: 3,
     };
   }
   componentDidMount() {
+    this.props.getListComment(this.props.route.params.data.name);
     console.log(this.props.route.params.data);
     this.setState({itemInfo: this.props.route.params.data});
     const list = this.props.car.filter(item => {
@@ -83,6 +89,11 @@ class DetailItemScreen extends React.Component {
     );
   };
   render() {
+    let totalRating = 0;
+    this.props?.comment?.data.map(
+      item => (totalRating = totalRating + item.rating),
+    );
+
     return (
       <View style={{height: '100%'}}>
         <HeaderComponent
@@ -173,6 +184,43 @@ class DetailItemScreen extends React.Component {
               </View>
             </View>
           </View>
+
+          <View
+            style={{
+              marginHorizontal: 20,
+              marginBottom: 80,
+              backgroundColor: '#ffffff',
+              borderRadius: 5,
+            }}>
+            <View style={{padding: 10}}>
+              <AppText i18nKey={'commentItem'} style={{fontSize: 16}} />
+              <View style={{alignItems: 'flex-start', flexDirection: 'row'}}>
+                <Rating
+                  type="star"
+                  ratingCount={5}
+                  imageSize={20}
+                  readonly
+                  startingValue={this.state.rating}
+                />
+                <Text>
+                  {' '}
+                  ({totalRating / this.props.comment?.data?.length}/5){' '}
+                </Text>
+                <TouchableOpacity
+                  style={{marginLeft: 'auto'}}
+                  onPress={() =>
+                    this.props.navigation.navigate('CommentScreen', {
+                      name: this.props.route.params.data.name,
+                    })
+                  }>
+                  <AppText
+                    style={{marginLeft: 'auto', color: 'red'}}
+                    i18nKey={'seeAllComment'}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
         </ScrollView>
         <View style={styles.btnContainer}>
           <TouchableOpacity
@@ -205,10 +253,13 @@ const mapStateToProps = state => {
     user: state.UserReducer.user,
     car: state.CarReducer.car,
     cart: state.CartReducer,
+    comment: state.CommentReducer.comment.data,
   };
 };
 
-export default connect(mapStateToProps, {addToCart})(DetailItemScreen);
+export default connect(mapStateToProps, {addToCart, getListComment})(
+  DetailItemScreen,
+);
 
 const styles = StyleSheet.create({
   imageItem: {
@@ -217,7 +268,7 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     backgroundColor: '#eee',
-    marginTop: -20,
+    marginTop: -10,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
@@ -297,7 +348,7 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 10,
     backgroundColor: '#fff',
-    marginBottom: 80,
+    marginBottom: 20,
   },
   Description_row: {
     paddingVertical: 8,

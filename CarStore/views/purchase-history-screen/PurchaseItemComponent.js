@@ -2,6 +2,10 @@ import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import Moment from 'react-moment';
+import AppText from '../../i18/AppText';
+import {addComment} from '../../redux/action/comment/CommentAction';
+import {connect} from 'react-redux';
 
 export default class PurchaseItemComponent extends React.Component {
   constructor(props) {
@@ -10,16 +14,6 @@ export default class PurchaseItemComponent extends React.Component {
   render() {
     return (
       <View style={[styles.purchaseItemContainer, styles.shadowBox]}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingHorizontal: 12,
-            paddingBottom: 20,
-          }}>
-          <Text style={{fontSize: 16, fontWeight: '700'}}>Cái gì đó ở đây</Text>
-          <Text style={{color: '#ff4d00', fontSize: 16}}>deliveryStatus</Text>
-        </View>
         {/* info */}
         <View
           style={{
@@ -95,53 +89,72 @@ export default class PurchaseItemComponent extends React.Component {
             <Icon name="angle-right" size={16} />
           </View>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            padding: 12,
-            borderColor: '#ddd',
-            borderBottomWidth: 0.5,
-          }}>
-          <View style={{flexDirection: 'row'}}>
-            <Icon name="truck" size={16} />
-            <Text
-              style={{
-                color: '#2dc937',
-                marginLeft: 12,
-              }}>
-              deliveryStatus
-            </Text>
-          </View>
-
-          <Icon name="angle-right" size={16} />
-        </View>
-
-        {/* re-buy */}
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingHorizontal: 12,
-          }}>
-          <Text style={{color: '#aaa', marginTop: 12}}>Chưa được đánh giá</Text>
-          <TouchableOpacity
+        {this.props.isPaid && (
+          <View
             style={{
-              backgroundColor: 'rgb(32,45,70)',
-              width: 100,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
               padding: 12,
-              borderRadius: 10,
-              marginTop: 12,
-              alignSelf: 'flex-end',
+              borderColor: '#ddd',
+              borderBottomWidth: 0.5,
             }}>
-            <Text style={{textAlign: 'center', color: '#fff'}}>Mua lại</Text>
-          </TouchableOpacity>
-        </View>
+            <View style={{flexDirection: 'row'}}>
+              <Icon name="truck" size={16} />
+              <Moment
+                date={this.props.item.selling_date}
+                format="DD/MM/YYYY"
+                element={Text}
+                style={{
+                  color: '#2dc937',
+                  marginLeft: 12,
+                }}
+              />
+            </View>
+          </View>
+        )}
+        {/* re-buy */}
+        {this.props.isPaid && (
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingHorizontal: 12,
+            }}>
+            <AppText
+              style={{color: '#aaa', marginTop: 12}}
+              i18nKey={this.props.item.isRating ? 'rated' : 'unRated'}
+            />
+            <TouchableOpacity
+              onPress={() =>
+                this.props.state.setState({
+                  isShow: true,
+                  itemRating: this.props.item,
+                })
+              }
+              disabled={this.props.item.isRating ? true : false}
+              style={{
+                backgroundColor: this.props.item.isRating
+                  ? '#bbbbbb'
+                  : 'rgb(32,45,70)',
+                width: 100,
+                padding: 12,
+                borderRadius: 10,
+                marginTop: 12,
+                alignSelf: 'flex-end',
+              }}>
+              <AppText
+                style={{textAlign: 'center', color: '#fff'}}
+                i18nKey={'rate'}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     );
   }
 }
+
 const styles = StyleSheet.create({
   purchaseItemContainer: {
     backgroundColor: '#fff',

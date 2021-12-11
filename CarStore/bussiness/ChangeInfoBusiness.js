@@ -14,8 +14,6 @@ export default class ChangeInfoBusiness {
       birthday: data.date,
     };
     var result = await postService.PostAPI(APP_URL.CHANGE_INFO, params);
-
-    console.log('RESULT business ----', result);
     return result;
   };
 }

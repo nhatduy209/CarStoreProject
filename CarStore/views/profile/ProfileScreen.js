@@ -8,7 +8,6 @@ import {
   ScrollView,
   TextInput,
   Dimensions,
-  ToastAndroid,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {connect} from 'react-redux';
@@ -21,6 +20,9 @@ import {
 } from '../../redux/action/change-info/ChangeInfoAction';
 import {STATUS} from '../../config/Status';
 import {ProcessLoading} from '../modal/ProcessLoading';
+import {showToastFail, showToastSuccess} from '../../common/Utils';
+import AppText from '../../i18/AppText';
+
 const avatarUrlDefault =
   'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg';
 class ProfileScreen extends React.Component {
@@ -65,6 +67,7 @@ class ProfileScreen extends React.Component {
     });
   };
   handleSave = () => {
+    console.log('---this.props.user.data--', this.props.user);
     // TODO TRAN THANH TOAN HANDLE SAVE INFO
     const data = {
       url: this.state.url,
@@ -100,11 +103,13 @@ class ProfileScreen extends React.Component {
   };
   componentDidUpdate() {
     if (this.props.updateStatus && this.props.updateStatus === STATUS.SUCCESS) {
-      ToastAndroid.show('Update info successfully', ToastAndroid.LONG);
+      showToastSuccess('Success', 'Update info successfully');
       if (this.state.loading) {
         this.setState({loading: false});
       }
       this.props.reloađUpateStatus();
+    } else if (this.props.updateStatus === STATUS.FAIL) {
+      showToastFail('Fail', 'Update info fail');
     }
   }
   render() {
@@ -135,7 +140,7 @@ class ProfileScreen extends React.Component {
         <ScrollView>
           <View>
             <View style={styles.detailInfo}>
-              <Text style={styles.textStyleTitle}> Email</Text>
+              <AppText style={styles.textStyleTitle} i18nKey={'Email'} />
               <TextInput
                 style={styles.textStyleData}
                 onChangeText={value => {
@@ -147,7 +152,7 @@ class ProfileScreen extends React.Component {
             </View>
 
             <View style={styles.detailInfo}>
-              <Text style={styles.textStyleTitle}> Name</Text>
+              <AppText style={styles.textStyleTitle} i18nKey={'FullName'} />
               <TextInput
                 style={styles.textStyleData}
                 onChangeText={value => {
@@ -158,7 +163,7 @@ class ProfileScreen extends React.Component {
             </View>
 
             <View style={styles.detailInfo}>
-              <Text style={styles.textStyleTitle}> Birthday</Text>
+              <AppText style={styles.textStyleTitle} i18nKey={'Birthday'} />
               <TouchableOpacity onPress={this.showDatepicker}>
                 {/* <Text style={{ ...styles.textStyleData, paddingVertical: 10 }}> {setDate}</Text> */}
                 <Moment
@@ -184,7 +189,7 @@ class ProfileScreen extends React.Component {
             </View>
 
             <View style={styles.detailInfo}>
-              <Text style={styles.textStyleTitle}> Phone Number</Text>
+              <AppText style={styles.textStyleTitle} i18nKey={'PhoneNumber'} />
               <TextInput
                 style={styles.textStyleData}
                 onChangeText={value => {
@@ -201,7 +206,7 @@ class ProfileScreen extends React.Component {
                 alignItems: 'center',
                 paddingVertical: 20,
               }}>
-              <Text style={styles.textStyleTitle}> Gender</Text>
+              <AppText style={styles.textStyleTitle} i18nKey={'Gender'} />
               <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity
                   style={{marginHorizontal: 20}}
@@ -216,7 +221,7 @@ class ProfileScreen extends React.Component {
             </View>
 
             <View style={styles.detailInfo}>
-              <Text style={styles.textStyleTitle}> Address</Text>
+              <AppText style={styles.textStyleTitle} i18nKey={'Address'} />
               <TextInput
                 style={styles.textStyleData}
                 onChangeText={value => {
@@ -229,20 +234,20 @@ class ProfileScreen extends React.Component {
           <View style={{flexDirection: 'row', marginVertical: 20}}>
             <View style={styles.btnReset}>
               <TouchableOpacity onPress={this.handleReset}>
-                <Text style={{fontSize: 25, padding: 5}}>Reset</Text>
+                <AppText style={{fontSize: 25, padding: 5}} i18nKey={'Reset'} />
               </TouchableOpacity>
             </View>
 
             <View style={styles.btnSave}>
               <TouchableOpacity onPress={this.handleSave}>
-                <Text
+                <AppText
                   style={{
                     fontSize: 25,
                     padding: 5,
                     color: '#ffffff',
-                  }}>
-                  Save
-                </Text>
+                  }}
+                  i18nKey={'Save'}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -255,7 +260,7 @@ class ProfileScreen extends React.Component {
 function mapStateToProps(state) {
   return {
     user: state.UserReducer.user.data,
-    updateStatus: state.UserReducer.user.updateStatus,
+    updateStatus: state.UserReducer.updateStatus,
   };
 }
 export default connect(mapStateToProps, {changeInfo, reloađUpateStatus})(

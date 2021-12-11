@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   TextInput,
@@ -20,6 +19,8 @@ import {STATUS_SIGNUP} from '../../config/Status';
 import {testIds} from '../../config/TestID';
 import {handleValidate} from '../../common/Utils';
 import AppText from '../../i18/AppText';
+import {showToastFail, showToastSuccess} from '../../common/Utils';
+
 class SignUpScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -68,10 +69,11 @@ class SignUpScreen extends React.Component {
   };
   componentDidUpdate() {
     if (this.props.user?.status === STATUS_SIGNUP.SUCCESS) {
+      showToastSuccess('Success', 'Create account successfully');
       this.props.navigation.navigate('LoginScreen');
       this.props.realoadSignUpStatus();
     } else if (this.props.user?.status === STATUS_SIGNUP.FAIL) {
-      ToastAndroid.show('Email has already been used', ToastAndroid.LONG);
+      showToastFail('Error', 'Email has already been used');
       this.props.realoadSignUpStatus();
     }
   }
@@ -85,15 +87,16 @@ class SignUpScreen extends React.Component {
           style={{height: '100%'}}
           testID={testIds.SignUp_Screen.scrollView}>
           <View style={{alignItems: 'center', marginVertical: '8%'}}>
-            <Text style={{fontSize: 32, fontWeight: '500'}}>
-              Create Account
-            </Text>
+            <AppText
+              style={{fontSize: 32, fontWeight: '500'}}
+              i18nKey={'createAccount'}
+            />
           </View>
 
           {/* input field */}
           <View style={{marginHorizontal: 30}}>
             <View>
-              <Text style={styles.emailAndPassWord}>Name</Text>
+              <AppText style={styles.emailAndPassWord} i18nKey={'FullName'} />
               <View style={styles.Input}>
                 <Icon
                   name="user"
@@ -115,7 +118,10 @@ class SignUpScreen extends React.Component {
               )}
             </View>
             <View>
-              <Text style={styles.emailAndPassWord}>Phone</Text>
+              <AppText
+                style={styles.emailAndPassWord}
+                i18nKey={'PhoneNumber'}
+              />
               <View style={styles.Input}>
                 <Icon
                   name="phone"
@@ -137,7 +143,7 @@ class SignUpScreen extends React.Component {
               )}
             </View>
             <View>
-              <Text style={styles.emailAndPassWord}>Email</Text>
+              <AppText style={styles.emailAndPassWord} i18nKey={'Email'} />
               <View style={styles.Input}>
                 <Icon
                   name="envelope"
@@ -159,7 +165,7 @@ class SignUpScreen extends React.Component {
               )}
             </View>
             <View>
-              <Text style={styles.emailAndPassWord}>Password</Text>
+              <AppText style={styles.emailAndPassWord} i18nKey={'Password'} />
               <View style={styles.Input}>
                 <Icon
                   onPress={this.handleHidePassowrd}
@@ -183,7 +189,10 @@ class SignUpScreen extends React.Component {
               )}
             </View>
             <View>
-              <Text style={styles.emailAndPassWord}>Confirm password</Text>
+              <AppText
+                style={styles.emailAndPassWord}
+                i18nKey={'confrimPassword'}
+              />
 
               <View style={styles.Input}>
                 <Icon
@@ -217,7 +226,7 @@ class SignUpScreen extends React.Component {
               testID={testIds.SignUp_Screen.buttonSignUp}
               style={styles.signUpButton}
               onPress={this.handleSignUp}>
-              <Text style={styles.loginText}>SIGN UP</Text>
+              <AppText style={styles.loginText} i18nKey={'SignUp'} />
             </TouchableOpacity>
           </View>
           <View
@@ -227,10 +236,10 @@ class SignUpScreen extends React.Component {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text>Already have an account? </Text>
+            <AppText i18nKey={'alreadyHaveAccount'} />
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('LoginScreen')}>
-              <Text style={{color: '#00e6e6'}}>Sign in</Text>
+              <AppText style={{color: '#00e6e6'}} i18nKey={'signIn'} />
             </TouchableOpacity>
           </View>
         </ScrollView>

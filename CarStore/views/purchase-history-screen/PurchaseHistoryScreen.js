@@ -20,6 +20,7 @@ import AppText from '../../i18/AppText';
 import {Rating} from 'react-native-ratings';
 import {addComment, reload} from '../../redux/action/comment/CommentAction';
 import {STATUS} from '../../config/Status';
+import {showToastFail, showToastSuccess} from '../../common/Utils';
 
 const deliveryStatus = [
   {
@@ -54,11 +55,13 @@ class PurchaseHistoryScreen extends React.Component {
 
   componentDidUpdate() {
     if (this.props.comment.canAddComment === STATUS.SUCCESS) {
+      showToastSuccess('Success', 'Thanks you for giving us comment');
       this.props.getHistoryItem(this.props.user.data?.email);
       this.props.reload();
       this.setState({isShow: false});
     }
     if (this.props.comment.canAddComment === STATUS.FAIL) {
+      showToastFail('Fail', 'Error occurs , please try again');
       this.props.reload();
     }
   }

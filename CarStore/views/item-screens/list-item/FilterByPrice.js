@@ -1,12 +1,10 @@
 import React from 'react';
 import {
   View,
-  Text,
   UIManager,
   Platform,
   StyleSheet,
   TouchableOpacity,
-  ToastAndroid,
   Image,
 } from 'react-native';
 import {connect} from 'react-redux';
@@ -14,6 +12,7 @@ import CardItem from './CardItem';
 import {getListCarByPrice} from '../../../redux/action/get-list-car/GetListCar';
 import {FlatList, TextInput} from 'react-native-gesture-handler';
 import AppText from '../../../i18/AppText';
+import {showToastFail} from '../../../common/Utils';
 if (
   Platform.OS === 'android' &&
   UIManager.setLayoutAnimationEnabledExperimental
@@ -109,9 +108,9 @@ class FilterByPrice extends React.Component {
         this.props.category,
       );
     } else {
-      ToastAndroid.show(
+      showToastFail(
+        'Error',
         'The maximum price must be greater than the minimum price',
-        ToastAndroid.LONG,
       );
       this.setState({filter: false});
       this.props.listFilterByPrice(false);

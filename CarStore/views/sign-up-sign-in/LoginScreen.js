@@ -26,11 +26,11 @@ import auth from '@react-native-firebase/auth';
 import * as Animatable from 'react-native-animatable';
 import {STATUS} from '../../config/Status';
 import {ProcessLoading} from '../modal/ProcessLoading';
-import {ToastAndroid} from 'react-native';
 import {LOGIN_KEY, TOKEN_DEVICE} from '../../config/StorageKey';
 import {_storeData, _retrieveData} from '../../common/Utils';
 import {testIds} from '../../config/TestID';
 import AppText from '../../i18/AppText';
+import {showToastFail, showToastSuccess} from '../../common/Utils';
 
 const removeUserLogin = async () => {
   try {
@@ -98,17 +98,17 @@ class LoginScreen extends React.Component {
   };
 
   componentDidUpdate() {
-    console.log('HELLO ---', this.props.user?.status);
     if (this.props.user?.status === STATUS.SUCCESS) {
+      showToastSuccess(
+        'Success',
+        'Welcome ' + this.props.user?.data?.data?.email,
+      );
       if (this.state.loading) {
         this.setState({loading: false});
       }
       this.props.navigation.navigate('RootDrawer');
     } else if (this.props.user?.status === STATUS.FAIL) {
-      ToastAndroid.show(
-        'Invalid account, check and try again',
-        ToastAndroid.LONG,
-      );
+      showToastFail('Error', 'Invalid account, check and try again');
       this.props.reload();
       if (this.state.loading) {
         this.setState({loading: false});

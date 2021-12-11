@@ -5,6 +5,7 @@ import {Provider} from 'react-redux';
 import {store, persistor} from './redux/Store';
 import {PersistGate} from 'redux-persist/integration/react';
 import {LogBox} from 'react-native';
+import Toast from 'react-native-toast-message';
 
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 export default class App extends React.Component {
@@ -14,6 +15,7 @@ export default class App extends React.Component {
         <PersistGate loading={null} persistor={persistor}>
           <NavigationContainer>
             <Root />
+            <Toast />
           </NavigationContainer>
         </PersistGate>
       </Provider>

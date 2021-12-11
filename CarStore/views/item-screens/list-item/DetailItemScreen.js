@@ -7,11 +7,9 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  ToastAndroid,
 } from 'react-native';
 import HeaderComponent from '../../headerComponent';
 import RelatedItemList from './RelatedItemList';
-import ColorPickerComponent from '../component/ColorPickerComponent';
 import {addToCart} from '../../../redux/action/cart-action/AddToCart';
 import {connect} from 'react-redux';
 import {STATUS} from '../../../config/Status';
@@ -19,6 +17,7 @@ import {ModalComponent} from '../../modal/ModalComponent';
 import AppText from '../../../i18/AppText';
 import {Rating} from 'react-native-ratings';
 import {getListComment} from '../../../redux/action/comment/CommentAction';
+import {showToastSuccess, showToastFail} from '../../../common/Utils';
 
 class DetailItemScreen extends React.Component {
   constructor(props) {
@@ -43,14 +42,11 @@ class DetailItemScreen extends React.Component {
   componentDidUpdate() {
     const name = this.state.itemInfo.name;
     if (this.props.cart.status === 'ADD_SUCCESS') {
-      ToastAndroid.show(`Add ${name} to cart successfully`, ToastAndroid.LONG);
+      showToastSuccess('Sucess', `Add ${name} to cart successfully`);
       this.props.cart.status = STATUS.FAIL;
     }
     if (this.props.cart.status === 'ADD_FAIL') {
-      ToastAndroid.show(
-        `${name} already exist in your cart`,
-        ToastAndroid.LONG,
-      );
+      showToastFail('Error', `${name} already exist in your cart`);
       this.props.cart.status = STATUS.FAIL;
     }
   }
@@ -79,7 +75,7 @@ class DetailItemScreen extends React.Component {
             paddingHorizontal: 20,
             marginTop: 20,
           }}>
-          <Text>Related items</Text>
+          <AppText i18nKey={'releatedItem'} />
         </View>
         <RelatedItemList
           data={this.state.relatedItems}
@@ -134,49 +130,49 @@ class DetailItemScreen extends React.Component {
                   ${this.state.itemInfo.prices ?? this.state.itemInfo.price}
                 </Text>
               </View>
-              <View style={{marginVertical: 16, paddingHorizontal: 16}}>
-                <Text>Star rating</Text>
-              </View>
             </View>
             {this.renderRelatedItem()}
-            <View>
-              <ColorPickerComponent data={this.props.route.params.data.color} />
-            </View>
             <View
               style={{
                 paddingHorizontal: 20,
                 marginTop: 20,
               }}>
-              <Text>Description</Text>
+              <AppText i18nKey={'carInfo'} />
             </View>
             <View style={[styles.Description, {padding: 16}]}>
               <View style={{alignItems: 'center'}}>
                 <View style={[styles.Description_row]}>
-                  <Text style={styles.titleDescrition}>Width</Text>
+                  <AppText style={styles.titleDescrition} i18nKey={'width'} />
                   <Text style={styles.valueDescrition}>
                     {this.state.itemInfo.width}
                   </Text>
                 </View>
                 <View style={[styles.Description_row]}>
-                  <Text style={styles.titleDescrition}>Length</Text>
+                  <AppText style={styles.titleDescrition} i18nKey={'length'} />
                   <Text style={styles.valueDescrition}>
                     {this.state.itemInfo.length}
                   </Text>
                 </View>
                 <View style={[styles.Description_row]}>
-                  <Text style={styles.titleDescrition}>Height</Text>
+                  <AppText style={styles.titleDescrition} i18nKey={'heigth'} />
                   <Text style={styles.valueDescrition}>
                     {this.state.itemInfo.height}
                   </Text>
                 </View>
                 <View style={[styles.Description_row]}>
-                  <Text style={styles.titleDescrition}>Make</Text>
+                  <AppText
+                    style={styles.titleDescrition}
+                    i18nKey={'Category'}
+                  />
                   <Text style={styles.valueDescrition}>
                     {this.state.itemInfo.category}
                   </Text>
                 </View>
                 <View style={[styles.Description_row]}>
-                  <Text style={styles.titleDescrition}>Description</Text>
+                  <AppText
+                    style={styles.titleDescrition}
+                    i18nKey={'description'}
+                  />
                   <Text style={styles.valueDescrition}>
                     {this.state.itemInfo.description}
                   </Text>

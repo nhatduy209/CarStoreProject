@@ -7,6 +7,7 @@ import {
   Platform,
   ToastAndroid,
   ActivityIndicator,
+  ScrollView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import CardItem from '../item-screens/list-item/CardItem';
@@ -108,24 +109,26 @@ class RenderCarCategory extends React.Component {
     return this.state.filterByPrice ? (
       <View />
     ) : (
-      <FlatList
-        ListHeaderComponent={this.renderHeader}
-        data={this.props.car}
-        renderItem={item =>
-          this.renderItem({...item, navigation: this.props.navigation})
-        }
-        ListEmptyComponent={this.renderEmpty}
-        keyExtractor={item => item.name}
-        showsHorizontalScrollIndicator={false}
-        ItemSeparatorComponent={this.separateItem}
-        style={{marginTop: 50}}
-        ListFooterComponent={this.renderFooter}
-        onEndReachedThreshold={1}
-        onEndReached={({distanceFromEnd}) =>
-          // problem
-          this.loadMoreItem()
-        }
-      />
+      <ScrollView style={{marginTop: 30}}>
+        <FlatList
+          ListHeaderComponent={this.renderHeader}
+          data={this.props.car}
+          renderItem={item =>
+            this.renderItem({...item, navigation: this.props.navigation})
+          }
+          ListEmptyComponent={this.renderEmpty}
+          keyExtractor={item => item.name}
+          showsHorizontalScrollIndicator={false}
+          ItemSeparatorComponent={this.separateItem}
+          style={{marginTop: 50}}
+          ListFooterComponent={this.renderFooter}
+          onEndReachedThreshold={1}
+          onEndReached={({distanceFromEnd}) =>
+            // problem
+            this.loadMoreItem()
+          }
+        />
+      </ScrollView>
     );
   };
 

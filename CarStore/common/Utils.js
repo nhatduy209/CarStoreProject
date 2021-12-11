@@ -1,4 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
+
 export const _storeData = async (key, value) => {
   try {
     await AsyncStorage.setItem(key, value);
@@ -29,5 +31,23 @@ export const handleValidate = dataValidate => {
       index,
       isCorrect: item[1].length > 0,
     };
+  });
+};
+
+export const showToastSuccess = (title, message, option) => {
+  Toast.show({
+    type: 'success',
+    text1: title,
+    text2: message,
+    visibilityTime: 2000,
+  });
+};
+
+export const showToastFail = (title, message, option) => {
+  Toast.show({
+    type: 'error',
+    text1: title,
+    text2: message,
+    visibilityTime: 2000,
   });
 };

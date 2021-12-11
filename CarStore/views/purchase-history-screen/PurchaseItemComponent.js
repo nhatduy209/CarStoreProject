@@ -4,8 +4,6 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Moment from 'react-moment';
 import AppText from '../../i18/AppText';
-import {addComment} from '../../redux/action/comment/CommentAction';
-import {connect} from 'react-redux';
 
 export default class PurchaseItemComponent extends React.Component {
   constructor(props) {

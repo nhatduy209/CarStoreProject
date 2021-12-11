@@ -17,6 +17,8 @@ import {
 import AppText from '../../i18/AppText';
 import Moment from 'react-moment';
 import {STATUS} from '../../config/Status';
+import {showToastSuccess, showToastFail} from '../../common/Utils';
+
 class BookingDetailScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -45,12 +47,18 @@ class BookingDetailScreen extends React.Component {
 
   componentDidUpdate() {
     if (this.props.statusCancelBooking === STATUS.SUCCESS) {
+      showToastSuccess('Success', 'You have canceled meeting');
       this.props.navigation.push('CalendarScreen');
       this.props.navigation.navigate('CalendarScreen');
     }
     if (this.props.confirmStatus === STATUS.SUCCESS) {
+      showToastSuccess('Success', 'You have confirm meeting');
       this.props.navigation.push('CalendarScreen');
       this.props.navigation.navigate('CalendarScreen');
+      this.props.reloadConfirm();
+    }
+    if (this.props.confirmStatus === STATUS.FAIL) {
+      showToastFail('Error', 'Can not confirm meeting');
       this.props.reloadConfirm();
     }
   }
@@ -102,7 +110,7 @@ class BookingDetailScreen extends React.Component {
               <AppText i18nKey={'Address'} style={styles.textInfo} />
               <Text numberOfLines={1} style={{width: 150}}>
                 {' '}
-                269 , Ha Duy Phien , ap 4a , xa Binh My , huyen Củ Chi , tp HCM{' '}
+                {booking?.address}
               </Text>
             </View>
 

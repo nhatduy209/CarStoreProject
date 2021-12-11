@@ -18,6 +18,8 @@ import {
   changeShowModalState,
 } from '../../redux/action/booking/BookingAction';
 import AppText from '../../i18/AppText';
+import {handleValidate} from '../../common/Utils';
+import {showToastFail} from '../../common/Utils';
 
 class BookingScreen extends React.Component {
   constructor(props) {
@@ -36,6 +38,7 @@ class BookingScreen extends React.Component {
       selectedCar: this.props.cart.data[0],
       fullName: '',
     };
+    this.arrayCheck = [];
   }
   handleSelect = item => {
     this.setState({country: item.name, countryCode: item.cca2});
@@ -62,6 +65,7 @@ class BookingScreen extends React.Component {
   };
 
   handleSubmit = () => {
+    let count = 0;
     const data = {
       full_name: this.state.fullName,
       clients_email: this.state.email,
@@ -78,7 +82,30 @@ class BookingScreen extends React.Component {
         image: this.state.selectedCar.car_img,
       },
     };
-    this.props.createBooking({data});
+    const checkDate = {
+      full_name: this.state.fullName,
+      clients_email: this.state.email,
+      country: this.state.country,
+      birthday: this.state.birthday,
+      personal_id: this.state.personalID,
+      phone_number: this.state.phoneNum,
+    };
+    this.arrayCheck = handleValidate(checkDate);
+    this.arrayCheck.map(item => {
+      if (!item.isCorrect) {
+        showToastFail(
+          'Error',
+          'All data must be filled in , please check again',
+        );
+        return;
+      } else {
+        count++;
+      }
+    });
+
+    if (count === this.arrayCheck.length) {
+      this.props.createBooking({data});
+    }
   };
   handleModalButton = () => {
     return this.props.booking.STATUS_BOOKING === 'SUCCESS'

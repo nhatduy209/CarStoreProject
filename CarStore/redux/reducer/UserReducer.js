@@ -6,6 +6,7 @@ const USER_STATE = {
   user: {
     status: STATUS.FAIL,
   },
+  updateStatus: STATUS.NONE,
 };
 
 const UserReducer = (state = USER_STATE, action) => {
@@ -70,19 +71,19 @@ const UserReducer = (state = USER_STATE, action) => {
     case CHANGE_INFO_ACTION_NAME.CHANGE_INFO_ACTION.CHANGE_INFO_SUCCESS:
       return {
         ...state,
-        user: {data: action.data.data, updateStatus: STATUS.SUCCESS},
+        user: action.data,
+        updateStatus: STATUS.SUCCESS,
       };
     case CHANGE_INFO_ACTION_NAME.CHANGE_INFO_ACTION.CHANGE_INFO_FAIL:
       return {
         ...state,
-        user: {updateStatus: STATUS.FAIL},
+        updateStatus: STATUS.FAIL,
       };
     case CHANGE_INFO_ACTION_NAME.RELOAD_UPLOAD:
       return {
         ...state,
-        user: {updateStatus: STATUS.NONE},
+        updateStatus: STATUS.NONE,
       };
-
     default:
       return state;
   }

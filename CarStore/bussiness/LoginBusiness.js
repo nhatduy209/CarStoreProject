@@ -8,6 +8,7 @@ export default class LoginBusiness {
       email: data.email,
       password: data.password,
       tokenDevice: data.tokenDevice,
+      role: data.role,
     };
     var result = await postService.PostAPI(APP_URL.LOGIN, params);
     return result;

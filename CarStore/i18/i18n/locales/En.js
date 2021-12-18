@@ -97,5 +97,12 @@ export default {
   heigth: 'Heigth',
   description: 'Description',
   length: 'Length',
+  Next: 'Next',
   carInfo: 'Car info',
+  titleStoreInfo1: 'We will provide',
+  messageStoreInfo1: 'best service for you , with professional employee',
+  titleStoreInfo2: 'Adminstrator system include',
+  messageStoreInfo2: 'Tran Thanh Toan - Tran Nhat Duy',
+  titleStoreInfo3: 'About us',
+  messageStoreInfo3: '',
 };

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {STATUS} from '../config/Status';
 
-export default class PostServiceGetService {
+export default class GetService {
   getAPI = async url => {
     try {
       const response = await axios.get(url);

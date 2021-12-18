@@ -18,7 +18,8 @@ class DrawerContent extends React.Component {
     this.props.navigation.navigate('HomeScreenStack');
   };
   onStoreInfoPress = () => {
-    this.props.navigation.navigate('StoreScreenStack');
+    this.props.navigation.push('StoreInfoScreen');
+    this.props.navigation.navigate('StoreInfoScreen');
   };
   onStatisticPress = () => {
     this.props.navigation.navigate('StatisticScreen');

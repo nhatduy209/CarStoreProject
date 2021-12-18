@@ -97,5 +97,13 @@ export default {
   heigth: 'Chiều cao',
   description: 'Mô tả',
   length: 'Chiều dài',
+  Next: 'Tiếp theo',
   carInfo: 'Thông tin xe',
+  titleStoreInfo1: 'Chúng tôi cung cấp',
+  messageStoreInfo1:
+    'dịch vụ tốt nhất cho bạn, với những nhân viên tư vấn chuyên nghiệp',
+  titleStoreInfo2: 'Hệ thống admin gồm',
+  messageStoreInfo2: 'Tran Thanh Toan - Tran Nhat Duy',
+  titleStoreInfo3: 'About us',
+  messageStoreInfo3: '',
 };

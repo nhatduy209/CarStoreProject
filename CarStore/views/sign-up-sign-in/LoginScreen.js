@@ -26,7 +26,11 @@ import auth from '@react-native-firebase/auth';
 import * as Animatable from 'react-native-animatable';
 import {STATUS} from '../../config/Status';
 import {ProcessLoading} from '../modal/ProcessLoading';
-import {LOGIN_KEY, TOKEN_DEVICE} from '../../config/StorageKey';
+import {
+  AUTHENTICATION_TOKEN,
+  LOGIN_KEY,
+  TOKEN_DEVICE,
+} from '../../config/StorageKey';
 import {_storeData, _retrieveData} from '../../common/Utils';
 import {testIds} from '../../config/TestID';
 import AppText from '../../i18/AppText';
@@ -99,6 +103,7 @@ class LoginScreen extends React.Component {
 
   componentDidUpdate() {
     if (this.props.user?.status === STATUS.SUCCESS) {
+      _storeData(AUTHENTICATION_TOKEN, this.props.user?.data?.data?.token);
       showToastSuccess(
         'Success',
         'Welcome ' + this.props.user?.data?.data?.email,

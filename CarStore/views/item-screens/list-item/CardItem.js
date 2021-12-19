@@ -36,11 +36,6 @@ class CardItem extends React.Component {
     this.setState({isShow: false});
   }
   listOptionIcons = [
-    // {
-    //   iconName: 'info',
-    //   backgroundColor: '#7289da',
-    //   onPress: () => this.handleUpdertItem('Detail'),
-    // },
     {
       iconName: 'pencil',
       backgroundColor: '#99cc33',

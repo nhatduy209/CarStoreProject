@@ -7,9 +7,7 @@ import {
   TouchableOpacity,
   Linking,
 } from 'react-native';
-import HeaderComponent from '../headerComponent';
 import {getStoreInfo} from '../../redux/action/store-info/StoreInfoAction';
-import Icon from 'react-native-vector-icons/Ionicons';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import AppText from '../../i18/AppText';

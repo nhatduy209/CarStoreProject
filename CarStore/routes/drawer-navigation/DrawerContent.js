@@ -21,9 +21,6 @@ class DrawerContent extends React.Component {
     this.props.navigation.push('StoreInfoScreen');
     this.props.navigation.navigate('StoreInfoScreen');
   };
-  onStatisticPress = () => {
-    this.props.navigation.navigate('StatisticScreen');
-  };
   onManagePress = () => {
     this.props.navigation.navigate('ManageItemScreenStack', {
       isManagementScreen: true,

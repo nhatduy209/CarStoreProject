@@ -119,7 +119,6 @@ class UpsertItemScreen extends React.Component {
     if (this.props.reload) {
       this.setState({loading: false});
       this.setData();
-      this.props.navigation.push('ManageItemsScreen');
     }
   }
   renderInput({item}) {

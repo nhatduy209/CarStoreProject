@@ -9,7 +9,6 @@ import {
   ActivityIndicator,
   ToastAndroid,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import {connect} from 'react-redux';
 import CardItem from './CardItem';
 import {searchCar} from '../../../redux/action/search-car/SearchAction';
@@ -19,7 +18,7 @@ import {
   getListCarByPrice,
 } from '../../../redux/action/get-list-car/GetListCar';
 import {reloadListItem} from '../../../redux/action/manage-item-action/ReloadListItemAction';
-import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+import {FlatList} from 'react-native-gesture-handler';
 import {setDefaultListColor} from '../../../redux/action/list-color/ListColorAction';
 import FilterByPrice from './FilterByPrice';
 if (
@@ -77,29 +76,6 @@ class AllItemsScreen extends React.Component {
     }
   };
 
-  showAddContainer = () => {
-    return (
-      <View style={styles.addContainer}>
-        <Text style={{fontSize: 20}}>Item Count: {this.props.car.length}</Text>
-        <TouchableOpacity
-          onPress={() => {
-            this.props.setDefaultListColor();
-            this.props.navigation.navigate('UpsertItemScreen', {action: 'Add'});
-          }}
-          style={[
-            styles.btnBuy,
-            styles.shadowBox,
-            {backgroundColor: '#9695c1'},
-          ]}>
-          <Icon style={styles.btn__text} name="plus" />
-        </TouchableOpacity>
-      </View>
-    );
-  };
-  renderHeader = () => {
-    return this.props.isManagementScreen ? this.showAddContainer() : <View />;
-  };
-
   loadMoreItem = () => {
     console.log('HELLo', this.canLoadMore);
     if (this.canLoadMore) {
@@ -128,7 +104,6 @@ class AllItemsScreen extends React.Component {
       <View />
     ) : (
       <FlatList
-        ListHeaderComponent={this.renderHeader}
         data={this.props.isSearch ? this.props.listSearchItems : this.props.car}
         renderItem={item =>
           this.renderItem({...item, navigation: this.props.navigation})
@@ -196,32 +171,3 @@ export default connect(mapStateToProps, {
   getListCarByPrice,
   reloadListItem,
 })(AllItemsScreen);
-
-const styles = StyleSheet.create({
-  addContainer: {
-    height: 100,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-  },
-  btnBuy: {
-    width: 80,
-    justifyContent: 'center',
-    padding: 10,
-    height: 60,
-    borderRadius: 30,
-  },
-  shadowBox: {
-    shadowColor: '#bbb',
-    shadowOffset: {width: -2, peak: 4},
-    shadowOpacity: 0.5,
-    shadowRadius: 3,
-    elevation: 6,
-  },
-  btn__text: {
-    textAlign: 'center',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-});

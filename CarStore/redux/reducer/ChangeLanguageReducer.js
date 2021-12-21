@@ -10,7 +10,7 @@ const LanguageReducer = (state = initialState, action) => {
     case REHYDRATE:
       return {
         ...state,
-        user: action.payload?.LanguageReducer.language,
+        language: action.payload?.LanguageReducer.language,
       };
     case NAME_ACTIONS.CHANGE_LANGUAGE.CHANGE_LANGUAGE: {
       state = {

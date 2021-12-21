@@ -108,12 +108,10 @@ class BookingScreen extends React.Component {
     }
   };
   handleModalButton = () => {
-    return this.props.booking.STATUS_BOOKING === 'SUCCESS'
-      ? 'Go to calendar'
-      : ' Close';
+    return this.props.booking.STATUS_BOOKING === 'SUCCESS' ? 'OK' : ' Close';
   };
   handleCloseModal = () => {
-    this.props.navigation.navigate('CalendarStack');
+    this.props.navigation.navigate('Home');
     this.props.changeShowModalState();
   };
   render() {

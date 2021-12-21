@@ -49,7 +49,7 @@ class BookingDetailScreen extends React.Component {
     if (this.props.statusCancelBooking === STATUS.SUCCESS) {
       showToastSuccess('Success', 'You have canceled meeting');
       this.props.navigation.push('CalendarScreen');
-      this.props.navigation.navigate('CalendarScreen');
+      this.props.navigation.navigate('Home');
     }
     if (this.props.confirmStatus === STATUS.SUCCESS) {
       showToastSuccess('Success', 'You have confirm meeting');

@@ -200,7 +200,8 @@ class DetailItemScreen extends React.Component {
                 />
                 <Text>
                   {' '}
-                  ({totalRating / this.props.comment?.data?.length}/5){' '}
+                  ({(totalRating / this.props.comment?.data?.length).toFixed(2)}
+                  /5){' '}
                 </Text>
                 <TouchableOpacity
                   style={{marginLeft: 'auto'}}

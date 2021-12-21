@@ -10,6 +10,7 @@ import {
   BackHandler,
   Switch,
 } from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {connect} from 'react-redux';
@@ -63,6 +64,7 @@ class LoginScreen extends React.Component {
       colorRemember: 'black',
       userEmail: {},
       loading: false,
+      isAdmin: false,
     };
   }
 
@@ -170,7 +172,12 @@ class LoginScreen extends React.Component {
     } else {
       removeUserLogin();
     }
-    this.props.login(this.state.email, this.state.password, tokenDevice);
+    this.props.login(
+      this.state.email,
+      this.state.password,
+      tokenDevice,
+      this.state.isAdmin ? 'admin' : 'member',
+    );
   };
 
   render() {
@@ -237,6 +244,24 @@ class LoginScreen extends React.Component {
                   value={this.state.password}
                 />
               </View>
+            </View>
+
+            <View
+              style={{
+                flexDirection: 'row',
+                width: 70,
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <CheckBox
+                value={this.state.isAdmin}
+                style={styles.checkbox}
+                onValueChange={() =>
+                  this.setState({isAdmin: !this.state.isAdmin})
+                }
+              />
+
+              <Text>Admin</Text>
             </View>
 
             {/*end input field */}

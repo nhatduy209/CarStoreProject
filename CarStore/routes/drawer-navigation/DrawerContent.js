@@ -18,7 +18,6 @@ class DrawerContent extends React.Component {
     this.props.navigation.navigate('HomeScreenStack');
   };
   onStoreInfoPress = () => {
-    this.props.navigation.push('StoreInfoScreen');
     this.props.navigation.navigate('StoreInfoScreen');
   };
   onManagePress = () => {
@@ -45,11 +44,6 @@ class DrawerContent extends React.Component {
       iconName: 'car',
       textContent: 'Product',
       handlePress: this.onManagePress,
-    },
-    {
-      iconName: 'book',
-      textContent: 'Policy',
-      handlePress: this.onHomePress,
     },
     {
       iconName: 'phone',

@@ -53,10 +53,6 @@ class CommentScreen extends React.Component {
     this.props.getListComment(this.props.route.params.name);
   }
 
-  componentDidUpdate() {
-    console.log('LOG ---', this.props.comment.data);
-  }
-
   renderItem = ({item, index}) => (
     <TouchableOpacity onPress={() => this.setState({selectedItem: item.id})}>
       <View
@@ -103,10 +99,6 @@ class CommentScreen extends React.Component {
           </View>
 
           <Text>{item.comment}</Text>
-          {/* <Image
-            source={{uri: item.image}}
-            style={{width: 200, height: 100, marginTop: 10}}
-          /> */}
         </View>
       </View>
     </View>

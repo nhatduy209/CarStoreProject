@@ -7,6 +7,8 @@ import {
   View,
   Image,
   ScrollView,
+  BackHandler,
+  Alert,
 } from 'react-native';
 import {Rating} from 'react-native-ratings';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -48,6 +50,18 @@ class CommentScreen extends React.Component {
       selectedItem: 0,
     };
   }
+
+  backAction = () => {
+    Alert.alert('Hold on!', 'Are you sure you want to go back?', [
+      {
+        text: 'Cancel',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      {text: 'YES', onPress: () => this.props.navigation.goBack()},
+    ]);
+    return true;
+  };
 
   componentDidMount() {
     this.props.getListComment(this.props.route.params.name);

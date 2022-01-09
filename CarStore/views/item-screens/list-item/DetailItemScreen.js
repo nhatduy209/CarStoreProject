@@ -196,11 +196,16 @@ class DetailItemScreen extends React.Component {
                   ratingCount={5}
                   imageSize={20}
                   readonly
-                  startingValue={this.state.rating}
+                  startingValue={
+                    totalRating / (this.props.comment?.data?.length || 1)
+                  }
                 />
                 <Text>
                   {' '}
-                  ({(totalRating / this.props.comment?.data?.length).toFixed(2)}
+                  (
+                  {(
+                    totalRating / (this.props.comment?.data?.length || 1)
+                  ).toFixed(2)}
                   /5){' '}
                 </Text>
                 <TouchableOpacity

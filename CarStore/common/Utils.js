@@ -26,10 +26,10 @@ export const _retrieveData = async key => {
 export const handleValidate = dataValidate => {
   const revertArray = Object.entries(dataValidate);
   return revertArray.map((item, index) => {
-    console.log('ITEM --', item);
+    console.log('ITEM --', item[1].toString().length);
     return {
       index,
-      isCorrect: item[1].length > 0,
+      isCorrect: item[1].toString().length > 0,
     };
   });
 };

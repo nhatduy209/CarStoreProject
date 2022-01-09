@@ -166,7 +166,7 @@ class HomeScreen extends React.Component {
               <View style={{flex: 1}}>
                 <AppText
                   style={{fontSize: 18, fontWeight: '900'}}
-                  i18nKey={'Categories'}
+                  i18nKey={'Brand'}
                 />
               </View>
             </View>

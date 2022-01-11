@@ -19,7 +19,7 @@ export default {
   warningEmptyPhone: 'You are missing phone number',
   warningEmptyPassword: 'You are missing password',
   warningEmptyConfirmPassword: 'Your confirm password and password not match',
-  Language: 'VietNamese',
+  Language: 'Language',
   ChangeLanguage: 'Change language to :',
   NewCar: 'New Car',
   TopChoice: 'Top Choice',
@@ -105,4 +105,5 @@ export default {
   messageStoreInfo2: 'Tran Thanh Toan - Tran Nhat Duy',
   titleStoreInfo3: 'About us',
   messageStoreInfo3: '',
+  product: 'Product',
 };

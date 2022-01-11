@@ -106,4 +106,5 @@ export default {
   messageStoreInfo2: 'Tran Thanh Toan - Tran Nhat Duy',
   titleStoreInfo3: 'About us',
   messageStoreInfo3: '',
+  product: 'Sản phẩm',
 };

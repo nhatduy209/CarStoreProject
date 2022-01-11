@@ -70,20 +70,18 @@ export default class PurchaseItemComponent extends React.Component {
             borderColor: '#ddd',
             borderBottomWidth: 0.5,
           }}>
-          <Text>1 Sản phẩm</Text>
+          <AppText i18nKey={'product'} />
           <View
             style={{
               flexDirection: 'row',
               width: '35%',
               justifyContent: 'space-between',
             }}>
-            <Text>
-              Thành tiền:{' '}
-              <Text
-                style={{
-                  color: '#ff4d00',
-                }}>{`$${this.props.item?.prices}`}</Text>
-            </Text>
+            <AppText i18nKey={'Price'}></AppText>
+            <Text
+              style={{
+                color: '#ff4d00',
+              }}>{`$${this.props.item?.prices}`}</Text>
             <Icon name="angle-right" size={16} />
           </View>
         </View>

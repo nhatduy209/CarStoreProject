@@ -1,5 +1,6 @@
 import {ACTION_NAME} from '../action/get-list-car/ActionName';
 import {ACTION_NAME as MANAGE_ACTION_NAME} from '../action/manage-item-action/ActionName';
+import {ACTION_NAME as DETAIL_ACTION} from '../action/get-detail-car/ActionName';
 import {STATUS} from '../../config/Status';
 const CAR_STATE = {
   car: [],
@@ -7,6 +8,7 @@ const CAR_STATE = {
   status_loading: STATUS.NONE,
   topchoice: [],
   newcar: [],
+  detail: {},
 };
 
 const CarReducer = (state = CAR_STATE, action) => {
@@ -140,6 +142,18 @@ const CarReducer = (state = CAR_STATE, action) => {
         ...state,
         reload: false,
       };
+    case DETAIL_ACTION.GET_DETAIL_CAR.GET_DETAIL_CAR_SUCCESS:
+      console.log('OKI ---');
+      return {
+        ...state,
+        detail: action.data,
+      };
+    case DETAIL_ACTION.GET_DETAIL_CAR.GET_DETAIL_CAR_FAIL:
+      return {
+        ...state,
+        detail: {},
+      };
+
     default:
       return state;
   }

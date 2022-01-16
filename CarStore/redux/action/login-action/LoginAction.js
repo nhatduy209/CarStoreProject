@@ -17,9 +17,9 @@ export const login =
     });
   };
 
-export const loginWithEmail = data => async dispatch => {
+export const loginWithEmail = (data, token) => async dispatch => {
   var loginBusiness = new LoginBusiness();
-  const resultdata = await loginBusiness.loginWithEmailBusiness(data);
+  const resultdata = await loginBusiness.loginWithEmailBusiness(data, token);
   dispatch({
     type: ACTION_NAME.LOGIN_ACTION.LOGIN_ACTION,
     data: resultdata,

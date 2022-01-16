@@ -14,13 +14,14 @@ export default class LoginBusiness {
     return result;
   };
 
-  loginWithEmailBusiness = async data => {
+  loginWithEmailBusiness = async (data, token) => {
     var postService = new PostService();
 
     const params = {
       email: data.email,
       displayName: data.displayName,
       photoURL: data.photoURL,
+      tokenDevice: token,
     };
     var result = await postService.PostAPI(APP_URL.LOGIN_WITH_EMAIL, params);
     return result;

@@ -91,4 +91,17 @@ export default class GetListCarBusiness {
 
     return result;
   };
+
+  getDetailCar = async name => {
+    const params = {
+      name,
+    };
+    var getService = new GetService();
+    var result = await getService.getApiWithParams(
+      APP_URL.GET_DETAIL_CAR,
+      params,
+    );
+
+    return result;
+  };
 }

@@ -18,12 +18,12 @@ import AppText from '../../../i18/AppText';
 import {Rating} from 'react-native-ratings';
 import {getListComment} from '../../../redux/action/comment/CommentAction';
 import {showToastSuccess, showToastFail} from '../../../common/Utils';
+import {getDetail} from '../../../redux/action/get-detail-car/GetDetailCar';
 
 class DetailItemScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemInfo: {},
       relatedItems: [],
       quantity: 0,
       isShow: false,
@@ -31,16 +31,22 @@ class DetailItemScreen extends React.Component {
     };
   }
   componentDidMount() {
-    this.props.getListComment(this.props.route.params.data.name);
+    this.props.getListComment(
+      this.props.route.params.data.name ??
+        this.props.route.params.data.car_name,
+    );
+    this.props.getDetail(
+      this.props.route.params.data.name ??
+        this.props.route.params.data.car_name,
+    );
     console.log(this.props.route.params.data);
-    this.setState({itemInfo: this.props.route.params.data});
     const list = this.props.car.filter(item => {
       return item.category === this.props.route.params.data.category;
     });
     this.setState({relatedItems: list});
   }
   componentDidUpdate() {
-    const name = this.state.itemInfo.name;
+    const name = this.props.detail_car?.data?.name;
     if (this.props.cart.status === 'ADD_SUCCESS') {
       showToastSuccess('Sucess', `Add ${name} to cart successfully`);
       this.props.cart.status = STATUS.FAIL;
@@ -54,11 +60,11 @@ class DetailItemScreen extends React.Component {
     if (this.props.user?.data?.data?.email) {
       const data = {
         email: this.props.user.data.data.email,
-        name: this.state.itemInfo.name,
-        color: this.state.itemInfo.color[0].color,
+        name: this.props.detail_car?.data?.name,
+        color: this.props.detail_car?.data?.color[0].color,
         quantity: this.state.quantity,
-        price: this.state.itemInfo.prices,
-        url: this.state.itemInfo.img,
+        price: this.props.detail_car?.data?.prices,
+        url: this.props.detail_car?.data?.img,
       };
       this.props.addToCart(data);
     } else {
@@ -84,9 +90,11 @@ class DetailItemScreen extends React.Component {
       </View>
     );
   };
+
   render() {
+    console.log('OH HELLO DETAIL  ---', this.props?.detail_car);
     let totalRating = 0;
-    this.props?.comment?.data.map(
+    this.props?.comment?.data?.map(
       item => (totalRating = totalRating + item.rating),
     );
 
@@ -111,7 +119,7 @@ class DetailItemScreen extends React.Component {
             <Image
               style={[styles.imageItem, {width: '100%', height: '100%'}]}
               source={{
-                uri: this.state.itemInfo.img ?? this.state.itemInfo.car_img,
+                uri: this.props.detail_car?.data?.img,
               }}
             />
           </View>
@@ -124,10 +132,10 @@ class DetailItemScreen extends React.Component {
               ]}>
               <View style={{flexDirection: 'row'}}>
                 <Text style={[styles.name, {width: '70%'}]}>
-                  {this.state.itemInfo.name ?? this.state.itemInfo.car_name}
+                  {this.props.detail_car?.data?.name}
                 </Text>
                 <Text style={[styles.price, {width: '30%'}]}>
-                  ${this.state.itemInfo.prices ?? this.state.itemInfo.price}
+                  ${this.props.detail_car?.data?.prices}
                 </Text>
               </View>
             </View>
@@ -144,19 +152,19 @@ class DetailItemScreen extends React.Component {
                 <View style={[styles.Description_row]}>
                   <AppText style={styles.titleDescrition} i18nKey={'width'} />
                   <Text style={styles.valueDescrition}>
-                    {this.state.itemInfo.width}
+                    {this.props.detail_car?.data?.width}
                   </Text>
                 </View>
                 <View style={[styles.Description_row]}>
                   <AppText style={styles.titleDescrition} i18nKey={'length'} />
                   <Text style={styles.valueDescrition}>
-                    {this.state.itemInfo.length}
+                    {this.props.detail_car?.data?.length}
                   </Text>
                 </View>
                 <View style={[styles.Description_row]}>
                   <AppText style={styles.titleDescrition} i18nKey={'heigth'} />
                   <Text style={styles.valueDescrition}>
-                    {this.state.itemInfo.height}
+                    {this.props.detail_car?.data?.height}
                   </Text>
                 </View>
                 <View style={[styles.Description_row]}>
@@ -165,7 +173,7 @@ class DetailItemScreen extends React.Component {
                     i18nKey={'Category'}
                   />
                   <Text style={styles.valueDescrition}>
-                    {this.state.itemInfo.category}
+                    {this.props.detail_car?.data?.category}
                   </Text>
                 </View>
                 <View style={[styles.Description_row]}>
@@ -174,7 +182,7 @@ class DetailItemScreen extends React.Component {
                     i18nKey={'description'}
                   />
                   <Text style={styles.valueDescrition}>
-                    {this.state.itemInfo.description}
+                    {this.props.detail_car?.data?.description}
                   </Text>
                 </View>
               </View>
@@ -256,10 +264,11 @@ const mapStateToProps = state => {
     car: state.CarReducer.car,
     cart: state.CartReducer,
     comment: state.CommentReducer.comment.data,
+    detail_car: state.CarReducer.detail.data,
   };
 };
 
-export default connect(mapStateToProps, {addToCart, getListComment})(
+export default connect(mapStateToProps, {addToCart, getDetail, getListComment})(
   DetailItemScreen,
 );
 

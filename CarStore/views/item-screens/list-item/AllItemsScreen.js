@@ -33,13 +33,16 @@ class AllItemsScreen extends React.Component {
     this.start = this.props.car.length;
     this.end = 5;
     this.canLoadMore = true;
+
     this.state = {
       filterByPrice: false,
+      shouldLoad: true,
     };
   }
   componentDidUpdate(prevProps) {
-    if (prevProps.car.length === this.props.car.length) {
+    if (prevProps.car.length === this.props.car.length && this.canLoadMore) {
       this.canLoadMore = false;
+      this.setState({shouldLoad: false});
     }
 
     if (this.props.reload) {
@@ -65,6 +68,7 @@ class AllItemsScreen extends React.Component {
 
   renderFooter = () => {
     const isSearch = this.props.isSearch ?? false;
+    console.log('ALO ---', this.canLoadMore);
     if (this.canLoadMore && !isSearch) {
       return (
         <View style={{height: 160}}>
@@ -72,12 +76,12 @@ class AllItemsScreen extends React.Component {
         </View>
       );
     } else {
+      console.log('ALO ??---', this.canLoadMore);
       return <View style={{height: 150}} />;
     }
   };
 
   loadMoreItem = () => {
-    console.log('HELLo', this.canLoadMore);
     if (this.canLoadMore) {
       this.start += 5;
       this.props.getListCar(this.start, this.end);
@@ -113,7 +117,7 @@ class AllItemsScreen extends React.Component {
         showsHorizontalScrollIndicator={false}
         ItemSeparatorComponent={this.separateItem}
         style={{marginTop: 50}}
-        ListFooterComponent={this.renderFooter}
+        ListFooterComponent={() => this.canLoadMore && this.renderFooter()}
         onEndReachedThreshold={1}
         onEndReached={({distanceFromEnd}) =>
           // problem

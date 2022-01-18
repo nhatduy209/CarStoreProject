@@ -50,7 +50,7 @@ class FilterByPrice extends React.Component {
       <View
         style={{
           marginTop: 40,
-          paddingHorizontal: 16,
+          paddingHorizontal: 5,
           flexDirection: 'row',
         }}>
         <View>
@@ -83,10 +83,9 @@ class FilterByPrice extends React.Component {
           style={{
             backgroundColor: '#fff',
             padding: 8,
-            width: 70,
             borderRadius: 10,
             justifyContent: 'center',
-            margin: 20,
+            margin: 10,
           }}
           onPress={() => this.handelFilter()}>
           <AppText

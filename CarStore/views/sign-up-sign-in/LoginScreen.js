@@ -304,29 +304,16 @@ class LoginScreen extends React.Component {
               i18nKey={'Or'}
             />
 
-            <View style={{flexDirection: 'row', marginVertical: 10}}>
-              <TouchableOpacity
-                style={{
-                  ...styles.loginWith,
-                  backgroundColor: 'blue',
-                }}>
-                <Icon
-                  name="facebook"
-                  size={20}
-                  style={{color: 'white', marginRight: 5}}
-                />
-
-                <AppText
-                  style={{color: 'white', fontSize: 12}}
-                  i18nKey={'LoginWithFacebook'}
-                />
-              </TouchableOpacity>
-
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginVertical: 10,
+              }}>
               <TouchableOpacity
                 style={{
                   ...styles.loginWith,
                   backgroundColor: '#ff3333',
-                  marginLeft: 'auto',
                 }}
                 onPress={this.handleGoogleSignin}>
                 <Icon

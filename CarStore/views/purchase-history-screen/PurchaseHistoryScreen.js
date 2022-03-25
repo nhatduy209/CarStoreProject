@@ -110,13 +110,13 @@ class PurchaseHistoryScreen extends React.Component {
   shouldRenderCar = () => {
     switch (this.state.currentTab) {
       case 0:
-        this.car = this.props.historyItem.bookingItem;
+        this.car = this.props.historyItem?.bookingItem || [];
         break;
       case 1:
-        this.car = this.props.historyItem.confirmedItem;
+        this.car = this.props.historyItem?.confirmedItem || [];
         break;
       case 2:
-        this.car = this.props.historyItem.historyItem;
+        this.car = this.props.historyItem?.historyItem || [];
         break;
       default:
         break;
@@ -189,7 +189,8 @@ class PurchaseHistoryScreen extends React.Component {
               borderWidth: this.state.isType ? 1 : 0,
               borderColor: this.state.isType ? 'red' : '#f5f5f5',
             }}
-            placeholder="Share what you think"></TextInput>
+            placeholder="Share what you think"
+          />
 
           <View style={{alignItems: 'flex-start'}}>
             <Rating

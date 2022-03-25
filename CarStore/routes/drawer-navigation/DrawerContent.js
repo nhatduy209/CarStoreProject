@@ -29,6 +29,10 @@ class DrawerContent extends React.Component {
     this.props.navigation.navigate('SettingScreenStack');
   };
 
+  onMessagePress = () => {
+    this.props.navigation.navigate('MessageScreenStack');
+  };
+
   logout = async () => {
     const getToken = await _retrieveData(TOKEN_DEVICE);
     this.props.logout(this.props?.user.email, getToken);
@@ -59,6 +63,11 @@ class DrawerContent extends React.Component {
       iconName: 'snapchat',
       textContent: 'Statistic',
       handlePress: this.onStatisticPress,
+    },
+    {
+      iconName: 'comments',
+      textContent: 'Message',
+      handlePress: this.onMessagePress,
     },
     {
       iconName: 'check',

@@ -1,7 +1,8 @@
 import React from 'react';
 import {View, ScrollView, Image, Text} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Message from '../message/Message';
 import {styles} from './Style';
 
 export default class Conversation extends React.Component {
@@ -10,7 +11,7 @@ export default class Conversation extends React.Component {
   }
   render() {
     return (
-      <View>
+      <View style={{backgroundColor: '#fff', height: '100%'}}>
         <View
           style={{
             position: 'absolute',
@@ -69,11 +70,46 @@ export default class Conversation extends React.Component {
             </View>
           </View>
         </View>
-        <ScrollView style={{height: '100%'}}>
-          <View style={styles.conversationHeader}>
-            <Text>hello 1</Text>
-          </View>
+        <ScrollView
+          style={{
+            height: '80%',
+            backgroundColor: '#fda',
+            marginTop: 80,
+            borderTopRightRadius: 24,
+            borderTopLeftRadius: 24,
+            paddingHorizontal: 20,
+          }}>
+          <Message type={'other'} />
+          <Message />
+          <Message type={'other'} />
+          <Message />
+          <Message type={'other'} />
+          <Message />
+          <Message type={'other'} />
+          <Message type={'other'} />
+          <Message type={'other'} />
+          <Message type={'other'} />
+          <Message />
+          <Message type={'other'} />
+          <Message />
+          <Message />
+          <Message type={'other'} />
+          <Message />
+          <Message />
+          <Message />
+          <Message />
+          <Message />
         </ScrollView>
+        <View style={styles.footer}>
+          <TextInput style={styles.textInput} />
+          <TouchableOpacity>
+            <Icon
+              name="paper-plane"
+              size={16}
+              style={[{color: '#999', marginRight: 5}, styles.sendButton]}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

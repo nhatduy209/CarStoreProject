@@ -25,4 +25,26 @@ export const styles = StyleSheet.create({
   userName: {
     fontWeight: '700',
   },
+  textInput: {
+    width: '80%',
+    backgroundColor: '#fff',
+    borderRadius: 50,
+    paddingHorizontal: 12,
+  },
+  sendButton: {
+    borderRadius: 50,
+    backgroundColor: '#fff',
+    padding: 12,
+  },
+  footer: {
+    // position: 'absolute',
+    width: '100%',
+    // zIndex: 100,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    backgroundColor: '#fda',
+  },
 });

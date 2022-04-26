@@ -12,6 +12,7 @@ import LanguageReducer from './ChangeLanguageReducer';
 import HistoryItemReducer from './HistoryItemReducer';
 import PaymentReducer from './PaymentReducer';
 import CommentReducer from './CommentReducer';
+import MessageReducer from './MessageReducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const rootPersistConfig = {
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   StoreInfoReducer,
   PaymentReducer,
   CommentReducer,
+  MessageReducer,
 });
 
 export default persistReducer(rootPersistConfig, rootReducer);

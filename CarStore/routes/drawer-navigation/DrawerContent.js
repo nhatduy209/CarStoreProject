@@ -156,17 +156,13 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     color: '#bae1ff',
-    borderRadius: 10,
-    borderWidth: 0.5,
-    borderColor: '#bae1ff',
     width: 40,
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#444',
   },
   itemDrawer: {
-    paddingHorizontal: 40,
+    paddingHorizontal: 20,
     paddingVertical: 14,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -178,7 +174,7 @@ const styles = StyleSheet.create({
     color: '#bae1ff',
     fontWeight: 'bold',
     textAlign: 'left',
-    width: '50%',
+    width: '70%',
   },
   choosenScreen: {
     backgroundColor: '#fff',

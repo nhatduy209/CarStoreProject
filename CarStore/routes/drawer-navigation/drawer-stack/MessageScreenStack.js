@@ -1,7 +1,6 @@
 import React from 'react';
 import {Image, View, TouchableOpacity} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import MessageScreen from '../../../views/message-screen/MessageScreen';
 import Conversation from '../../../views/message-screen/component/conversation/Conversation';
 const Stack = createStackNavigator();
 
@@ -34,7 +33,7 @@ export default class MessageScreenStack extends React.Component {
   render() {
     return (
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="MessageScreen"
           component={MessageScreen}
           options={{
@@ -46,7 +45,7 @@ export default class MessageScreenStack extends React.Component {
               />
             ),
           }}
-        />
+        /> */}
         <Stack.Screen
           name="ConvesationScreen"
           component={Conversation}

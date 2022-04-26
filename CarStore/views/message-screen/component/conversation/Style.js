@@ -20,13 +20,13 @@ export const styles = StyleSheet.create({
     marginRight: 12,
   },
   itemContent: {
-    width: '70%',
+    width: '80%',
   },
   userName: {
     fontWeight: '700',
   },
   textInput: {
-    width: '80%',
+    width: '70%',
     backgroundColor: '#fff',
     borderRadius: 50,
     paddingHorizontal: 12,

@@ -3,12 +3,44 @@ import {View, ScrollView, Image, Text} from 'react-native';
 import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Message from '../message/Message';
+import {connect} from 'react-redux';
+import {
+  getInitMessage,
+  sendMessage,
+} from '../../../../redux/action/message/MessageAction';
 import {styles} from './Style';
 
-export default class Conversation extends React.Component {
+class Conversation extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      inputMesssage: '',
+    };
   }
+  componentDidMount() {
+    this.props.getInitMessage(this.props.user?.email ?? '');
+  }
+  renderItem = item => {
+    console.log(item);
+    if (item.id.includes(this.props.user?.email)) {
+      return <Message key={item.id} content={item.content} />;
+    }
+
+    return <Message type={'other'} content={item.content} key={item.id} />;
+  };
+  sendMessage = async () => {
+    console.log(this.state.inputMesssage);
+    const data = {
+      reciver: 'admin_123',
+      content: this.state.inputMesssage,
+      sender: this.props.user?.email,
+    };
+    await this.props.sendMessage({
+      data,
+      onSuccess: () => this.props.getInitMessage(this.props.user?.email ?? ''),
+    });
+    this.setState({inputMesssage: ''});
+  };
   render() {
     return (
       <View style={{backgroundColor: '#fff', height: '100%'}}>
@@ -42,20 +74,7 @@ export default class Conversation extends React.Component {
                   source={require('../../../../images/avatarPerson.jpeg')}
                   style={styles.itemAvatar}
                 />
-                <View style={styles.itemContent}>
-                  <Text>Name</Text>
-                  <Text>Last message</Text>
-                </View>
-                <Icon
-                  name="phone"
-                  size={16}
-                  style={{color: '#999', marginRight: 5}}
-                />
-                <Icon
-                  name="video"
-                  size={16}
-                  style={{color: '#999', marginRight: 5}}
-                />
+                <Text style={styles.itemContent}>Admin</Text>
               </View>
               <Text
                 style={{
@@ -79,32 +98,24 @@ export default class Conversation extends React.Component {
             borderTopLeftRadius: 24,
             paddingHorizontal: 20,
           }}>
-          <Message type={'other'} />
-          <Message />
-          <Message type={'other'} />
-          <Message />
-          <Message type={'other'} />
-          <Message />
-          <Message type={'other'} />
-          <Message type={'other'} />
-          <Message type={'other'} />
-          <Message type={'other'} />
-          <Message />
-          <Message type={'other'} />
-          <Message />
-          <Message />
-          <Message type={'other'} />
-          <Message />
-          <Message />
-          <Message />
-          <Message />
-          <Message />
+          {this.props.messages.map(el => this.renderItem(el))}
         </ScrollView>
         <View style={styles.footer}>
-          <TextInput style={styles.textInput} />
-          <TouchableOpacity>
+          <TextInput
+            style={styles.textInput}
+            value={this.state.inputMesssage}
+            onChangeText={value => this.setState({inputMesssage: value})}
+          />
+          <TouchableOpacity onPress={() => this.sendMessage()}>
             <Icon
               name="paper-plane"
+              size={16}
+              style={[{color: '#999', marginRight: 5}, styles.sendButton]}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Icon
+              name="image"
               size={16}
               style={[{color: '#999', marginRight: 5}, styles.sendButton]}
             />
@@ -114,3 +125,14 @@ export default class Conversation extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.UserReducer.user?.data?.data,
+    messages: state.MessageReducer.messages,
+  };
+};
+
+export default connect(mapStateToProps, {getInitMessage, sendMessage})(
+  Conversation,
+);

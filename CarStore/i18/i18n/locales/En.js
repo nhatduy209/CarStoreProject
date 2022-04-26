@@ -106,5 +106,5 @@ export default {
   titleStoreInfo3: 'About us',
   messageStoreInfo3: '',
   product: 'Product',
-  Message: 'Message',
+  Message: 'Contact Admin',
 };

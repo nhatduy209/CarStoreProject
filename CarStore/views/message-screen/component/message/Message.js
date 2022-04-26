@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, Text, Image} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {View, Text} from 'react-native';
 import {styles} from './Style';
 
 export default class Message extends React.Component {
@@ -36,7 +35,7 @@ export default class Message extends React.Component {
               styles.itemContent,
               this.props.type === 'other' ? styles.otherSide : styles.mine,
             ]}>
-            Last message
+            {this.props.content}
           </Text>
           {/* <Image
             source={require('../../../../images/avatarPerson.jpeg')}

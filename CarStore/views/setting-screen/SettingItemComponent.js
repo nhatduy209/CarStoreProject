@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    width: '80%',
+    width: '72%',
     justifyContent: 'flex-end',
   },
   moreIcon: {

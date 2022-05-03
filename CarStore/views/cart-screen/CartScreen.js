@@ -61,7 +61,7 @@ class CartScreen extends React.Component {
   };
 
   handleContact = () => {
-    if (this.props.cart.data.length) {
+    if (this.props?.cart?.data?.length) {
       this.props.navigation.navigate('BookingScreen');
     } else {
       ToastAndroid.show(

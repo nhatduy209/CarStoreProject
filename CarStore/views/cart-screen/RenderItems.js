@@ -3,6 +3,8 @@ import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {deleteItem} from '../../redux/action/cart-action/GetListCart';
 import {connect} from 'react-redux';
+import {formatNumber} from '../../common/Utils';
+
 class RenderItems extends React.Component {
   handleDelete = () => {
     const {_id} = this.props.item;
@@ -45,7 +47,11 @@ class RenderItems extends React.Component {
             </View>
           </View>
           <View style={{flexDirection: 'row'}}>
-            <Text style={{fontWeight: 'bold', fontSize: 15}}>{price}USD</Text>
+            <Text style={{fontWeight: 'bold', fontSize: 15}}>
+              {this.props.language === 'vi'
+                ? `${formatNumber(price * 23000)}VNĐ`
+                : `${formatNumber(price)}USD`}{' '}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -57,6 +63,7 @@ const mapStateToProps = state => {
   return {
     cart: state.CartReducer.cart,
     user: state.UserReducer.user.data,
+    language: state.LanguageReducer.language,
   };
 };
 

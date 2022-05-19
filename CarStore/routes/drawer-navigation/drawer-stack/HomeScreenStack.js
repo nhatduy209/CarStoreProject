@@ -7,6 +7,7 @@ import CartStack from '../../cart-stack/CartStack';
 import StoreInfoScreen from '../../../views/store-screen/StoreInfoScreen';
 import CalendarStack from '../../calendar-stack/CalendarStack';
 import RenderCarCategory from '../../../views/home-screen/RenderCarCategory';
+import {Message} from '../../../views/message/Message';
 const Stack = createStackNavigator();
 
 const NavigationDrawerStructureLeft = props => {
@@ -92,6 +93,13 @@ export default class HomeScreenStack extends React.Component {
         <Stack.Screen
           name="CalendarStack"
           component={CalendarStack}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="MessageScreen"
+          component={Message}
           options={{
             headerShown: false,
           }}

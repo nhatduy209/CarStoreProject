@@ -1,6 +1,9 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
-export default class RenderCarOnSale extends React.Component {
+import {formatNumber} from '../../common/Utils';
+import {connect} from 'react-redux';
+
+class RenderCarOnSale extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -33,7 +36,11 @@ export default class RenderCarOnSale extends React.Component {
             </View>
 
             <View style={{paddingHorizontal: 8}}>
-              <Text>{this.props.item.prices} USD</Text>
+              <Text>
+                {this.props.language === 'vi'
+                  ? `${formatNumber(this.props.item.prices * 23000)}VNĐ`
+                  : `${formatNumber(this.props.item.prices)}USD`}{' '}
+              </Text>
             </View>
           </View>
         </View>
@@ -50,3 +57,11 @@ const styles = new StyleSheet.create({
     borderRadius: 20,
   },
 });
+
+const mapStateToProps = state => {
+  return {
+    language: state.LanguageReducer.language,
+  };
+};
+
+export default connect(mapStateToProps, {})(RenderCarOnSale);

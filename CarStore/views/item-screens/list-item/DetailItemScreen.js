@@ -19,6 +19,7 @@ import {Rating} from 'react-native-ratings';
 import {getListComment} from '../../../redux/action/comment/CommentAction';
 import {showToastSuccess, showToastFail} from '../../../common/Utils';
 import {getDetail} from '../../../redux/action/get-detail-car/GetDetailCar';
+import {formatNumber} from '../../../common/Utils';
 
 class DetailItemScreen extends React.Component {
   constructor(props) {
@@ -130,12 +131,17 @@ class DetailItemScreen extends React.Component {
                 styles.shadowBox,
                 {padding: 16, marginTop: -30},
               ]}>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={[styles.name, {width: '70%'}]}>
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Text style={styles.name}>
                   {this.props.detail_car?.data?.name}
                 </Text>
-                <Text style={[styles.price, {width: '30%'}]}>
-                  ${this.props.detail_car?.data?.prices}
+                <Text style={styles.price}>
+                  {this.props.language === 'vi'
+                    ? `${formatNumber(
+                        this.props.detail_car?.data?.prices * 23000,
+                      )}VNĐ`
+                    : `${formatNumber(this.props.detail_car?.data?.prices)}USD`}
                 </Text>
               </View>
             </View>
@@ -265,6 +271,7 @@ const mapStateToProps = state => {
     cart: state.CartReducer,
     comment: state.CommentReducer.comment.data,
     detail_car: state.CarReducer.detail.data,
+    language: state.LanguageReducer.language,
   };
 };
 
@@ -284,7 +291,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
   },
   name: {
-    fontSize: 20,
+    fontSize: 15,
   },
   btnContainer: {
     flexDirection: 'row',
@@ -309,7 +316,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   price: {
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: 'bold',
     textAlign: 'right',
   },

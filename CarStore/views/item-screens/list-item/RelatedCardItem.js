@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Image, Text} from 'react-native';
 import {connect} from 'react-redux';
+import {formatNumber} from '../../../common/Utils';
 
 class RelatedCardItem extends React.Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class RelatedCardItem extends React.Component {
           style={[styles.imageItem, {width: 150, height: 100}]}
           source={{uri: this.props.data.img}}
         />
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{justifyContent: 'space-between'}}>
           <View>
             <Text style={{fontSize: 14, color: '#aaa'}}>
               {this.props.data.category}
@@ -25,7 +26,11 @@ class RelatedCardItem extends React.Component {
               {this.props.data.name}
             </Text>
           </View>
-          <Text style={{fontSize: 14}}>${this.props.data.prices}</Text>
+          <Text style={{fontSize: 14}}>
+            {this.props.language === 'vi'
+              ? `${formatNumber(this.props.data.prices * 23000)}VNĐ`
+              : `${formatNumber(this.props.data.prices)}USD`}
+          </Text>
         </View>
       </View>
     );
@@ -34,6 +39,7 @@ class RelatedCardItem extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.UserReducer.user,
+    language: state.LanguageReducer.language,
   };
 };
 

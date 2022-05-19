@@ -13,6 +13,7 @@ import {connect} from 'react-redux';
 import {getListCartActon} from '../../redux/action/cart-action/GetListCart';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import AppText from '../../i18/AppText';
+import {formatNumber} from '../../common/Utils';
 class CartScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -73,6 +74,7 @@ class CartScreen extends React.Component {
 
   render() {
     const count = this.props.cart?.data?.length ?? 0;
+
     return (
       <View style={styles.container}>
         <AppText style={{fontSize: 27}} i18nKey={'yourCart'} />
@@ -96,7 +98,9 @@ class CartScreen extends React.Component {
           <AppText style={{fontSize: 16}} i18nKey={'subTotal'} />
           <Text style={{fontSize: 16}}>
             {' '}
-            {this.handleTotal().toString()}USD
+            {this.props.language === 'vi'
+              ? `${formatNumber(this.handleTotal() * 23000)} VNĐ`
+              : `${this.handleTotal()} USD`}
           </Text>
         </View>
 
@@ -148,6 +152,7 @@ const mapStateToProps = state => {
     cart: state.CartReducer.cart,
     user: state.UserReducer.user.data,
     status: state.CartReducer.status,
+    language: state.LanguageReducer.language,
   };
 };
 

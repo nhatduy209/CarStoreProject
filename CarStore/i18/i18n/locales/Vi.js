@@ -107,5 +107,5 @@ export default {
   titleStoreInfo3: 'About us',
   messageStoreInfo3: '',
   product: 'Sản phẩm',
-  Message: 'Liên hệ cửa hàng',
+  Message: 'Tin nhắn',
 };

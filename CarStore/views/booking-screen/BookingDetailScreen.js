@@ -92,19 +92,19 @@ class BookingDetailScreen extends React.Component {
               <Text> {booking.full_name}</Text>
             </View>
 
-            <View style={styles.info}>
+            {/* <View style={styles.info}>
               <AppText i18nKey={'Birthday'} style={styles.textInfo} />
               <Moment
                 date={booking.birthday}
                 format="DD/MM/YYYY"
                 element={Text}
               />
-            </View>
+            </View> */}
 
-            <View style={styles.info}>
+            {/* <View style={styles.info}>
               <AppText i18nKey={'Country'} style={styles.textInfo} />
               <Text> {booking.country}</Text>
-            </View>
+            </View> */}
 
             <View style={styles.info}>
               <AppText i18nKey={'Address'} style={styles.textInfo} />
@@ -119,10 +119,10 @@ class BookingDetailScreen extends React.Component {
               <Text> {booking.phone_number}</Text>
             </View>
 
-            <View style={styles.info}>
+            {/* <View style={styles.info}>
               <AppText i18nKey={'PersonalID'} style={styles.textInfo} />
               <Text> {booking.personal_id}</Text>
-            </View>
+            </View> */}
           </View>
 
           <AppText i18nKey={'CarMeeting'} style={styles.textStyle} />

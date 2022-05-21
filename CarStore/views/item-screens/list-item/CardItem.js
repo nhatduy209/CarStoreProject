@@ -17,6 +17,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {getListCar} from '../../../redux/action/get-list-car/GetListCar';
 import {removeItem} from '../../../redux/action/manage-item-action/RemoveItemAction';
 import AppText from '../../../i18/AppText';
+import {formatNumber} from '../../../common/Utils';
+
 if (
   Platform.OS === 'android' &&
   UIManager.setLayoutAnimationEnabledExperimental
@@ -141,11 +143,13 @@ class CardItem extends React.Component {
             </View>
 
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={{fontSize: 18, width: '70%', fontWeight: 'bold'}}>
+              <Text style={{fontSize: 15, width: '70%', fontWeight: 'bold'}}>
                 {this.props.data.name}
               </Text>
-              <Text style={{fontSize: 18, width: '30%', fontWeight: 'bold'}}>
-                ${this.props.data.prices}
+              <Text style={{fontSize: 15, width: '50%', fontWeight: 'bold'}}>
+                {this.props.language === 'vi'
+                  ? `${formatNumber(this.props.data.prices * 23000)}VNĐ`
+                  : `${formatNumber(this.props.data.prices)}USD`}
               </Text>
             </View>
           </View>
@@ -164,6 +168,7 @@ class CardItem extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.UserReducer.user,
+    language: state.LanguageReducer.language,
   };
 };
 

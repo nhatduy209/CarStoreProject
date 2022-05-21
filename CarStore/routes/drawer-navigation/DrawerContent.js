@@ -38,6 +38,10 @@ class DrawerContent extends React.Component {
     this.props.logout(this.props?.user.email, getToken);
   };
 
+  onMessagePress = () => {
+    this.props.navigation.navigate('MessageScreen');
+  };
+
   listDrawerItems = [
     {
       iconName: 'home',
@@ -65,7 +69,7 @@ class DrawerContent extends React.Component {
       handlePress: this.onStatisticPress,
     },
     {
-      iconName: 'comments',
+      iconName: 'message',
       textContent: 'Message',
       handlePress: this.onMessagePress,
     },

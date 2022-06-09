@@ -39,7 +39,7 @@ class DrawerContent extends React.Component {
   };
 
   onMessagePress = () => {
-    this.props.navigation.navigate('MessageScreen');
+    this.props.navigation.navigate('ConvesationScreen');
   };
 
   listDrawerItems = [
@@ -69,7 +69,7 @@ class DrawerContent extends React.Component {
       handlePress: this.onStatisticPress,
     },
     {
-      iconName: 'message',
+      iconName: 'comments',
       textContent: 'Message',
       handlePress: this.onMessagePress,
     },

@@ -8,6 +8,7 @@ import PaymentScreen from '../../views/payment-screen/PaymentScreen';
 import StoreInfoScreen from '../../views/store-screen/StoreInfoScreen';
 import MessageScreenStack from './drawer-stack/MessageScreenStack';
 import {Message} from '../../views/message/Message';
+import Conversation from '../../views/message-screen/component/conversation/Conversation';
 const Drawer = createDrawerNavigator();
 
 export default class RootDrawer extends React.Component {
@@ -68,8 +69,8 @@ export default class RootDrawer extends React.Component {
           options={{
             headerShown: false,
           }}
-          name="MessageSreen"
-          component={Message}
+          name="ConvesationScreen"
+          component={Conversation}
         />
       </Drawer.Navigator>
     );

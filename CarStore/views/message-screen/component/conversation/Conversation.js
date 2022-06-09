@@ -8,7 +8,12 @@ import {
   getInitMessage,
   sendMessage,
 } from '../../../../redux/action/message/MessageAction';
+import io from 'socket.io-client';
 import {styles} from './Style';
+
+const socket = io('https://18ce-1-52-37-166.ngrok.io/', {
+  transports: ['websocket'],
+});
 
 class Conversation extends React.Component {
   constructor(props) {
@@ -16,20 +21,29 @@ class Conversation extends React.Component {
     this.state = {
       inputMesssage: '',
     };
+    this.scrollViewRef = React.createRef();
   }
   componentDidMount() {
     this.props.getInitMessage(this.props.user?.email ?? '');
+    socket.on('connect', con => {
+      console.debug('SOCKET: connected to socket server', con);
+    });
+
+    console.log(this.props.reciverId);
+
+    socket.on(this.props.reciverId, data => {
+      console.debug('Response from admin ---> ', data + this.props.user?.email);
+      this.props.getInitMessage(this.props.user?.email ?? '');
+    });
   }
   renderItem = item => {
-    console.log(item);
-    if (item.id.includes(this.props.user?.email)) {
+    if (item?.id.includes(this.props.user?.email)) {
       return <Message key={item.id} content={item.content} />;
     }
 
     return <Message type={'other'} content={item.content} key={item.id} />;
   };
   sendMessage = async () => {
-    console.log(this.state.inputMesssage);
     const data = {
       reciver: 'admin_123',
       content: this.state.inputMesssage,
@@ -38,6 +52,10 @@ class Conversation extends React.Component {
     await this.props.sendMessage({
       data,
       onSuccess: () => this.props.getInitMessage(this.props.user?.email ?? ''),
+    });
+    socket.emit('code_from_client', {
+      data: this.state.inputMesssage,
+      id: this.props.senderId,
     });
     this.setState({inputMesssage: ''});
   };
@@ -90,6 +108,10 @@ class Conversation extends React.Component {
           </View>
         </View>
         <ScrollView
+          ref={r => (this.scrollViewRef = r)}
+          onContentSizeChange={() => {
+            this.scrollViewRef.scrollToEnd();
+          }}
           style={{
             height: '80%',
             backgroundColor: '#fda',
@@ -98,7 +120,7 @@ class Conversation extends React.Component {
             borderTopLeftRadius: 24,
             paddingHorizontal: 20,
           }}>
-          {this.props.messages.map(el => this.renderItem(el))}
+          {this.props.messages?.map(el => this.renderItem(el))}
         </ScrollView>
         <View style={styles.footer}>
           <TextInput
@@ -130,6 +152,8 @@ const mapStateToProps = state => {
   return {
     user: state.UserReducer.user?.data?.data,
     messages: state.MessageReducer.messages,
+    reciverId: state.MessageReducer.reciverId,
+    senderId: state.MessageReducer.senderId,
   };
 };
 

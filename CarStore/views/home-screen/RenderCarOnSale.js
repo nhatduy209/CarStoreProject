@@ -1,9 +1,13 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
-import {formatNumber} from '../../common/Utils';
+import {formatNumber, showToastSuccess} from '../../common/Utils';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {share} from '../../redux/action/sharing/SharingAction';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import AppText from '../../i18/AppText';
+import {ACTION_NAME} from '../../redux/action/sharing/ActionName';
+
 class RenderCarOnSale extends React.Component {
   constructor(props) {
     super(props);
@@ -15,13 +19,45 @@ class RenderCarOnSale extends React.Component {
       name: item.name,
     };
     const result = await share(data);
-
-    console.log('Result ---' + result);
+    if (result.type === ACTION_NAME.SHARE_ACTION.SHARE_ACTION_SUCCESS) {
+      showToastSuccess(
+        'Success',
+        'Sharing item to admin success , please check',
+      );
+    }
   };
 
   render() {
     return (
       <>
+        <RBSheet
+          ref={ref => {
+            this.RBSheet = ref;
+          }}
+          height={100}
+          openDuration={250}
+          customStyles={{
+            container: {
+              padding: 20,
+            },
+          }}>
+          <TouchableOpacity
+            style={{
+              flexDirection: 'row',
+            }}
+            onPress={() => {
+              this.handleShare(this.props.item);
+              this.RBSheet.close();
+            }}>
+            <Icon
+              name="share"
+              size={20}
+              color="##50A2F5"
+              style={{paddingRight: 20}}
+            />
+            <AppText i18nKey={'ShareAdmin'} />
+          </TouchableOpacity>
+        </RBSheet>
         <TouchableOpacity
           onPress={() =>
             this.props.navigation.navigate('DetailItemScreen', {
@@ -38,7 +74,7 @@ class RenderCarOnSale extends React.Component {
                 right: 20,
                 zIndex: 1000,
               }}
-              onPress={() => this.handleShare(this.props.item)}>
+              onPress={() => this.RBSheet.open()}>
               <Icon name="share-alt" size={23} color="##50A2F5" />
             </TouchableOpacity>
             <Image

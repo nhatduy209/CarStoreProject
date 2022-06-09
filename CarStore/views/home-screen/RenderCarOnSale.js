@@ -1,6 +1,10 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
-import {formatNumber, showToastSuccess} from '../../common/Utils';
+import {
+  formatNumber,
+  showToastFail,
+  showToastSuccess,
+} from '../../common/Utils';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {share} from '../../redux/action/sharing/SharingAction';
@@ -24,6 +28,8 @@ class RenderCarOnSale extends React.Component {
         'Success',
         'Sharing item to admin success , please check',
       );
+    } else {
+      showToastFail('Fail', 'Sharing item to admin fail , try again');
     }
   };
 

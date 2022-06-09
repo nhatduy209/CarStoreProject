@@ -107,4 +107,5 @@ export default {
   messageStoreInfo3: '',
   product: 'Product',
   Message: 'Message',
+  ShareAdmin: 'Share with admin',
 };

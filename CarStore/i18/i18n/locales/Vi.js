@@ -108,4 +108,5 @@ export default {
   messageStoreInfo3: '',
   product: 'Sản phẩm',
   Message: 'Tin nhắn',
+  ShareAdmin: 'Chia sẽ với admin',
 };

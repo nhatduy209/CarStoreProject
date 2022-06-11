@@ -1,8 +1,9 @@
 import React from 'react';
 import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 import io from 'socket.io-client';
+import {ngrokUrl} from '../../config/URL';
 
-const socket = io('https://89f7-115-74-41-209.ngrok.io/', {
+const socket = io(ngrokUrl, {
   transports: ['websocket'],
 });
 export class Message extends React.Component {

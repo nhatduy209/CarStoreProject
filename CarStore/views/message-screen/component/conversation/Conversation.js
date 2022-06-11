@@ -10,8 +10,9 @@ import {
 } from '../../../../redux/action/message/MessageAction';
 import io from 'socket.io-client';
 import {styles} from './Style';
+import {ngrokUrl} from '../../../../config/URL';
 
-const socket = io('https://18ce-1-52-37-166.ngrok.io/', {
+const socket = io(ngrokUrl, {
   transports: ['websocket'],
 });
 
@@ -28,8 +29,6 @@ class Conversation extends React.Component {
     socket.on('connect', con => {
       console.debug('SOCKET: connected to socket server', con);
     });
-
-    console.log(this.props.reciverId);
 
     socket.on(this.props.reciverId, data => {
       console.debug('Response from admin ---> ', data + this.props.user?.email);
@@ -49,13 +48,15 @@ class Conversation extends React.Component {
       content: this.state.inputMesssage,
       sender: this.props.user?.email,
     };
-    await this.props.sendMessage({
-      data,
-      onSuccess: () => this.props.getInitMessage(this.props.user?.email ?? ''),
-    });
     socket.emit('code_from_client', {
       data: this.state.inputMesssage,
       id: this.props.senderId,
+    });
+    await this.props.sendMessage({
+      data,
+      onSuccess: () => {
+        this.props.getInitMessage(this.props.user?.email ?? '');
+      },
     });
     this.setState({inputMesssage: ''});
   };

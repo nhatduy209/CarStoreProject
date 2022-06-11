@@ -38,4 +38,5 @@ export const APP_URL = {
   GET_DETAIL_CAR: URL_HEROKU + 'car/getdetail',
   GET_INIT_MESSAGE: URL_HEROKU + 'message/initmessage',
   SEND_MESSAGE: URL_HEROKU + 'message/sendingmessage',
+  SHARING_ITEM: URL_HEROKU + 'message/share',
 };

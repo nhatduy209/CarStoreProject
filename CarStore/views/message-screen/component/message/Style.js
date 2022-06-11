@@ -14,11 +14,11 @@ export const styles = StyleSheet.create({
     borderRadius: 12,
   },
   otherSide: {
-    backgroundColor: '#faa',
+    backgroundColor: '#7e83c2',
     textAlign: 'left',
   },
   mine: {
-    backgroundColor: '#bda',
+    backgroundColor: 'rgb(240, 240, 240)',
     textAlign: 'right',
   },
   itemAvatar: {
@@ -26,6 +26,14 @@ export const styles = StyleSheet.create({
     height: 50,
     width: 50,
     marginRight: 12,
+  },
+  imageSharedItem: {
+    borderRadius: 20,
+    height: 150,
+    width: 150,
+  },
+  messageSharedItem: {
+    //
   },
   itemContent: {
     //

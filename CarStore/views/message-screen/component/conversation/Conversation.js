@@ -37,12 +37,28 @@ class Conversation extends React.Component {
   }
   renderItem = item => {
     if (item?.id.includes(this.props.user?.email)) {
-      return <Message key={item.id} content={item.content} />;
+      return (
+        <Message
+          key={item.id}
+          content={item.content}
+          shareItem={item.shareItem}
+        />
+      );
     }
 
-    return <Message type={'other'} content={item.content} key={item.id} />;
+    return (
+      <Message
+        type={'other'}
+        content={item.content}
+        key={item.id}
+        shareItem={item.shareItem}
+      />
+    );
   };
   sendMessage = async () => {
+    if (!this.state.inputMesssage || this.state.inputMesssage.length === 0) {
+      return;
+    }
     const data = {
       reciver: 'admin_123',
       content: this.state.inputMesssage,
@@ -115,7 +131,7 @@ class Conversation extends React.Component {
           }}
           style={{
             height: '80%',
-            backgroundColor: '#fda',
+            backgroundColor: 'lavender',
             marginTop: 80,
             borderTopRightRadius: 24,
             borderTopLeftRadius: 24,

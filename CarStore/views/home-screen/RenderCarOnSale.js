@@ -40,16 +40,21 @@ class RenderCarOnSale extends React.Component {
           ref={ref => {
             this.RBSheet = ref;
           }}
-          height={100}
+          height={70}
           openDuration={250}
           customStyles={{
             container: {
-              padding: 20,
+              marginVertical: 8,
+              backgroundColor: 'rgba(255, 255, 255, 0)',
             },
           }}>
           <TouchableOpacity
             style={{
+              padding: 20,
               flexDirection: 'row',
+              backgroundColor: '#fff',
+              borderRadius: 50,
+              marginHorizontal: 10,
             }}
             onPress={() => {
               this.handleShare(this.props.item);
@@ -58,7 +63,7 @@ class RenderCarOnSale extends React.Component {
             <Icon
               name="share"
               size={20}
-              color="##50A2F5"
+              color="#50A2F5"
               style={{paddingRight: 20}}
             />
             <AppText i18nKey={'ShareAdmin'} />
@@ -71,18 +76,6 @@ class RenderCarOnSale extends React.Component {
             })
           }>
           <View style={styles.renderCarOnSale}>
-            <TouchableOpacity
-              style={{
-                position: 'absolute',
-                bottom: 170,
-                top: 20,
-                left: 200,
-                right: 20,
-                zIndex: 1000,
-              }}
-              onPress={() => this.RBSheet.open()}>
-              <Icon name="share-alt" size={23} color="##50A2F5" />
-            </TouchableOpacity>
             <Image
               source={{uri: this.props.item.img}}
               style={{
@@ -101,12 +94,24 @@ class RenderCarOnSale extends React.Component {
                 </Text>
               </View>
 
-              <View style={{paddingHorizontal: 8}}>
+              <View
+                style={{
+                  paddingHorizontal: 8,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
                 <Text>
                   {this.props.language === 'vi'
                     ? `${formatNumber(this.props.item.prices * 23000)}VNĐ`
                     : `${formatNumber(this.props.item.prices)}USD`}{' '}
                 </Text>
+                <TouchableOpacity
+                  style={{
+                    marginRight: 8,
+                  }}
+                  onPress={() => this.RBSheet.open()}>
+                  <Icon name="share-alt" size={16} color="##50A2F5" />
+                </TouchableOpacity>
               </View>
             </View>
           </View>

@@ -45,6 +45,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingVertical: 12,
     paddingHorizontal: 16,
-    backgroundColor: '#fda',
+    backgroundColor: 'rgba(230, 230, 250, 0.6)',
   },
 });

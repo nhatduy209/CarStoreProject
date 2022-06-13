@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, Text, Image} from 'react-native';
-import AppText from '../../../../i18/AppText';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from './Style';
 const avatarUrlDefault =
   'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg';
@@ -25,7 +24,13 @@ export default class Message extends React.Component {
             this.props.type === 'other' ? styles.otherSide : styles.mine,
           ]}>
           {this.props.shareItem && (
-            <View style={[styles.messageSharedItem]}>
+            <TouchableOpacity
+              style={[styles.messageSharedItem]}
+              onPress={() =>
+                this.props.navigation.navigate('DetailItemScreen', {
+                  data: this.props.shareItem,
+                })
+              }>
               <Image
                 source={{uri: this.props.shareItem?.img ?? avatarUrlDefault}}
                 style={[styles.imageSharedItem]}
@@ -36,7 +41,7 @@ export default class Message extends React.Component {
               <Text style={[styles.itemContent]}>
                 {this.props.shareItem?.category}
               </Text>
-            </View>
+            </TouchableOpacity>
           )}
           {this.props.content && (
             <Text

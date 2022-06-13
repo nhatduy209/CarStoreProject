@@ -42,6 +42,7 @@ class Conversation extends React.Component {
           key={item.id}
           content={item.content}
           shareItem={item.shareItem}
+          navigation={this.props.navigation}
         />
       );
     }
@@ -52,6 +53,7 @@ class Conversation extends React.Component {
         content={item.content}
         key={item.id}
         shareItem={item.shareItem}
+        navigation={this.props.navigation}
       />
     );
   };

@@ -95,9 +95,11 @@ class DetailItemScreen extends React.Component {
   render() {
     console.log('OH HELLO DETAIL  ---', this.props?.detail_car);
     let totalRating = 0;
-    this.props?.comment?.data?.map(
-      item => (totalRating = totalRating + item.rating),
-    );
+    if (this.props?.comment) {
+      this.props?.comment?.data?.map(
+        item => (totalRating = totalRating + item.rating),
+      );
+    }
 
     return (
       <View style={{height: '100%'}}>

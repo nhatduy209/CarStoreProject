@@ -91,7 +91,8 @@ export class Root extends React.Component {
 
         <Stack.Screen
           options={{
-            headerShown: false,
+            headerShown: true,
+            title: '',
           }}
           name="CommentScreen"
           component={CommentScreen}

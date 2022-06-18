@@ -141,7 +141,7 @@ class DetailItemScreen extends React.Component {
                     ? `${formatNumber(
                         this.props.detail_car?.data?.prices * 23000,
                       )}VNĐ`
-                    : `${formatNumber(this.props.detail_car?.data?.prices)}USD`}
+                    : `${this.props.detail_car?.data?.prices}USD`}
                 </Text>
               </View>
             </View>

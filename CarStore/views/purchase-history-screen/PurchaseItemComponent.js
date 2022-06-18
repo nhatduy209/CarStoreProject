@@ -4,11 +4,13 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Moment from 'react-moment';
 import AppText from '../../i18/AppText';
+import {connect} from 'react-redux';
 
-export default class PurchaseItemComponent extends React.Component {
+class PurchaseItemComponent extends React.Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     return (
       <View style={[styles.purchaseItemContainer, styles.shadowBox]}>
@@ -56,7 +58,9 @@ export default class PurchaseItemComponent extends React.Component {
                 alignSelf: 'flex-end',
                 fontSize: 16,
               }}>
-              ${this.props.item?.prices}
+              {this.props.language === 'vi'
+                ? `${this.props.item?.prices * 23000} VND`
+                : `$${this.props.item?.prices}`}
             </Text>
           </View>
         </View>
@@ -76,13 +80,18 @@ export default class PurchaseItemComponent extends React.Component {
               flexDirection: 'row',
               width: '35%',
               justifyContent: 'space-between',
+              marginRight: 10,
             }}>
             <AppText i18nKey={'Price'}></AppText>
             <Text
               style={{
                 color: '#ff4d00',
-              }}>{`$${this.props.item?.prices}`}</Text>
-            <Icon name="angle-right" size={16} />
+              }}>
+              {' '}
+              {this.props.language === 'vi'
+                ? `${this.props.item?.prices * 23000} VND`
+                : `$${this.props.item?.prices}`}
+            </Text>
           </View>
         </View>
         {this.props.isPaid && (
@@ -150,6 +159,14 @@ export default class PurchaseItemComponent extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    language: state.LanguageReducer.language,
+  };
+};
+
+export default connect(mapStateToProps, {})(PurchaseItemComponent);
 
 const styles = StyleSheet.create({
   purchaseItemContainer: {

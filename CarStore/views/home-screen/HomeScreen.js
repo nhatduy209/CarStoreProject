@@ -23,6 +23,7 @@ import {getListCategory} from '../../redux/action/get-list-category/GetListCateg
 import {ModalComponent} from '../modal/ModalComponent';
 import AllItemsScreen from '../item-screens/list-item/AllItemsScreen';
 import AppText from '../../i18/AppText';
+import AnimatedLottieView from 'lottie-react-native';
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -162,7 +163,7 @@ class HomeScreen extends React.Component {
             </View>
 
             {/* end  Search input text  */}
-            <View style={{flexDirection: 'row', paddingTop: 10}}>
+            <View style={styles.containerBody}>
               <View style={{flex: 1}}>
                 <AppText
                   style={{fontSize: 18, fontWeight: '900'}}
@@ -186,11 +187,18 @@ class HomeScreen extends React.Component {
             {/* end flatlist category */}
 
             {/* flatlist new car */}
-            <View style={{flexDirection: 'row', paddingTop: 10}}>
-              <View style={{flex: 1}}>
+            <View style={styles.containerBody}>
+              <View>
                 <AppText
                   style={{fontSize: 18, fontWeight: '900'}}
                   i18nKey={'NewCar'}
+                />
+              </View>
+              <View style={styles.lotties}>
+                <AnimatedLottieView
+                  autoPlay
+                  loop
+                  source={require('../../config/lotties/new-icon.json')}
                 />
               </View>
             </View>
@@ -207,11 +215,18 @@ class HomeScreen extends React.Component {
             </View>
 
             {/* flatlist top choice */}
-            <View style={{flexDirection: 'row', paddingTop: 10}}>
-              <View style={{flex: 1}}>
+            <View style={styles.containerBody}>
+              <View>
                 <AppText
                   style={{fontSize: 18, fontWeight: '900'}}
                   i18nKey={'TopChoice'}
+                />
+              </View>
+              <View style={styles.lotties}>
+                <AnimatedLottieView
+                  autoPlay
+                  loop
+                  source={require('../../config/lotties/star-icon.json')}
                 />
               </View>
             </View>
@@ -228,7 +243,7 @@ class HomeScreen extends React.Component {
             </View>
 
             {/* Car on sale  */}
-            <View style={{flexDirection: 'row', paddingTop: 10}}>
+            <View style={styles.containerBody}>
               <View style={{flex: 1}}>
                 <AppText
                   style={{fontSize: 18, fontWeight: '900'}}
@@ -295,4 +310,9 @@ const styles = new StyleSheet.create({
     margin: 10,
     alignItems: 'center',
   },
+  lotties: {
+    width: 50,
+    height: 50,
+  },
+  containerBody: {flexDirection: 'row', paddingTop: 10, alignItems: 'center'},
 });

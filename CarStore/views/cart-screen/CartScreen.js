@@ -14,6 +14,8 @@ import {getListCartActon} from '../../redux/action/cart-action/GetListCart';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import AppText from '../../i18/AppText';
 import {formatNumber} from '../../common/Utils';
+import LottieView from 'lottie-react-native';
+
 class CartScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -75,7 +77,7 @@ class CartScreen extends React.Component {
   render() {
     const count = this.props.cart?.data?.length ?? 0;
 
-    return (
+    return count ? (
       <View style={styles.container}>
         <AppText style={{fontSize: 27}} i18nKey={'yourCart'} />
 
@@ -143,6 +145,30 @@ class CartScreen extends React.Component {
           </TouchableOpacity>
         </View>
       </View>
+    ) : (
+      <View
+        style={{
+          ...styles.container,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <View style={styles.lotties}>
+          <LottieView
+            autoPlay
+            loop
+            source={require('../../config/lotties/empty-cart.json')}
+          />
+        </View>
+        <View style={{position: 'absolute', bottom: 20}}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Home')}>
+            <AppText
+              style={{textAlign: 'center', fontSize: 20}}
+              i18nKey={'StartCar'}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
     );
   }
 }
@@ -163,6 +189,11 @@ const styles = new StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
     paddingHorizontal: 15,
+  },
+  lotties: {
+    backgroundColor: '#ffffff',
+    height: 200,
+    width: 200,
   },
   btnCheckout: {
     width: Dimensions.get('window').width - 80,

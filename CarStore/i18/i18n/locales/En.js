@@ -108,4 +108,5 @@ export default {
   product: 'Product',
   Message: 'Message',
   ShareAdmin: 'Share with admin',
+  StartCar: 'Choose your car',
 };

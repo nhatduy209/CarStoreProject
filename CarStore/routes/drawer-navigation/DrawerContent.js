@@ -6,6 +6,7 @@ import {_retrieveData} from '../../common/Utils';
 import {TOKEN_DEVICE} from '../../config/StorageKey';
 import {logout} from '../../redux/action/login-action/LoginAction';
 import AppText from '../../i18/AppText';
+import LottieView from 'lottie-react-native';
 const avatarUrlDefault =
   'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg';
 class DrawerContent extends React.Component {
@@ -44,37 +45,37 @@ class DrawerContent extends React.Component {
 
   listDrawerItems = [
     {
-      iconName: 'home',
+      iconName: require('../../config/lotties/home-icon.json'),
       textContent: 'Home',
       handlePress: this.onHomePress,
     },
     {
-      iconName: 'car',
+      iconName: require('../../config/lotties/car-icon.json'),
       textContent: 'Product',
       handlePress: this.onManagePress,
     },
     {
-      iconName: 'phone',
+      iconName: require('../../config/lotties/store-icon.json'),
       textContent: 'StoreInfo',
       handlePress: this.onStoreInfoPress,
     },
     {
-      iconName: 'gear',
+      iconName: require('../../config/lotties/setting-icon.json'),
       textContent: 'Setting',
       handlePress: this.onSettingPress,
     },
     {
-      iconName: 'snapchat',
+      iconName: require('../../config/lotties/home-icon.json'),
       textContent: 'Statistic',
       handlePress: this.onStatisticPress,
     },
     {
-      iconName: 'comments',
+      iconName: require('../../config/lotties/message-icon.json'),
       textContent: 'Message',
       handlePress: this.onMessagePress,
     },
     {
-      iconName: 'check',
+      iconName: require('../../config/lotties/logout-icon.json'),
       textContent: 'Logout',
       handlePress: this.logout,
     },
@@ -93,7 +94,10 @@ class DrawerContent extends React.Component {
       <TouchableOpacity key={index} onPress={item.handlePress}>
         <View style={styles.itemDrawer}>
           <View style={styles.iconStyle}>
-            <Icon size={20} name={item.iconName} color={'#bae1ff'} />
+            {/* <Icon size={20} name={item.iconName} color={'#bae1ff'} /> */}
+            <View style={styles.lotties}>
+              <LottieView autoPlay loop source={item.iconName} />
+            </View>
           </View>
           <AppText style={styles.itemText} i18nKey={item.textContent} />
         </View>
@@ -164,6 +168,11 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  lotties: {
+    backgroundColor: 'transparent',
+    height: 35,
+    width: 35,
   },
   itemDrawer: {
     paddingHorizontal: 20,

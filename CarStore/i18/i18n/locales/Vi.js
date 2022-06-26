@@ -109,4 +109,5 @@ export default {
   product: 'Sản phẩm',
   Message: 'Tin nhắn',
   ShareAdmin: 'Chia sẽ với admin',
+  StartCar: 'Nhanh tay chọn xe nào',
 };

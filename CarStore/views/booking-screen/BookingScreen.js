@@ -20,6 +20,12 @@ import {
 import AppText from '../../i18/AppText';
 import {handleValidate} from '../../common/Utils';
 import {showToastFail} from '../../common/Utils';
+import io from 'socket.io-client';
+import {ngrokUrl} from '../../config/URL';
+
+const socket = io(ngrokUrl, {
+  transports: ['websocket'],
+});
 
 class BookingScreen extends React.Component {
   constructor(props) {
@@ -40,6 +46,13 @@ class BookingScreen extends React.Component {
     };
     this.arrayCheck = [];
   }
+
+  componentDidMount() {
+    socket.on('connection', con => {
+      console.debug('SOCKET: connected to socket server', con);
+    });
+  }
+
   handleSelect = item => {
     this.setState({country: item.name, countryCode: item.cca2});
   };
@@ -104,7 +117,11 @@ class BookingScreen extends React.Component {
     });
 
     if (count === this.arrayCheck.length) {
-      this.props.createBooking({data});
+      //  this.props.createBooking({data});
+      console.log('HI');
+      socket.emit('booking_from_client', {
+        data: data,
+      });
     }
   };
   handleModalButton = () => {

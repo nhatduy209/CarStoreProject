@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
@@ -14,12 +14,13 @@ export const styles = StyleSheet.create({
     borderRadius: 12,
   },
   otherSide: {
-    backgroundColor: '#7e83c2',
+    backgroundColor: '#ccc',
     textAlign: 'left',
   },
   mine: {
-    backgroundColor: 'rgb(240, 240, 240)',
+    backgroundColor: '#7e83c2',
     textAlign: 'right',
+    color: '#fff',
   },
   itemAvatar: {
     borderRadius: 500,
@@ -28,12 +29,17 @@ export const styles = StyleSheet.create({
     marginRight: 12,
   },
   imageSharedItem: {
-    borderRadius: 20,
-    height: 150,
-    width: 150,
+    borderRadius: 10,
+    height: 100,
+    width: 100,
+    backgroundColor: '#fff',
   },
   messageSharedItem: {
-    //
+    width: Dimensions.get('screen').width,
+    flexDirection: 'row',
+  },
+  textSharedItem: {
+    marginLeft: 12,
   },
   itemContent: {
     //

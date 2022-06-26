@@ -30,6 +30,8 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 50,
     paddingHorizontal: 12,
+    borderWidth: 1,
+    borderColor: '#bcbcbc',
   },
   sendButton: {
     borderRadius: 50,
@@ -45,6 +47,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingVertical: 12,
     paddingHorizontal: 16,
-    backgroundColor: 'rgba(230, 230, 250, 0.6)',
+    backgroundColor: '#fff',
   },
 });

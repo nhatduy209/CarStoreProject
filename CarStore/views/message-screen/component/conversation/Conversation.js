@@ -133,7 +133,7 @@ class Conversation extends React.Component {
           }}
           style={{
             height: '80%',
-            backgroundColor: 'lavender',
+            backgroundColor: '#eee',
             marginTop: 80,
             borderTopRightRadius: 24,
             borderTopLeftRadius: 24,

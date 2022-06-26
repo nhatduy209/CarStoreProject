@@ -21,6 +21,7 @@ export default class Message extends React.Component {
         <View
           style={[
             styles.content,
+            {maxWidth: this.props.shareItem ? '80%' : '60%'},
             this.props.type === 'other' ? styles.otherSide : styles.mine,
           ]}>
           {this.props.shareItem && (
@@ -35,12 +36,17 @@ export default class Message extends React.Component {
                 source={{uri: this.props.shareItem?.img ?? avatarUrlDefault}}
                 style={[styles.imageSharedItem]}
               />
-              <Text style={[styles.itemContent]}>
-                {this.props.shareItem?.name}
-              </Text>
-              <Text style={[styles.itemContent]}>
-                {this.props.shareItem?.category}
-              </Text>
+              <View style={[styles.textSharedItem]}>
+                <Text style={[styles.itemContent]} numberOfLines={2}>
+                  {this.props.shareItem?.name}
+                </Text>
+                <Text style={[styles.itemContent]}>
+                  ({this.props.shareItem?.category})
+                </Text>
+                <Text style={[styles.itemContent]}>
+                  {this.props.shareItem?.price}
+                </Text>
+              </View>
             </TouchableOpacity>
           )}
           {this.props.content && (

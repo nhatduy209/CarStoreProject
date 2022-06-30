@@ -49,7 +49,14 @@ export default class Message extends React.Component {
               </View>
             </TouchableOpacity>
           )}
-          {this.props.content && (
+          {this.props?.content?.includes(
+            'https://firebasestorage.googleapis.com',
+          ) ? (
+            <Image
+              style={{width: 90, height: 90}}
+              source={{uri: this.props.content}}
+            />
+          ) : (
             <Text
               style={[
                 styles.itemContent,

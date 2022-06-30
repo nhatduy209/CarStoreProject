@@ -34,6 +34,7 @@ class RenderCarSaleOff extends React.Component {
   };
 
   render() {
+    console.log('Item ---' + JSON.stringify(this.props.item.percentSale));
     return (
       <>
         <RBSheet
@@ -76,6 +77,22 @@ class RenderCarSaleOff extends React.Component {
             })
           }>
           <View style={styles.renderCarOnSale}>
+            <View
+              style={{
+                position: 'absolute',
+                bottom: 10,
+                right: 10,
+                zIndex: 9999,
+              }}>
+              <Text
+                style={{
+                  color: 'red',
+                  fontSize: 20,
+                  transform: [{rotate: '20deg'}],
+                }}>
+                {this.props.item.percentSale}%
+              </Text>
+            </View>
             <Image
               source={{uri: this.props.item.img}}
               style={{

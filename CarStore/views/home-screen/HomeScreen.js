@@ -14,6 +14,7 @@ import {
   getListCar,
   getListNewCar,
   getListTopChoice,
+  getListSaleOff,
 } from '../../redux/action/get-list-car/GetListCar';
 import {connect} from 'react-redux';
 import RevealCycle from './RevealCycle';
@@ -24,6 +25,7 @@ import {ModalComponent} from '../modal/ModalComponent';
 import AllItemsScreen from '../item-screens/list-item/AllItemsScreen';
 import AppText from '../../i18/AppText';
 import AnimatedLottieView from 'lottie-react-native';
+import RenderCarSaleOff from './RenderCarSaleOff';
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -40,6 +42,7 @@ class HomeScreen extends React.Component {
     this.props.getListNewCar(0, 5);
     this.props.getListTopChoice(0, 5);
     this.props.getListCategory();
+    this.props.getListSaleOff(0, 5);
   }
 
   renderCategories = ({item}) => (
@@ -56,6 +59,10 @@ class HomeScreen extends React.Component {
 
   renderCarOnSale = ({item}) => {
     return <RenderCarOnSale item={item} navigation={this.props.navigation} />;
+  };
+
+  renderCarSaleOff = ({item}) => {
+    return <RenderCarSaleOff item={item} navigation={this.props.navigation} />;
   };
 
   renderRevealCycle = () => {
@@ -244,6 +251,33 @@ class HomeScreen extends React.Component {
 
             {/* Car on sale  */}
             <View style={styles.containerBody}>
+              <View>
+                <AppText
+                  style={{fontSize: 18, fontWeight: '900'}}
+                  i18nKey={'SaleOff'}
+                />
+              </View>
+              <View style={styles.lotties}>
+                <AnimatedLottieView
+                  autoPlay
+                  loop
+                  source={require('../../config/lotties/sale-off.json')}
+                />
+              </View>
+            </View>
+
+            <FlatList
+              horizontal
+              data={this.props.saleOff}
+              renderItem={this.renderCarSaleOff}
+              keyExtractor={item => item.name}
+              showsHorizontalScrollIndicator={false}
+              ItemSeparatorComponent={this.separateItem}
+            />
+            {/*End car on sale */}
+
+            {/* Car on sale  */}
+            <View style={styles.containerBody}>
               <View style={{flex: 1}}>
                 <AppText
                   style={{fontSize: 18, fontWeight: '900'}}
@@ -283,6 +317,7 @@ const mapStateToProps = state => {
     topchoice: state.CarReducer.topchoice,
     search_car: state.SearchReducer.car,
     category: state.CategoryReducer.category,
+    saleOff: state.CarReducer.saleOff,
   };
 };
 
@@ -292,6 +327,7 @@ export default connect(mapStateToProps, {
   getListCategory,
   getListNewCar,
   getListTopChoice,
+  getListSaleOff,
 })(HomeScreen);
 
 const styles = new StyleSheet.create({

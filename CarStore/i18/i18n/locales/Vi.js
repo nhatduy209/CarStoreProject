@@ -110,4 +110,5 @@ export default {
   Message: 'Tin nhắn',
   ShareAdmin: 'Chia sẽ với admin',
   StartCar: 'Nhanh tay chọn xe nào',
+  SaleOff: 'Giảm giá',
 };

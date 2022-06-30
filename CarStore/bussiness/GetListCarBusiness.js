@@ -47,6 +47,20 @@ export default class GetListCarBusiness {
     return result;
   };
 
+  getSaleOfCarBusiness = async (start, end) => {
+    const params = {
+      start,
+      end,
+    };
+    var getService = new GetService();
+    var result = await getService.getApiWithParams(
+      APP_URL.GET_LIST_SALEOFF,
+      params,
+    );
+
+    return result;
+  };
+
   getListCarByPriceBusiness = async (minPrices, maxPrices, category) => {
     var postService = new PostService();
     const params = {

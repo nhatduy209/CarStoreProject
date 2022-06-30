@@ -8,9 +8,9 @@ import {
   getInitMessage,
   sendMessage,
 } from '../../../../redux/action/message/MessageAction';
-import io from 'socket.io-client';
 import {styles} from './Style';
 import {ngrokUrl} from '../../../../config/URL';
+import io from 'socket.io-client';
 
 const socket = io(ngrokUrl, {
   transports: ['websocket'],

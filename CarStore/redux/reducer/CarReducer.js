@@ -8,6 +8,7 @@ const CAR_STATE = {
   status_loading: STATUS.NONE,
   topchoice: [],
   newcar: [],
+  saleOff: [],
   detail: {},
 };
 
@@ -46,6 +47,17 @@ const CarReducer = (state = CAR_STATE, action) => {
         topchoice: [...state.topchoice, ...action.data.data.data],
       };
 
+    case ACTION_NAME.GET_LIST_SALEOFF.GET_LIST_SALEOFF_SUCCESS:
+      if (action.data.data.data[0]?.name === state.saleOff[0]?.name) {
+        return {
+          ...state,
+        };
+      }
+      return {
+        ...state,
+        saleOff: [...state.saleOff, ...action.data.data.data],
+      };
+
     case ACTION_NAME.GET_LIST_CAR.GET_LIST_CAR_FAIL:
       return {
         ...state,
@@ -53,6 +65,12 @@ const CarReducer = (state = CAR_STATE, action) => {
       };
 
     case ACTION_NAME.GET_LIST_NEWCAR.GET_LIST_NEWCAR_FAIL:
+      return {
+        ...state,
+        car: action.data,
+      };
+
+    case ACTION_NAME.GET_LIST_SALEOFF.GET_LIST_SALEOFF_FAIL:
       return {
         ...state,
         car: action.data,

@@ -15,6 +15,7 @@ export const APP_URL = {
   GET_LIST_CAR: URL_HEROKU + 'car',
   GET_LIST_NEW_CAR: URL_HEROKU + 'car/newcar',
   GET_LIST_TOP_CHOICE: URL_HEROKU + 'car/topchoice',
+  GET_LIST_SALEOFF: URL_HEROKU + 'car/saleof',
   GET_LIST_CAR_BY_CATEGORY: URL_HEROKU + 'car/filtercategory',
   GET_LIST_CAR_BY_PRICE: URL_HEROKU + 'car/filterprice',
   GET_LIST_CATEGORY: URL_HEROKU + 'category/getlist',

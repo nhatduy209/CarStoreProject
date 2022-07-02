@@ -1,4 +1,4 @@
-import {STATUS} from '../../config/Status';
+import {STATUS, unauthoriedMessage} from '../../config/Status';
 import {ACTION_NAME} from '../action/cart-action/ActionName';
 
 const CART_STATE = {
@@ -36,9 +36,13 @@ const CartReducer = (state = CART_STATE, action) => {
         status: 'ADD_SUCCESS',
       };
     case ACTION_NAME.ADD_TO_CART_ACTION.ADD_TO_CART_FAIL:
+      console.log('action data' + JSON.stringify(action.data.data.error));
       return {
         ...state,
-        status: 'ADD_FAIL',
+        status:
+          unauthoriedMessage === action.data.data.error
+            ? STATUS.UNAUTHORIED
+            : 'ADD_FAIL',
       };
     default:
       return state;

@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from './Style';
@@ -9,6 +10,7 @@ export default class Message extends React.Component {
     super(props);
   }
   render() {
+    const date = moment(this.props.time);
     return (
       <View
         onPress={() => this.props.navigation.push('ConvesationScreen')}
@@ -57,13 +59,16 @@ export default class Message extends React.Component {
               source={{uri: this.props.content}}
             />
           ) : (
-            <Text
-              style={[
-                styles.itemContent,
-                this.props.type === 'other' ? styles.otherSide : styles.mine,
-              ]}>
-              {this.props.content}
-            </Text>
+            <View>
+              <Text
+                style={[
+                  styles.itemContent,
+                  this.props.type === 'other' ? styles.otherSide : styles.mine,
+                ]}>
+                {this.props.content}
+              </Text>
+              <Text style={{fontSize: 10}}>{date.format('hh:mm')}</Text>
+            </View>
           )}
         </View>
       </View>

@@ -9,7 +9,7 @@ export const uploadImageToStorage = async (path, imageName) => {
 export const sendMessageImage = async (path, imageName) => {
   try {
     const storageRef = storage().ref();
-    const currentRef = storageRef.child(`Message/${imageName}`);
+    const currentRef = storageRef.child(`${imageName}`);
     await currentRef.putFile(path);
     return currentRef.getDownloadURL();
   } catch (err) {

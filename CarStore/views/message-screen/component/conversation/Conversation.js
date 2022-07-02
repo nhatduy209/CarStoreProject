@@ -53,6 +53,7 @@ class Conversation extends React.Component {
           key={item.id}
           content={item.content}
           shareItem={item.shareItem}
+          time={item.time}
           navigation={this.props.navigation}
         />
       );
@@ -100,7 +101,7 @@ class Conversation extends React.Component {
         this.props.getInitMessage(this.props.user?.email ?? '');
       },
     });
-    this.setState({inputMesssage: ''});
+    this.setState({inputMesssage: '', image: {}});
   };
 
   addImage = () => {

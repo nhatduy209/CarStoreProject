@@ -117,7 +117,7 @@ class BookingScreen extends React.Component {
     });
 
     if (count === this.arrayCheck.length) {
-      //  this.props.createBooking({data});
+      this.props.createBooking({data});
       console.log('HI');
       socket.emit('booking_from_client', {
         data: data,

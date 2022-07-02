@@ -13,6 +13,8 @@ import {ngrokUrl} from '../../../../config/URL';
 import io from 'socket.io-client';
 import * as ImagePicker from 'react-native-image-picker';
 import {sendMessageImage} from '../../../../common/pushImage';
+import {ModalComponent} from '../../../modal/ModalComponent';
+import {STATUS} from '../../../../config/Status';
 
 const socket = io(ngrokUrl, {
   transports: ['websocket'],
@@ -24,6 +26,7 @@ class Conversation extends React.Component {
     this.state = {
       inputMesssage: '',
       image: {},
+      isShow: false,
     };
     this.scrollViewRef = React.createRef();
   }
@@ -46,6 +49,16 @@ class Conversation extends React.Component {
       },
     );
   }
+
+  componentDidUpdate() {
+    console.log('Log props ----' + this.props.status);
+    if (this.props.status === STATUS.UNAUTHORIED) {
+      if (!this.state.isShow) {
+        this.setState({isShow: true});
+      }
+    }
+  }
+
   renderItem = item => {
     if (item?.id.includes(this.props.user?.email)) {
       return (
@@ -122,6 +135,14 @@ class Conversation extends React.Component {
     console.log('Log ----' + JSON.stringify(this.state.image));
     return (
       <View style={{backgroundColor: '#fff', height: '100%'}}>
+        <ModalComponent
+          navigation={this.props.navigation}
+          state={this}
+          isShow={this.state.isShow}
+          descriptionText={'Your session has expired, please login again'}
+          textAction="Sign in"
+          textCancel="Cancel"
+        />
         <View
           style={{
             position: 'absolute',
@@ -226,6 +247,7 @@ const mapStateToProps = state => {
     messages: state.MessageReducer.messages,
     reciverId: state.MessageReducer.reciverId,
     senderId: state.MessageReducer.senderId,
+    status: state.MessageReducer.status,
   };
 };
 

@@ -9,12 +9,12 @@ export const getInitMessage = email => async dispatch => {
   if (res.status === STATUS.SUCCESS) {
     dispatch({
       type: ACTION_NAME.GET_INT_MESSAGE.GET_INT_MESSAGE_SUCCESS,
-      data: res.data.data,
+      data: res.data,
     });
   } else {
     dispatch({
       type: ACTION_NAME.GET_INT_MESSAGE.GET_INT_MESSAGE_FAIL,
-      data: res.data.data,
+      data: res.data,
     });
   }
 };

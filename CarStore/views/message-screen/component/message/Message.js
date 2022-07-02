@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {styles} from './Style';
@@ -9,6 +10,7 @@ export default class Message extends React.Component {
     super(props);
   }
   render() {
+    const date = moment(this.props.time);
     return (
       <View
         onPress={() => this.props.navigation.push('ConvesationScreen')}
@@ -49,14 +51,24 @@ export default class Message extends React.Component {
               </View>
             </TouchableOpacity>
           )}
-          {this.props.content && (
-            <Text
-              style={[
-                styles.itemContent,
-                this.props.type === 'other' ? styles.otherSide : styles.mine,
-              ]}>
-              {this.props.content}
-            </Text>
+          {this.props?.content?.includes(
+            'https://firebasestorage.googleapis.com',
+          ) ? (
+            <Image
+              style={{width: 90, height: 90}}
+              source={{uri: this.props.content}}
+            />
+          ) : (
+            <View>
+              <Text
+                style={[
+                  styles.itemContent,
+                  this.props.type === 'other' ? styles.otherSide : styles.mine,
+                ]}>
+                {this.props.content}
+              </Text>
+              <Text style={{fontSize: 10}}>{date.format('hh:mm')}</Text>
+            </View>
           )}
         </View>
       </View>

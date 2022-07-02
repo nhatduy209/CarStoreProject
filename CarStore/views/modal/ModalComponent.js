@@ -19,7 +19,7 @@ export const ModalComponent = props => {
       <View style={styles.modal}>
         <Text
           style={{
-            fontSize: 20,
+            fontSize: 17,
             paddingHorizontal: 50,
             paddingVertical: 20,
             textAlign: 'center',

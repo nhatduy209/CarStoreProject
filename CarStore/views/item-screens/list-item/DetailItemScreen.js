@@ -12,7 +12,7 @@ import HeaderComponent from '../../headerComponent';
 import RelatedItemList from './RelatedItemList';
 import {addToCart} from '../../../redux/action/cart-action/AddToCart';
 import {connect} from 'react-redux';
-import {STATUS} from '../../../config/Status';
+import {STATUS, unauthoriedMessage} from '../../../config/Status';
 import {ModalComponent} from '../../modal/ModalComponent';
 import AppText from '../../../i18/AppText';
 import {Rating} from 'react-native-ratings';
@@ -20,6 +20,7 @@ import {getListComment} from '../../../redux/action/comment/CommentAction';
 import {showToastSuccess, showToastFail} from '../../../common/Utils';
 import {getDetail} from '../../../redux/action/get-detail-car/GetDetailCar';
 import {formatNumber} from '../../../common/Utils';
+import AnimatedLottieView from 'lottie-react-native';
 
 class DetailItemScreen extends React.Component {
   constructor(props) {
@@ -29,6 +30,7 @@ class DetailItemScreen extends React.Component {
       quantity: 0,
       isShow: false,
       rating: 3,
+      descriptionText: 'You are not login, please login first',
     };
   }
   componentDidMount() {
@@ -48,6 +50,7 @@ class DetailItemScreen extends React.Component {
   }
   componentDidUpdate() {
     const name = this.props.detail_car?.data?.name;
+    console.log('status ----' + this.props.cart.status);
     if (this.props.cart.status === 'ADD_SUCCESS') {
       showToastSuccess('Sucess', `Add ${name} to cart successfully`);
       this.props.cart.status = STATUS.FAIL;
@@ -55,6 +58,14 @@ class DetailItemScreen extends React.Component {
     if (this.props.cart.status === 'ADD_FAIL') {
       showToastFail('Error', `${name} already exist in your cart`);
       this.props.cart.status = STATUS.FAIL;
+    } else if (this.props.cart.status === STATUS.UNAUTHORIED) {
+      if (!this.state.isShow) {
+        this.props.cart.status = STATUS.FAIL;
+        this.setState({
+          isShow: true,
+          descriptionText: 'Your session has expired, please login',
+        });
+      }
     }
   }
   handleAddToCart() {
@@ -69,7 +80,10 @@ class DetailItemScreen extends React.Component {
       };
       this.props.addToCart(data);
     } else {
-      this.setState({isShow: true});
+      this.setState({
+        descriptionText: 'You are not login, please login first',
+        isShow: true,
+      });
     }
   }
   renderRelatedItem = () => {
@@ -93,7 +107,6 @@ class DetailItemScreen extends React.Component {
   };
 
   render() {
-    console.log('OH HELLO DETAIL  ---', this.props?.detail_car);
     let totalRating = 0;
     if (this.props?.comment) {
       this.props?.comment?.data?.map(
@@ -111,13 +124,41 @@ class DetailItemScreen extends React.Component {
           navigation={this.props.navigation}
           state={this}
           isShow={this.state.isShow}
-          descriptionText="You are not login, please login first"
+          descriptionText={this.state.descriptionText}
           textAction="Sign in"
           textCancel="Cancel"
         />
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{height: '100%', backgroundColor: '#eee'}}>
+          {this.props.detail_car?.data?.percentSale && (
+            <View
+              style={{
+                position: 'absolute',
+                flexDirection: 'row',
+                top: 300,
+                right: 60,
+                zIndex: 9999,
+                transform: [{rotate: '-20deg'}],
+              }}>
+              <AppText
+                style={{
+                  fontSize: 20,
+                  color: 'red',
+                }}
+                i18nKey={'SaleOff'}></AppText>
+
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: 'red',
+                }}>
+                {' '}
+                {this.props.detail_car?.data?.percentSale}%
+              </Text>
+            </View>
+          )}
+
           <View style={styles.itemImageContainer}>
             <Image
               style={[styles.imageItem, {width: '100%', height: '100%'}]}
@@ -140,9 +181,15 @@ class DetailItemScreen extends React.Component {
                 </Text>
                 <Text style={styles.price}>
                   {this.props.language === 'vi'
-                    ? `${formatNumber(
-                        this.props.detail_car?.data?.prices * 23000,
-                      )}VNĐ`
+                    ? this.props.detail_car?.data?.saleOfPrice
+                      ? `${formatNumber(
+                          this.props.detail_car?.data?.saleOfPrice * 23000,
+                        )}VNĐ`
+                      : `${formatNumber(
+                          this.props.detail_car?.data?.prices * 23000,
+                        )}VNĐ`
+                    : this.props.detail_car?.data?.saleOfPrice
+                    ? `${this.props.detail_car?.data?.saleOfPrice}USD`
                     : `${this.props.detail_car?.data?.prices}USD`}
                 </Text>
               </View>
@@ -150,10 +197,15 @@ class DetailItemScreen extends React.Component {
             {this.renderRelatedItem()}
             <View
               style={{
-                paddingHorizontal: 20,
-                marginTop: 20,
+                paddingHorizontal: 30,
+                width: 70,
+                height: 70,
               }}>
-              <AppText i18nKey={'carInfo'} />
+              <AnimatedLottieView
+                autoPlay
+                loop
+                source={require('../../../config/lotties/information-icon.json')}
+              />
             </View>
             <View style={[styles.Description, {padding: 16}]}>
               <View style={{alignItems: 'center'}}>

@@ -68,7 +68,7 @@ class AllItemsScreen extends React.Component {
 
   renderFooter = () => {
     const isSearch = this.props.isSearch ?? false;
-    console.log('ALO ---', this.canLoadMore);
+
     if (this.canLoadMore && !isSearch) {
       return (
         <View style={{height: 160}}>
@@ -76,7 +76,6 @@ class AllItemsScreen extends React.Component {
         </View>
       );
     } else {
-      console.log('ALO ??---', this.canLoadMore);
       return <View style={{height: 150}} />;
     }
   };

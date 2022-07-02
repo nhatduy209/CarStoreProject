@@ -2,6 +2,7 @@ export const STATUS = {
   SUCCESS: 'SUCCESS',
   FAIL: 'FAIL',
   NONE: 'NONE',
+  UNAUTHORIED: 'UNAUTHORIED',
 };
 
 export const STATUS_LOGOUT = {
@@ -14,3 +15,5 @@ export const STATUS_SIGNUP = {
   FAIL: 'SIGNUP_FAIL',
   NONE: 'SIGNUP_NONE',
 };
+
+export const unauthoriedMessage = 'Not authorized to access this resource';

@@ -131,6 +131,8 @@ class CardItem extends React.Component {
     );
   };
   render() {
+    this.props.data?.saleOfPrice &&
+      console.log('Log ----' + JSON.stringify(this.props.data));
     return (
       <TouchableOpacity onPress={() => this.handleDetailItem()}>
         {this.renderDeletePopup()}
@@ -148,8 +150,12 @@ class CardItem extends React.Component {
               </Text>
               <Text style={{fontSize: 15, width: '50%', fontWeight: 'bold'}}>
                 {this.props.language === 'vi'
-                  ? `${formatNumber(this.props.data.prices * 23000)}VNĐ`
-                  : `${formatNumber(this.props.data.prices)}USD`}
+                  ? this.props.data?.saleOfPrice
+                    ? `${formatNumber(this.props.data?.saleOfPrice * 23000)}VNĐ`
+                    : `${formatNumber(this.props.data?.prices * 23000)}VNĐ`
+                  : this.props.data?.saleOfPrice
+                  ? `${this.props.data?.saleOfPrice}USD`
+                  : `${this.props.data?.prices}USD`}
               </Text>
             </View>
           </View>
@@ -158,6 +164,33 @@ class CardItem extends React.Component {
               style={[styles.imageItem, {width: '100%', height: 230}]}
               source={{uri: this.props.data.img}}
             />
+            {this.props.data?.saleOfPrice && (
+              <View
+                style={{
+                  position: 'absolute',
+                  flexDirection: 'row',
+                  bottom: 30,
+                  right: 0,
+                  zIndex: 9999,
+                  transform: [{rotate: '-20deg'}],
+                }}>
+                <AppText
+                  style={{
+                    fontSize: 15,
+                    color: 'red',
+                  }}
+                  i18nKey={'SaleOff'}></AppText>
+
+                <Text
+                  style={{
+                    fontSize: 15,
+                    color: 'red',
+                  }}>
+                  {' '}
+                  {this.props.data?.percentSale}%
+                </Text>
+              </View>
+            )}
           </View>
           {this.handleShowOption()}
         </View>

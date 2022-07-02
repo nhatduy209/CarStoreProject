@@ -11,6 +11,8 @@ import {
 import {styles} from './Style';
 import {ngrokUrl} from '../../../../config/URL';
 import io from 'socket.io-client';
+import * as ImagePicker from 'react-native-image-picker';
+import {sendMessageImage} from '../../../../common/pushImage';
 
 const socket = io(ngrokUrl, {
   transports: ['websocket'],
@@ -21,19 +23,28 @@ class Conversation extends React.Component {
     super(props);
     this.state = {
       inputMesssage: '',
+      image: {},
     };
     this.scrollViewRef = React.createRef();
   }
   componentDidMount() {
-    this.props.getInitMessage(this.props.user?.email ?? '');
-    socket.on('connect', con => {
-      console.debug('SOCKET: connected to socket server', con);
-    });
+    this.didFocusSubscription = this.props.navigation.addListener(
+      'focus',
+      () => {
+        this.props.getInitMessage(this.props.user?.email ?? '');
+        socket.on('connect', con => {
+          console.debug('SOCKET: connected to socket server', con);
+        });
 
-    socket.on(this.props.reciverId, data => {
-      console.debug('Response from admin ---> ', data + this.props.user?.email);
-      this.props.getInitMessage(this.props.user?.email ?? '');
-    });
+        socket.on(this.props.reciverId, data => {
+          console.debug(
+            'Response from admin ---> ',
+            data + this.props.user?.email,
+          );
+          this.props.getInitMessage(this.props.user?.email ?? '');
+        });
+      },
+    );
   }
   renderItem = item => {
     if (item?.id.includes(this.props.user?.email)) {
@@ -42,6 +53,7 @@ class Conversation extends React.Component {
           key={item.id}
           content={item.content}
           shareItem={item.shareItem}
+          time={item.time}
           navigation={this.props.navigation}
         />
       );
@@ -58,12 +70,25 @@ class Conversation extends React.Component {
     );
   };
   sendMessage = async () => {
-    if (!this.state.inputMesssage || this.state.inputMesssage.length === 0) {
+    if (this.state.inputMesssage.length === 0 || this.state.image?.uri) {
       return;
     }
+    let urlImage = '';
+    if (this.state.image?.uri) {
+      const {uri, fileName} = this.state.image;
+
+      urlImage = await sendMessageImage(uri, fileName)
+        .then(res => {
+          return res;
+        })
+        .catch(err => console.log('err ne ' + err));
+    }
+
     const data = {
       reciver: 'admin_123',
-      content: this.state.inputMesssage,
+      content: this.state.inputMesssage.length
+        ? this.state.inputMesssage
+        : urlImage,
       sender: this.props.user?.email,
     };
     socket.emit('code_from_client', {
@@ -76,9 +101,25 @@ class Conversation extends React.Component {
         this.props.getInitMessage(this.props.user?.email ?? '');
       },
     });
-    this.setState({inputMesssage: ''});
+    this.setState({inputMesssage: '', image: {}});
   };
+
+  addImage = () => {
+    ImagePicker.launchImageLibrary({}, response => {
+      try {
+        this.setState({image: response.assets[0]});
+      } catch (err) {
+        console.log('Error when choose image' + err);
+      }
+    });
+  };
+
+  removeImage = () => {
+    this.setState({image: {}});
+  };
+
   render() {
+    console.log('Log ----' + JSON.stringify(this.state.image));
     return (
       <View style={{backgroundColor: '#fff', height: '100%'}}>
         <View
@@ -154,7 +195,7 @@ class Conversation extends React.Component {
               style={[{color: '#999', marginRight: 5}, styles.sendButton]}
             />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => this.addImage()}>
             <Icon
               name="image"
               size={16}
@@ -162,6 +203,18 @@ class Conversation extends React.Component {
             />
           </TouchableOpacity>
         </View>
+        {this.state.image?.uri && (
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity
+              style={{paddingRight: 8}}
+              onLongPress={() => this.removeImage()}>
+              <Image
+                style={{width: 80, height: 80}}
+                source={{uri: this.state.image.uri}}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     );
   }

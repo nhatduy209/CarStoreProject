@@ -113,6 +113,9 @@ class DetailItemScreen extends React.Component {
         item => (totalRating = totalRating + item.rating),
       );
     }
+    console.log(
+      'Hello detail : ' + JSON.stringify(this.props.detail_car?.data),
+    );
 
     return (
       <View style={{height: '100%'}}>
@@ -236,13 +239,15 @@ class DetailItemScreen extends React.Component {
                     {this.props.detail_car?.data?.category}
                   </Text>
                 </View>
-                <View style={[styles.Description_row]}>
+                <View style={{...styles.Description_row}}>
                   <AppText
                     style={styles.titleDescrition}
                     i18nKey={'description'}
                   />
                   <Text style={styles.valueDescrition}>
-                    {this.props.detail_car?.data?.description}
+                    {this.props.language === 'vi'
+                      ? this.props.detail_car?.data?.description?.vi
+                      : this.props.detail_car?.data?.description?.en}
                   </Text>
                 </View>
               </View>
@@ -428,5 +433,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   titleDescrition: {width: '35%', fontSize: 14, color: '#ccc'},
-  valueDescrition: {width: '65%', fontSize: 14, fontWeight: 'bold'},
+  valueDescrition: {
+    width: '65%',
+    fontSize: 14,
+    fontWeight: '300',
+  },
 });

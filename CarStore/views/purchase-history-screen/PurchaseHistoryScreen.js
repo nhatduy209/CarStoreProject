@@ -21,6 +21,7 @@ import {Rating} from 'react-native-ratings';
 import {addComment, reload} from '../../redux/action/comment/CommentAction';
 import {STATUS} from '../../config/Status';
 import {showToastFail, showToastSuccess} from '../../common/Utils';
+import {ModalComponent} from '../modal/ModalComponent';
 
 const deliveryStatus = [
   {
@@ -46,6 +47,7 @@ class PurchaseHistoryScreen extends React.Component {
       comment: '',
       rating: 0,
       itemRating: {},
+      isShowTimeoutSession: false,
     };
     this.car = [];
   }
@@ -63,6 +65,13 @@ class PurchaseHistoryScreen extends React.Component {
     if (this.props.comment.canAddComment === STATUS.FAIL) {
       showToastFail('Fail', 'Error occurs , please try again');
       this.props.reload();
+    }
+
+    console.log('History ---' + this.props.status);
+    if (this.props.status === STATUS.UNAUTHORIED) {
+      if (!this.state.isShowTimeoutSession) {
+        this.setState({isShowTimeoutSession: true});
+      }
     }
   }
 
@@ -220,10 +229,19 @@ class PurchaseHistoryScreen extends React.Component {
 
   render() {
     this.shouldRenderCar();
+
     return (
       <View ststtyle={{backgroundColor: '#fff'}}>
         <HeaderComponent navigation={this.props.navigation} />
         {this.renderModal()}
+        <ModalComponent
+          navigation={this.props.navigation}
+          state={this}
+          isShow={this.state.isShowTimeoutSession}
+          descriptionText="Your session is expired , please login again"
+          textAction="Sign in"
+          textCancel="Cancel"
+        />
         <AppText
           style={{
             fontSize: 32,
@@ -282,6 +300,7 @@ const mapStateToProps = state => {
     user: state.UserReducer.user.data,
     historyItem: state.HistoryItemReducer.historyItem,
     comment: state.CommentReducer,
+    status: state.HistoryItemReducer.status,
   };
 };
 

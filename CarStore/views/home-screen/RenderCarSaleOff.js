@@ -34,7 +34,6 @@ class RenderCarSaleOff extends React.Component {
   };
 
   render() {
-    console.log('Item ---' + JSON.stringify(this.props.item.percentSale));
     return (
       <>
         <RBSheet

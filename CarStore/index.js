@@ -23,7 +23,7 @@ PushNotification.configure({
     console.log('NOTIFICATION:', notification);
 
     PushNotification.localNotification({
-      channelId: notification.channelId,
+      channelId: 'CarStore',
       message: notification.message,
       title: notification.title,
     });

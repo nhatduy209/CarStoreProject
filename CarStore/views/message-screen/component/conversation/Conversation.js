@@ -12,7 +12,7 @@ import {styles} from './Style';
 import {ngrokUrl} from '../../../../config/URL';
 import io from 'socket.io-client';
 import * as ImagePicker from 'react-native-image-picker';
-import {sendMessageImage} from '../../../../common/pushImage';
+import {uploadImageToStorage} from '../../../../common/pushImage';
 import {ModalComponent} from '../../../modal/ModalComponent';
 import {STATUS} from '../../../../config/Status';
 
@@ -51,7 +51,6 @@ class Conversation extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log('Log props ----' + this.props.status);
     if (this.props.status === STATUS.UNAUTHORIED) {
       if (!this.state.isShow) {
         this.setState({isShow: true});
@@ -83,38 +82,59 @@ class Conversation extends React.Component {
     );
   };
   sendMessage = async () => {
-    if (this.state.inputMesssage.length === 0 || this.state.image?.uri) {
+    console.log(
+      'image ====' +
+        !this.state.inputMesssage.length +
+        ' ' +
+        !this.state.image?.uri.length,
+    );
+    if (!this.state.inputMesssage.length && !this.state.image?.uri.length) {
       return;
     }
-    let urlImage = '';
+    console.log('image ====' + JSON.stringify(this.state.image));
+
     if (this.state.image?.uri) {
       const {uri, fileName} = this.state.image;
-
-      urlImage = await sendMessageImage(uri, fileName)
-        .then(res => {
-          return res;
+      console.log('uri filename ' + uri, fileName);
+      await uploadImageToStorage(uri, fileName)
+        .then(async res => {
+          console.log('res mess ' + res);
+          const data = {
+            reciver: 'admin_123',
+            content: res,
+            sender: this.props.user?.email,
+          };
+          socket.emit('code_from_client', {
+            data: this.state.inputMesssage,
+            id: this.props.senderId,
+          });
+          await this.props.sendMessage({
+            data,
+            onSuccess: () => {
+              this.props.getInitMessage(this.props.user?.email ?? '');
+            },
+          });
+          this.setState({inputMesssage: '', image: {}});
         })
         .catch(err => console.log('err ne ' + err));
+    } else {
+      const data = {
+        reciver: 'admin_123',
+        content: this.state.inputMesssage,
+        sender: this.props.user?.email,
+      };
+      socket.emit('code_from_client', {
+        data: this.state.inputMesssage,
+        id: this.props.senderId,
+      });
+      await this.props.sendMessage({
+        data,
+        onSuccess: () => {
+          this.props.getInitMessage(this.props.user?.email ?? '');
+        },
+      });
+      this.setState({inputMesssage: '', image: {}});
     }
-
-    const data = {
-      reciver: 'admin_123',
-      content: this.state.inputMesssage.length
-        ? this.state.inputMesssage
-        : urlImage,
-      sender: this.props.user?.email,
-    };
-    socket.emit('code_from_client', {
-      data: this.state.inputMesssage,
-      id: this.props.senderId,
-    });
-    await this.props.sendMessage({
-      data,
-      onSuccess: () => {
-        this.props.getInitMessage(this.props.user?.email ?? '');
-      },
-    });
-    this.setState({inputMesssage: '', image: {}});
   };
 
   addImage = () => {
@@ -132,7 +152,6 @@ class Conversation extends React.Component {
   };
 
   render() {
-    console.log('Log ----' + JSON.stringify(this.state.image));
     return (
       <View style={{backgroundColor: '#fff', height: '100%'}}>
         <ModalComponent

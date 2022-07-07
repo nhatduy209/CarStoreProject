@@ -132,6 +132,7 @@ class BookingScreen extends React.Component {
     this.props.changeShowModalState();
   };
   render() {
+    console.log('?');
     const birthday = new Date(this.state.birthday);
     const {email, phoneNum} = this.props.user.data;
     return (
@@ -169,7 +170,7 @@ class BookingScreen extends React.Component {
           }}
         />
 
-        <ScrollView>
+        <ScrollView keyboardDismissMode="on-drag">
           <View style={styles.inputView}>
             <AppText style={styles.textInfo} i18nKey={'emailContact'} />
             <TextInput
@@ -200,6 +201,7 @@ class BookingScreen extends React.Component {
             <TextInput
               onChangeText={value => this.setState({fullName: value})}
               style={styles.inputInfo}
+              blurOnSubmit={false}
             />
           </View>
 

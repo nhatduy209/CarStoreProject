@@ -1,4 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginBusiness from '../../../bussiness/LoginBusiness';
+import {AUTHENTICATION_TOKEN, LOGIN_KEY} from '../../../config/StorageKey';
 import {ACTION_NAME} from './ActionName';
 
 export const login =
@@ -29,6 +31,9 @@ export const loginWithEmail = (data, token) => async dispatch => {
 export const logout = (email, tokenDevice) => async dispatch => {
   var loginBusiness = new LoginBusiness();
   const data = await loginBusiness.logoutBusiness({email, tokenDevice});
+
+  await AsyncStorage.removeItem(AUTHENTICATION_TOKEN);
+
   dispatch({
     type: ACTION_NAME.LOGOUT_ACTION,
     data,

@@ -26,6 +26,7 @@ export default class CommentBusiness {
       email: data.email,
       rating: data.rating,
       comment: data.comment,
+      idBill: data.idBill,
     };
     var result = await postService.PostAPI(APP_URL.ADD_COMMENT, params);
 

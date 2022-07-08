@@ -14,7 +14,6 @@ import PaymentReducer from './PaymentReducer';
 import CommentReducer from './CommentReducer';
 import MessageReducer from './MessageReducer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 const rootPersistConfig = {
   key: 'root',
   storage: AsyncStorage,

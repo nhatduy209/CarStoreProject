@@ -135,6 +135,7 @@ class PurchaseItemComponent extends React.Component {
                 this.props.state.setState({
                   isShow: true,
                   itemRating: this.props.item,
+                  idBill: this.props.item.idBill,
                 })
               }
               disabled={this.props.item.isRating ? true : false}

@@ -1,6 +1,6 @@
 import {STATUS, unauthoriedMessage} from '../../config/Status';
 import {ACTION_NAME} from '../action/message/ActionName';
-
+import {ACTION_NAME as LOGOUT} from '../action/login-action/ActionName';
 const STORE_STATE = {
   messages: [],
   status: STATUS.NONE,
@@ -17,6 +17,14 @@ const MessageReducer = (state = STORE_STATE, action) => {
         reciverId: action.data?.data?.idSendingFromAdmin,
         senderId: action.data?.data?.idSendingFromClient,
         status: STATUS.SUCCESS,
+      };
+    case LOGOUT.LOGOUT_ACTION:
+      return {
+        ...state,
+        reciverId: '',
+        senderId: '',
+        messages: [],
+        status: STATUS.NONE,
       };
     case ACTION_NAME.GET_INT_MESSAGE.GET_INT_MESSAGE_FAIL:
       if (action.data.error === unauthoriedMessage) {

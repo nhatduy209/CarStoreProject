@@ -48,6 +48,7 @@ class PurchaseHistoryScreen extends React.Component {
       rating: 0,
       itemRating: {},
       isShowTimeoutSession: false,
+      idBill: '',
     };
     this.car = [];
   }
@@ -67,7 +68,6 @@ class PurchaseHistoryScreen extends React.Component {
       this.props.reload();
     }
 
-    console.log('History ---' + this.props.status);
     if (this.props.status === STATUS.UNAUTHORIED) {
       if (!this.state.isShowTimeoutSession) {
         this.setState({isShowTimeoutSession: true});
@@ -156,10 +156,12 @@ class PurchaseHistoryScreen extends React.Component {
   };
 
   handleRating = () => {
+    console.log('Log ----' + this.state.idBill);
     this.props.addComment({
       comment: this.state.comment,
       rating: this.state.rating,
       email: this.props.user.data.email,
+      idBill: this.state.idBill,
       ...this.state.itemRating,
     });
   };

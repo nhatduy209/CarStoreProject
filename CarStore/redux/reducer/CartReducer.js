@@ -1,5 +1,6 @@
 import {STATUS, unauthoriedMessage} from '../../config/Status';
 import {ACTION_NAME} from '../action/cart-action/ActionName';
+import {ACTION_NAME as LOGOUT} from '../action/login-action/ActionName';
 
 const CART_STATE = {
   cart: {},
@@ -13,6 +14,11 @@ const CartReducer = (state = CART_STATE, action) => {
         ...state,
         cart: action.data,
         status: STATUS.SUCCESS,
+      };
+    case LOGOUT.LOGOUT_ACTION:
+      return {
+        ...state,
+        cart: {},
       };
     case ACTION_NAME.GET_LIST_CART_ACTION.GET_LIST_CART_FAIL:
       return {

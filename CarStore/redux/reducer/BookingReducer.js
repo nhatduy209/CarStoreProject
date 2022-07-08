@@ -57,7 +57,6 @@ const BookingReducer = (state = BOOKING_STATE, action) => {
       };
 
     case ACTION_NAME.BOOKING_ACTION.GET_LIST_MEETINGS_SUCCESS:
-      console.log('DATA MEETINGS ---', action.data);
       return {
         ...state,
         meetings: action.data.data,

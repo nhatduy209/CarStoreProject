@@ -17,7 +17,11 @@ import {
 import AppText from '../../i18/AppText';
 import Moment from 'react-moment';
 import {STATUS} from '../../config/Status';
-import {showToastSuccess, showToastFail} from '../../common/Utils';
+import {
+  showToastSuccess,
+  showToastFail,
+  formatNumber,
+} from '../../common/Utils';
 
 class BookingDetailScreen extends React.Component {
   constructor(props) {
@@ -144,7 +148,12 @@ class BookingDetailScreen extends React.Component {
 
             <View style={styles.info}>
               <AppText i18nKey={'Price'} style={styles.textInfo} />
-              <Text> {booking.car_booking.prices}</Text>
+
+              <Text>
+                {this.props.language === 'vi'
+                  ? `${formatNumber(booking.car_booking.prices * 23000)}VNĐ`
+                  : `${formatNumber(booking.car_booking.prices)}USD`}{' '}
+              </Text>
             </View>
           </View>
 
@@ -222,6 +231,7 @@ const mapStateToProps = state => {
     user: state.UserReducer.user.data,
     statusCancelBooking: state.BookingReducer.CANCEL_BOOKING,
     confirmStatus: state.BookingReducer.confirmStatus,
+    language: state.LanguageReducer.language,
   };
 };
 

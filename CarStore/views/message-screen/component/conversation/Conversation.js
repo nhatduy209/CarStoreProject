@@ -82,13 +82,7 @@ class Conversation extends React.Component {
     );
   };
   sendMessage = async () => {
-    console.log(
-      'image ====' +
-        !this.state.inputMesssage.length +
-        ' ' +
-        !this.state.image?.uri.length,
-    );
-    if (!this.state.inputMesssage.length && !this.state.image?.uri.length) {
+    if (!this.state.inputMesssage.length && !this.state.image?.uri?.length) {
       return;
     }
     console.log('image ====' + JSON.stringify(this.state.image));

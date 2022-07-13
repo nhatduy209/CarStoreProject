@@ -15,55 +15,63 @@ class PurchaseItemComponent extends React.Component {
     return (
       <View style={[styles.purchaseItemContainer, styles.shadowBox]}>
         {/* info */}
-        <View
-          style={{
-            flexDirection: 'row',
-            borderColor: '#ddd',
-            borderBottomWidth: 0.5,
-            paddingBottom: 12,
+
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.navigate('DetailItemScreen', {
+              data: this.props.item,
+            });
           }}>
-          <Image
-            style={{
-              height: 80,
-              width: 80,
-              borderColor: '#eee',
-              borderWidth: 1,
-              resizeMode: 'center',
-              marginHorizontal: 8,
-            }}
-            source={{uri: this.props.item?.image}}
-          />
           <View
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              width: '70%',
+              flexDirection: 'row',
+              borderColor: '#ddd',
+              borderBottomWidth: 0.5,
+              paddingBottom: 12,
             }}>
-            <Text style={{fontSize: 20}}>{this.props.item?.car_name}</Text>
-            <View style={{flexDirection: 'row'}}>
-              <View
-                style={{
-                  backgroundColor: '#a70000',
-                  height: 24,
-                  width: 24,
-                  borderRadius: 10,
-                  marginRight: 12,
-                }}
-              />
-              <Text>{this.props.item?.color}</Text>
-            </View>
-            <Text
+            <Image
               style={{
-                color: '#ff4d00',
-                alignSelf: 'flex-end',
-                fontSize: 16,
+                height: 80,
+                width: 80,
+                borderColor: '#eee',
+                borderWidth: 1,
+                resizeMode: 'center',
+                marginHorizontal: 8,
+              }}
+              source={{uri: this.props.item?.image}}
+            />
+            <View
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '70%',
               }}>
-              {this.props.language === 'vi'
-                ? `${this.props.item?.prices * 23000} VND`
-                : `$${this.props.item?.prices}`}
-            </Text>
+              <Text style={{fontSize: 20}}>{this.props.item?.car_name}</Text>
+              <View style={{flexDirection: 'row'}}>
+                <View
+                  style={{
+                    backgroundColor: '#a70000',
+                    height: 24,
+                    width: 24,
+                    borderRadius: 10,
+                    marginRight: 12,
+                  }}
+                />
+                <Text>{this.props.item?.color}</Text>
+              </View>
+              <Text
+                style={{
+                  color: '#ff4d00',
+                  alignSelf: 'flex-end',
+                  fontSize: 16,
+                }}>
+                {this.props.language === 'vi'
+                  ? `${this.props.item?.prices * 23000} VND`
+                  : `$${this.props.item?.prices}`}
+              </Text>
+            </View>
           </View>
-        </View>
+        </TouchableOpacity>
 
         {/* total price */}
         <View
@@ -82,7 +90,7 @@ class PurchaseItemComponent extends React.Component {
               justifyContent: 'space-between',
               marginRight: 10,
             }}>
-            <AppText i18nKey={'Price'}></AppText>
+            <AppText i18nKey={'Price'} />
             <Text
               style={{
                 color: '#ff4d00',

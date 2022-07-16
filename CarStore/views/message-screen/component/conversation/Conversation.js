@@ -31,6 +31,7 @@ class Conversation extends React.Component {
     this.scrollViewRef = React.createRef();
   }
   componentDidMount() {
+    console.log('mount');
     this.didFocusSubscription = this.props.navigation.addListener(
       'focus',
       () => {
@@ -51,6 +52,7 @@ class Conversation extends React.Component {
   }
 
   componentDidUpdate() {
+    console.log('update');
     if (this.props.status === STATUS.UNAUTHORIED) {
       if (!this.state.isShow) {
         this.setState({isShow: true});

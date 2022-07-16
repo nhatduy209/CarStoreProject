@@ -19,7 +19,7 @@ class RenderCarOnSale extends React.Component {
 
   handleShare = async item => {
     const data = {
-      sender: this.props.user?.data?.email,
+      sender: this.props?.user?.data?.email,
       name: item.name,
     };
     const result = await share(data);
@@ -133,7 +133,7 @@ const styles = new StyleSheet.create({
 const mapStateToProps = state => {
   return {
     language: state.LanguageReducer.language,
-    user: state.UserReducer.user.data,
+    user: state.UserReducer?.user.data,
   };
 };
 

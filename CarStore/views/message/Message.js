@@ -20,11 +20,10 @@ export class Message extends React.Component {
   };
 
   componentDidMount() {
+    console.log('mount 1', socket);
     socket.on('connect', con => {
       console.debug('SOCKET: connected to socket server', con);
     });
-
-    console.log('check 1', socket);
   }
 
   render() {
